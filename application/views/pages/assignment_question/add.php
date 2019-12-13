@@ -55,7 +55,7 @@
                     <td>
                         <select class="form-control" name="answer_type0" >
                             <option value="TEXT">Text</option>
-                            <option value="SCALE">Scale (1-5)</option>
+                            <option value="SCALE">Scale (0-4)</option>
                             <option value="SCORE">Score (0%-100%)</option>
                             <option value="GRADE">Grade (NN/PP/CR/DN/HD)</option>
                         </select>

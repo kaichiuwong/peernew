@@ -30,6 +30,7 @@
         <table id="myTable" class="table table-head-fixed table-hover order-list">
             <thead>
                 <tr>
+                    <th style="width: 10%">Order</th>
                     <th style="width: 50%">Question</th>
                     <th style="width: 20%">Question Section</th>
                     <th style="width: 20%">Answer Type</th>
@@ -38,6 +39,9 @@
             </thead>
             <tbody>
                 <tr id="first_row">
+                    <td>
+                        <input type="number" min="1" step="1" value="<?php echo $assignment_question['question_order']; ?>" name="question_order" class="form-control" />
+                    </td>
                     <td>
                         <input type="hidden" name="asg_id" value="<?php echo $assignment_question['asg_id']; ?>" required />
                         <input type="text" name="question" class="form-control" value="<?php echo ($this->input->post('question') ? $this->input->post('question') : $assignment_question['question']); ?>" />
@@ -51,7 +55,7 @@
                     <td>
                         <select class="form-control" name="answer_type" >
                             <option value="TEXT" <?php echo $assignment_question['answer_type'] == "TEXT"?"selected":"";?> >Text</option>
-                            <option value="SCALE" <?php echo $assignment_question['answer_type'] == "SCALE"?"selected":"";?> >Scale (1-5)</option>
+                            <option value="SCALE" <?php echo $assignment_question['answer_type'] == "SCALE"?"selected":"";?> >Scale (0-4)</option>
                             <option value="SCORE" <?php echo $assignment_question['answer_type'] == "SCORE"?"selected":"";?> >Score (0%-100%)</option>
                             <option value="GRADE" <?php echo $assignment_question['answer_type'] == "GRADE"?"selected":"";?> >Grade (NN/PP/CR/DN/HD)</option>
                         </select>

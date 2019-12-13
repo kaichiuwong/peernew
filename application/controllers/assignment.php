@@ -165,6 +165,10 @@ class Assignment extends MY_PasController {
                             $data['allow_submit'] = true; 
                             $this->load->model('Submission_model');
                             $data['submission_hist'] = $this->Submission_model->get_submission_history_by_group($asg_id, $data['assignment_topic']['topic_id']);
+
+                            $this->load->model('assignment_question_model');
+                            $data['assignment_questions_peer'] = $this->assignment_question_model->get_assignment_question_by_asgid_section($asg_id,'PEER');
+                            $data['assignment_questions_self'] = $this->assignment_question_model->get_assignment_question_by_asgid_section($asg_id,'SELF');
                         }
                         
                         $new_session_data = array('asg_id' => $asg_id, 'asg_header' => $data['assignment']['unit_code'] . ' - ' . $data['assignment']['title']);

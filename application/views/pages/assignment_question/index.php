@@ -47,7 +47,7 @@
             </span>
             <?php echo form_close(); ?>
       </div>
-        <table class="table table-head-fixed table-hover enable-datatable">
+        <table class="table table-sm table-head-fixed table-hover enable-datatable">
             <thead>
                 <tr>
                     <th>Order</th>

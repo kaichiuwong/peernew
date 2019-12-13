@@ -51,6 +51,7 @@ class assignment_question extends MY_PasController{
                     if (isset($_POST['question'.$x])) {
                         $post_data = array (
                             "asg_id" => $this->input->post('asg_id'),
+                            "question_order" => $this->input->post('question_order'.$x),
                             "question" => $this->input->post('question'.$x), 
                             "question_section" => $this->input->post('question_section'.$x), 
                             "answer_type" => $this->input->post('answer_type'.$x)
@@ -70,7 +71,7 @@ class assignment_question extends MY_PasController{
     /*
      * Editing a assignment_question
      */
-    function edit($asg_id, $type,$id)
+    function edit($asg_id, $type, $id)
     {   
         if ($this->check_permission(20)) {
             $type=strtoupper($type);
@@ -83,14 +84,15 @@ class assignment_question extends MY_PasController{
             {
                 $this->load->library('form_validation');
 
-                $this->form_validation->set_rules('max','Max number per group','required');
+                $this->form_validation->set_rules('question','Question','required');
             
                 if($this->form_validation->run())     
                 {   
                     $params = array(
-                        'topic' => $this->input->post('topic'),
-                        'max' => $this->input->post('max'),
-                        'topic_desc' => $this->input->post('topic_desc'),
+                        "question_order" => $this->input->post('question_order'),
+                        "question" => $this->input->post('question'), 
+                        "question_section" => $this->input->post('question_section'), 
+                        "answer_type" => $this->input->post('answer_type')
                     );
 
                     $this->assignment_question_model->update_assignment_question($id,$params);            

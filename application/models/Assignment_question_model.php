@@ -24,7 +24,7 @@ class Assignment_question_model extends CI_Model
      */
     function get_assignment_question_by_asgid($asg_id)
     {
-        $query = $this->db->query("select t.* from assignment_question t where t.asg_id=$asg_id order by t.question_section, t.question; ");
+        $query = $this->db->query("select t.* from assignment_question t where t.asg_id=$asg_id order by t.question_order asc; ");
         return $query->result_array();
     }
     
@@ -33,7 +33,7 @@ class Assignment_question_model extends CI_Model
      */
     function get_assignment_question_by_asgid_section($asg_id, $section)
     {
-        $query = $this->db->query("select t.* from assignment_question t where t.asg_id=$asg_id and t.question_section='$section' order by t.question_section, t.question; ");
+        $query = $this->db->query("select t.* from assignment_question t where t.asg_id=$asg_id and t.question_section='$section' order by t.question_order asc ; ");
         return $query->result_array();
     }
         
