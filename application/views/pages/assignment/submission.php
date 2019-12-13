@@ -19,7 +19,7 @@
 
 <div class="row">
   <div class="col-12">
-    <?php if (!$allow_submit) { ?>
+    <?php if (!$allow_submit) :?>
     <div class="card">
       <div class="card-header bg-danger">
         <h3 class="card-title text-bold"><i class="fas fa-exclamation-triangle"></i> No Assignment Group Found.</h3>
@@ -31,7 +31,7 @@
       <!-- /.card-body -->
     </div>
     <!-- /.card -->
-    <?php } else { ?>
+    <?php else: ?>
     <div class="card card-secondary">
         <div class="card-header">
             <h3 class="card-title"><span class="badge badge-success">Part A</span> Submission</h3>
@@ -134,7 +134,7 @@
                   <?php foreach($assignment_questions_self as $a){ ?>
                   <tr>
                       <td><span class="text-bold">Q<?php echo $a['question_order'];?>.</span></td>
-                      <td><?php echo $a['question']; ?></td>
+                      <td class="text-justify"><?php echo $a['question']; ?></td>
                       <?php switch ($a['answer_type']):
                             case "SCALE": ?>
                           <td>
@@ -180,6 +180,7 @@
     </div>
     <!-- /.card -->
     
+    <?php if (sizeof($assignment_topics_member) > 1) : ?>
     <div class="card card-secondary">
         <div class="card-header">
             <h3 class="card-title"><span class="badge badge-success">Part C</span> Peer Review</h3>
@@ -191,59 +192,79 @@
                   <tr>
                       <th>No.</th>
                       <th style="width: 50%">Question</th>
-                      <th style="width: 40%">Answer</th>
+                      <?php foreach($assignment_topics_member as $member) : ?>
+                        <?php if ($member['user_id'] != $username) :?>
+                          <th><?php echo $member['first_name']; ?> <?php echo $member['last_name']; ?></th>
+                        <?php endif; ?>
+                      <?php endforeach; ?>
                   </tr>
               </thead>
               <tbody>
-                  <?php foreach($assignment_questions_peer as $a){ ?>
+                  <?php foreach($assignment_questions_peer as $a):  ?>
                   <tr>
                       <td><span class="text-bold">Q<?php echo $a['question_order'];?>.</span></td>
-                      <td><?php echo $a['question']; ?></td>
-                      <?php switch ($a['answer_type']):
-                            case "SCALE": ?>
-                          <td>
-                              <select name="<?php $a['id']; ?>"  class="form-control" required>
-                                <option value="" disabled selected>-- Select --</option>
-                                <option value="4">4 - Always</option>
-                                <option value="3">3 - Nearly Always</option>
-                                <option value="2">2 - Usually</option>
-                                <option value="1">1 - Sometimes</option>
-                                <option value="0">0 - Seldom</option>
-                              </select>
-                          </td>
-                        <?php break; ?>
-                        <?php case "GRADE": ?>
-                          <td>
-                              <select name="<?php $a['id']; ?>"  class="form-control" required>
-                                <option value="" disabled selected>-- Select --</option>
-                                <option value="HD">HD</option>
-                                <option value="DN">DN</option>
-                                <option value="CR">CR</option>
-                                <option value="PP">PP</option>
-                                <option value="NN">NN</option>
-                              </select>
-                          </td>
-                        <?php break; ?>
-                        <?php case "SCORE": ?>
-                          <td>
-                              <input type="number" min="0" max="100" step="1" value=""  name="<?php $a['id']; ?>" class="form-control" required/>
-                          </td>
-                        <?php break; ?>
-                        <?php default: ?>
-                          <td>
-                              <input type="text" name="<?php $a['id']; ?>" class="form-control" required/>
-                          </td>
-                        <?php break; ?>
-                      <?php endswitch; ?>
+                      <td class="text-justify"><?php echo $a['question']; ?></td>
+                      <?php foreach($assignment_topics_member as $member):  ?>
+                        <?php if ($member['user_id'] != $username) :?>
+                          <?php switch ($a['answer_type']):
+                                case "SCALE": ?>
+                              <td>
+                                  <select name="<?php echo 'answer_'.$member['user_id'].'_'.$a['id']; ?>"  class="form-control" data-username="<?php echo $member['user_id']; ?>" required>
+                                    <option value="" disabled selected>-- Select --</option>
+                                    <option value="4">4 - Always</option>
+                                    <option value="3">3 - Nearly Always</option>
+                                    <option value="2">2 - Usually</option>
+                                    <option value="1">1 - Sometimes</option>
+                                    <option value="0">0 - Seldom</option>
+                                  </select>
+                              </td>
+                            <?php break; ?>
+                            <?php case "GRADE": ?>
+                              <td>
+                                  <select name="<?php echo 'answer_'.$member['user_id'].'_'.$a['id']; ?>"  class="form-control <?php echo 'grade_'.$member['user_id']; ?>" required>
+                                    <option value="" disabled selected>-- Select --</option>
+                                    <option value="HD">HD</option>
+                                    <option value="DN">DN</option>
+                                    <option value="CR">CR</option>
+                                    <option value="PP">PP</option>
+                                    <option value="NN">NN</option>
+                                  </select>
+                              </td>
+                            <?php break; ?>
+                            <?php case "SCORE": ?>
+                              <td>
+                                  <input type="number" min="0" max="100" step="1" value=""  name="<?php echo 'answer_'.$member['user_id'].'_'.$a['id']; ?>" class="form-control" data-username="<?php echo $member['user_id']; ?>" required/>
+                              </td>
+                            <?php break; ?>
+                            <?php default: ?>
+                              <td>
+                                  <input type="text" name="<?php echo 'answer_'.$member['user_id'].'_'.$a['id']; ?>" class="form-control" required/>
+                              </td>
+                            <?php break; ?>
+                           <?php endswitch; ?>
+                         <?php endif; ?>
+                       <?php endforeach; ?>
                   </tr>
-                  <?php } ?>
-              </tbody>
+                  <?php endforeach; ?>
+                </tbody>
+                <tfoot>
+                  <tr>
+                      <td></td>
+                      <td class="text-bold">Total</td>
+                      <?php foreach($assignment_topics_member as $member): ?>
+                        <?php if ($member['user_id'] != $username) :?>
+                          <td class="text-bold" id="sum_<?php echo $member['user_id']; ?>">0</td>
+                        <?php endif; ?>
+                      <?php endforeach; ?>
+                  </tr>
+                </tfoot>
           </table>
         </div>
         <!-- /.card-body -->
     </div>
     <!-- /.card -->
-    <?php } ?>
+    <?php endif; ?>
+    <?php endif; ?>
   </div>
 </div>
 <!-- /.row -->
