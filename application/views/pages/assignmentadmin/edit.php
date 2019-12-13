@@ -7,7 +7,7 @@
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="<?php echo site_url('assignmentadmin'); ?>">Assignment List</a></li>
+          <li class="breadcrumb-item"><a href="<?php echo site_url('Assignmentadmin'); ?>">Assignment List</a></li>
           <li class="breadcrumb-item active">Edit Info</li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('assignment_topic/index/'.$asg_id); ?>">Group List</a></li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('student_list/index/'.$asg_id); ?>">Student List</a></li>
@@ -23,7 +23,7 @@
     <div class="card-header">
         <h3 class="card-title">Edit Assignment</h3>
     </div>
-    <?php echo form_open('assignmentadmin/edit/'.$assignment['id'],array("class"=>"form-horizontal")); ?>
+    <?php echo form_open('Assignmentadmin/edit/'.$assignment['id'],array("class"=>"form-horizontal")); ?>
     <div class="card-body">
         <div class="form-group">
             <label for="type" class="col-md-4 control-label"><span class="text-danger">*</span>Type</label>

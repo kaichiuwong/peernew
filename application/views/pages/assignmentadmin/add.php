@@ -7,7 +7,7 @@
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="<?php echo site_url('assignmentadmin'); ?>">Assignment List</a></li>
+          <li class="breadcrumb-item"><a href="<?php echo site_url('Assignmentadmin'); ?>">Assignment List</a></li>
           <li class="breadcrumb-item active">Create </li>
         </ol>
       </div>
@@ -19,7 +19,7 @@
     <div class="card-header">
         <h3 class="card-title">Create Assignment</h3>
     </div>
-    <?php echo form_open('assignmentadmin/add',array("class"=>"form-horizontal")); ?>
+    <?php echo form_open('Assignmentadmin/add',array("class"=>"form-horizontal")); ?>
     <div class="card-body">
         <div class="form-group">
             <label for="type" class="col-md-4 control-label"><span class="text-danger">*</span>Type</label>

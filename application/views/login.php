@@ -56,7 +56,7 @@
                   <?php
                   }
                   ?>
-                  <?php $attributes = array('class' => 'user'); echo form_open('UserControl/login', $attributes); ?>
+                  <?php $attributes = array('class' => 'user'); echo form_open('Usercontrol/login', $attributes); ?>
                     <div class="form-group">
                       <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Username" required>
                     </div>
@@ -69,7 +69,7 @@
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="<?php echo base_url(); ?>index.php/UserControl/forgotpassword">Forgot Password?</a>
+                    <a class="small" href="<?php echo base_url(); ?>index.php/Usercontrol/forgotpassword">Forgot Password?</a>
                   </div>
                 </div>
               </div>

@@ -45,7 +45,7 @@
                     <td><?php echo $a['locked']? "<span class='text-danger text-bold'>Locked</span>":"Normal";?></td>
                     <td><?php echo get_permission_level_desc($a['permission_level']); ?></td>
                     <td>
-                    <?php echo form_open('useradministration/lock/'); ?>
+                    <?php echo form_open('Useradministration/lock/'); ?>
                         <div class="input-group">
                             <input type="hidden" name="username" value="<?php echo $a['username']; ?>" />
                             <span class="input-group-btn">

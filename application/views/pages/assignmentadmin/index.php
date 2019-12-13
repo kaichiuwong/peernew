@@ -17,7 +17,7 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body table-responsive p-3">
-      <a href="<?php echo site_url('assignmentadmin/add'); ?>" class="btn btn-success btn-sm">Create Assignment</a> 
+      <a href="<?php echo site_url('Assignmentadmin/add'); ?>" class="btn btn-success btn-sm">Create Assignment</a> 
         <table class="table table-head-fixed table-hover enable-datatable">
             <thead>
                 <tr>
@@ -38,8 +38,8 @@
                     <td><?php echo $a['topic_count']; ?></td>
                     <td><?php echo $a['student_count']; ?></td>
                     <td>
-                        <a href="<?php echo site_url('assignmentadmin/edit/'.$a['id']); ?>" class="btn btn-info btn-sm">Edit</a> 
-                        <a href="<?php echo site_url('assignmentadmin/remove/'.$a['id']); ?>" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="<?php echo site_url('Assignmentadmin/edit/'.$a['id']); ?>" class="btn btn-info btn-sm">Edit</a> 
+                        <a href="<?php echo site_url('Assignmentadmin/remove/'.$a['id']); ?>" class="btn btn-danger btn-sm">Delete</a>
                     </td>
                 </tr>
             <?php } ?>

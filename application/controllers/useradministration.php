@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class UserAdministration extends MY_PasController {
+class Useradministration extends MY_PasController {
     
     public function __construct() {
         parent::__construct();

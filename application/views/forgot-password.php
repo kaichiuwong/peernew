@@ -48,7 +48,7 @@
                   <?php
                   }
                   ?>
-                  <?php $attributes = array('class' => 'user'); echo form_open('UserControl/resetpassword', $attributes); ?>
+                  <?php $attributes = array('class' => 'user'); echo form_open('Usercontrol/resetpassword', $attributes); ?>
                     <div class="form-group">
                       <input type="email" name="email" class="form-control form-control-user" id="email" aria-describedby="emailHelp" placeholder="Enter Email Address..." required>
                     </div>
@@ -58,7 +58,7 @@
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="<?php echo base_url(); ?>index.php/UserControl/login">Login Again</a>
+                    <a class="small" href="<?php echo base_url(); ?>index.php/Usercontrol/login">Login Again</a>
                   </div>
                 </div>
               </div>

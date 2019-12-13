@@ -23,13 +23,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo site_url('assignmentadmin'); ?>" class="nav-link">
+                <a href="<?php echo site_url('Assignmentadmin'); ?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Assignment List</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo site_url('assignmentadmin/add'); ?>" class="nav-link">
+                <a href="<?php echo site_url('Assignmentadmin/add'); ?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create Assignment</p>
                 </a>
@@ -102,7 +102,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?php echo site_url('UserAdministration'); ?>" class="nav-link">
+            <a href="<?php echo site_url('Useradministration'); ?>" class="nav-link">
               <i class="nav-icon fas fa-user-cog"></i>
               <p>User Administration</p>
             </a>
@@ -117,7 +117,7 @@
           </li>
           <li class="nav-header"></li>
           <li class="nav-item">
-            <a href="<?php echo site_url('UserControl/logout'); ?>" class="nav-link">
+            <a href="<?php echo site_url('Usercontrol/logout'); ?>" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>Logout</p>
             </a>
