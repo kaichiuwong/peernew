@@ -103,7 +103,7 @@ class MY_PasController extends CI_Controller
     public function check_permission($min_level) {
         
         if (!$this->is_session_valid()) {
-            redirect('UserControl');
+            redirect('Usercontrol');
             return false;
         }
         else {

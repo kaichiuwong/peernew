@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-Class UserControl extends CI_Controller {
+Class Usercontrol extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -79,7 +79,7 @@ Class UserControl extends CI_Controller {
         );
         $this->session->unset_userdata('logged_in', $sess_array);
         $data['message_display'] = 'Successfully Logout';
-        redirect('UserControl');
+        redirect('Usercontrol');
     }
     
     public function forgotpassword($error = false) {
