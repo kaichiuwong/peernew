@@ -1,0 +1,15 @@
+.sidebar-primary{
+  background-color: #014681;
+}
+
+.sidebar-info{
+  background-color: #5bc0de;
+}
+
+.sidebar-success{
+  background-color: #5cb85c;
+}
+
+.sidebar-danger{
+  background-color: #d9534f;
+}
