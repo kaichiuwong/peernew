@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class AssignmentAdmin extends MY_PasController {
+class Assignmentadmin extends MY_PasController {
     function __construct()
     {
         parent::__construct();
@@ -65,7 +65,7 @@ class AssignmentAdmin extends MY_PasController {
                             $this->input->post('prefix')
                     );
                 }
-                redirect('assignmentadmin/index');
+                redirect('Assignmentadmin/index');
             }
             else
             {
@@ -108,7 +108,7 @@ class AssignmentAdmin extends MY_PasController {
                     );
 
                     $this->Assignment_model->update_assignment($asg_id,$params);            
-                    redirect('assignmentadmin/index/');
+                    redirect('Assignmentadmin/index/');
                 }
                 else
                 {
@@ -142,7 +142,7 @@ class AssignmentAdmin extends MY_PasController {
             if(isset($assignment['id']))
             {
                 $this->Assignment_model->delete_assignment($asg_id);
-                redirect('assignmentadmin/index/');
+                redirect('Assignmentadmin/index/');
             }
             else
                 show_error('The assignment you are trying to delete does not exist.');

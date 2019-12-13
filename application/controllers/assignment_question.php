@@ -4,7 +4,7 @@
  * www.crudigniter.com
  */
  
-class assignment_question extends MY_PasController{
+class Assignment_question extends MY_PasController{
     function __construct()
     {
         parent::__construct();
