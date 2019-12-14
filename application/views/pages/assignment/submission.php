@@ -95,18 +95,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                          <?php if ($submission_hist) { ?>
-                            <?php foreach ($submission_hist as $hist) {?>
+                          <?php if ($submission_hist) : ?>
+                            <?php foreach ($submission_hist as $hist) : ?>
                                 <tr>
                                     <td><i class="fas fa-file"></i> <a href="<?php echo base_url().$hist->filename; ?>" target="_blank"><?php echo basename($hist->filename); ?></a></td>
                                     <td><i class="fas fa-user"></i> <?php echo $hist->user_id; ?></td>
                                     <td><i class="fas fa-clock"></i> <?php echo $hist->submission_date; ?></td>
                                 </tr>
-                            <?php } ?>
-                          <?php } else { ?>
+                            <?php endforeach; ?>
+                          <?php else: ?>
                                 <tr>
                                 </tr>
-                          <?php } ?>
+                          <?php endif; ?>
                         </tbody>
                     </table>
               </div>
@@ -121,149 +121,38 @@
             <h3 class="card-title"><span class="badge badge-success">Part B</span> Self Evaluation Questions</h3>
         </div>
         <!-- /.card-header -->
-        <div class="card-body">
-          <table class="table table-sm table-head-fixed table-hover">
-              <thead>
-                  <tr>
-                      <th>No.</th>
-                      <th style="width: 50%">Question</th>
-                      <th style="width: 40%">Answer</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <?php foreach($assignment_questions_self as $a){ ?>
-                  <tr>
-                      <td><span class="text-bold">Q<?php echo $a['question_order'];?>.</span></td>
-                      <td class="text-justify"><?php echo $a['question']; ?></td>
-                      <?php switch ($a['answer_type']):
-                            case "SCALE": ?>
-                          <td>
-                              <select name="<?php $a['id']; ?>"  class="form-control" required>
-                                <option value="" disabled selected>-- Select --</option>
-                                <option value="4">4 - Always</option>
-                                <option value="3">3 - Nearly Always</option>
-                                <option value="2">2 - Usually</option>
-                                <option value="1">1 - Sometimes</option>
-                                <option value="0">0 - Seldom</option>
-                              </select>
-                          </td>
-                        <?php break; ?>
-                        <?php case "GRADE": ?>
-                          <td>
-                              <select name="<?php $a['id']; ?>"  class="form-control" required>
-                                <option value="" disabled selected>-- Select --</option>
-                                <option value="HD">HD</option>
-                                <option value="DN">DN</option>
-                                <option value="CR">CR</option>
-                                <option value="PP">PP</option>
-                                <option value="NN">NN</option>
-                              </select>
-                          </td>
-                        <?php break; ?>
-                        <?php case "SCORE": ?>
-                          <td>
-                              <input type="number" min="0" max="100" step="1" value=""  name="<?php $a['id']; ?>" class="form-control" required/>
-                          </td>
-                        <?php break; ?>
-                        <?php default: ?>
-                          <td>
-                              <input type="text" name="<?php $a['id']; ?>" class="form-control" required/>
-                          </td>
-                        <?php break; ?>
-                      <?php endswitch; ?>
-                  </tr>
-                  <?php } ?>
-              </tbody>
-          </table>
+        <div class="card-body" id="self_feedback_card" data-href="<?php echo site_url('Assignment/self_feedback_form/'.$asg_id.'/'.$assignment_topic['topic_id']); ?>">
+
         </div>
         <!-- /.card-body -->
+        <div class="card-footer">
+          <button type="button" class="btn btn-primary btn-sm" id="btn_self_submit">Save</button>
+        </div>
+        <div class="overlay dark" id="loading-self-feedback-overlay"> 
+          <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        </div>
     </div>
     <!-- /.card -->
     
-    <?php if (sizeof($assignment_topics_member) > 1) : ?>
+
     <div class="card card-secondary">
         <div class="card-header">
             <h3 class="card-title"><span class="badge badge-success">Part C</span> Peer Review</h3>
         </div>
         <!-- /.card-header -->
-        <div class="card-body">
-            <table class="table table-sm table-head-fixed table-hover">
-              <thead>
-                  <tr>
-                      <th>No.</th>
-                      <th style="width: 50%">Question</th>
-                      <?php foreach($assignment_topics_member as $member) : ?>
-                        <?php if ($member['user_id'] != $username) :?>
-                          <th><?php echo $member['first_name']; ?> <?php echo $member['last_name']; ?></th>
-                        <?php endif; ?>
-                      <?php endforeach; ?>
-                  </tr>
-              </thead>
-              <tbody>
-                  <?php foreach($assignment_questions_peer as $a):  ?>
-                  <tr>
-                      <td><span class="text-bold">Q<?php echo $a['question_order'];?>.</span></td>
-                      <td class="text-justify"><?php echo $a['question']; ?></td>
-                      <?php foreach($assignment_topics_member as $member):  ?>
-                        <?php if ($member['user_id'] != $username) :?>
-                          <?php switch ($a['answer_type']):
-                                case "SCALE": ?>
-                              <td>
-                                  <select name="<?php echo 'answer_'.$member['user_id'].'_'.$a['id']; ?>"  class="form-control" data-username="<?php echo $member['user_id']; ?>" required>
-                                    <option value="" disabled selected>-- Select --</option>
-                                    <option value="4">4 - Always</option>
-                                    <option value="3">3 - Nearly Always</option>
-                                    <option value="2">2 - Usually</option>
-                                    <option value="1">1 - Sometimes</option>
-                                    <option value="0">0 - Seldom</option>
-                                  </select>
-                              </td>
-                            <?php break; ?>
-                            <?php case "GRADE": ?>
-                              <td>
-                                  <select name="<?php echo 'answer_'.$member['user_id'].'_'.$a['id']; ?>"  class="form-control <?php echo 'grade_'.$member['user_id']; ?>" required>
-                                    <option value="" disabled selected>-- Select --</option>
-                                    <option value="HD">HD</option>
-                                    <option value="DN">DN</option>
-                                    <option value="CR">CR</option>
-                                    <option value="PP">PP</option>
-                                    <option value="NN">NN</option>
-                                  </select>
-                              </td>
-                            <?php break; ?>
-                            <?php case "SCORE": ?>
-                              <td>
-                                  <input type="number" min="0" max="100" step="1" value=""  name="<?php echo 'answer_'.$member['user_id'].'_'.$a['id']; ?>" class="form-control" data-username="<?php echo $member['user_id']; ?>" required/>
-                              </td>
-                            <?php break; ?>
-                            <?php default: ?>
-                              <td>
-                                  <input type="text" name="<?php echo 'answer_'.$member['user_id'].'_'.$a['id']; ?>" class="form-control" required/>
-                              </td>
-                            <?php break; ?>
-                           <?php endswitch; ?>
-                         <?php endif; ?>
-                       <?php endforeach; ?>
-                  </tr>
-                  <?php endforeach; ?>
-                </tbody>
-                <tfoot>
-                  <tr>
-                      <td></td>
-                      <td class="text-bold">Total</td>
-                      <?php foreach($assignment_topics_member as $member): ?>
-                        <?php if ($member['user_id'] != $username) :?>
-                          <td class="text-bold" id="sum_<?php echo $member['user_id']; ?>">0</td>
-                        <?php endif; ?>
-                      <?php endforeach; ?>
-                  </tr>
-                </tfoot>
-          </table>
+        
+        <div class="card-body" id="peer_feedback_card" data-href="<?php echo site_url('Assignment/peer_feedback_form/'.$asg_id.'/'.$assignment_topic['topic_id']); ?>">
+
         </div>
         <!-- /.card-body -->
+        <div class="card-footer">
+          <button type="button" class="btn btn-primary btn-sm" id="btn_peer_submit">Save</button>
+        </div>
+        <div class="overlay dark" id="loading-peer-feedback-overlay"> 
+          <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        </div>
     </div>
     <!-- /.card -->
-    <?php endif; ?>
     <?php endif; ?>
   </div>
 </div>

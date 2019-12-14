@@ -36,9 +36,29 @@ $('.group_info_open').on('click',function(){
     });
 });
 
+$(document).ready(function() {
+    if($('#self_feedback_card').length){
+        var dataURL = $('#self_feedback_card').attr('data-href');
+        $('#self_feedback_card').load(dataURL,function(){
+            $('#loading-self-feedback-overlay').removeClass('overlay dark');
+            $('#loading-self-feedback-overlay').addClass('d-none');
+        });
+    }
+
+    if($('#peer_feedback_card').length){
+        var dataURL = $('#peer_feedback_card').attr('data-href');
+        $('#peer_feedback_card').load(dataURL,function(){
+            $('#loading-peer-feedback-overlay').removeClass('overlay dark');
+            $('#loading-peer-feedback-overlay').addClass('d-none');
+        });
+    }
+});
+
+
+
 $(document).on('change', '.custom-file-input', function (event) {
     $(this).next('.custom-file-label').html('<i class="fas fa-file"></i> ' + event.target.files[0].name);
-})
+});
 
 $(document).ready(function () {
     var counter = 1;

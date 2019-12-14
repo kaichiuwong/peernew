@@ -19,6 +19,6 @@
 <script src="<?php echo base_url(); ?>/assets/dist/js/adminlte.min.js"></script>
 <script src="<?php echo base_url(); ?>/assets/plugins/summernote/summernote-bs4.min.js"></script>
 <script src="<?php echo base_url(); ?>/assets/dist/js/demo.js"></script>
-<script src="<?php echo base_url(); ?>/assets/dist/js/pas.js?t=123"></script>
+<script src="<?php echo base_url(); ?>/assets/dist/js/pas.js?t=<?php echo rand(); ?>"></script>
 </body>
 </html>

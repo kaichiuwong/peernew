@@ -116,6 +116,34 @@ class Assignment extends MY_PasController {
             $this->load->view('pages/assignment/group_member',$data);
         }
     }
+
+    function self_feedback_form($asg_id, $topic_id) {
+        if ($this->check_permission(10) ) {
+            if ($this->is_allow_view_asg($asg_id)) {
+                $data['asg_id'] = $asg_id;
+                $data['topic_id'] = $topic_id;
+                $data['username'] = $this->get_login_user();
+                $this->load->model('assignment_question_model');
+                $data['assignment_questions_self'] = $this->assignment_question_model->get_assignment_question_by_asgid_section($asg_id,'SELF');
+                $this->load->view('pages/assignment/self_feedback_form',$data);
+            }
+        }
+    }
+
+    function peer_feedback_form($asg_id, $topic_id) {
+        if ($this->check_permission(10) ) {
+            if ($this->is_allow_view_asg($asg_id)) {
+                $data['asg_id'] = $asg_id;
+                $data['topic_id'] = $topic_id;
+                $data['username'] = $this->get_login_user();
+                $this->load->model('assignment_question_model');
+                $this->load->model('Assignment_topic_model');
+                $data['assignment_questions_peer'] = $this->assignment_question_model->get_assignment_question_by_asgid_section($asg_id,'PEER');
+                $data['assignment_topics_member'] = $this->Assignment_topic_model->get_assignment_member($topic_id);
+                $this->load->view('pages/assignment/peer_feedback_form',$data);
+            }
+        }
+    }
     
     function submit($asg_id) {
         if ($this->check_permission(10) ) {
@@ -165,11 +193,6 @@ class Assignment extends MY_PasController {
                             $data['allow_submit'] = true; 
                             $this->load->model('Submission_model');
                             $data['submission_hist'] = $this->Submission_model->get_submission_history_by_group($asg_id, $data['assignment_topic']['topic_id']);
-
-                            $this->load->model('assignment_question_model');
-                            $data['assignment_questions_peer'] = $this->assignment_question_model->get_assignment_question_by_asgid_section($asg_id,'PEER');
-                            $data['assignment_questions_self'] = $this->assignment_question_model->get_assignment_question_by_asgid_section($asg_id,'SELF');
-                            $data['assignment_topics_member'] = $this->Assignment_topic_model->get_assignment_member($data['assignment_topic']['topic_id']);
                         }
                         
                         $new_session_data = array('asg_id' => $asg_id, 'asg_header' => $data['assignment']['unit_code'] . ' - ' . $data['assignment']['title']);
