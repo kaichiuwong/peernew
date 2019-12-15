@@ -18,6 +18,12 @@ class Assignment_feedback_model extends CI_Model
         return $query->result_array();
     }
     
+    function get_assignment_feedback_by_person($asg_id, $reviewer, $reviewee)
+    {
+        $query = $this->db->query("select t.* from assignment_feedback t where t.asg_id=$asg_id and t.reviewer='$reviewer' and t.reviewee='$reviewee' ; ");
+        return $query->result_array();
+    }
+
     function get_assignment_feedback_by_reviewer($asg_id, $reviewer)
     {
         $query = $this->db->query("select t.* from assignment_feedback t where t.asg_id=$asg_id and t.reviewer='$reviewer' ; ");
@@ -26,7 +32,7 @@ class Assignment_feedback_model extends CI_Model
 
     function get_assignment_feedback_by_reviewee($asg_id, $reviewee)
     {
-        $query = $this->db->query("select t.* from assignment_feedback t where t.asg_id=$asg_id and t.reviewer='$reviewee' ; ");
+        $query = $this->db->query("select t.* from assignment_feedback t where t.asg_id=$asg_id and t.reviewee='$reviewee' ; ");
         return $query->result_array();
     }
 
@@ -34,6 +40,20 @@ class Assignment_feedback_model extends CI_Model
     {
         $query = $this->db->query("select t.* from assignment_feedback t where t.asg_id=$asg_id and t.question_id=$question_id ; ");
         return $query->result_array();
+    }
+
+    function get_question_with_feedback($asg_id, $reviewer, $reviewee, $qtype) 
+    {
+        $params = array("asg_id"=> $asg_id, 
+                        "reviewer" => $reviewer,
+                        "reviewee" => $reviewee,
+                        "qtype" => $qtype);
+
+        $query = $this->db->query("CALL `sp_get_question_feedback`(?,?,?,?) ; " , $params);
+        $result = $query->result_array();
+        mysqli_next_result( $this->db->conn_id );
+        $query->free_result(); 
+        return $result;
     }
 
     function get_all_assignment_feedbacks()

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2019 at 01:26 PM
+-- Generation Time: Dec 15, 2019 at 04:09 PM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -13,6 +13,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `pas`
 --
+DROP DATABASE `pas`;
 CREATE DATABASE IF NOT EXISTS `pas` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `pas`;
 
@@ -20,6 +21,15 @@ DELIMITER $$
 --
 -- Procedures
 --
+DROP PROCEDURE IF EXISTS `sp_get_question_feedback`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_question_feedback`(IN `asg_id` INT, IN `reviewer` VARCHAR(20), IN `reviewee` VARCHAR(20), IN `qtype` ENUM('SELF','PEER','GROUP'))
+BEGIN
+    SELECT aq.id as qid, aq.question_order, aq.question, aq.answer_type, aq.question_section, af.*
+      FROM assignment_question aq
+      LEFT JOIN assignment_feedback af ON aq.asg_id=af.asg_id and aq.id=af.question_id and af.reviewer=reviewer and af.reviewee=reviewee
+     WHERE aq.asg_id = asg_id and aq.question_section=qtype ;
+END$$
+
 DROP PROCEDURE IF EXISTS `sp_get_student_assignment_list`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_student_assignment_list`(
     IN username VARCHAR(10)
@@ -119,6 +129,62 @@ CREATE TABLE IF NOT EXISTS `assignment_deadline` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `assignment_feedback`
+--
+
+DROP TABLE IF EXISTS `assignment_feedback`;
+CREATE TABLE IF NOT EXISTS `assignment_feedback` (
+`id` int(11) NOT NULL,
+  `asg_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `reviewer` varchar(20) NOT NULL,
+  `reviewee` varchar(20) NOT NULL,
+  `feedback` text,
+  `create_time` datetime NOT NULL,
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
+
+--
+-- Dumping data for table `assignment_feedback`
+--
+
+INSERT INTO `assignment_feedback` (`id`, `asg_id`, `question_id`, `reviewer`, `reviewee`, `feedback`, `create_time`, `last_upd_time`) VALUES
+(1, 11, 11, 'user1', 'user1', '5', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
+(2, 11, 12, 'user1', 'user1', '9 hours maybe', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
+(3, 11, 13, 'user1', 'user1', '1000 hours... haha', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
+(4, 11, 14, 'user1', 'user1', '<script>alert("hello");</script>', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
+(5, 11, 15, 'user1', 'user1', 'Programming', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
+(6, 11, 16, 'user1', 'user1', 'Hello world', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
+(7, 11, 17, 'user1', 'user1', 'I don''t know', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
+(8, 11, 18, 'user1', 'user1', 'No plan at all', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
+(9, 11, 19, 'user1', 'user1', 'I want to have a holiday', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
+(10, 11, 20, 'user1', 'user1', 'No management', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
+(11, 11, 26, 'user1', 'user2', '0', '2019-12-16 01:09:21', '2019-12-16 02:08:59'),
+(12, 11, 27, 'user1', 'user2', '0', '2019-12-16 01:09:21', '2019-12-16 02:08:59'),
+(13, 11, 28, 'user1', 'user2', '0', '2019-12-16 01:09:21', '2019-12-16 02:08:59'),
+(14, 11, 29, 'user1', 'user2', '0', '2019-12-16 01:09:21', '2019-12-16 02:08:59'),
+(15, 11, 31, 'user1', 'user2', '0', '2019-12-16 01:09:21', '2019-12-16 02:08:59'),
+(16, 11, 30, 'user1', 'user2', '0', '2019-12-16 01:16:40', '2019-12-16 02:08:59'),
+(21, 11, 32, 'user1', 'user2', '0', '2019-12-16 01:29:16', '2019-12-16 02:08:59'),
+(22, 11, 33, 'user1', 'user2', '0', '2019-12-16 01:29:27', '2019-12-16 02:08:59'),
+(23, 11, 35, 'user1', 'user2', '0', '2019-12-16 01:38:34', '2019-12-16 02:08:59'),
+(24, 11, 34, 'user1', 'user2', '0', '2019-12-16 01:38:45', '2019-12-16 02:08:59'),
+(25, 11, 26, 'user1', 'user3', '3', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
+(26, 11, 27, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
+(27, 11, 28, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
+(28, 11, 29, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
+(29, 11, 30, 'user1', 'user3', '1', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
+(30, 11, 31, 'user1', 'user3', '2', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
+(31, 11, 32, 'user1', 'user3', '3', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
+(32, 11, 33, 'user1', 'user3', '3', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
+(33, 11, 34, 'user1', 'user3', '0', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
+(34, 11, 35, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
+(35, 11, 36, 'user1', 'user2', 'Free Rider, i don''t give him a mark.', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
+(36, 11, 36, 'user1', 'user3', 'Nice teammate', '2019-12-16 02:08:54', '2019-12-16 02:08:59');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `assignment_mark_criteria`
 --
 
@@ -163,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `assignment_question` (
   `question_section` enum('SELF','PEER','GROUP') NOT NULL DEFAULT 'SELF',
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
 
 --
 -- Dumping data for table `assignment_question`
@@ -199,7 +265,8 @@ INSERT INTO `assignment_question` (`id`, `asg_id`, `question_order`, `question`,
 (32, 11, 7, 'Positive working attitude', 'SCALE', 'PEER', '2019-12-13 16:27:52', '2019-12-13 16:37:40'),
 (33, 11, 8, 'Organised', 'SCALE', 'PEER', '2019-12-13 16:27:52', '2019-12-13 16:37:50'),
 (34, 11, 9, 'Prepared and helped make decisions', 'SCALE', 'PEER', '2019-12-13 16:27:52', '2019-12-13 16:38:01'),
-(35, 11, 10, 'Submitting  individual contributions of sufficient quality to be used by the team', 'SCALE', 'PEER', '2019-12-13 16:27:52', '2019-12-13 16:38:12');
+(35, 11, 10, 'Submitting  individual contributions of sufficient quality to be used by the team', 'SCALE', 'PEER', '2019-12-13 16:27:52', '2019-12-13 16:38:12'),
+(36, 11, 11, 'Justification', 'TEXT', 'PEER', '2019-12-14 01:09:15', '2019-12-14 01:09:15');
 
 -- --------------------------------------------------------
 
@@ -681,7 +748,7 @@ CREATE TABLE IF NOT EXISTS `assignment_topic_allocation` (
   `topic_id` int(11) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=265 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=267 ;
 
 --
 -- Dumping data for table `assignment_topic_allocation`
@@ -947,7 +1014,9 @@ INSERT INTO `assignment_topic_allocation` (`id`, `asg_id`, `user_id`, `topic_id`
 (257, 12, 'user600', 436, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
 (258, 12, 'user601', 264, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
 (262, 1, 'user1', 5, '2019-12-12 18:01:58', '2019-12-12 18:01:58'),
-(264, 11, 'user1', 73, '2019-12-13 17:50:43', '2019-12-13 17:50:43');
+(264, 11, 'user1', 73, '2019-12-13 17:50:43', '2019-12-13 17:50:43'),
+(265, 11, 'user2', 73, '2019-12-14 00:20:21', '2019-12-14 00:20:21'),
+(266, 11, 'user3', 73, '2019-12-14 00:20:33', '2019-12-14 00:20:33');
 
 -- --------------------------------------------------------
 
@@ -2029,12 +2098,12 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `id`, `email`, `permission_level`, `locked`, `create_time`, `login_fail_cnt`, `last_login_time`, `reset_token`, `reset_time`, `last_upd_time`) VALUES
-('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2019-12-13 16:33:03', NULL, NULL, '2019-12-01 00:17:48'),
+('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2019-12-14 01:08:19', NULL, NULL, '2019-12-01 00:17:48'),
 ('staff1', '$1$346d40d8$806o0kWTuSUlndg8x0jZ81', '$1$346d40d85be1653b1b20eee806c93967', 'Account 1', 'Staff', '03007563', 'kaichiu.wong@utas.edu.au', 30, 0, '2019-11-15 22:34:45', 0, '2019-11-26 23:10:21', NULL, NULL, '2019-11-18 01:20:02'),
 ('staff2', '$1$9a121110$nYumg2W2TIJBS4FyX.I111', '$1$9a121110f95b57330d829119e6b09fef', 'Account 2', 'Staff', '000000', 'teacher@aaa.com', 30, 1, '2019-11-19 00:41:38', 0, '2019-11-20 02:58:19', NULL, NULL, '2019-11-19 00:41:38'),
 ('staff3', '$1$f14a37c0$xSu42pAzI3/.rsvzJL05L0', '$1$f14a37c00eae2ddf8f1303f98008e11f', 'Account 3', 'Staff', '32434', 'sdffe@srewrwe.com', 30, 1, '2019-12-02 02:11:50', 0, NULL, NULL, NULL, NULL),
 ('staff4', '$1$2bb3309b$uhfCK4zeU7Wm.5kZrcijT/', '$1$2bb3309b3a3f88a9b0bd5b219401a379', 'Account 4', 'Staff', '1432542', 'sdsfejoi@sdofreoi.com', 30, 1, '2019-12-02 02:13:52', 0, NULL, NULL, NULL, NULL),
-('user1', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'Account 1', 'Student', '492085', 'kcwong3@utas.edu.au', 10, 0, '2019-11-15 22:34:45', 0, '2019-12-13 16:11:25', NULL, NULL, '2019-11-18 01:22:08'),
+('user1', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'Account 1', 'Student', '492085', 'kcwong3@utas.edu.au', 10, 0, '2019-11-15 22:34:45', 0, '2019-12-16 00:52:30', NULL, NULL, '2019-11-18 01:22:08'),
 ('user10', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 10', 'Student', '169146', 'user10@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user100', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 100', 'Student', '899188', 'user100@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user101', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 101', 'Student', '810995', 'user101@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
@@ -2736,6 +2805,12 @@ ALTER TABLE `assignment_deadline`
  ADD PRIMARY KEY (`id`), ADD KEY `asg_id` (`asg_id`);
 
 --
+-- Indexes for table `assignment_feedback`
+--
+ALTER TABLE `assignment_feedback`
+ ADD PRIMARY KEY (`id`), ADD KEY `asg_id` (`asg_id`), ADD KEY `question_id` (`question_id`), ADD KEY `reviewer` (`reviewer`), ADD KEY `reviewee` (`reviewee`);
+
+--
 -- Indexes for table `assignment_mark_criteria`
 --
 ALTER TABLE `assignment_mark_criteria`
@@ -2810,6 +2885,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 ALTER TABLE `assignment_deadline`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `assignment_feedback`
+--
+ALTER TABLE `assignment_feedback`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
+--
 -- AUTO_INCREMENT for table `assignment_mark_criteria`
 --
 ALTER TABLE `assignment_mark_criteria`
@@ -2818,7 +2898,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 -- AUTO_INCREMENT for table `assignment_question`
 --
 ALTER TABLE `assignment_question`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `assignment_topic`
 --
@@ -2828,7 +2908,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=664;
 -- AUTO_INCREMENT for table `assignment_topic_allocation`
 --
 ALTER TABLE `assignment_topic_allocation`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=265;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=267;
 --
 -- AUTO_INCREMENT for table `submission`
 --
@@ -2858,6 +2938,15 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 ALTER TABLE `assignment_deadline`
 ADD CONSTRAINT `asg_id` FOREIGN KEY (`asg_id`) REFERENCES `assignment` (`id`);
+
+--
+-- Constraints for table `assignment_feedback`
+--
+ALTER TABLE `assignment_feedback`
+ADD CONSTRAINT `feedback_asg_id_fk` FOREIGN KEY (`asg_id`) REFERENCES `assignment` (`id`),
+ADD CONSTRAINT `feedback_question_id_fk` FOREIGN KEY (`question_id`) REFERENCES `assignment_question` (`id`),
+ADD CONSTRAINT `feedback_reviewee_fk` FOREIGN KEY (`reviewee`) REFERENCES `user` (`username`),
+ADD CONSTRAINT `feedback_reviewer_fk` FOREIGN KEY (`reviewer`) REFERENCES `user` (`username`);
 
 --
 -- Constraints for table `assignment_mark_criteria`

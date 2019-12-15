@@ -120,11 +120,44 @@ class Assignment extends MY_PasController {
     function self_feedback_form($asg_id, $topic_id) {
         if ($this->check_permission(10) ) {
             if ($this->is_allow_view_asg($asg_id)) {
+                $this->load->model('assignment_feedback_model');
+                if (isset($_POST['asg_id']) && isset($_POST['topic_id'])) 
+                {
+                    $post_asg_id = $this->input->post('asg_id');
+                    $post_topic_id = $this->input->post('topic_id');
+                    $post_reviewer = $this->input->post('reviewer');
+                    $post_reviewee = $this->input->post('reviewee');
+                    $post_qid_array = $this->input->post('question_id');
+                    foreach ($post_qid_array as $qid) {
+                        if (isset($_POST['self_feedback_'. $qid])) {
+
+                            $feedback = trim($this->input->post('self_feedback_'. $qid));
+                            $feedback_id = $this->input->post('self_feedback_id_'. $qid);
+                            if ($feedback == "" && $feedback_id == "") {
+                            }
+                            else{
+                                $params = array(
+                                    "asg_id" => $post_asg_id,
+                                    "question_id" => $qid,
+                                    "reviewer" => $post_reviewer,
+                                    "reviewee" => $post_reviewee,
+                                    "feedback" => $feedback
+                                );
+                                if (!empty($feedback_id)) {
+                                    $this->assignment_feedback_model->update_assignment_feedback($feedback_id, $params);
+                                }
+                                else {
+                                    $this->assignment_feedback_model->add_assignment_feedback($params);
+                                }
+                            }
+                        }
+                    }
+                }
                 $data['asg_id'] = $asg_id;
                 $data['topic_id'] = $topic_id;
                 $data['username'] = $this->get_login_user();
-                $this->load->model('assignment_question_model');
-                $data['assignment_questions_self'] = $this->assignment_question_model->get_assignment_question_by_asgid_section($asg_id,'SELF');
+                $this->load->model('assignment_question_model');                
+                $data['assignment_questions_self'] = $this->assignment_feedback_model->get_question_with_feedback($asg_id,$this->get_login_user(),$this->get_login_user(),'SELF');
                 $this->load->view('pages/assignment/self_feedback_form',$data);
             }
         }
@@ -133,13 +166,49 @@ class Assignment extends MY_PasController {
     function peer_feedback_form($asg_id, $topic_id) {
         if ($this->check_permission(10) ) {
             if ($this->is_allow_view_asg($asg_id)) {
+                $this->load->model('assignment_feedback_model');
+                if (isset($_POST['asg_id']) && isset($_POST['topic_id'])) 
+                {
+                    $post_asg_id = $this->input->post('asg_id');
+                    $post_topic_id = $this->input->post('topic_id');
+                    $post_reviewer = $this->input->post('reviewer');
+                    $post_reviewee_array = $this->input->post('reviewee');
+                    $post_qid_array = $this->input->post('question_id');
+                    foreach ($post_qid_array as $qid) {
+                        foreach ($post_reviewee_array as $reviewee) {
+                            if (isset($_POST['feedback_'.$reviewee.'_'.$qid])) {
+                                $feedback = trim($this->input->post('feedback_'.$reviewee.'_'.$qid));
+                                $feedback_id = $this->input->post('feedback_id_'.$reviewee.'_'.$qid);
+                                if ($feedback == "" && $feedback_id == "") {
+                                }
+                                else{
+                                    $params = array(
+                                        "asg_id" => $post_asg_id,
+                                        "question_id" => $qid,
+                                        "reviewer" => $post_reviewer,
+                                        "reviewee" => $reviewee,
+                                        "feedback" => $feedback
+                                    );
+                                    if (!empty($feedback_id)) {
+                                        $this->assignment_feedback_model->update_assignment_feedback($feedback_id, $params);
+                                    }
+                                    else {
+                                        $this->assignment_feedback_model->add_assignment_feedback($params);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 $data['asg_id'] = $asg_id;
                 $data['topic_id'] = $topic_id;
                 $data['username'] = $this->get_login_user();
                 $this->load->model('assignment_question_model');
                 $this->load->model('Assignment_topic_model');
-                $data['assignment_questions_peer'] = $this->assignment_question_model->get_assignment_question_by_asgid_section($asg_id,'PEER');
                 $data['assignment_topics_member'] = $this->Assignment_topic_model->get_assignment_member($topic_id);
+                foreach($data['assignment_topics_member'] as $member) {
+                    $data['assignment_questions_peer'][$member['user_id']] = $this->assignment_feedback_model->get_question_with_feedback($asg_id,$this->get_login_user(),$member['user_id'],'PEER');
+                }
                 $this->load->view('pages/assignment/peer_feedback_form',$data);
             }
         }
