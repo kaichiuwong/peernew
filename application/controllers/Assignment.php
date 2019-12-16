@@ -117,6 +117,59 @@ class Assignment extends MY_PasController {
         }
     }
 
+    function asg_upload_form($asg_id, $topic_id) {
+        if ($this->check_permission(10) ) {
+            if ($this->is_allow_view_asg($asg_id)) {
+                $data['asg_id'] = $asg_id;
+                $data['assignment'] = $this->Assignment_model->get_assignment($asg_id);
+
+                if(isset($data['assignment']['id']))
+                {
+                    if (isset($_POST['asg_id'])) 
+                    {
+                        $config['upload_path'] = './uploads/'.md5($this->input->post('asg_id')).'/'.md5($this->input->post('grp_id')).'/';
+                        $config['allowed_types'] = 'txt|rtf|pdf|docx|doc|ppt|pptx|xls|xlsx';
+                        $config['file_ext_tolower'] = true;
+                        $config['encrypt_name'] = true;
+
+                        $this->load->library('upload', $config);
+                        if (!is_dir($config['upload_path']))
+                        {
+                            mkdir($config['upload_path'], 0777, true);
+                        }
+                        $upload_result = $this->upload->do_upload('assignment_file');
+                        if ($upload_result) {
+                            $upload_data = $this->upload->data();
+                            $this->load->model('Submission_model');
+                            $this->Submission_model->delete_submission_by_group($this->input->post('asg_id'), $this->input->post('grp_id'));
+                            $this->Submission_model->submit_assignment($this->input->post('asg_id'),
+                                                                       $this->input->post('grp_id'),
+                                                                       $this->input->post('username'),
+                                                                       $config['upload_path'].$upload_data['file_name']);
+                        }
+                        else {
+                            echo $this->upload->display_errors();
+                        }
+                    }
+                    $data['username'] = $this->get_login_user();
+                    
+                    $this->load->model('Unit_model');
+                    $data['all_units'] = $this->Unit_model->get_all_units();
+                    
+                    $this->load->model('Assignment_topic_model');
+                    $data['assignment_topic'] = $this->Assignment_topic_model->get_assignment_topic_by_student($asg_id, $this->get_login_user() );
+                    $data['allow_submit'] = false;
+                    if(isset($data['assignment_topic']['topic_id'])) {
+                        $data['allow_submit'] = true; 
+                        $this->load->model('Submission_model');
+                        $data['submission_hist'] = $this->Submission_model->get_submission_history_by_group($asg_id, $data['assignment_topic']['topic_id']);
+                    }
+                    $this->load->view('pages/assignment/asg_submission_form',$data);
+                }
+            }
+        }
+    }
+
     function self_feedback_form($asg_id, $topic_id) {
         if ($this->check_permission(10) ) {
             if ($this->is_allow_view_asg($asg_id)) {
@@ -222,56 +275,21 @@ class Assignment extends MY_PasController {
                 
                 if(isset($data['assignment']['id']))
                 {
-                    if (isset($_POST['asg_id'])) 
-                    {
-                        $config['upload_path'] = './uploads/'.md5($this->input->post('asg_id')).'/'.md5($this->input->post('grp_id')).'/';
-                        $config['allowed_types'] = 'txt|rtf|pdf|docx|doc|ppt|pptx|xls|xlsx';
-                        $config['file_ext_tolower'] = true;
-                        $config['encrypt_name'] = true;
-
-                        $this->load->library('upload', $config);
-                        if (!is_dir($config['upload_path']))
-                        {
-                            mkdir($config['upload_path'], 0777, true);
-                        }
-                        $upload_result = $this->upload->do_upload('assignment_file');
-                        if ($upload_result) {
-                            $upload_data = $this->upload->data();
-                            $this->load->model('Submission_model');
-                            $this->Submission_model->delete_submission_by_group($this->input->post('asg_id'), $this->input->post('grp_id'));
-                            $this->Submission_model->submit_assignment($this->input->post('asg_id'),
-                                                                       $this->input->post('grp_id'),
-                                                                       $this->input->post('username'),
-                                                                       $config['upload_path'].$upload_data['file_name']);
-                            redirect('Assignment/submit/'.$asg_id);
-                        }
-                        else {
-                            echo $this->upload->display_errors();
-                        }
+                    $data['username'] = $this->get_login_user();
+                    $this->load->model('Assignment_topic_model');
+                    $data['assignment_topic'] = $this->Assignment_topic_model->get_assignment_topic_by_student($asg_id, $this->get_login_user() );
+                    $data['allow_submit'] = false;
+                    if(isset($data['assignment_topic']['topic_id'])) {
+                        $data['allow_submit'] = true; 
                     }
-                    else {
-                        $data['username'] = $this->get_login_user();
-                        
-                        $this->load->model('Unit_model');
-                        $data['all_units'] = $this->Unit_model->get_all_units();
-                        
-                        $this->load->model('Assignment_topic_model');
-                        $data['assignment_topic'] = $this->Assignment_topic_model->get_assignment_topic_by_student($asg_id, $this->get_login_user() );
-                        $data['allow_submit'] = false;
-                        if(isset($data['assignment_topic']['topic_id'])) {
-                            $data['allow_submit'] = true; 
-                            $this->load->model('Submission_model');
-                            $data['submission_hist'] = $this->Submission_model->get_submission_history_by_group($asg_id, $data['assignment_topic']['topic_id']);
-                        }
-                        
-                        $new_session_data = array('asg_id' => $asg_id, 'asg_header' => $data['assignment']['unit_code'] . ' - ' . $data['assignment']['title']);
-                        $this->session->set_userdata($new_session_data);
-                        
-                        $data['_view'] = 'pages/assignment/submission';
-                        $this->load_header($data);
-                        $this->load->view('templates/main',$data);
-                        $this->load_footer($data);
-                    }
+                    
+                    $new_session_data = array('asg_id' => $asg_id, 'asg_header' => $data['assignment']['unit_code'] . ' - ' . $data['assignment']['title']);
+                    $this->session->set_userdata($new_session_data);
+                    
+                    $data['_view'] = 'pages/assignment/submission';
+                    $this->load_header($data);
+                    $this->load->view('templates/main',$data);
+                    $this->load_footer($data);
                 }
                 else {
                     redirect('Assignment');

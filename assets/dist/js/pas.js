@@ -46,6 +46,31 @@ $(document).on('change', '.score', function (event) {
     calc_feedback_sum(peername);
 });
 
+
+$(document).on('submit','#asg_submit_form',function(event){
+    event.preventDefault();
+    $('#loading-submission-overlay').removeClass('d-none');
+    $('#loading-submission-overlay').addClass('overlay dark');
+    var form = $('#asg_submit_form')[0];
+    var data = new FormData(form);
+    var url = $('#asg_submit_form').attr('action');
+
+    $.ajax({
+           type: "POST",
+           enctype: 'multipart/form-data',
+           url: url,
+           data: data,
+           processData: false,
+           contentType: false,
+           cache: false,
+           success: function(data)
+           {
+                load_asg_submission_form();
+           }
+         });
+    return false;
+ });
+
 $(document).on('submit','#peer_feedback_form',function(event){
     event.preventDefault();
     $('#loading-peer-feedback-overlay').removeClass('d-none');
@@ -82,6 +107,25 @@ $(document).on('submit','#peer_feedback_form',function(event){
            }
          });
     return false;
+ });
+
+ $(document).on('click','#btn_submission_submit',function(){
+
+    if($('#assignment_file').val() != '') {            
+        $.each($('#assignment_file').prop("files"), function(k,v){
+            var filename = v['name'];    
+            var ext = filename.split('.').pop().toLowerCase();
+            if($.inArray(ext, ['txt','rtf','pdf','docx','doc','ppt','pptx','xls','xlsx']) == -1) {
+                alert("Please upload only 'pdf','docx','doc','ppt','pptx','xls','xlsx' format files.");
+            }
+            else {
+                $('#asg_submit_button').trigger('click');
+            }
+        });        
+    }
+    else {
+        alert("Please select a file to upload.");
+    }
  });
 
 $(document).on('click','#btn_self_submit',function(){
@@ -126,6 +170,7 @@ $(document).ready(function () {
         $(this).closest("tr").remove();
     });
 
+    load_asg_submission_form();
     load_self_review_form();
     load_peer_review_form();
 });
@@ -157,6 +202,16 @@ function load_peer_review_form() {
         $('#peer_feedback_card').load(dataURL,function(){
             $('#loading-peer-feedback-overlay').removeClass('overlay dark');
             $('#loading-peer-feedback-overlay').addClass('d-none');
+        });
+    }
+}
+
+function load_asg_submission_form() {
+    if($('#submission_card').length){
+        var dataURL = $('#submission_card').attr('data-href');
+        $('#submission_card').load(dataURL,function(){
+            $('#loading-submission-overlay').removeClass('overlay dark');
+            $('#loading-submission-overlay').addClass('d-none');
         });
     }
 }
