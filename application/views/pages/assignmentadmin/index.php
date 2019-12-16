@@ -26,6 +26,7 @@
                     <th>Title</th>
                     <th>Group Count</th>
                     <th>Enrolled Students</th>
+                    <th>Student Visibility</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -37,7 +38,13 @@
                     <td><?php echo $a['title']; ?></td>
                     <td><?php echo $a['topic_count']; ?></td>
                     <td><?php echo $a['student_count']; ?></td>
+                    <td><?php echo $a['public']?'<i class="fas fa-users"></i> Public':'<i class="fas fa-lock"></i> Private'; ?></td>
                     <td>
+                        <?php if ($a['public']): ?>
+                        <a href="<?php echo site_url('Assignmentadmin/public_switch/'.$a['id']); ?>" class="btn btn-dark btn-sm">Make Private</a> 
+                        <?php else: ?>
+                        <a href="<?php echo site_url('Assignmentadmin/public_switch/'.$a['id']); ?>" class="btn btn-success btn-sm">Make Public</a> 
+                        <?php endif; ?>
                         <a href="<?php echo site_url('Assignmentadmin/edit/'.$a['id']); ?>" class="btn btn-info btn-sm">Edit</a> 
                         <a href="<?php echo site_url('Assignmentadmin/remove/'.$a['id']); ?>" class="btn btn-danger btn-sm">Delete</a>
                     </td>

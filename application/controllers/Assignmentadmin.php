@@ -14,15 +14,7 @@ class Assignmentadmin extends MY_PasController {
     function index()
     {
         if ($this->check_permission(20)) {
-            $params['limit'] = RECORDS_PER_PAGE; 
-            $params['offset'] = ($this->input->get('per_page')) ? $this->input->get('per_page') : 0;
-            
-            $config = $this->config->item('pagination');
-            $config['base_url'] = site_url('assignmentadmin/index');
-            $config['total_rows'] = $this->Assignment_model->get_all_assignments_count();
-            $this->pagination->initialize($config);
-
-            $data['assignments'] = $this->Assignment_model->get_all_assignments($params);
+            $data['assignments'] = $this->Assignment_model->get_all_assignments();
             $data['_view'] = 'pages/assignmentadmin/index';
             $this->load_header($data);
             $this->load->view('templates/main',$data);
@@ -149,5 +141,13 @@ class Assignmentadmin extends MY_PasController {
         }
     }
 
-    
+    function public_switch($asg_id)
+    {
+        if ($this->check_permission(20)) {
+            if (!empty($asg_id)) {
+                $this->Assignment_model->public_switch($asg_id);
+            }
+        }
+        redirect('Assignmentadmin');
+    }
 }

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2019 at 01:02 PM
+-- Generation Time: Dec 16, 2019 at 02:21 PM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -13,6 +13,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `pas`
 --
+DROP DATABASE `pas`;
 CREATE DATABASE IF NOT EXISTS `pas` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `pas`;
 
@@ -60,10 +61,7 @@ BEGIN
 END$$
 
 DROP FUNCTION IF EXISTS `fn_is_allow_view_assignment`$$
-CREATE DEFINER=`root`@`localhost` FUNCTION `fn_is_allow_view_assignment`(
-    username VARCHAR(10),
-    asg_id   INT
-) RETURNS int(11)
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_is_allow_view_assignment`(`username` VARCHAR(10), `asg_id` INT) RETURNS int(11)
     DETERMINISTIC
 BEGIN
  DECLARE rtn_result INT DEFAULT 0;
@@ -73,7 +71,8 @@ BEGIN
   FROM   assignment a, unit_enrol ue
   WHERE  a.unit_id = ue.unit_id
   AND    ue.user_id = username
-  AND    a.id = asg_id  ;
+  AND    a.id = asg_id  
+  AND    a.public = 1 ;
   
   RETURN rtn_result ;
 END$$
@@ -94,6 +93,7 @@ CREATE TABLE IF NOT EXISTS `assignment` (
   `outcome` mediumtext,
   `scenario` mediumtext,
   `unit_id` int(11) NOT NULL,
+  `public` int(11) NOT NULL DEFAULT '0' COMMENT '0 - private, 1 - open to public',
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
@@ -102,24 +102,25 @@ CREATE TABLE IF NOT EXISTS `assignment` (
 -- Dumping data for table `assignment`
 --
 
-INSERT INTO `assignment` (`id`, `title`, `type`, `outcome`, `scenario`, `unit_id`, `create_time`, `last_upd_time`) VALUES
-(1, 'Assignment 1', 1, '<p>Write an essay</p><p>''"''"'''''''''';'';'';'';''''&nbsp;</p>', 'An essay about security', 1, '2019-11-17 22:44:34', '2019-12-10 23:47:08'),
-(11, 'Group Assignment', 1, '<p>You <strike>should </strike>be <sup>careful </sup>for <span style="font-size: 24px;"><b>the </b></span><a href="http://www.google.com" target="_blank"><b>following </b></a><sub>matrix</sub></p><table class="table table-bordered"><tbody><tr><td>11</td><td>12</td><td>13</td></tr><tr><td>21</td><td>22</td><td>23</td></tr><tr><td>31</td><td>32</td><td>33</td></tr><tr><td>41</td><td>42</td><td>43</td></tr></tbody></table><p><br></p>', '<h3><b><u><span style="font-family: " times="" new="" roman";"="">Nothing happens <span style="font-size: 36px;">here</span></span></u></b></h3>', 7, '2019-12-07 21:30:49', '2019-12-10 23:11:18'),
-(12, 'Design Requirement', 1, '<p><span style="background-color: rgb(255, 255, 0);">This </span>is a <b>test</b></p><p><b><br></b></p><p><b>''";!!''"''''''</b></p>', '<h6><u>This </u>is <b>another </b>test</h6>', 9, '2019-12-08 00:18:03', '2019-12-10 23:46:24'),
-(13, 'Design Documentation', 1, '<p>You should be careful for the <a href="http://www.google.com" target="_blank"><b>following </b></a>matrix</p><table class="table table-bordered"><tbody><tr><td>11</td><td>12</td><td>13</td></tr><tr><td>21</td><td>22</td><td>23</td></tr><tr><td>31</td><td>32</td><td>33</td></tr><tr><td>41</td><td>42</td><td>43</td></tr></tbody></table><p><br></p>', '<h3><b><u><span style="font-family: &quot;Times New Roman&quot;;">Nothing happens here</span></u></b></h3>', 9, '2019-12-08 21:36:48', '2019-12-10 22:48:25');
+INSERT INTO `assignment` (`id`, `title`, `type`, `outcome`, `scenario`, `unit_id`, `public`, `create_time`, `last_upd_time`) VALUES
+(1, 'Assignment 1', 1, '<p>Write an essay</p><p>''"''"'''''''''';'';'';'';''''&nbsp;</p>', 'An essay about security', 1, 0, '2019-11-17 22:44:34', '2019-12-10 23:47:08'),
+(11, 'Group Assignment', 1, '<p>You <strike>should </strike>be <sup>careful </sup>for <span style="font-size: 24px;"><b>the </b></span><a href="http://www.google.com" target="_blank"><b>following </b></a><sub>matrix</sub></p><table class="table table-bordered"><tbody><tr><td>11</td><td>12</td><td>13</td></tr><tr><td>21</td><td>22</td><td>23</td></tr><tr><td>31</td><td>32</td><td>33</td></tr><tr><td>41</td><td>42</td><td>43</td></tr></tbody></table><p><br></p>', '<h3><b><u><span style="font-family: " times="" new="" roman";"="">Nothing happens <span style="font-size: 36px;">here</span></span></u></b></h3>', 7, 1, '2019-12-07 21:30:49', '2019-12-10 23:11:18'),
+(12, 'Design Requirement', 1, '<p><span style="background-color: rgb(255, 255, 0);">This </span>is a <b>test</b></p><p><b><br></b></p><p><b>''";!!''"''''''</b></p>', '<h6><u>This </u>is <b>another </b>test</h6>', 9, 0, '2019-12-08 00:18:03', '2019-12-10 23:46:24'),
+(13, 'Design Documentation', 1, '<p>You should be careful for the <a href="http://www.google.com" target="_blank"><b>following </b></a>matrix</p><table class="table table-bordered"><tbody><tr><td>11</td><td>12</td><td>13</td></tr><tr><td>21</td><td>22</td><td>23</td></tr><tr><td>31</td><td>32</td><td>33</td></tr><tr><td>41</td><td>42</td><td>43</td></tr></tbody></table><p><br></p>', '<h3><b><u><span style="font-family: &quot;Times New Roman&quot;;">Nothing happens here</span></u></b></h3>', 9, 0, '2019-12-08 21:36:48', '2019-12-10 22:48:25');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `assignment_deadline`
+-- Table structure for table `assignment_date`
 --
 
-DROP TABLE IF EXISTS `assignment_deadline`;
-CREATE TABLE IF NOT EXISTS `assignment_deadline` (
+DROP TABLE IF EXISTS `assignment_date`;
+CREATE TABLE IF NOT EXISTS `assignment_date` (
 `id` int(11) NOT NULL,
   `asg_id` int(11) NOT NULL,
-  `deadline_desc` varchar(500) DEFAULT NULL,
-  `deadline_time` datetime NOT NULL,
+  `key` varchar(200) NOT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `date_value` datetime DEFAULT NULL,
   `last_upd_by` varchar(50) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
@@ -136,9 +137,9 @@ CREATE TABLE IF NOT EXISTS `assignment_feedback` (
 `id` int(11) NOT NULL,
   `asg_id` int(11) NOT NULL,
   `question_id` int(11) NOT NULL,
-  `reviewer` varchar(20) CHARACTER SET utf8 NOT NULL,
-  `reviewee` varchar(20) CHARACTER SET utf8 NOT NULL,
-  `feedback` text CHARACTER SET utf8,
+  `reviewer` varchar(20) NOT NULL,
+  `reviewee` varchar(20) NOT NULL,
+  `feedback` text,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=99 ;
@@ -1194,6 +1195,7 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_staff` (
 `id` int(11)
 ,`title` varchar(500)
 ,`type` int(11)
+,`public` int(11)
 ,`topic_count` bigint(21)
 ,`student_count` bigint(21)
 ,`outcome` mediumtext
@@ -2165,12 +2167,12 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `id`, `email`, `permission_level`, `locked`, `create_time`, `login_fail_cnt`, `last_login_time`, `reset_token`, `reset_time`, `last_upd_time`) VALUES
-('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2019-12-16 22:24:49', NULL, NULL, '2019-12-01 00:17:48'),
+('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2019-12-17 00:19:07', NULL, NULL, '2019-12-01 00:17:48'),
 ('staff1', '$1$346d40d8$806o0kWTuSUlndg8x0jZ81', '$1$346d40d85be1653b1b20eee806c93967', 'Account 1', 'Staff', '03007563', 'kaichiu.wong@utas.edu.au', 30, 0, '2019-11-15 22:34:45', 0, '2019-11-26 23:10:21', NULL, NULL, '2019-11-18 01:20:02'),
 ('staff2', '$1$9a121110$nYumg2W2TIJBS4FyX.I111', '$1$9a121110f95b57330d829119e6b09fef', 'Account 2', 'Staff', '000000', 'teacher@aaa.com', 30, 1, '2019-11-19 00:41:38', 0, '2019-11-20 02:58:19', NULL, NULL, '2019-11-19 00:41:38'),
 ('staff3', '$1$f14a37c0$xSu42pAzI3/.rsvzJL05L0', '$1$f14a37c00eae2ddf8f1303f98008e11f', 'Account 3', 'Staff', '32434', 'sdffe@srewrwe.com', 30, 1, '2019-12-02 02:11:50', 0, NULL, NULL, NULL, NULL),
 ('staff4', '$1$2bb3309b$uhfCK4zeU7Wm.5kZrcijT/', '$1$2bb3309b3a3f88a9b0bd5b219401a379', 'Account 4', 'Staff', '1432542', 'sdsfejoi@sdofreoi.com', 30, 1, '2019-12-02 02:13:52', 0, NULL, NULL, NULL, NULL),
-('user1', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'Account 1', 'Student', '492085', 'kcwong3@utas.edu.au', 10, 0, '2019-11-15 22:34:45', 0, '2019-12-16 20:58:57', NULL, NULL, '2019-11-18 01:22:08'),
+('user1', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'Account 1', 'Student', '492085', 'kcwong3@utas.edu.au', 10, 0, '2019-11-15 22:34:45', 0, '2019-12-17 00:11:23', NULL, NULL, '2019-11-18 01:22:08'),
 ('user10', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 10', 'Student', '169146', 'user10@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user100', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 100', 'Student', '899188', 'user100@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user101', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 101', 'Student', '810995', 'user101@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
@@ -2781,7 +2783,7 @@ INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `
 --
 DROP TABLE IF EXISTS `sv_assignemnt_student`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignemnt_student` AS select distinct `ue`.`id` AS `id`,`a`.`id` AS `asg_id`,`a`.`title` AS `asg_title`,`un`.`id` AS `unit_id`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`u`.`username` AS `username`,`u`.`email` AS `email`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid` from (((`assignment` `a` join `unit_enrol` `ue`) join `unit` `un`) join `user` `u`) where ((`a`.`unit_id` = `un`.`id`) and (`un`.`id` = `ue`.`unit_id`) and (`ue`.`user_id` = `u`.`username`));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignemnt_student` AS select distinct `ue`.`id` AS `id`,`a`.`id` AS `asg_id`,`a`.`title` AS `asg_title`,`un`.`id` AS `unit_id`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`u`.`username` AS `username`,`u`.`email` AS `email`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid` from (((`assignment` `a` join `unit_enrol` `ue`) join `unit` `un`) join `user` `u`) where ((`a`.`unit_id` = `un`.`id`) and (`un`.`id` = `ue`.`unit_id`) and (`ue`.`user_id` = `u`.`username`) and (`a`.`public` = 1));
 
 -- --------------------------------------------------------
 
@@ -2790,7 +2792,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sv_assignment_staff`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_staff` AS select `a`.`id` AS `id`,`a`.`title` AS `title`,`a`.`type` AS `type`,`st`.`topic_count` AS `topic_count`,`au`.`student_count` AS `student_count`,`a`.`outcome` AS `outcome`,`a`.`scenario` AS `scenario`,`a`.`unit_id` AS `unit_id`,`a`.`create_time` AS `create_time`,`a`.`last_upd_time` AS `last_upd_time`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`u`.`username` AS `username`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid`,`u`.`email` AS `email`,`u`.`permission_level` AS `permission_level` from (((((`assignment` `a` left join `unit_staff` `us` on((`a`.`unit_id` = `us`.`unit_id`))) left join `unit` `un` on((`a`.`unit_id` = `un`.`id`))) left join `user` `u` on((`us`.`username` = `u`.`username`))) left join `sv_assignment_topic_count` `st` on((`a`.`id` = `st`.`id`))) left join `sv_assignment_student_count` `au` on((`a`.`id` = `au`.`id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_staff` AS select `a`.`id` AS `id`,`a`.`title` AS `title`,`a`.`type` AS `type`,`a`.`public` AS `public`,`st`.`topic_count` AS `topic_count`,`au`.`student_count` AS `student_count`,`a`.`outcome` AS `outcome`,`a`.`scenario` AS `scenario`,`a`.`unit_id` AS `unit_id`,`a`.`create_time` AS `create_time`,`a`.`last_upd_time` AS `last_upd_time`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`u`.`username` AS `username`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid`,`u`.`email` AS `email`,`u`.`permission_level` AS `permission_level` from (((((`assignment` `a` left join `unit_staff` `us` on((`a`.`unit_id` = `us`.`unit_id`))) left join `unit` `un` on((`a`.`unit_id` = `un`.`id`))) left join `user` `u` on((`us`.`username` = `u`.`username`))) left join `sv_assignment_topic_count` `st` on((`a`.`id` = `st`.`id`))) left join `sv_assignment_student_count` `au` on((`a`.`id` = `au`.`id`)));
 
 -- --------------------------------------------------------
 
@@ -2866,9 +2868,9 @@ ALTER TABLE `assignment`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `assignment_deadline`
+-- Indexes for table `assignment_date`
 --
-ALTER TABLE `assignment_deadline`
+ALTER TABLE `assignment_date`
  ADD PRIMARY KEY (`id`), ADD KEY `asg_id` (`asg_id`);
 
 --
@@ -2947,9 +2949,9 @@ ALTER TABLE `user`
 ALTER TABLE `assignment`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
--- AUTO_INCREMENT for table `assignment_deadline`
+-- AUTO_INCREMENT for table `assignment_date`
 --
-ALTER TABLE `assignment_deadline`
+ALTER TABLE `assignment_date`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `assignment_feedback`
@@ -3001,9 +3003,9 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 
 --
--- Constraints for table `assignment_deadline`
+-- Constraints for table `assignment_date`
 --
-ALTER TABLE `assignment_deadline`
+ALTER TABLE `assignment_date`
 ADD CONSTRAINT `asg_id` FOREIGN KEY (`asg_id`) REFERENCES `assignment` (`id`);
 
 --
