@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 15, 2019 at 04:09 PM
+-- Generation Time: Dec 16, 2019 at 01:02 PM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -13,8 +13,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `pas`
 --
-DROP DATABASE `pas`;
-CREATE DATABASE IF NOT EXISTS `pas` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `pas` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `pas`;
 
 DELIMITER $$
@@ -47,7 +46,7 @@ END$$
 DROP FUNCTION IF EXISTS `fn_get_unit_code`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `fn_get_unit_code`(
     unit_id INT
-) RETURNS varchar(20) CHARSET latin1
+) RETURNS varchar(20) CHARSET utf8
     DETERMINISTIC
 BEGIN
  DECLARE rtnstr VARCHAR(20);
@@ -92,12 +91,12 @@ CREATE TABLE IF NOT EXISTS `assignment` (
 `id` int(11) NOT NULL,
   `title` varchar(500) DEFAULT NULL,
   `type` int(11) NOT NULL DEFAULT '0' COMMENT '0 - Indiv, 1 - Group',
-  `outcome` text,
-  `scenario` text,
+  `outcome` mediumtext,
+  `scenario` mediumtext,
   `unit_id` int(11) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `assignment`
@@ -124,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `assignment_deadline` (
   `last_upd_by` varchar(50) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -137,50 +136,112 @@ CREATE TABLE IF NOT EXISTS `assignment_feedback` (
 `id` int(11) NOT NULL,
   `asg_id` int(11) NOT NULL,
   `question_id` int(11) NOT NULL,
-  `reviewer` varchar(20) NOT NULL,
-  `reviewee` varchar(20) NOT NULL,
-  `feedback` text,
+  `reviewer` varchar(20) CHARACTER SET utf8 NOT NULL,
+  `reviewee` varchar(20) CHARACTER SET utf8 NOT NULL,
+  `feedback` text CHARACTER SET utf8,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=99 ;
 
 --
 -- Dumping data for table `assignment_feedback`
 --
 
 INSERT INTO `assignment_feedback` (`id`, `asg_id`, `question_id`, `reviewer`, `reviewee`, `feedback`, `create_time`, `last_upd_time`) VALUES
-(1, 11, 11, 'user1', 'user1', '5', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
-(2, 11, 12, 'user1', 'user1', '9 hours maybe', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
-(3, 11, 13, 'user1', 'user1', '1000 hours... haha', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
-(4, 11, 14, 'user1', 'user1', '<script>alert("hello");</script>', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
-(5, 11, 15, 'user1', 'user1', 'Programming', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
-(6, 11, 16, 'user1', 'user1', 'Hello world', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
-(7, 11, 17, 'user1', 'user1', 'I don''t know', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
-(8, 11, 18, 'user1', 'user1', 'No plan at all', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
-(9, 11, 19, 'user1', 'user1', 'I want to have a holiday', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
-(10, 11, 20, 'user1', 'user1', 'No management', '2019-12-15 23:39:00', '2019-12-16 01:31:26'),
-(11, 11, 26, 'user1', 'user2', '0', '2019-12-16 01:09:21', '2019-12-16 02:08:59'),
-(12, 11, 27, 'user1', 'user2', '0', '2019-12-16 01:09:21', '2019-12-16 02:08:59'),
-(13, 11, 28, 'user1', 'user2', '0', '2019-12-16 01:09:21', '2019-12-16 02:08:59'),
-(14, 11, 29, 'user1', 'user2', '0', '2019-12-16 01:09:21', '2019-12-16 02:08:59'),
-(15, 11, 31, 'user1', 'user2', '0', '2019-12-16 01:09:21', '2019-12-16 02:08:59'),
-(16, 11, 30, 'user1', 'user2', '0', '2019-12-16 01:16:40', '2019-12-16 02:08:59'),
-(21, 11, 32, 'user1', 'user2', '0', '2019-12-16 01:29:16', '2019-12-16 02:08:59'),
-(22, 11, 33, 'user1', 'user2', '0', '2019-12-16 01:29:27', '2019-12-16 02:08:59'),
-(23, 11, 35, 'user1', 'user2', '0', '2019-12-16 01:38:34', '2019-12-16 02:08:59'),
-(24, 11, 34, 'user1', 'user2', '0', '2019-12-16 01:38:45', '2019-12-16 02:08:59'),
-(25, 11, 26, 'user1', 'user3', '3', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
-(26, 11, 27, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
-(27, 11, 28, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
-(28, 11, 29, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
-(29, 11, 30, 'user1', 'user3', '1', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
-(30, 11, 31, 'user1', 'user3', '2', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
-(31, 11, 32, 'user1', 'user3', '3', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
-(32, 11, 33, 'user1', 'user3', '3', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
-(33, 11, 34, 'user1', 'user3', '0', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
-(34, 11, 35, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
-(35, 11, 36, 'user1', 'user2', 'Free Rider, i don''t give him a mark.', '2019-12-16 02:08:54', '2019-12-16 02:08:59'),
-(36, 11, 36, 'user1', 'user3', 'Nice teammate', '2019-12-16 02:08:54', '2019-12-16 02:08:59');
+(1, 11, 11, 'user1', 'user1', '5', '2019-12-15 23:39:00', '2019-12-16 21:57:32'),
+(2, 11, 12, 'user1', 'user1', '9 hours maybe', '2019-12-15 23:39:00', '2019-12-16 21:57:32'),
+(3, 11, 13, 'user1', 'user1', '1000 hours... haha', '2019-12-15 23:39:00', '2019-12-16 21:57:32'),
+(4, 11, 14, 'user1', 'user1', '<script>alert("hello");</script>', '2019-12-15 23:39:00', '2019-12-16 21:57:32'),
+(5, 11, 15, 'user1', 'user1', 'Programming', '2019-12-15 23:39:00', '2019-12-16 21:57:32'),
+(6, 11, 16, 'user1', 'user1', 'Hello world', '2019-12-15 23:39:00', '2019-12-16 21:57:32'),
+(7, 11, 17, 'user1', 'user1', 'I don''t know', '2019-12-15 23:39:00', '2019-12-16 21:57:32'),
+(8, 11, 18, 'user1', 'user1', 'No plan at all', '2019-12-15 23:39:00', '2019-12-16 21:57:32'),
+(9, 11, 19, 'user1', 'user1', 'I want to have a holiday', '2019-12-15 23:39:00', '2019-12-16 21:57:32'),
+(10, 11, 20, 'user1', 'user1', 'No management', '2019-12-15 23:39:00', '2019-12-16 21:57:32'),
+(11, 11, 26, 'user1', 'user2', '0', '2019-12-16 01:09:21', '2019-12-16 21:57:37'),
+(12, 11, 27, 'user1', 'user2', '0', '2019-12-16 01:09:21', '2019-12-16 21:57:37'),
+(13, 11, 28, 'user1', 'user2', '0', '2019-12-16 01:09:21', '2019-12-16 21:57:37'),
+(14, 11, 29, 'user1', 'user2', '0', '2019-12-16 01:09:21', '2019-12-16 21:57:37'),
+(15, 11, 31, 'user1', 'user2', '0', '2019-12-16 01:09:21', '2019-12-16 21:57:37'),
+(16, 11, 30, 'user1', 'user2', '0', '2019-12-16 01:16:40', '2019-12-16 21:57:37'),
+(21, 11, 32, 'user1', 'user2', '0', '2019-12-16 01:29:16', '2019-12-16 21:57:37'),
+(22, 11, 33, 'user1', 'user2', '0', '2019-12-16 01:29:27', '2019-12-16 21:57:37'),
+(23, 11, 35, 'user1', 'user2', '0', '2019-12-16 01:38:34', '2019-12-16 21:57:37'),
+(24, 11, 34, 'user1', 'user2', '0', '2019-12-16 01:38:45', '2019-12-16 21:57:37'),
+(25, 11, 26, 'user1', 'user3', '3', '2019-12-16 02:08:54', '2019-12-16 21:57:37'),
+(26, 11, 27, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2019-12-16 21:57:37'),
+(27, 11, 28, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2019-12-16 21:57:37'),
+(28, 11, 29, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2019-12-16 21:57:37'),
+(29, 11, 30, 'user1', 'user3', '1', '2019-12-16 02:08:54', '2019-12-16 21:57:37'),
+(30, 11, 31, 'user1', 'user3', '2', '2019-12-16 02:08:54', '2019-12-16 21:57:37'),
+(31, 11, 32, 'user1', 'user3', '3', '2019-12-16 02:08:54', '2019-12-16 21:57:37'),
+(32, 11, 33, 'user1', 'user3', '3', '2019-12-16 02:08:54', '2019-12-16 21:57:37'),
+(33, 11, 34, 'user1', 'user3', '0', '2019-12-16 02:08:54', '2019-12-16 21:57:37'),
+(34, 11, 35, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2019-12-16 21:57:37'),
+(35, 11, 36, 'user1', 'user2', 'Free Rider, i don''t give him a mark.', '2019-12-16 02:08:54', '2019-12-16 21:57:37'),
+(36, 11, 36, 'user1', 'user3', 'Nice teammate', '2019-12-16 02:08:54', '2019-12-16 21:57:37'),
+(37, 11, 26, 'user2', 'user1', '3', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(38, 11, 26, 'user2', 'user3', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(39, 11, 27, 'user2', 'user1', '3', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(40, 11, 27, 'user2', 'user3', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(41, 11, 28, 'user2', 'user1', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(42, 11, 28, 'user2', 'user3', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(43, 11, 29, 'user2', 'user1', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(44, 11, 29, 'user2', 'user3', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(45, 11, 30, 'user2', 'user1', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(46, 11, 30, 'user2', 'user3', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(47, 11, 31, 'user2', 'user1', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(48, 11, 31, 'user2', 'user3', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(49, 11, 32, 'user2', 'user1', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(50, 11, 32, 'user2', 'user3', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(51, 11, 33, 'user2', 'user1', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(52, 11, 33, 'user2', 'user3', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(53, 11, 34, 'user2', 'user1', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(54, 11, 34, 'user2', 'user3', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(55, 11, 35, 'user2', 'user1', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(56, 11, 35, 'user2', 'user3', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
+(57, 11, 11, 'user2', 'user2', '0', '2019-12-16 02:30:41', '2019-12-16 02:30:41'),
+(58, 11, 12, 'user2', 'user2', '0', '2019-12-16 02:30:41', '2019-12-16 02:30:41'),
+(59, 11, 13, 'user2', 'user2', '0', '2019-12-16 02:30:41', '2019-12-16 02:30:41'),
+(60, 11, 14, 'user2', 'user2', '0', '2019-12-16 02:30:41', '2019-12-16 02:30:41'),
+(61, 11, 15, 'user2', 'user2', 'No', '2019-12-16 02:30:41', '2019-12-16 02:30:41'),
+(62, 11, 16, 'user2', 'user2', 'No', '2019-12-16 02:30:41', '2019-12-16 02:30:41'),
+(63, 11, 17, 'user2', 'user2', 'No', '2019-12-16 02:30:41', '2019-12-16 02:30:41'),
+(64, 11, 18, 'user2', 'user2', 'No', '2019-12-16 02:30:41', '2019-12-16 02:30:41'),
+(65, 11, 19, 'user2', 'user2', 'No', '2019-12-16 02:30:41', '2019-12-16 02:30:41'),
+(66, 11, 20, 'user2', 'user2', 'Not at all.', '2019-12-16 02:30:41', '2019-12-16 02:30:41'),
+(67, 11, 11, 'user3', 'user3', '5', '2019-12-16 02:32:52', '2019-12-16 02:34:59'),
+(68, 11, 12, 'user3', 'user3', '4 hours maybe', '2019-12-16 02:32:52', '2019-12-16 02:34:59'),
+(69, 11, 13, 'user3', 'user3', '10 hours', '2019-12-16 02:32:52', '2019-12-16 02:34:59'),
+(70, 11, 14, 'user3', 'user3', '12', '2019-12-16 02:32:52', '2019-12-16 02:34:59'),
+(71, 11, 15, 'user3', 'user3', 'Never', '2019-12-16 02:32:52', '2019-12-16 02:34:59'),
+(72, 11, 16, 'user3', 'user3', 'Always', '2019-12-16 02:32:52', '2019-12-16 02:34:59'),
+(73, 11, 17, 'user3', 'user3', 'I am not sure', '2019-12-16 02:32:52', '2019-12-16 02:34:59'),
+(74, 11, 18, 'user3', 'user3', 'no plan at all', '2019-12-16 02:32:52', '2019-12-16 02:34:59'),
+(75, 11, 19, 'user3', 'user3', 'no improvement', '2019-12-16 02:32:52', '2019-12-16 02:34:59'),
+(76, 11, 20, 'user3', 'user3', 'no plans', '2019-12-16 02:32:52', '2019-12-16 02:34:59'),
+(77, 11, 26, 'user3', 'user1', '4', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(78, 11, 26, 'user3', 'user2', '0', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(79, 11, 27, 'user3', 'user1', '4', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(80, 11, 27, 'user3', 'user2', '0', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(81, 11, 28, 'user3', 'user1', '4', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(82, 11, 28, 'user3', 'user2', '0', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(83, 11, 29, 'user3', 'user1', '4', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(84, 11, 29, 'user3', 'user2', '0', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(85, 11, 30, 'user3', 'user1', '3', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(86, 11, 30, 'user3', 'user2', '0', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(87, 11, 31, 'user3', 'user1', '4', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(88, 11, 31, 'user3', 'user2', '0', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(89, 11, 32, 'user3', 'user1', '3', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(90, 11, 32, 'user3', 'user2', '0', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(91, 11, 33, 'user3', 'user1', '3', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(92, 11, 33, 'user3', 'user2', '0', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(93, 11, 34, 'user3', 'user1', '3', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(94, 11, 34, 'user3', 'user2', '0', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(95, 11, 35, 'user3', 'user1', '3', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(96, 11, 35, 'user3', 'user2', '0', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(97, 11, 36, 'user3', 'user1', 'Good teammate', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(98, 11, 36, 'user3', 'user2', 'He don''t participated at any activities.', '2019-12-16 02:34:31', '2019-12-16 02:34:58');
 
 -- --------------------------------------------------------
 
@@ -194,15 +255,15 @@ CREATE TABLE IF NOT EXISTS `assignment_mark_criteria` (
   `asg_id` int(11) NOT NULL,
   `weight` int(11) NOT NULL,
   `type` int(11) NOT NULL DEFAULT '0' COMMENT '0 - Assignment, 1- feedback',
-  `topic` text,
-  `hd` text,
-  `dn` text,
-  `cr` text,
-  `pp` text,
-  `nn` text,
+  `topic` mediumtext,
+  `hd` mediumtext,
+  `dn` mediumtext,
+  `cr` mediumtext,
+  `pp` mediumtext,
+  `nn` mediumtext,
   `create_date` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `assignment_mark_criteria`
@@ -224,12 +285,12 @@ CREATE TABLE IF NOT EXISTS `assignment_question` (
 `id` int(11) NOT NULL,
   `asg_id` int(11) NOT NULL,
   `question_order` int(11) NOT NULL DEFAULT '0',
-  `question` text,
+  `question` mediumtext,
   `answer_type` enum('TEXT','SCALE','SCORE','GRADE') NOT NULL DEFAULT 'TEXT',
   `question_section` enum('SELF','PEER','GROUP') NOT NULL DEFAULT 'SELF',
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=37 ;
 
 --
 -- Dumping data for table `assignment_question`
@@ -279,11 +340,11 @@ CREATE TABLE IF NOT EXISTS `assignment_topic` (
 `id` int(11) NOT NULL,
   `assign_id` int(11) NOT NULL,
   `topic` varchar(500) DEFAULT NULL,
-  `topic_desc` text,
+  `topic_desc` mediumtext,
   `max` int(11) NOT NULL DEFAULT '0',
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=664 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=664 ;
 
 --
 -- Dumping data for table `assignment_topic`
@@ -748,7 +809,7 @@ CREATE TABLE IF NOT EXISTS `assignment_topic_allocation` (
   `topic_id` int(11) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=267 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=267 ;
 
 --
 -- Dumping data for table `assignment_topic_allocation`
@@ -1032,14 +1093,15 @@ CREATE TABLE IF NOT EXISTS `submission` (
   `user_id` varchar(10) NOT NULL,
   `filename` varchar(1000) NOT NULL,
   `submission_date` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `submission`
 --
 
 INSERT INTO `submission` (`id`, `asg_id`, `topic_id`, `user_id`, `filename`, `submission_date`) VALUES
-(1, 11, 94, 'user1', './uploads/6512bd43d9caa6e02c990b0a82652dca/f4b9ec30ad9f68f89b29639786cb62ef/c96b4b75787a2cb4d32c4ef7a5a621db.pdf', '2019-12-13 17:18:52');
+(1, 11, 94, 'user1', './uploads/6512bd43d9caa6e02c990b0a82652dca/f4b9ec30ad9f68f89b29639786cb62ef/c96b4b75787a2cb4d32c4ef7a5a621db.pdf', '2019-12-13 17:18:52'),
+(4, 11, 73, 'user1', './uploads/6512bd43d9caa6e02c990b0a82652dca/d2ddea18f00665ce8623e36bd4e3c7c5/7b0a03486e7a22394400de4623a38960.pdf', '2019-12-16 21:54:55');
 
 --
 -- Triggers `submission`
@@ -1089,14 +1151,19 @@ CREATE TABLE IF NOT EXISTS `submission_log` (
   `submission_date` datetime NOT NULL,
   `action` varchar(10) NOT NULL,
   `action_date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `submission_log`
 --
 
 INSERT INTO `submission_log` (`id`, `asg_id`, `topic_id`, `user_id`, `filename`, `submission_date`, `action`, `action_date`) VALUES
-(1, 11, 94, 'user1', './uploads/6512bd43d9caa6e02c990b0a82652dca/f4b9ec30ad9f68f89b29639786cb62ef/c96b4b75787a2cb4d32c4ef7a5a621db.pdf', '2019-12-13 17:18:52', 'ADD', '2019-12-13 17:18:52');
+(1, 11, 94, 'user1', './uploads/6512bd43d9caa6e02c990b0a82652dca/f4b9ec30ad9f68f89b29639786cb62ef/c96b4b75787a2cb4d32c4ef7a5a621db.pdf', '2019-12-13 17:18:52', 'ADD', '2019-12-13 17:18:52'),
+(2, 11, 73, 'user1', './uploads/6512bd43d9caa6e02c990b0a82652dca/d2ddea18f00665ce8623e36bd4e3c7c5/1302a34ea05326a86f8652f9d2a99f96.pdf', '2019-12-16 02:20:32', 'ADD', '2019-12-16 02:20:32'),
+(2, 11, 73, 'user1', './uploads/6512bd43d9caa6e02c990b0a82652dca/d2ddea18f00665ce8623e36bd4e3c7c5/1302a34ea05326a86f8652f9d2a99f96.pdf', '2019-12-16 02:20:32', 'DELETE', '2019-12-16 02:20:41'),
+(3, 11, 73, 'user1', './uploads/6512bd43d9caa6e02c990b0a82652dca/d2ddea18f00665ce8623e36bd4e3c7c5/1be06deb42d30a574f12c26f91987f8f.pdf', '2019-12-16 02:20:41', 'ADD', '2019-12-16 02:20:41'),
+(3, 11, 73, 'user1', './uploads/6512bd43d9caa6e02c990b0a82652dca/d2ddea18f00665ce8623e36bd4e3c7c5/1be06deb42d30a574f12c26f91987f8f.pdf', '2019-12-16 02:20:41', 'DELETE', '2019-12-16 21:54:55'),
+(4, 11, 73, 'user1', './uploads/6512bd43d9caa6e02c990b0a82652dca/d2ddea18f00665ce8623e36bd4e3c7c5/7b0a03486e7a22394400de4623a38960.pdf', '2019-12-16 21:54:55', 'ADD', '2019-12-16 21:54:55');
 
 -- --------------------------------------------------------
 
@@ -1129,8 +1196,8 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_staff` (
 ,`type` int(11)
 ,`topic_count` bigint(21)
 ,`student_count` bigint(21)
-,`outcome` text
-,`scenario` text
+,`outcome` mediumtext
+,`scenario` mediumtext
 ,`unit_id` int(11)
 ,`create_time` datetime
 ,`last_upd_time` datetime
@@ -1193,7 +1260,7 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_topic_summary` (
 ,`topic_id` int(11)
 ,`assign_id` int(11)
 ,`topic` varchar(500)
-,`topic_desc` text
+,`topic_desc` mediumtext
 );
 -- --------------------------------------------------------
 
@@ -1256,7 +1323,7 @@ CREATE TABLE IF NOT EXISTS `unit` (
   `unit_description` varchar(500) DEFAULT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `unit`
@@ -1285,7 +1352,7 @@ CREATE TABLE IF NOT EXISTS `unit_enrol` (
   `enable` int(11) NOT NULL DEFAULT '1',
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=750 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=750 ;
 
 --
 -- Dumping data for table `unit_enrol`
@@ -2056,7 +2123,7 @@ CREATE TABLE IF NOT EXISTS `unit_staff` (
   `unit_id` int(11) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `unit_staff`
@@ -2091,19 +2158,19 @@ CREATE TABLE IF NOT EXISTS `user` (
   `reset_token` varchar(500) DEFAULT NULL,
   `reset_time` datetime DEFAULT NULL,
   `last_upd_time` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `id`, `email`, `permission_level`, `locked`, `create_time`, `login_fail_cnt`, `last_login_time`, `reset_token`, `reset_time`, `last_upd_time`) VALUES
-('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2019-12-14 01:08:19', NULL, NULL, '2019-12-01 00:17:48'),
+('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2019-12-16 22:24:49', NULL, NULL, '2019-12-01 00:17:48'),
 ('staff1', '$1$346d40d8$806o0kWTuSUlndg8x0jZ81', '$1$346d40d85be1653b1b20eee806c93967', 'Account 1', 'Staff', '03007563', 'kaichiu.wong@utas.edu.au', 30, 0, '2019-11-15 22:34:45', 0, '2019-11-26 23:10:21', NULL, NULL, '2019-11-18 01:20:02'),
 ('staff2', '$1$9a121110$nYumg2W2TIJBS4FyX.I111', '$1$9a121110f95b57330d829119e6b09fef', 'Account 2', 'Staff', '000000', 'teacher@aaa.com', 30, 1, '2019-11-19 00:41:38', 0, '2019-11-20 02:58:19', NULL, NULL, '2019-11-19 00:41:38'),
 ('staff3', '$1$f14a37c0$xSu42pAzI3/.rsvzJL05L0', '$1$f14a37c00eae2ddf8f1303f98008e11f', 'Account 3', 'Staff', '32434', 'sdffe@srewrwe.com', 30, 1, '2019-12-02 02:11:50', 0, NULL, NULL, NULL, NULL),
 ('staff4', '$1$2bb3309b$uhfCK4zeU7Wm.5kZrcijT/', '$1$2bb3309b3a3f88a9b0bd5b219401a379', 'Account 4', 'Staff', '1432542', 'sdsfejoi@sdofreoi.com', 30, 1, '2019-12-02 02:13:52', 0, NULL, NULL, NULL, NULL),
-('user1', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'Account 1', 'Student', '492085', 'kcwong3@utas.edu.au', 10, 0, '2019-11-15 22:34:45', 0, '2019-12-16 00:52:30', NULL, NULL, '2019-11-18 01:22:08'),
+('user1', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'Account 1', 'Student', '492085', 'kcwong3@utas.edu.au', 10, 0, '2019-11-15 22:34:45', 0, '2019-12-16 20:58:57', NULL, NULL, '2019-11-18 01:22:08'),
 ('user10', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 10', 'Student', '169146', 'user10@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user100', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 100', 'Student', '899188', 'user100@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user101', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 101', 'Student', '810995', 'user101@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
@@ -2214,7 +2281,7 @@ INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `
 ('user197', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 197', 'Student', '281371', 'user197@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user198', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 198', 'Student', '636178', 'user198@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user199', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 199', 'Student', '772320', 'user199@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
-('user2', '$1$0110f9d0$e7cdlWJmv.Psg8NoUmuDc1', '$1$0110f9d01bee0c30e7e11e7653b64f56', 'Account 2', 'Student', '432992', 'empty@empty.com', 10, 1, '2019-11-18 01:06:33', 0, '2019-11-26 17:20:47', NULL, NULL, '2019-11-19 00:17:03'),
+('user2', '$1$0110f9d0$e7cdlWJmv.Psg8NoUmuDc1', '$1$0110f9d01bee0c30e7e11e7653b64f56', 'Account 2', 'Student', '432992', 'empty@empty.com', 10, 0, '2019-11-18 01:06:33', 0, '2019-12-16 02:29:13', NULL, NULL, '2019-11-19 00:17:03'),
 ('user20', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 20', 'Student', '885180', 'user20@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user200', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 200', 'Student', '666493', 'user200@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user201', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 201', 'Student', '811069', 'user201@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
@@ -2325,7 +2392,7 @@ INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `
 ('user297', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 297', 'Student', '749364', 'user297@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user298', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 298', 'Student', '906206', 'user298@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user299', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 299', 'Student', '647160', 'user299@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
-('user3', '$1$4b385781$PO.BeSuXiWmS36bOu7sRK0', '$1$4b38578106353e38c43cff55a99d5a5f', 'Account 3', 'Student', '212321', 'a@a.com', 10, 1, '2019-11-18 00:58:38', 0, '2019-11-26 17:22:26', NULL, NULL, '2019-11-19 00:17:22'),
+('user3', '$1$4b385781$PO.BeSuXiWmS36bOu7sRK0', '$1$4b38578106353e38c43cff55a99d5a5f', 'Account 3', 'Student', '212321', 'a@a.com', 10, 0, '2019-11-18 00:58:38', 0, '2019-12-16 02:31:52', NULL, NULL, '2019-11-19 00:17:22'),
 ('user30', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 30', 'Student', '623531', 'user30@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user300', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 300', 'Student', '574940', 'user300@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user301', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 301', 'Student', '330458', 'user301@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
@@ -2888,7 +2955,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `assignment_feedback`
 --
 ALTER TABLE `assignment_feedback`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=99;
 --
 -- AUTO_INCREMENT for table `assignment_mark_criteria`
 --
@@ -2913,7 +2980,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=267;
 -- AUTO_INCREMENT for table `submission`
 --
 ALTER TABLE `submission`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `unit`
 --
