@@ -56,6 +56,9 @@ class Assignmentadmin extends MY_PasController {
                             $this->input->post('max'),
                             $this->input->post('prefix')
                     );
+
+                    $this->load->model('Assignment_date_model');
+                    $this->Assignment_date_model->add_default($assignment_id, $this->get_login_user() );
                 }
                 redirect('Assignmentadmin/index');
             }

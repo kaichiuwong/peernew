@@ -66,7 +66,9 @@ class Assignment_model extends CI_Model
 
     function delete_assignment($id)
     {
-        $this->db->delete('assignment_deadline',array('asg_id'=>$id));
+        $this->db->delete('assignment_date',array('asg_id'=>$id));
+        $this->db->delete('assignment_feedback',array('asg_id'=>$id));
+        $this->db->delete('submission',array('asg_id'=>$id));
         $this->db->delete('assignment_mark_criteria',array('asg_id'=>$id));
         $this->db->delete('assignment_question',array('asg_id'=>$id));
         $this->db->delete('assignment_topic_allocation',array('asg_id'=>$id));
