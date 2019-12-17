@@ -45,7 +45,7 @@
                         <?php else: ?>
                         <a href="<?php echo site_url('Assignmentadmin/public_switch/'.$a['id']); ?>" class="btn btn-success btn-sm">Make Public</a> 
                         <?php endif; ?>
-                        <a href="<?php echo site_url('Assignmentadmin/edit/'.$a['id']); ?>" class="btn btn-info btn-sm">Edit</a> 
+                        <a href="<?php echo site_url('Assignmentadmin/edit/'.$a['id']); ?>" class="btn btn-primary btn-sm">Manage</a> 
                         <a href="<?php echo site_url('Assignmentadmin/remove/'.$a['id']); ?>" class="btn btn-danger btn-sm">Delete</a>
                     </td>
                 </tr>
