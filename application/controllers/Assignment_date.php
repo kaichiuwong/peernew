@@ -115,12 +115,24 @@ class Assignment_date extends MY_PasController{
         }
     }
     
-    function topic_member($id) 
+    function json($asg_id) 
     {
+        $output_array = array();
         if ($this->check_permission(20)) {
-            $data['Assignment_dates'] = $this->Assignment_date_model->get_assignment_member($id);
-            $this->load->view('pages/Assignment_date/topic_member',$data);
+            $asg_dates = $this->Assignment_date_model->get_all_dates_by_asg_id($asg_id);
+            foreach($asg_dates as $d) {
+                $element = array (
+                    "title" => $d['description'],
+                    "start" => $d['date_value'],
+                    "end" => $d['date_value'],
+                    "slotDuration" =>'00:01' ,
+                    "backgroundColor" => '#5bc0de',
+                    "url" => ''
+                );
+                $output_array[] = $element ; 
+            }
         }
+        echo json_encode($output_array);
     }
     
 }

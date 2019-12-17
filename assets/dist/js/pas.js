@@ -1,3 +1,39 @@
+if($('#asg-calendar').length){
+    const cal = document.querySelector('#asg-calendar');
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('asg-calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          },
+          height: 650,
+          defaultDate: yyyy + '-' + mm + '-' + dd ,
+          editable: true,
+          navLinks: true,
+          events: {
+            url: cal.dataset.jsonurl,
+            failure: function() {
+                document.getElementById('loading-calendar-overlay').className = 'd-none' ;
+                document.getElementById('calendar-alert').className = 'alert alert-danger' ;
+            }
+          },
+          loading: function(bool) {
+            document.getElementById('loading-calendar-overlay').className = bool ? 'overlay dark' : 'd-none';
+          }
+        });
+    
+        calendar.render();
+      });
+}
+
 $(function () {
     $(".enable-datatable").DataTable({
         "paging": true,
@@ -7,6 +43,7 @@ $(function () {
         "info": true,
         "autoWidth": false,
     });
+
     $(".enable-editor").summernote({
         height: 300,
         toolbar: [
@@ -163,8 +200,6 @@ $(document).ready(function () {
         $('#counter').val(counter);
         counter++;
     });
-
-
 
     $("table.order-list").on("click", ".ibtnDel", function (event) {
         $(this).closest("tr").remove();

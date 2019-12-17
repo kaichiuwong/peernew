@@ -27,7 +27,7 @@
         <div class="card-body">
               <ul class="nav nav-tabs" id="custom-content-above-tab" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" id="deadline-info-tab" data-toggle="pill" href="#deadline-info" role="tab" aria-controls="deadline-info" aria-selected="true">Deadlines</a>
+                  <a class="nav-link active" id="deadline-info-tab" data-toggle="pill" href="#deadline-info" role="tab" aria-controls="deadline-info" aria-selected="true">Assignment Timeline</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="outcome-info-tab" data-toggle="pill" href="#outcome-info" role="tab" aria-controls="outcome-info" aria-selected="false">Outcome</a>
@@ -38,7 +38,30 @@
               </ul>
               <div class="tab-content" id="custom-content-above-tabContent">
                 <div class="tab-pane fade show active" id="deadline-info" role="tabpanel" aria-labelledby="deadline-info-tab">
-
+                  <div class="timeline">
+                    <?php $last_day_str = date("d-m-Y"); ?>
+                    <?php $now = date("Y-m-d H:i:s"); ?>
+                    <?php foreach($Assignment_dates as $a):  ?>
+                      <?php $earlier = (date("Y-m-d H:i:s", strtotime($a['date_value'])) < $now) ; ?>
+                      <?php $date_str = date("d-m-Y", strtotime($a['date_value'])); ?>
+                      <?php if ($date_str != $last_day_str) : ?>
+                      <div class="time-label">
+                        <span class="<?php echo ($earlier)?'bg-secondary':'bg-success'; ?>"><?php echo $date_str; ?></span>
+                      </div>
+                      <?php endif; ?>
+                      <div>
+                        <i class="fas <?php echo ($earlier)?'fa-check-circle bg-secondary':'fa-hourglass-half bg-success'; ?>"></i>
+                        <div class="timeline-item">
+                          <h3 class="timeline-header <?php echo ($earlier)?'bg-secondary':'bg-success'; ?>"><i class="fas fa-clock"></i> <?php echo date("H:i:s", strtotime($a['date_value'])); ?> - <?php echo $a['description']; ?></h3>
+                        </div>
+                      </div>
+                      <?php $last_day_str = $date_str ;?>
+                    <?php endforeach; ?>
+                      <!-- The last icon means the story is complete -->
+                      <div>
+                          <i class="fas fa-trophy bg-yellow"></i> <div class="timeline-item"><span class="timeline-body">Assignment Complete</span></div>
+                      </div>
+                  </div>
                 </div>
                 <div class="tab-pane fade" id="outcome-info" role="tabpanel" aria-labelledby="outcome-info-tab">
                   <?php echo $assignment['outcome']; ?>

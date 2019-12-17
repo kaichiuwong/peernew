@@ -36,6 +36,8 @@ class Assignment extends MY_PasController {
                 {
                     $this->load->model('Unit_model');
                     $data['all_units'] = $this->Unit_model->get_all_units();
+                    $this->load->model('Assignment_date_model');
+                    $data['Assignment_dates'] = $this->Assignment_date_model->get_all_dates_by_asg_id($asg_id);
                     
                     $new_session_data = array('asg_id' => $asg_id, 'asg_header' => $data['assignment']['unit_code'] . ' - ' . $data['assignment']['title']);
                     $this->session->set_userdata($new_session_data);

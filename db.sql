@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2019 at 02:21 PM
+-- Generation Time: Dec 16, 2019 at 05:17 PM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `assignment` (
   `public` int(11) NOT NULL DEFAULT '0' COMMENT '0 - private, 1 - open to public',
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `assignment`
@@ -124,7 +124,24 @@ CREATE TABLE IF NOT EXISTS `assignment_date` (
   `last_upd_by` varchar(50) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+
+--
+-- Dumping data for table `assignment_date`
+--
+
+INSERT INTO `assignment_date` (`id`, `asg_id`, `key`, `description`, `date_value`, `last_upd_by`, `create_time`, `last_upd_time`) VALUES
+(2, 11, 'ASG_OPEN', 'Assignment open to public date', '2019-12-01 00:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
+(3, 11, 'ASG_CLOSE', 'Assignment close from public date', '2019-12-31 23:59:59', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
+(4, 11, 'GRP_OPEN', 'Group Selection open date', '2019-12-02 00:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
+(5, 11, 'GRP_CLOSE', 'Group Selection close date', '2019-12-06 00:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
+(6, 11, 'SUBMISSION_OPEN', 'Assignment Submission Open Date', '2019-12-07 08:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
+(7, 11, 'SUBMISSION_DEADLINE', 'Assignment Submission Deadline', '2019-12-20 17:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
+(8, 11, 'SUBMISSION_CLOSE', 'Assignment Submission Close Date', '2019-12-20 23:59:59', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
+(9, 11, 'SELF_REVIEW_OPEN', 'Self review open date', '2019-12-21 00:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
+(10, 11, 'SELF_REVIEW_CLOSE', 'Self review close date', '2019-12-28 17:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
+(11, 11, 'PEER_REVIEW_OPEN', 'Peer review open date', '2019-12-28 00:00:00', 'admin', '2019-12-17 00:48:10', '2019-12-17 00:48:10'),
+(12, 11, 'PEER_REVIEW_CLOSE', 'Peer review close date', '2019-12-31 17:00:00', 'admin', '2019-12-17 00:48:10', '2019-12-17 00:48:10');
 
 -- --------------------------------------------------------
 
@@ -345,7 +362,7 @@ CREATE TABLE IF NOT EXISTS `assignment_topic` (
   `max` int(11) NOT NULL DEFAULT '0',
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=664 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=796 ;
 
 --
 -- Dumping data for table `assignment_topic`
@@ -2947,12 +2964,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `assignment`
 --
 ALTER TABLE `assignment`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `assignment_date`
 --
 ALTER TABLE `assignment_date`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `assignment_feedback`
 --
@@ -2972,7 +2989,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
 -- AUTO_INCREMENT for table `assignment_topic`
 --
 ALTER TABLE `assignment_topic`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=664;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=796;
 --
 -- AUTO_INCREMENT for table `assignment_topic_allocation`
 --
