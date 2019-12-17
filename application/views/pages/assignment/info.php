@@ -42,22 +42,26 @@
                     <?php $last_day_str = date("d-m-Y"); ?>
                     <?php $now = date("Y-m-d H:i:s"); ?>
                     <?php foreach($Assignment_dates as $a):  ?>
-                      <?php $earlier = (date("Y-m-d H:i:s", strtotime($a['date_value'])) < $now) ; ?>
-                      <?php $date_str = date("d-m-Y", strtotime($a['date_value'])); ?>
-                      <?php if ($date_str != $last_day_str) : ?>
-                      <div class="time-label">
-                        <span class="<?php echo ($earlier)?'bg-secondary':'bg-success'; ?>"><?php echo $date_str; ?></span>
-                      </div>
-                      <?php endif; ?>
-                      <div>
-                        <i class="fas <?php echo ($earlier)?'fa-check-circle bg-secondary':'fa-hourglass-half bg-success'; ?>"></i>
-                        <div class="timeline-item">
-                          <h3 class="timeline-header <?php echo ($earlier)?'bg-secondary':'bg-success'; ?>"><i class="fas fa-clock"></i> <?php echo date("H:i:s", strtotime($a['date_value'])); ?> - <?php echo $a['description']; ?></h3>
+                      <?php if ($a['date_value']): ?>
+                        <?php $earlier = (date("Y-m-d H:i:s", strtotime($a['date_value'])) < $now) ; ?>
+                        <?php $date_str = date("d-m-Y", strtotime($a['date_value'])); ?>
+                        <?php $time_str = "<i class='fas fa-clock'></i> ".date("H:i:s", strtotime($a['date_value'])); ?>
+                        <?php $bg_color = ($earlier)?'bg-secondary':'bg-success' ; ?>
+                        <?php $icon = ($earlier)?'fas fa-check-circle':'fas fa-hourglass-half' ; ?>
+                        <?php if ($date_str != $last_day_str) : ?>
+                        <div class="time-label">
+                          <span class="<?php echo $bg_color; ?>"><?php echo $date_str; ?></span>
                         </div>
-                      </div>
-                      <?php $last_day_str = $date_str ;?>
+                        <?php endif; ?>
+                        <div>
+                          <i class="<?php echo $icon.' '.$bg_color ; ?>"></i>
+                          <div class="timeline-item">
+                            <h3 class="timeline-header <?php echo $bg_color; ?>"><?php echo $time_str; ?> - <?php echo $a['description']; ?></h3>
+                          </div>
+                        </div>
+                        <?php $last_day_str = $date_str ;?>
+                      <?php endif; ?>
                     <?php endforeach; ?>
-                      <!-- The last icon means the story is complete -->
                       <div>
                           <i class="fas fa-trophy bg-yellow"></i> <div class="timeline-item"><span class="timeline-body">Assignment Complete</span></div>
                       </div>

@@ -7,10 +7,7 @@ class Assignment extends MY_PasController {
         parent::__construct();
         $this->load->model('Assignment_model');
     } 
-
-    /*
-     * Listing of assignments
-     */
+    
     function index()
     {
         if ($this->check_permission(10)) {
@@ -22,9 +19,6 @@ class Assignment extends MY_PasController {
         }
     }
 
-    /*
-     * Editing a assignment
-     */
     function info($asg_id)
     {
         if ($this->check_permission(10) ) {

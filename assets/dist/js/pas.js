@@ -8,6 +8,7 @@ if($('#asg-calendar').length){
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('asg-calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
+          nextDayThreshold: '01:00:00',
           plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
           header: {
             left: 'prev,next today',
@@ -58,7 +59,19 @@ $(function () {
             [ 'view', [ 'undo', 'redo', 'fullscreen' ] ]
         ]
     });
+
+    $('#datetimepicker1').datetimepicker({
+        format: "YYYY-MM-DD HH:mm:ss",
+        widgetPositioning: {
+            horizontal: 'left',
+            vertical: 'auto'
+        }
+    });
 });
+
+$('#date_value').on('click',function(){
+    $('#picker_button').click();
+});    
 
 $('.group_info_open').on('click',function(){
     var dataURL = $(this).attr('data-href');
