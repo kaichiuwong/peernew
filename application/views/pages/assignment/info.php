@@ -40,23 +40,34 @@
                 <div class="tab-pane fade show active" id="deadline-info" role="tabpanel" aria-labelledby="deadline-info-tab">
                   <div class="timeline">
                     <?php $last_day_str = date("d-m-Y"); ?>
+                    <?php $today = date("d-m-Y"); ?>
                     <?php $now = date("Y-m-d H:i:s"); ?>
+                    <?php array_push($Assignment_dates, array('date_value'=> $now, 'description'=>'You are here', 'today'=> true, 'id' => null) ); ?>
+                    <?php usort($Assignment_dates, function($a, $b) {return $b['date_value'] < $a['date_value'];}); ?>
                     <?php foreach($Assignment_dates as $a):  ?>
+                      <?php $earlier = true ; ?>
                       <?php if ($a['date_value']): ?>
                         <?php $earlier = (date("Y-m-d H:i:s", strtotime($a['date_value'])) < $now) ; ?>
                         <?php $date_str = date("d-m-Y", strtotime($a['date_value'])); ?>
                         <?php $time_str = "<i class='fas fa-clock'></i> ".date("H:i:s", strtotime($a['date_value'])); ?>
                         <?php $bg_color = ($earlier)?'bg-secondary':'bg-success' ; ?>
-                        <?php $icon = ($earlier)?'fas fa-check-circle':'fas fa-hourglass-half' ; ?>
+                        <?php $icon = ($earlier)?'fas fa-check-circle':'fas fa-map-marker' ; ?>
+                        <?php if (isset($a['today'])) : ?>
+                        <?php     $icon = 'fas fa-walking'; ?>
+                        <?php     $bg_color = 'bg-primary'; ?>
+                        <?php     $time_str = ''; ?>
+                        <?php endif; ?>
                         <?php if ($date_str != $last_day_str) : ?>
                         <div class="time-label">
-                          <span class="<?php echo $bg_color; ?>"><?php echo $date_str; ?></span>
+                          <span class="<?php echo ($date_str == $today) ? "bg-primary" : $bg_color; ?>"><?php echo $date_str; ?></span>
                         </div>
                         <?php endif; ?>
                         <div>
                           <i class="<?php echo $icon.' '.$bg_color ; ?>"></i>
                           <div class="timeline-item">
-                            <h3 class="timeline-header <?php echo $bg_color; ?>"><?php echo $time_str; ?> - <?php echo $a['description']; ?></h3>
+                              <div class="timeline-header <?php echo $bg_color; ?>">
+                                  <span><?php echo $time_str? $time_str.' - ' : '' ; ?><?php echo $a['description']; ?></span>
+                              </div>
                           </div>
                         </div>
                         <?php $last_day_str = $date_str ;?>

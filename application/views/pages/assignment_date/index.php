@@ -31,7 +31,10 @@
       <div class="card-body">
                   <div class="timeline">
                     <?php $last_day_str = date("d-m-Y"); ?>
+                    <?php $today = date("d-m-Y"); ?>
                     <?php $now = date("Y-m-d H:i:s"); ?>
+                    <?php array_push($Assignment_dates, array('date_value'=> $now, 'description'=>'We are here', 'today'=> true, 'id' => null) ); ?>
+                    <?php usort($Assignment_dates, function($a, $b) {return $b['date_value'] < $a['date_value'];}); ?>
                     <?php foreach($Assignment_dates as $a):  ?>
                       <?php $earlier = true ; ?>
                       <?php $date_str = "Not yet defined"; ?>
@@ -43,11 +46,16 @@
                         <?php $date_str = date("d-m-Y", strtotime($a['date_value'])); ?>
                         <?php $time_str = "<i class='fas fa-clock'></i> ".date("H:i:s", strtotime($a['date_value'])); ?>
                         <?php $bg_color = ($earlier)?'bg-secondary':'bg-success' ; ?>
-                        <?php $icon = ($earlier)?'fas fa-check-circle':'fas fa-hourglass-half' ; ?>
+                        <?php $icon = ($earlier)?'fas fa-check-circle':'fas fa-map-marker' ; ?>
+                      <?php endif; ?>
+                      <?php if (isset($a['today'])) : ?>
+                        <?php     $icon = 'fas fa-walking'; ?>
+                        <?php     $bg_color = 'bg-primary'; ?>
+                        <?php     $time_str = ''; ?>
                       <?php endif; ?>
                       <?php if ($date_str != $last_day_str) : ?>
                       <div class="time-label">
-                        <span class="<?php echo $bg_color; ?>"><?php echo $date_str; ?></span>
+                        <span class="<?php echo ($date_str == $today) ? "bg-primary" : $bg_color; ?>"><?php echo $date_str; ?></span>
                       </div>
                       <?php endif; ?>
                       <div>
@@ -55,8 +63,10 @@
                         <div class="timeline-item">
                             <div class="timeline-header <?php echo $bg_color; ?>">
                               <div class="row">
-                                <span class="col-md-9"><?php echo $time_str; ?> - <?php echo $a['description']; ?></span>
-                                <span class="col-md-3  text-right"><a href="<?php echo site_url('assignment_date/edit/'.$a['asg_id'].'/'.$a['id']);?>" class="btn btn-sm btn-primary">Edit</a></span>
+                                <span class="col-md-9"><?php echo $time_str? $time_str.' - ' : '' ; ?><?php echo $a['description']; ?></span>
+                                <?php if (!isset($a['today'])) : ?>
+                                  <span class="col-md-3  text-right"><a href="<?php echo site_url('assignment_date/edit/'.$a['asg_id'].'/'.$a['id']);?>" class="btn btn-sm btn-primary">Edit</a></span>
+                                <?php endif; ?>
                               </div>
                             </div>
                         </div>
