@@ -60,13 +60,15 @@ $(function () {
         ]
     });
 
-    $('#datetimepicker1').datetimepicker({
-        format: "YYYY-MM-DD HH:mm:ss",
-        widgetPositioning: {
-            horizontal: 'left',
-            vertical: 'auto'
-        }
-    });
+    if($('#datetimepicker1').length) {
+        $('#datetimepicker1').datetimepicker({
+            format: "YYYY-MM-DD HH:mm:ss",
+            widgetPositioning: {
+                horizontal: 'left',
+                vertical: 'auto'
+            }
+        });
+    }
 });
 
 $('#date_value').on('click',function(){
@@ -221,6 +223,7 @@ $(document).ready(function () {
     load_asg_submission_form();
     load_self_review_form();
     load_peer_review_form();
+
 });
 
 function calc_feedback_sum(peername) {
@@ -240,6 +243,12 @@ function load_self_review_form() {
         $('#self_feedback_card').load(dataURL,function(){
             $('#loading-self-feedback-overlay').removeClass('overlay dark');
             $('#loading-self-feedback-overlay').addClass('d-none');
+            if($('#self_feedback_form').length) {
+                $('#btn_self_submit').removeClass('d-none');
+            }
+            else {
+                $('#btn_self_submit').addClass('d-none');
+            }
         });
     }
 }
@@ -250,6 +259,12 @@ function load_peer_review_form() {
         $('#peer_feedback_card').load(dataURL,function(){
             $('#loading-peer-feedback-overlay').removeClass('overlay dark');
             $('#loading-peer-feedback-overlay').addClass('d-none');
+            if($('#peer_feedback_form').length) {
+                $('#btn_peer_submit').removeClass('d-none');
+            }
+            else {
+                $('#btn_peer_submit').addClass('d-none');
+            }
         });
     }
 }
@@ -260,6 +275,12 @@ function load_asg_submission_form() {
         $('#submission_card').load(dataURL,function(){
             $('#loading-submission-overlay').removeClass('overlay dark');
             $('#loading-submission-overlay').addClass('d-none');
+            if($('#asg_submit_form').length) {
+                $('#btn_submission_submit').removeClass('d-none');
+            }
+            else {
+                $('#btn_submission_submit').addClass('d-none');
+            }
         });
     }
 }

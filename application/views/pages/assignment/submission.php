@@ -42,7 +42,7 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
-          <button type="button" class="btn btn-primary btn-sm" id="btn_submission_submit">Upload Assignment</button>
+          <button type="button" class="btn btn-primary btn-sm d-none" id="btn_submission_submit">Upload Assignment</button>
         </div>
         <div class="overlay dark" id="loading-submission-overlay"> 
           <i class="fas fa-2x fa-sync-alt fa-spin"></i>
@@ -60,7 +60,7 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
-          <button type="button" class="btn btn-primary btn-sm" id="btn_self_submit">Save</button>
+          <button type="button" class="btn btn-primary btn-sm d-none" id="btn_self_submit">Save</button>
         </div>
         <div class="overlay dark" id="loading-self-feedback-overlay"> 
           <i class="fas fa-2x fa-sync-alt fa-spin"></i>
@@ -80,7 +80,7 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
-          <button type="button" class="btn btn-primary btn-sm" id="btn_peer_submit">Save</button>
+          <button type="button" class="btn btn-primary btn-sm d-none" id="btn_peer_submit">Save</button>
         </div>
         <div class="overlay dark" id="loading-peer-feedback-overlay"> 
           <i class="fas fa-2x fa-sync-alt fa-spin"></i>

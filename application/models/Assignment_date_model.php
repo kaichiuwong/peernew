@@ -31,12 +31,9 @@ class Assignment_date_model extends CI_Model
         return $this->db->get('assignment_date')->result_array();
     }
 
-    function get_all_dates_by_asg_id_key($asg_id, $key) 
+    function get_date_by_asg_id_key($asg_id, $key) 
     {
-        $this->db->order_by('date_value asc, id asc');
-        $this->db->where('asg_id',$asg_id);
-        $this->db->where('key',$key);
-        return $this->db->get('assignment_date')->result_array();
+        return $this->db->get_where('assignment_date',array('asg_id'=>$asg_id, 'key'=>$key))->row_array();
     }
     
     function add_assignment_date($params, $username)

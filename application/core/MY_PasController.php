@@ -129,6 +129,48 @@ class MY_PasController extends CI_Controller
         }
         return $result;
     }
+
+    public function is_open($asg_id, $open_key, $close_key, $display_error_page = true)
+    {
+        $this->load->model('Assignment_date_model');
+        $result = false;
+        $open_date = $this->Assignment_date_model->get_date_by_asg_id_key($asg_id, $open_key);
+        $close_date = $this->Assignment_date_model->get_date_by_asg_id_key($asg_id, $close_key);
+        $current_time = time();
+
+        if ($open_date && $close_date) {
+            $open = $open_date['date_value'];
+            $close = $close_date['date_value'];
+            
+            if ($open  && $close) 
+            {
+                if ( ( $current_time >= strtotime($open) ) && $current_time <= strtotime($close) ) 
+                {
+                    $result = true;
+                }
+            }
+            else if ($open)
+            {
+                if ( ( $current_time >= strtotime($open) ) ) 
+                {
+                    $result = true;
+                }
+            }
+            else if ($close)
+            {
+                if ( $current_time <= strtotime($close) ) 
+                {
+                    $result = true;
+                }
+            }
+        }
+
+        if (!$result && $display_error_page) {
+            $this->load->view('pages/expire');
+        }
+
+        return $result;
+    }
     
     public function get_login_user() {
         $user = '';

@@ -8,21 +8,23 @@
 </ul>
 <div class="tab-content" id="custom-content-above-tabContent">
     <div class="tab-pane fade show active" id="submission-info" role="tabpanel" aria-labelledby="submission-info-tab">
-    <?php echo form_open_multipart('Assignment/asg_upload_form/'.$asg_id.'/'.$assignment_topic['topic_id'],array("id"=>"asg_submit_form")); ?>
-        <div class="form-group">
-        <input type="hidden" value="<?php echo $asg_id; ?>" name="asg_id" />
-        <input type="hidden" value="<?php echo $assignment_topic['topic_id']; ?>" name="grp_id" />
-        <input type="hidden" value="<?php echo $username; ?>" name="username" />
-        <label for="assignment_file">Upload Assignment File</label>
-        <div class="input-group">
-            <div class="custom-file">
-            <input type="file" class="custom-file-input" id="assignment_file" name="assignment_file" required>
-            <label class="custom-file-label" for="assignment_file"><i class="fas fa-search"></i> Choose file</label>
-            <button type="submit" class="d-none" id="asg_submit_button"></button>
+    <?php if ($submission_open) : ?>
+        <?php echo form_open_multipart('Assignment/asg_upload_form/'.$asg_id.'/'.$assignment_topic['topic_id'],array("id"=>"asg_submit_form")); ?>
+            <div class="form-group">
+            <input type="hidden" value="<?php echo $asg_id; ?>" name="asg_id" />
+            <input type="hidden" value="<?php echo $assignment_topic['topic_id']; ?>" name="grp_id" />
+            <input type="hidden" value="<?php echo $username; ?>" name="username" />
+            <label for="assignment_file">Upload Assignment File</label>
+            <div class="input-group">
+                <div class="custom-file">
+                <input type="file" class="custom-file-input" id="assignment_file" name="assignment_file" required>
+                <label class="custom-file-label" for="assignment_file"><i class="fas fa-search"></i> Choose file</label>
+                <button type="submit" class="d-none" id="asg_submit_button"></button>
+                </div>
             </div>
-        </div>
-        </div>
-    <?php echo form_close(); ?>
+            </div>
+        <?php echo form_close(); ?>
+    <?php endif; ?>
     <?php if ($submission_hist) { $hist = $submission_hist[0]; ?>
     <h6 class="text-bold">Submitted Assignment</h6>
     <table class="table table-sm table-head-fixed table-hover">
