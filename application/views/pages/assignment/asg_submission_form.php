@@ -1,3 +1,8 @@
+<div class="alert alert-<?php echo $submission_condition['result']? "success" : "danger" ; ?>" role="alert">
+    <?php echo $submission_condition['result']? "":"<span class='text-bold'><i class='fas fa-exclamation-triangle'></i> This section is closed for changes.</span><br />" ;?>
+    <?php echo $submission_condition['open_date']? $submission_condition['open_desc']. ": ".$submission_condition['open_date']."<br />" : "" ; ?>
+    <?php echo $submission_condition['close_date']? $submission_condition['close_desc']. ": ".$submission_condition['close_date'] : "" ; ?>
+</div>
 <ul class="nav nav-tabs" id="custom-content-above-tab" role="tablist">
     <li class="nav-item">
     <a class="nav-link active" id="submission-info-tab" data-toggle="pill" href="#submission-info" role="tab" aria-controls="submission-info" aria-selected="true"><i class="fas fa-file-upload"></i> Upload Assignment</a>
@@ -8,7 +13,7 @@
 </ul>
 <div class="tab-content" id="custom-content-above-tabContent">
     <div class="tab-pane fade show active" id="submission-info" role="tabpanel" aria-labelledby="submission-info-tab">
-    <?php if ($submission_open) : ?>
+    <?php if ($submission_condition["result"]) : ?>
         <?php echo form_open_multipart('Assignment/asg_upload_form/'.$asg_id.'/'.$assignment_topic['topic_id'],array("id"=>"asg_submit_form")); ?>
             <div class="form-group">
             <input type="hidden" value="<?php echo $asg_id; ?>" name="asg_id" />

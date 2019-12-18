@@ -137,10 +137,15 @@ class MY_PasController extends CI_Controller
         $open_date = $this->Assignment_date_model->get_date_by_asg_id_key($asg_id, $open_key);
         $close_date = $this->Assignment_date_model->get_date_by_asg_id_key($asg_id, $close_key);
         $current_time = time();
-
+        $open = null;
+        $close = null ;
+        $open_desc = "";
+        $close_desc = "";
         if ($open_date && $close_date) {
             $open = $open_date['date_value'];
             $close = $close_date['date_value'];
+            $open_desc = $open_date['description'];
+            $close_desc = $close_date['description'];
             
             if ($open  && $close) 
             {
@@ -169,7 +174,7 @@ class MY_PasController extends CI_Controller
             $this->load->view('pages/expire');
         }
 
-        return $result;
+        return array("result" => $result, "open_date" => $open, "close_date" => $close, "open_desc" => $open_desc, "close_desc" => $close_desc);
     }
     
     public function get_login_user() {

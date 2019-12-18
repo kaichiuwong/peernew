@@ -54,6 +54,7 @@ class Assignment extends MY_PasController {
             if ($asg_id) {
                 if ($this->is_allow_view_asg($asg_id)) {
                     $data['asg_id'] = $asg_id;
+                    $data['submission_condition']  = $this->is_open($asg_id,'GRP_OPEN','GRP_CLOSE', false);
                     $data['_view'] = 'pages/assignment/group';
                     $this->load->model('Assignment_topic_model');
                     $data['assignment_topic'] = $this->Assignment_topic_model->get_assignment_topic_by_student($asg_id, $this->get_login_user() );
@@ -77,8 +78,11 @@ class Assignment extends MY_PasController {
         if ($this->check_permission(10)) {
             if ($asg_id && $topic_id) {
                 if ($this->is_allow_view_asg($asg_id)) {
-                    $this->load->model('Assignment_topic_model');
-                    $this->Assignment_topic_model->leave_topic($asg_id, $this->get_login_user(),$topic_id );
+                    $data['submission_condition']  = $this->is_open($asg_id,'GRP_OPEN','GRP_CLOSE', false);
+                    if ($data['submission_condition']['result']) {
+                        $this->load->model('Assignment_topic_model');
+                        $this->Assignment_topic_model->leave_topic($asg_id, $this->get_login_user(),$topic_id );
+                    }
                     redirect('Assignment/group/'.$asg_id);
                 }
             }
@@ -93,8 +97,11 @@ class Assignment extends MY_PasController {
         if ($this->check_permission(10)) {
             if ($asg_id && $topic_id) {
                 if ($this->is_allow_view_asg($asg_id)) {
-                    $this->load->model('Assignment_topic_model');
-                    $this->Assignment_topic_model->join_topic($asg_id, $this->get_login_user(),$topic_id );
+                    $data['submission_condition']  = $this->is_open($asg_id,'GRP_OPEN','GRP_CLOSE', false);
+                    if ($data['submission_condition']['result']) {
+                        $this->load->model('Assignment_topic_model');
+                        $this->Assignment_topic_model->join_topic($asg_id, $this->get_login_user(),$topic_id );
+                    }
                     redirect('Assignment/group/'.$asg_id);
                 }
             }
@@ -117,8 +124,8 @@ class Assignment extends MY_PasController {
         if ($this->check_permission(10) ) {
             if ($this->is_allow_view_asg($asg_id)) {
                 $data['asg_id'] = $asg_id;
-                $data['submission_open'] = $this->is_open($asg_id,'SUBMISSION_OPEN','SUBMISSION_CLOSE', false);
-                if ($data['submission_open']) {
+                $data['submission_condition']  = $this->is_open($asg_id,'SUBMISSION_OPEN','SUBMISSION_CLOSE', false);
+                if ($data['submission_condition']["result"]) {
                     if (isset($_POST['asg_id'])) 
                     {
                         $config['upload_path'] = './uploads/'.md5($this->input->post('asg_id')).'/'.md5($this->input->post('grp_id')).'/';
@@ -167,8 +174,10 @@ class Assignment extends MY_PasController {
     function self_feedback_form($asg_id, $topic_id) {
         if ($this->check_permission(10) ) {
             if ($this->is_allow_view_asg($asg_id)) {
-                if ($this->is_open($asg_id,'SELF_REVIEW_OPEN','SELF_REVIEW_CLOSE', false)) {
-                    $this->load->model('assignment_feedback_model');
+                $data['submission_condition']  = ($this->is_open($asg_id,'SELF_REVIEW_OPEN','SELF_REVIEW_CLOSE', false));
+
+                $this->load->model('assignment_feedback_model');
+                if ($data['submission_condition']['result']) {
                     if (isset($_POST['asg_id']) && isset($_POST['topic_id'])) 
                     {
                         $post_asg_id = $this->input->post('asg_id');
@@ -201,17 +210,13 @@ class Assignment extends MY_PasController {
                             }
                         }
                     }
-                    $data['asg_id'] = $asg_id;
-                    $data['topic_id'] = $topic_id;
-                    $data['username'] = $this->get_login_user();
-                    $this->load->model('assignment_question_model');                
-                    $data['assignment_questions_self'] = $this->assignment_feedback_model->get_question_with_feedback($asg_id,$this->get_login_user(),$this->get_login_user(),'SELF');
-                    $this->load->view('pages/assignment/self_feedback_form',$data);
                 }
-                else
-                {
-                    echo "This section is closed.";
-                }
+                $data['asg_id'] = $asg_id;
+                $data['topic_id'] = $topic_id;
+                $data['username'] = $this->get_login_user();
+                $this->load->model('assignment_question_model');                
+                $data['assignment_questions_self'] = $this->assignment_feedback_model->get_question_with_feedback($asg_id,$this->get_login_user(),$this->get_login_user(),'SELF');
+                $this->load->view('pages/assignment/self_feedback_form',$data);
             }
         }
     }
@@ -219,8 +224,10 @@ class Assignment extends MY_PasController {
     function peer_feedback_form($asg_id, $topic_id) {
         if ($this->check_permission(10) ) {
             if ($this->is_allow_view_asg($asg_id)) {
-                if ($this->is_open($asg_id,'PEER_REVIEW_OPEN','PEER_REVIEW_CLOSE', false)) {
-                    $this->load->model('assignment_feedback_model');
+                $data['submission_condition'] = ($this->is_open($asg_id,'PEER_REVIEW_OPEN','PEER_REVIEW_CLOSE', false));
+
+                $this->load->model('assignment_feedback_model');
+                if ($data['submission_condition']['result']) {
                     if (isset($_POST['asg_id']) && isset($_POST['topic_id'])) 
                     {
                         $post_asg_id = $this->input->post('asg_id');
@@ -254,21 +261,17 @@ class Assignment extends MY_PasController {
                             }
                         }
                     }
-                    $data['asg_id'] = $asg_id;
-                    $data['topic_id'] = $topic_id;
-                    $data['username'] = $this->get_login_user();
-                    $this->load->model('assignment_question_model');
-                    $this->load->model('Assignment_topic_model');
-                    $data['assignment_topics_member'] = $this->Assignment_topic_model->get_assignment_member($topic_id);
-                    foreach($data['assignment_topics_member'] as $member) {
-                        $data['assignment_questions_peer'][$member['user_id']] = $this->assignment_feedback_model->get_question_with_feedback($asg_id,$this->get_login_user(),$member['user_id'],'PEER');
-                    }
-                    $this->load->view('pages/assignment/peer_feedback_form',$data);
                 }
-                else
-                {
-                    echo "This section is closed.";
+                $data['asg_id'] = $asg_id;
+                $data['topic_id'] = $topic_id;
+                $data['username'] = $this->get_login_user();
+                $this->load->model('assignment_question_model');
+                $this->load->model('Assignment_topic_model');
+                $data['assignment_topics_member'] = $this->Assignment_topic_model->get_assignment_member($topic_id);
+                foreach($data['assignment_topics_member'] as $member) {
+                    $data['assignment_questions_peer'][$member['user_id']] = $this->assignment_feedback_model->get_question_with_feedback($asg_id,$this->get_login_user(),$member['user_id'],'PEER');
                 }
+                $this->load->view('pages/assignment/peer_feedback_form',$data);
             }
         }
     }
