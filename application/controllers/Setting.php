@@ -27,7 +27,7 @@ class Setting extends MY_PasController {
                 if ($updated) {
                     $data['update_success'] = 'Update Completed.';
                 }
-                $data['_view'] = 'pages/profile';
+                $data['_view'] = 'pages/user/profile';
                 $this->load->view('templates/main',$data);
             }      
             $this->load_footer();

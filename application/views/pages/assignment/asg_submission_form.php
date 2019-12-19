@@ -1,7 +1,12 @@
+<?php $now = time(); ?>
 <div class="alert alert-<?php echo $submission_condition['result']? "success" : "danger" ; ?>" role="alert">
-    <?php echo $submission_condition['result']? "":"<span class='text-bold'><i class='fas fa-exclamation-triangle'></i> This section is closed for changes.</span><br />" ;?>
-    <?php echo $submission_condition['open_date']? $submission_condition['open_desc']. ": ".$submission_condition['open_date']."<br />" : "" ; ?>
-    <?php echo $submission_condition['close_date']? $submission_condition['close_desc']. ": ".$submission_condition['close_date'] : "" ; ?>
+    <?php if ($submission_condition['result']): ?>
+        <span class='text-bold'><?php echo $asg_deadline['description'] ;?></span>: <?php echo $asg_deadline['date_value'] ;?> 
+    <?php else: ?>
+        <?php echo $submission_condition['result']? "":"<span class='text-bold'><i class='fas fa-exclamation-triangle'></i> This section is closed for changes.</span><br />" ;?>
+        <?php echo $submission_condition['open_date']? $submission_condition['open_desc']. ": ".$submission_condition['open_date']."<br />" : "" ; ?>
+        <?php echo $submission_condition['close_date']? $submission_condition['close_desc']. ": ".$submission_condition['close_date'] : "" ; ?>
+    <?php endif; ?>
 </div>
 <ul class="nav nav-tabs" id="custom-content-above-tab" role="tablist">
     <li class="nav-item">
@@ -44,7 +49,7 @@
             <tr>
                 <td><i class="fas fa-file"></i> <a href="<?php echo base_url().$hist->filename; ?>" target="_blank"><?php echo basename($hist->filename); ?></a></td>
                 <td><i class="fas fa-user"></i> <?php echo $hist->user_id; ?></td>
-                <td><i class="fas fa-clock"></i> <?php echo $hist->submission_date; ?></td>
+                <td><i class="fas fa-clock"></i> <?php echo $hist->submission_date; ?> <?php echo ( $hist->submission_date > $asg_deadline['date_value'] ) ? "<span class='badge badge-danger'>Late Submission</span>": ""; ?> </td>
             </tr>                  
         </tbody>
     </table>
@@ -65,7 +70,7 @@
                     <tr>
                         <td><i class="fas fa-file"></i> <a href="<?php echo base_url().$hist->filename; ?>" target="_blank"><?php echo basename($hist->filename); ?></a></td>
                         <td><i class="fas fa-user"></i> <?php echo $hist->user_id; ?></td>
-                        <td><i class="fas fa-clock"></i> <?php echo $hist->submission_date; ?></td>
+                        <td><i class="fas fa-clock"></i> <?php echo $hist->submission_date; ?> <?php echo ( $hist->submission_date > $asg_deadline['date_value'] ) ? "<span class='badge badge-danger'>Late Submission</span>": ""; ?> </td>
                     </tr>
                 <?php endforeach; ?>
                 <?php else: ?>

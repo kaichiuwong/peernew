@@ -16,29 +16,18 @@
               <p>Home</p>
             </a>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item">
+            <a href="<?php echo site_url('Assignment'); ?>" class="nav-link">
               <i class="nav-icon fas fa-table"></i>
-              <p>Assignment <i class="fas fa-angle-left right"></i></p>
+              <p>Assignments</p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?php echo site_url('assignment'); ?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Assignment List</p>
-                </a>
-              </li>
-            </ul>
           </li>
-
-          <li class="nav-header">Help</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-file"></i>
               <p>FAQs</p>
             </a>
           </li>
-          <li class="nav-header"></li>
           <li class="nav-item">
             <a href="<?php echo site_url('Usercontrol/logout'); ?>" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>

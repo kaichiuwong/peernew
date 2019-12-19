@@ -153,6 +153,8 @@ class Assignment extends MY_PasController {
                         }
                     }
                 }
+                $this->load->model('Assignment_date_model');
+                $data['asg_deadline'] = $this->Assignment_date_model->get_date_by_asg_id_key($asg_id, 'SUBMISSION_DEADLINE');
                 $data['username'] = $this->get_login_user();
                 
                 $this->load->model('Unit_model');

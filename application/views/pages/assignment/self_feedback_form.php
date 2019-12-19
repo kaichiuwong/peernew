@@ -1,14 +1,18 @@
 <div class="alert alert-<?php echo $submission_condition['result']? "success" : "danger" ; ?>" role="alert">
-    <?php echo $submission_condition['result']? "":"<span class='text-bold'><i class='fas fa-exclamation-triangle'></i> This section is closed for changes.</span><br />" ;?>
-    <?php echo $submission_condition['open_date']? $submission_condition['open_desc']. ": ".$submission_condition['open_date']."<br />" : "" ; ?>
-    <?php echo $submission_condition['close_date']? $submission_condition['close_desc']. ": ".$submission_condition['close_date'] : "" ; ?>
+    <?php if ($submission_condition['result']): ?>
+        <span class='text-bold'><?php echo $submission_condition['close_desc'] ;?></span>: <?php echo $submission_condition['close_date'] ;?> 
+    <?php else: ?>
+        <?php echo $submission_condition['result']? "":"<span class='text-bold'><i class='fas fa-exclamation-triangle'></i> This section is closed for changes.</span><br />" ;?>
+        <?php echo $submission_condition['open_date']? $submission_condition['open_desc']. ": ".$submission_condition['open_date']."<br />" : "" ; ?>
+        <?php echo $submission_condition['close_date']? $submission_condition['close_desc']. ": ".$submission_condition['close_date'] : "" ; ?>
+    <?php endif; ?>
 </div>
 <?php if ($submission_condition['result']): ?>
     <?php echo form_open('assignment/self_feedback_form/'.$asg_id.'/'.$topic_id,array("class"=>"form-horizontal", "id"=>"self_feedback_form")); ?>
 <?php else: ?>
-    <?php echo form_open('#',array("class"=>"form-horizontal")); ?>
+    <form class="form-horizontal">
 <?php endif; ?>
-<fieldset <?php echo $submission_condition['result']? "" : 'disabled="disabled"' ; ?> id="peer_feedback_form_fieldset">
+<fieldset <?php echo $submission_condition['result']? "" : 'disabled="disabled"' ; ?>>
     <input type="hidden" name="asg_id" value="<?php echo $asg_id; ?>" />
     <input type="hidden" name="topic_id" value="<?php echo $topic_id; ?>" />
     <input type="hidden" name="reviewer" value="<?php echo $username; ?>" />
