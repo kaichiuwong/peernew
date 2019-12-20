@@ -2,7 +2,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<?php echo site_url('Home'); ?>" class="brand-link">
-      <span class="brand-text font-weight-light">Peer Assessmenet System</span>
+      <span class="brand-text font-bold">Groupy</span>
     </a>
 
     <!-- Sidebar -->

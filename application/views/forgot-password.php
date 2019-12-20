@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Peer Assessment System - Forgot Password</title>
+  <title>Groupy - Forgot Password</title>
 
   <!-- Custom fonts for this template-->
   <link href="<?php echo base_url(); ?>/assets/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
