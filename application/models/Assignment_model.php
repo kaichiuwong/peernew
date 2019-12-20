@@ -24,12 +24,13 @@ class Assignment_model extends CI_Model
         return $this->db->get('sv_assignment_staff')->result_array();
     }
     
-    function get_all_assignments_student($username)
+    function get_all_assignments_student($username, $sem)
     {
         $this->db->order_by('id', 'desc');
         if(isset($username) && !empty($username))
         {
             $this->db->where('username',$username);
+            $this->db->where('sem',$sem);
             return $this->db->get('sv_assignemnt_student')->result_array();
         }
         return array();

@@ -11,7 +11,7 @@ class Assignment extends MY_PasController {
     function index()
     {
         if ($this->check_permission(10)) {
-            $data['assignments'] = $this->Assignment_model->get_all_assignments_student($this->get_login_user());
+            $data['assignments'] = $this->Assignment_model->get_all_assignments_student($this->get_login_user(), $this->current_sem());
             $data['_view'] = 'pages/assignment/index';
             $this->load_header($data);
             $this->load->view('templates/main',$data);

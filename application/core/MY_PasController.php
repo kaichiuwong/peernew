@@ -70,6 +70,11 @@ class MY_PasController extends CI_Controller
         );
         $this->session->set_userdata('logged_in', $session_data);
     }
+
+    public function current_sem() 
+    {
+        return '202001';
+    }
     
     public function refresh_user_session_info()
     {
