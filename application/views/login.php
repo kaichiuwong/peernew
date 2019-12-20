@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Groupy - Login</title>
+  <title><?php echo SYSTEM_FRIENDLY_NAME;?> - Login</title>
 
   <!-- Custom fonts for this template-->
   <link href="<?php echo base_url(); ?>/assets/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -36,7 +36,7 @@
               <div class="col-lg-12">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Groupy</h1>
+                    <h1 class="h4 text-gray-900 mb-4 font-weight-bold"><?php echo SYSTEM_FRIENDLY_NAME;?></h1>
                   </div>
                   <?php
                   if (!empty($error_message)) {

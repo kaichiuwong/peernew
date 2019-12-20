@@ -84,7 +84,9 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-defined('EXT')      OR define('EXT', '.php');
-defined('RECORDS_PER_PAGE') OR define('RECORDS_PER_PAGE', 100);
-defined('USER_ALLOW_FAIL_LOGIN')      OR define('USER_ALLOW_FAIL_LOGIN', 3);
-defined('SESSION_EXPIRE_TIME')      OR define('SESSION_EXPIRE_TIME', 3600);
+
+defined('SYSTEM_FRIENDLY_NAME')      OR define('SYSTEM_FRIENDLY_NAME', 'Groupy');
+defined('EXT')                       OR define('EXT', '.php');
+defined('RECORDS_PER_PAGE')          OR define('RECORDS_PER_PAGE', 100);
+defined('USER_ALLOW_FAIL_LOGIN')     OR define('USER_ALLOW_FAIL_LOGIN', 3);
+defined('SESSION_EXPIRE_TIME')       OR define('SESSION_EXPIRE_TIME', 3600);
