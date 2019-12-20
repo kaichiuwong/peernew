@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2019 at 05:17 PM
+-- Generation Time: Dec 20, 2019 at 01:41 PM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -31,9 +31,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_get_student_assignment_list`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_student_assignment_list`(
-    IN username VARCHAR(10)
-)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_student_assignment_list`(IN `username` VARCHAR(10))
 BEGIN
     SELECT a.*,fn_get_unit_code(a.unit_id) as unit
     FROM   assignment a, unit_enrol ue
@@ -45,10 +43,7 @@ END$$
 -- Functions
 --
 DROP FUNCTION IF EXISTS `fn_get_unit_code`$$
-CREATE DEFINER=`root`@`localhost` FUNCTION `fn_get_unit_code`(
-    unit_id INT
-) RETURNS varchar(20) CHARSET utf8
-    DETERMINISTIC
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_get_unit_code`(`unit_id` INT) RETURNS varchar(20) CHARSET utf8
 BEGIN
  DECLARE rtnstr VARCHAR(20);
  
@@ -62,7 +57,6 @@ END$$
 
 DROP FUNCTION IF EXISTS `fn_is_allow_view_assignment`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `fn_is_allow_view_assignment`(`username` VARCHAR(10), `asg_id` INT) RETURNS int(11)
-    DETERMINISTIC
 BEGIN
  DECLARE rtn_result INT DEFAULT 0;
   
@@ -96,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `assignment` (
   `public` int(11) NOT NULL DEFAULT '0' COMMENT '0 - private, 1 - open to public',
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `assignment`
@@ -124,23 +118,23 @@ CREATE TABLE IF NOT EXISTS `assignment_date` (
   `last_upd_by` varchar(50) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
 
 --
 -- Dumping data for table `assignment_date`
 --
 
 INSERT INTO `assignment_date` (`id`, `asg_id`, `key`, `description`, `date_value`, `last_upd_by`, `create_time`, `last_upd_time`) VALUES
-(2, 11, 'ASG_OPEN', 'Assignment open to public date', '2019-12-01 00:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
-(3, 11, 'ASG_CLOSE', 'Assignment close from public date', '2019-12-31 23:59:59', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
-(4, 11, 'GRP_OPEN', 'Group Selection open date', '2019-12-02 00:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
-(5, 11, 'GRP_CLOSE', 'Group Selection close date', '2019-12-06 00:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
+(2, 11, 'ASG_OPEN', 'Assignment Release', '2019-11-16 09:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 23:19:06'),
+(3, 11, 'ASG_CLOSE', 'Assignment Close', '2019-12-31 23:55:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 23:09:18'),
+(4, 11, 'GRP_OPEN', 'Group Selection open date', '2019-12-02 09:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 23:19:23'),
+(5, 11, 'GRP_CLOSE', 'Group Selection close date', '2019-12-06 09:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 23:19:36'),
 (6, 11, 'SUBMISSION_OPEN', 'Assignment Submission Open Date', '2019-12-07 08:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
 (7, 11, 'SUBMISSION_DEADLINE', 'Assignment Submission Deadline', '2019-12-20 17:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
-(8, 11, 'SUBMISSION_CLOSE', 'Assignment Submission Close Date', '2019-12-20 23:59:59', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
-(9, 11, 'SELF_REVIEW_OPEN', 'Self review open date', '2019-12-21 00:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
+(8, 11, 'SUBMISSION_CLOSE', 'Assignment Submission Close Date', '2019-12-20 23:55:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 23:20:26'),
+(9, 11, 'SELF_REVIEW_OPEN', 'Self review open date', '2019-12-21 09:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 23:19:51'),
 (10, 11, 'SELF_REVIEW_CLOSE', 'Self review close date', '2019-12-28 17:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
-(11, 11, 'PEER_REVIEW_OPEN', 'Peer review open date', '2019-12-28 00:00:00', 'admin', '2019-12-17 00:48:10', '2019-12-17 00:48:10'),
+(11, 11, 'PEER_REVIEW_OPEN', 'Peer review open date', '2019-12-28 09:00:00', 'admin', '2019-12-17 00:48:10', '2019-12-17 23:20:06'),
 (12, 11, 'PEER_REVIEW_CLOSE', 'Peer review close date', '2019-12-31 17:00:00', 'admin', '2019-12-17 00:48:10', '2019-12-17 00:48:10');
 
 -- --------------------------------------------------------
@@ -362,7 +356,7 @@ CREATE TABLE IF NOT EXISTS `assignment_topic` (
   `max` int(11) NOT NULL DEFAULT '0',
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=796 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=797 ;
 
 --
 -- Dumping data for table `assignment_topic`
@@ -827,7 +821,7 @@ CREATE TABLE IF NOT EXISTS `assignment_topic_allocation` (
   `topic_id` int(11) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=267 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=268 ;
 
 --
 -- Dumping data for table `assignment_topic_allocation`
@@ -1093,9 +1087,29 @@ INSERT INTO `assignment_topic_allocation` (`id`, `asg_id`, `user_id`, `topic_id`
 (257, 12, 'user600', 436, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
 (258, 12, 'user601', 264, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
 (262, 1, 'user1', 5, '2019-12-12 18:01:58', '2019-12-12 18:01:58'),
-(264, 11, 'user1', 73, '2019-12-13 17:50:43', '2019-12-13 17:50:43'),
 (265, 11, 'user2', 73, '2019-12-14 00:20:21', '2019-12-14 00:20:21'),
-(266, 11, 'user3', 73, '2019-12-14 00:20:33', '2019-12-14 00:20:33');
+(266, 11, 'user3', 73, '2019-12-14 00:20:33', '2019-12-14 00:20:33'),
+(267, 11, 'user1', 73, '2019-12-17 23:24:53', '2019-12-17 23:24:53');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `semester`
+--
+
+DROP TABLE IF EXISTS `semester`;
+CREATE TABLE IF NOT EXISTS `semester` (
+  `sem` varchar(10) NOT NULL,
+  `description` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `semester`
+--
+
+INSERT INTO `semester` (`sem`, `description`) VALUES
+('202001', '2020 Semester 1'),
+('202002', '2020 Semester 2');
 
 -- --------------------------------------------------------
 
@@ -1339,6 +1353,7 @@ DROP TABLE IF EXISTS `unit`;
 CREATE TABLE IF NOT EXISTS `unit` (
 `id` int(11) NOT NULL,
   `unit_code` varchar(20) NOT NULL,
+  `sem` varchar(10) NOT NULL,
   `unit_description` varchar(500) DEFAULT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
@@ -1348,14 +1363,14 @@ CREATE TABLE IF NOT EXISTS `unit` (
 -- Dumping data for table `unit`
 --
 
-INSERT INTO `unit` (`id`, `unit_code`, `unit_description`, `create_time`, `last_upd_time`) VALUES
-(1, 'KIT711', 'Network Security Techniques and Technology', '2019-11-17 22:41:43', '2019-11-17 22:41:43'),
-(4, 'KIT111', 'Data Networks and Security', '2019-11-17 23:28:58', '2019-11-17 23:28:58'),
-(5, 'KIT501', 'ICT Systems Administration Fundamentals', '2019-11-17 23:28:58', '2019-11-17 23:28:58'),
-(6, 'KIT201', 'Data Networks and Security', '2019-11-17 23:29:51', '2019-11-17 23:29:51'),
-(7, 'KIT301', 'ICT Project A', '2019-12-05 15:34:57', '2019-12-05 15:34:57'),
-(8, 'KIT302', 'ICT Project B', '2019-12-05 15:35:05', '2019-12-05 15:35:05'),
-(9, 'KIT503', 'ICT Professional Practices and Project Management', '2019-12-05 15:35:46', '2019-12-05 15:35:46');
+INSERT INTO `unit` (`id`, `unit_code`, `sem`, `unit_description`, `create_time`, `last_upd_time`) VALUES
+(1, 'KIT711', '202001', 'Network Security Techniques and Technology', '2019-11-17 22:41:43', '2019-11-17 22:41:43'),
+(4, 'KIT111', '202001', 'Data Networks and Security', '2019-11-17 23:28:58', '2019-11-17 23:28:58'),
+(5, 'KIT501', '202001', 'ICT Systems Administration Fundamentals', '2019-11-17 23:28:58', '2019-11-17 23:28:58'),
+(6, 'KIT201', '202001', 'Data Networks and Security', '2019-11-17 23:29:51', '2019-11-17 23:29:51'),
+(7, 'KIT301', '202001', 'ICT Project A', '2019-12-05 15:34:57', '2019-12-05 15:34:57'),
+(8, 'KIT302', '202001', 'ICT Project B', '2019-12-05 15:35:05', '2019-12-05 15:35:05'),
+(9, 'KIT503', '202001', 'ICT Professional Practices and Project Management', '2019-12-05 15:35:46', '2019-12-05 15:35:46');
 
 -- --------------------------------------------------------
 
@@ -2184,12 +2199,12 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `id`, `email`, `permission_level`, `locked`, `create_time`, `login_fail_cnt`, `last_login_time`, `reset_token`, `reset_time`, `last_upd_time`) VALUES
-('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2019-12-17 00:19:07', NULL, NULL, '2019-12-01 00:17:48'),
+('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2019-12-17 20:16:56', NULL, NULL, '2019-12-01 00:17:48'),
 ('staff1', '$1$346d40d8$806o0kWTuSUlndg8x0jZ81', '$1$346d40d85be1653b1b20eee806c93967', 'Account 1', 'Staff', '03007563', 'kaichiu.wong@utas.edu.au', 30, 0, '2019-11-15 22:34:45', 0, '2019-11-26 23:10:21', NULL, NULL, '2019-11-18 01:20:02'),
 ('staff2', '$1$9a121110$nYumg2W2TIJBS4FyX.I111', '$1$9a121110f95b57330d829119e6b09fef', 'Account 2', 'Staff', '000000', 'teacher@aaa.com', 30, 1, '2019-11-19 00:41:38', 0, '2019-11-20 02:58:19', NULL, NULL, '2019-11-19 00:41:38'),
 ('staff3', '$1$f14a37c0$xSu42pAzI3/.rsvzJL05L0', '$1$f14a37c00eae2ddf8f1303f98008e11f', 'Account 3', 'Staff', '32434', 'sdffe@srewrwe.com', 30, 1, '2019-12-02 02:11:50', 0, NULL, NULL, NULL, NULL),
 ('staff4', '$1$2bb3309b$uhfCK4zeU7Wm.5kZrcijT/', '$1$2bb3309b3a3f88a9b0bd5b219401a379', 'Account 4', 'Staff', '1432542', 'sdsfejoi@sdofreoi.com', 30, 1, '2019-12-02 02:13:52', 0, NULL, NULL, NULL, NULL),
-('user1', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'Account 1', 'Student', '492085', 'kcwong3@utas.edu.au', 10, 0, '2019-11-15 22:34:45', 0, '2019-12-17 00:11:23', NULL, NULL, '2019-11-18 01:22:08'),
+('user1', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'Account 1', 'Student', '492085', 'kcwong3@utas.edu.au', 10, 0, '2019-11-15 22:34:45', 0, '2019-12-17 21:03:43', NULL, NULL, '2019-11-18 01:22:08'),
 ('user10', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 10', 'Student', '169146', 'user10@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user100', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 100', 'Student', '899188', 'user100@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user101', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 101', 'Student', '810995', 'user101@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
@@ -2921,6 +2936,12 @@ ALTER TABLE `assignment_topic_allocation`
  ADD PRIMARY KEY (`id`), ADD KEY `asg_id` (`asg_id`), ADD KEY `user_id` (`user_id`), ADD KEY `topic_id` (`topic_id`);
 
 --
+-- Indexes for table `semester`
+--
+ALTER TABLE `semester`
+ ADD PRIMARY KEY (`sem`);
+
+--
 -- Indexes for table `submission`
 --
 ALTER TABLE `submission`
@@ -2936,7 +2957,7 @@ ALTER TABLE `submission_log`
 -- Indexes for table `unit`
 --
 ALTER TABLE `unit`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `sem` (`sem`);
 
 --
 -- Indexes for table `unit_enrol`
@@ -2964,12 +2985,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `assignment`
 --
 ALTER TABLE `assignment`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `assignment_date`
 --
 ALTER TABLE `assignment_date`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT for table `assignment_feedback`
 --
@@ -2989,12 +3010,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
 -- AUTO_INCREMENT for table `assignment_topic`
 --
 ALTER TABLE `assignment_topic`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=796;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=797;
 --
 -- AUTO_INCREMENT for table `assignment_topic_allocation`
 --
 ALTER TABLE `assignment_topic_allocation`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=267;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=268;
 --
 -- AUTO_INCREMENT for table `submission`
 --
@@ -3067,6 +3088,12 @@ ALTER TABLE `submission`
 ADD CONSTRAINT `asg_id_submission` FOREIGN KEY (`asg_id`) REFERENCES `assignment` (`id`),
 ADD CONSTRAINT `assg_id_topic_id_submission` FOREIGN KEY (`topic_id`) REFERENCES `assignment_topic` (`id`),
 ADD CONSTRAINT `username_submission` FOREIGN KEY (`user_id`) REFERENCES `user` (`username`);
+
+--
+-- Constraints for table `unit`
+--
+ALTER TABLE `unit`
+ADD CONSTRAINT `sem_unit_fk` FOREIGN KEY (`sem`) REFERENCES `semester` (`sem`);
 
 --
 -- Constraints for table `unit_enrol`
