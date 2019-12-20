@@ -8,9 +8,6 @@ class Assignmentadmin extends MY_PasController {
         $this->load->model('Assignment_model');
     } 
 
-    /*
-     * Listing of assignments
-     */
     function index()
     {
         if ($this->check_permission(20)) {
@@ -22,9 +19,6 @@ class Assignmentadmin extends MY_PasController {
         }
     }
 
-    /*
-     * Adding a new assignment
-     */
     function add()
     {
         if ($this->check_permission(20)) {
@@ -75,9 +69,6 @@ class Assignmentadmin extends MY_PasController {
         }
     }  
 
-    /*
-     * Editing a assignment
-     */
     function edit($asg_id)    {
         if ($this->check_permission(20)) {
             $data['asg_id'] = $asg_id;
@@ -124,9 +115,6 @@ class Assignmentadmin extends MY_PasController {
         }
     } 
 
-    /*
-     * Deleting assignment
-     */
     function remove($asg_id)
     {
         if ($this->check_permission(20)) {

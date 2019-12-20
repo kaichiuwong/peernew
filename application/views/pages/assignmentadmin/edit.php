@@ -56,7 +56,7 @@
                     {
                         $selected = ($unit['id'] == $assignment['unit_id']) ? ' selected="selected"' : "";
 
-                        echo '<option value="'.$unit['id'].'" '.$selected.'>'.$unit['unit_code'].' - '. $unit['unit_description'].'</option>';
+                        echo '<option value="'.$unit['id'].'" '.$selected.'>'.$unit['unit_code']. ' (' . $unit['sem'] .') - '. $unit['unit_description'].'</option>';
                     } 
                     ?>
                 </select>

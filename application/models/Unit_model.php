@@ -14,7 +14,7 @@ class Unit_model extends CI_Model
 
     function get_all_units()
     {
-        $this->db->order_by('unit_code', 'asc');
+        $this->db->order_by('unit_code asc, sem asc');
         return $this->db->get('unit')->result_array();
     }
 

@@ -22,6 +22,7 @@
             <thead>
                 <tr>
                     <th>Unit</th>
+                    <th>Semester</th>
                     <th>Type</th>
                     <th>Title</th>
                     <th>Group Count</th>
@@ -34,6 +35,7 @@
             <?php foreach($assignments as $a){ ?>
                 <tr>
                     <td><?php echo $a['unit_code']; ?></td>
+                    <td><?php echo $a['sem']; ?></td>
                     <td><?php echo $a['type'] ? "Group Assignment" : "Individual Assignment"; ?></td>
                     <td><?php echo $a['title']; ?></td>
                     <td><?php echo $a['topic_count']; ?></td>

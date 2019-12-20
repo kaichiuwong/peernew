@@ -10,7 +10,7 @@
           <li class="breadcrumb-item"><a href="<?php echo site_url('Assignmentadmin'); ?>">Assignment List</a></li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('Assignmentadmin/edit/'.$asg_id); ?>">Edit Info</a></li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('assignment_date/index/'.$asg_id); ?>">Timeline</a></li>
-          <li class="breadcrumb-item"><a href="<?php echo site_url('Assignment_topic/edit/'.$asg_id); ?>">Group List</a></li>
+          <li class="breadcrumb-item"><a href="<?php echo site_url('Assignment_topic/index/'.$asg_id); ?>">Group List</a></li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('student_list/index/'.$asg_id); ?>">Student List</a></li>
           <li class="breadcrumb-item <?php echo $type=="self"?"active":"" ;?>"><a href="<?php echo site_url('assignment_question/index/'.$asg_id).'/self'; ?>">Self Evaluation</a></li>
           <li class="breadcrumb-item <?php echo $type=="peer"?"active":"" ;?>"><a href="<?php echo site_url('assignment_question/index/'.$asg_id).'/peer'; ?>">Peer Review</a></li>

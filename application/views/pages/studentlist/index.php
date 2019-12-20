@@ -41,7 +41,7 @@
             <tbody>
                 <?php foreach($students as $a){ ?>
                 <tr>
-                    <td><?php echo $a['sid']; ?></td>
+                    <td><a href="<?php echo site_url('Member/profile/'.$a['username']); ?>"><?php echo $a['sid']; ?></a></td>
                     <td><?php echo $a['username']; ?></td>
                     <td><?php echo $a['first_name'] . ' ' . $a['last_name'] ; ?></td>
                     <td>
