@@ -19,6 +19,28 @@ class Assignmentadmin extends MY_PasController {
         }
     }
 
+    function info($asg_id)
+    {
+        if ($this->check_permission(20) ) {
+            $data['asg_id'] = $asg_id;
+            $data['assignment'] = $this->Assignment_model->get_assignment($asg_id);
+            
+            if(isset($data['assignment']['id']))
+            {
+                $new_session_data = array('asg_id' => $asg_id, 'asg_header' => $data['assignment']['unit_code'] . ' - ' . $data['assignment']['title']);
+                $this->session->set_userdata($new_session_data);
+                
+                $data['_view'] = 'pages/assignmentadmin/info';
+                $this->load_header($data);
+                $this->load->view('templates/main',$data);
+                $this->load_footer($data);
+            }
+            else {
+                redirect('Assignment');
+            }
+        }
+    } 
+
     function add()
     {
         if ($this->check_permission(20)) {
@@ -94,7 +116,7 @@ class Assignmentadmin extends MY_PasController {
                     );
 
                     $this->Assignment_model->update_assignment($asg_id,$params);            
-                    redirect('Assignmentadmin/index/');
+                    redirect('Assignmentadmin/info/'.$asg_id);
                 }
                 else
                 {
