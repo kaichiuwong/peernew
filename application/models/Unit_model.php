@@ -14,8 +14,8 @@ class Unit_model extends CI_Model
 
     function get_all_units()
     {
-        $this->db->order_by('unit_code asc, sem asc');
-        return $this->db->get('unit')->result_array();
+        $query = $this->db->query("SELECT id, unit_code, fn_sem_short_desc(sem) as sem, sem as sem_key, unit_description FROM `unit` ORDER BY unit_code, sem; ");
+        return $query->result_array();
     }
 
     function add_unit($params)

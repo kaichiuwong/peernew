@@ -43,11 +43,11 @@
                     <td><?php echo $a['public']?'<i class="fas fa-users"></i> Public':'<i class="fas fa-lock"></i> Private'; ?></td>
                     <td>
                         <a href="<?php echo site_url('Assignmentadmin/info/'.$a['id']); ?>" class="btn btn-primary btn-sm">View Info</a> 
-                        <a href="<?php echo site_url('Assignmentadmin/remove/'.$a['id']); ?>" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="<?php echo site_url('Assignmentadmin/remove/'.$a['id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are your confirm to remove this assignment?');">Delete</a>
                         <?php if ($a['public']): ?>
                         <a href="<?php echo site_url('Assignmentadmin/public_switch/'.$a['id']); ?>" class="btn btn-dark btn-sm">Make Private</a> 
                         <?php else: ?>
-                        <a href="<?php echo site_url('Assignmentadmin/public_switch/'.$a['id']); ?>" class="btn btn-success btn-sm">Make Public</a> 
+                        <a href="<?php echo site_url('Assignmentadmin/public_switch/'.$a['id']); ?>" class="btn btn-success btn-sm" onclick="return confirm('Are your confirm to release this assignment to students?');">Make Public</a> 
                         <?php endif; ?>
                     </td>
                 </tr>

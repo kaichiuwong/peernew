@@ -33,12 +33,14 @@
             <?php echo form_open('assignment_question/copy_question/'); ?>
             <span class="input-group-btn">
                 <a href="<?php echo site_url('assignment_question/add/'.$asg_id.'/'.$type); ?>" class="btn btn-success btn-sm">Create Questions</a>
-                <a href="<?php echo site_url('assignment_question/remove_all/'.$asg_id.'/'.$type); ?>" class="btn btn-danger btn-sm">Clear Questions</a>
+                <a href="<?php echo site_url('assignment_question/remove_all/'.$asg_id.'/'.$type); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are your confirm to remove all questions under this assignment?');">Clear Questions</a>
             </span>
             <select name="from_id" class="form-control-sm" required>
                 <option value="" disabled selected>*** Copy questions from other assignment ***</option>
                 <?php foreach($all_assignments as $asg){ ?>
-                  <option value="<?php echo $asg['id']; ?>" ><?php echo $asg['unit_code']; ?> - <?php echo $asg['title']; ?></option>
+                  <?php if ($asg['id'] !=$asg_id) : ?>
+                  <option value="<?php echo $asg['id']; ?>" ><?php echo $asg['unit_code']; ?> (<?php echo $asg['sem']; ?>) - <?php echo $asg['title']; ?></option>
+                  <?php endif; ?>
                 <?php } ?>
             </select>
             <span class="input-group-btn">
