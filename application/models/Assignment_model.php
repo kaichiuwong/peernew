@@ -86,4 +86,13 @@ class Assignment_model extends CI_Model
         $query = $this->db->query($query_str);
         return $this->db->affected_rows();
     }
+
+    function student_summary($username) {
+        $params = array("username"=> $username);    
+        $query = $this->db->query("CALL `sp_get_question_feedback`(?) ; " , $params);
+        $result = $query->result_array();
+        mysqli_next_result( $this->db->conn_id );
+        $query->free_result(); 
+        return $result;
+    }
 }

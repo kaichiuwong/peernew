@@ -26,9 +26,9 @@
         <table class="table table-head-fixed table-hover enable-datatable">
             <thead>
                 <tr>
+                    <th>Student ID</th>
                     <th>Username</th>
                     <th>Student Name</th>
-                    <th>Student ID</th>
                     <th>Email</th>
                     <th>Status</th>
                     <th>Permission Level</th>
@@ -38,9 +38,9 @@
             <tbody>
                 <?php foreach($user_list as $a){ ?>
                 <tr>
+                    <td><a href="<?php echo site_url('Member/full_profile/'.$a['username']); ?>"><?php echo $a['id']; ?></a></td>
                     <td><?php echo $a['username']; ?></td>
                     <td><?php echo $a['first_name'] . ' ' . $a['last_name'] ; ?></td>
-                    <td><?php echo $a['id']; ?></td>
                     <td><?php echo $a['email']; ?></td>
                     <td><?php echo $a['locked']? "<span class='text-danger text-bold'>Locked</span>":"Normal";?></td>
                     <td><?php echo get_permission_level_desc($a['permission_level']); ?></td>

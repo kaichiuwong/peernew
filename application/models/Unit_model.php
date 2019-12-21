@@ -52,7 +52,7 @@ class Unit_model extends CI_Model
 
     function get_list_by_student($username = null) {
         if ($username) {
-            $query = $this->db->query("SELECT * FROM `sv_unit_student` where username='$username' ORDER BY username, unit_code; ");
+            $query = $this->db->query("SELECT * FROM `sv_unit_student` where username='$username' ORDER BY unit_code; ");
         }
         else {
             $query = $this->db->query("SELECT * FROM `sv_unit_student` ORDER BY unit_code; ");
