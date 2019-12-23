@@ -23,6 +23,16 @@ class Assignment_model extends CI_Model
         $this->db->order_by('id', 'desc');
         return $this->db->get('sv_assignment_staff')->result_array();
     }
+
+    function get_all_assignments_by_unit($unit_code, $sem = null)
+    {
+        $this->db->where('unit_code', $unit_code);
+        if ($sem) {
+            $this->db->where('sem', $sem);
+        }
+        $this->db->order_by('sem desc, id asc');
+        return $this->db->get('sv_assignment_staff')->result_array();
+    }
     
     function get_all_assignments_student($username, $sem)
     {

@@ -37,7 +37,24 @@
     </div>
     <div class="card-body">
         <div class="col-lg-12">
-
+          <table class="table table-sm table-head-fixed table-hover enable-datatable">
+              <thead>
+                  <tr>
+                      <th>Unit</th>
+                      <th>Semester</th>
+                      <th>Title</th>
+                  </tr>
+              </thead>
+              <tbody>
+              <?php foreach($enroll_unit as $a):  ?>
+                  <tr>
+                      <td><a href="<?php echo site_url('assignmentadmin/index/'.$a['unit_code']); ?>"><?php echo $a['unit_code']; ?></a></td>
+                      <td><?php echo $a['sem']; ?></td>
+                      <td><?php echo $a['unit_description']; ?></td>
+                  </tr>
+              <?php endforeach; ?>
+              </tbody>
+          </table>
         </div>
     </div>
 </div>
@@ -50,7 +67,24 @@
     </div>
     <div class="card-body">
         <div class="col-lg-12">
-
+          <table class="table table-sm table-head-fixed table-hover enable-datatable">
+              <thead>
+                  <tr>
+                      <th>Unit</th>
+                      <th>Semester</th>
+                      <th>Title</th>
+                  </tr>
+              </thead>
+              <tbody>
+              <?php foreach($incharge_unit as $a):  ?>
+                  <tr>
+                      <td><a href="<?php echo site_url('assignmentadmin/index/'.$a['unit_code']); ?>"><?php echo $a['unit_code']; ?></a></td>
+                      <td><?php echo $a['sem']; ?></td>
+                      <td><?php echo $a['unit_description']; ?></td>
+                  </tr>
+              <?php endforeach; ?>
+              </tbody>
+          </table>
         </div>
     </div>
 </div>

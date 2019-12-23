@@ -105,18 +105,22 @@ class MY_PasController extends CI_Controller
         $this->session->set_userdata('logged_in', $session_data);
     }
     
-    public function check_permission($min_level) {
+    public function check_permission($min_level, $redirect = true) {
         
         if (!$this->is_session_valid()) {
-            redirect('Usercontrol');
+            if ($redirect) {
+                redirect('Usercontrol');
+            }
             return false;
         }
         else {
             if (!$this->is_permitted($min_level)) {
-                $this->load_header();
-                $data['_view'] = 'pages/deny';
-                $this->load->view('templates/main',$data);
-                $this->load_footer();
+                if ($redirect) {
+                    $this->load_header();
+                    $data['_view'] = 'pages/deny';
+                    $this->load->view('templates/main',$data);
+                    $this->load_footer();
+                }
                 return false;
             }
         }

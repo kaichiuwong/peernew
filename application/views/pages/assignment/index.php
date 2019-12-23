@@ -21,6 +21,7 @@
             <thead>
                 <tr>
                     <th>Unit</th>
+                    <th>Semester</th>
                     <th>Title</th>
                     <th>Actions</th>
                 </tr>
@@ -29,6 +30,7 @@
             <?php foreach($assignments as $a){ ?>
                 <tr>
                     <td><?php echo $a['unit_code']; ?></td>
+                    <td><?php echo $a['sem']; ?></td>
                     <td><?php echo $a['asg_title']; ?></td>
                     <td>
                         <a href="<?php echo site_url('assignment/info/'.$a['asg_id']); ?>" class="btn btn-info btn-sm">Select</a> 

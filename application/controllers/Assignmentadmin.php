@@ -8,10 +8,17 @@ class Assignmentadmin extends MY_PasController {
         $this->load->model('Assignment_model');
     } 
 
-    function index()
+    function index($unit_code = null)
     {
         if ($this->check_permission(20)) {
-            $data['assignments'] = $this->Assignment_model->get_all_assignments();
+            if ($unit_code) {
+                $data['assignments'] = $this->Assignment_model->get_all_assignments_by_unit($unit_code);
+                $data['unit'] = strtoupper($unit_code);
+            }
+            else {
+                $data['assignments'] = $this->Assignment_model->get_all_assignments();
+                $data['unit'] = null;
+            }
             $data['_view'] = 'pages/assignmentadmin/index';
             $this->load_header($data);
             $this->load->view('templates/main',$data);

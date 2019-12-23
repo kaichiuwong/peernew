@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Assignment Management</h1>
+        <h1><?php echo ($unit)?$unit." - " : ""; ?>Assignment Management</h1>
       </div>
     </div>
   </div><!-- /.container-fluid -->
@@ -32,17 +32,16 @@
                 </tr>
             </thead>
             <tbody>
-            <?php foreach($assignments as $a){ ?>
+            <?php foreach($assignments as $a):?>
                 <tr>
                     <td><?php echo $a['unit_code']; ?></td>
                     <td><?php echo $a['sem']; ?></td>
-                    <td><?php echo $a['title']; ?></td>
+                    <td><a href="<?php echo site_url('Assignmentadmin/info/'.$a['id']); ?>"><?php echo $a['title']; ?></a></td>
                     <td><?php echo $a['type'] ? "Group Assignment" : "Individual Assignment"; ?></td>
-                    <td><?php echo $a['topic_count']; ?></td>
-                    <td><?php echo $a['student_count']; ?></td>
+                    <td><a href="<?php echo site_url('Assignment_topic/index/'.$a['id']); ?>"><?php echo $a['topic_count']; ?></a></td>
+                    <td><a href="<?php echo site_url('Student_list/index/'.$a['id']); ?>"><?php echo $a['student_count']; ?></a></td>
                     <td><?php echo $a['public']?'<i class="fas fa-users"></i> Public':'<i class="fas fa-lock"></i> Private'; ?></td>
                     <td>
-                        <a href="<?php echo site_url('Assignmentadmin/info/'.$a['id']); ?>" class="btn btn-primary btn-sm">View Info</a> 
                         <a href="<?php echo site_url('Assignmentadmin/remove/'.$a['id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are your confirm to remove this assignment?');">Delete</a>
                         <?php if ($a['public']): ?>
                         <a href="<?php echo site_url('Assignmentadmin/public_switch/'.$a['id']); ?>" class="btn btn-dark btn-sm">Make Private</a> 
@@ -51,7 +50,7 @@
                         <?php endif; ?>
                     </td>
                 </tr>
-            <?php } ?>
+            <?php endforeach; ?>
             </tbody>
         </table>
       </div>
