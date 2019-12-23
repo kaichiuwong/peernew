@@ -24,13 +24,13 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="<?php echo site_url('Assignmentadmin'); ?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-table nav-icon"></i>
                   <p>Assignment List</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="<?php echo site_url('Assignmentadmin/add'); ?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-table nav-icon"></i>
                   <p>Create Assignment</p>
                 </a>
               </li>
@@ -46,21 +46,15 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="../tables/simple.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Simple Tables</p>
+                <a href="<?php echo site_url('Marking'); ?>" class="nav-link">
+                  <i class="fas fa-edit nav-icon"></i>
+                  <p>Initial Marking</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../tables/data.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>DataTables</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="../tables/jsgrid.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>jsGrid</p>
+                <a href="<?php echo site_url('Marking/download'); ?>" class="nav-link">
+                  <i class="fas fa-edit nav-icon"></i>
+                  <p>Final Marking</p>
                 </a>
               </li>
             </ul>

@@ -28,7 +28,7 @@ class Assignment_model extends CI_Model
     {
         $this->db->where('unit_code', $unit_code);
         if ($sem) {
-            $this->db->where('sem', $sem);
+            $this->db->where('sem_key', $sem);
         }
         $this->db->order_by('sem desc, id asc');
         return $this->db->get('sv_assignment_staff')->result_array();
@@ -40,7 +40,7 @@ class Assignment_model extends CI_Model
         if(isset($username) && !empty($username))
         {
             $this->db->where('username',$username);
-            $this->db->where('sem',$sem);
+            $this->db->where('sem_key',$sem);
             return $this->db->get('sv_assignemnt_student')->result_array();
         }
         return array();
