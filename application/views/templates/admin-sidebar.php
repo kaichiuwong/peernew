@@ -46,44 +46,15 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo site_url('Marking'); ?>" class="nav-link">
+                <a href="<?php echo site_url('Marking/group'); ?>" class="nav-link">
                   <i class="fas fa-edit nav-icon"></i>
-                  <p>Initial Marking</p>
+                  <p>Group Marking</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo site_url('Marking/download'); ?>" class="nav-link">
+                <a href="<?php echo site_url('Marking/individual'); ?>" class="nav-link">
                   <i class="fas fa-edit nav-icon"></i>
-                  <p>Final Marking</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
-              <p>
-                Result
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="../charts/chartjs.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>ChartJS</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="../charts/flot.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Flot</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="../charts/inline.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Inline</p>
+                  <p>Individual Marking</p>
                 </a>
               </li>
             </ul>
