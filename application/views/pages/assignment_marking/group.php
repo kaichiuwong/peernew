@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1><?php echo ($unit)?$unit." - " : ""; ?>Assignment Management</h1>
+        <h1><?php echo ($unit)?$unit." - " : ""; ?>Group Marking</h1>
       </div>
     </div>
   </div><!-- /.container-fluid -->
@@ -17,7 +17,6 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body table-responsive p-3">
-      <a href="<?php echo site_url('Assignmentadmin/add'); ?>" class="btn btn-success btn-sm">Create Assignment</a> 
         <table class="table table-head-fixed table-hover enable-datatable">
             <thead>
                 <tr>
