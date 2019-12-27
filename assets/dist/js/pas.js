@@ -43,6 +43,7 @@ $(function () {
         "ordering": true,
         "info": true,
         "autoWidth": false,
+        "pageLength": 100
     });
 
     $(".enable-editor").summernote({

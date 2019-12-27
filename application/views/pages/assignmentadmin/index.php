@@ -18,7 +18,7 @@
       <!-- /.card-header -->
       <div class="card-body table-responsive p-3">
       <a href="<?php echo site_url('Assignmentadmin/add'); ?>" class="btn btn-success btn-sm">Create Assignment</a> 
-        <table class="table table-head-fixed table-hover enable-datatable">
+        <table class="table table-sm table-head-fixed table-hover enable-datatable">
             <thead>
                 <tr>
                     <th>Unit</th>

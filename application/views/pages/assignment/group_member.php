@@ -9,7 +9,7 @@
         <tbody>
             <?php foreach($assignment_topics as $a){ ?>
             <tr>
-                <td><a href="<?php echo site_url('Member/profile/'.$a['user_id']); ?>"><?php echo $a['first_name']; ?> <?php echo $a['last_name']; ?></a></td>
+                <td><a href="<?php echo site_url('Member/profile/'.$a['user_id']); ?>"><?php echo $a['first_name']; ?> <?php echo $a['last_name']; ?> (<?php echo $a['user_id']; ?>)</a></td>
             </tr>
             <?php } ?>
         </tbody>

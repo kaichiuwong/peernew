@@ -17,7 +17,7 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body table-responsive p-3">
-        <table class="table table-head-fixed table-hover enable-datatable">
+        <table class="table table-sm table-head-fixed table-hover enable-datatable">
             <thead>
                 <tr>
                     <th>Unit</th>

@@ -23,7 +23,7 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body table-responsive p-3">
-        <table class="table table-head-fixed table-hover enable-datatable">
+        <table class="table table-sm table-head-fixed table-hover enable-datatable">
             <thead>
                 <tr>
                     <th>Student ID</th>
@@ -49,7 +49,7 @@
                         <div class="input-group">
                             <input type="hidden" name="username" value="<?php echo $a['username']; ?>" />
                             <span class="input-group-btn">
-                                <button class="btn btn-<?php echo $a['locked']? "success":"danger";?> btn-sm" type="submit" tabindex="-1"><?php echo $a['locked']? "Unlock":"Lock";?></button>
+                                <button class="btn btn-sm btn-<?php echo $a['locked']? "success":"danger";?> btn-sm" type="submit" tabindex="-1"><?php echo $a['locked']? "Unlock":"Lock";?></button>
                             </span>
                         </div>
                     <?php echo form_close(); ?>

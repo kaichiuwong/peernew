@@ -18,8 +18,10 @@ class Marking extends MY_PasController {
                 $new_session_data = array('asg_id' => $asg_id, 'asg_header' => $data['assignment']['unit_code'] . ' - ' . $data['assignment']['title']);
                 $this->session->set_userdata($new_session_data);
 
-                $this->load->model('Assignment_topic_model');
-                $data['assignment_topics'] = $this->Assignment_topic_model->get_assignment_topic_by_asgid($asg_id);
+                $this->load->model('Submission_model');
+                $data['assignment_topics'] = $this->Submission_model->get_group_submission($asg_id);
+                $this->load->model('Assignment_date_model');
+                $data['asg_deadline'] = $this->Assignment_date_model->get_date_by_asg_id_key($asg_id, 'SUBMISSION_DEADLINE');
                 $data['_view'] = 'pages/assignment_marking/group_submission';
             }
             else {
