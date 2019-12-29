@@ -43,4 +43,44 @@ class Marking extends MY_PasController {
         }
     }
 
+    function save_group_submission()
+    {
+        header('Content-Type: application/json');
+        $done = false;
+        $http_code = 500;
+        $score_id = null;
+        if ($this->check_permission(20, false) ) {
+            if (isset($_POST['asg_id']) && isset($_POST['topic_id']) ) {
+                $this->load->model('Assignment_mark_model');
+                $params = array(
+                    'asg_id' => $this->input->post('asg_id'),
+                    'group_id' => $this->input->post('topic_id'),
+                    'score' => $this->input->post('score'),
+                    'remark' => $this->input->post('remark')
+                );
+                if (isset($_POST['score_id'])) {
+                    if ( !empty($_POST['score_id']) ) {
+                        $score_id = $this->input->post('score_id');
+                    }
+                }
+                $current_user = $this->get_login_user();
+                if (!$score_id) 
+                {
+                    $score_id = $this->Assignment_mark_model->create_group_mark($current_user, $params);
+                }
+                else 
+                {
+                    $this->Assignment_mark_model->update_group_mark($score_id, $current_user, $params);
+                }
+                $done = true;
+                $http_code = 200;
+            }
+        }
+
+        return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header($http_code)
+            ->set_output( json_encode( array('score_id' => $score_id, 'status' => $done) ) );
+    }
+
 }

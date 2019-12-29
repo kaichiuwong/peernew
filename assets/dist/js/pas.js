@@ -181,12 +181,62 @@ $(document).on('submit','#peer_feedback_form',function(event){
     }
  });
 
+ $(document).on('submit','.grp_submission_mark',function(event){
+    event.preventDefault();
+    var grpid = $(this).attr('data-grp-id');
+    if ($("#score_"+grpid).val()) {
+        $("#submit_btn_"+grpid).attr("disabled", true);
+        $("#status_"+grpid).html("Saving");
+        $("#status_"+grpid).removeClass("d-none");
+        $("#status_"+grpid).addClass("badge-secondary");    
+
+        var form = $('#grp_submission_mark_'+grpid);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function(data)
+            {
+                    $("#score_id_"+grpid).val(data.score_id);
+                    $("#submit_btn_"+grpid).attr("disabled", false);
+                    $("#status_"+grpid).html("Saved");
+                    $("#status_"+grpid).removeClass("badge-secondary");
+                    $("#status_"+grpid).addClass("badge-primary");
+                    
+                    setTimeout(function() { 
+                        $("#status_"+grpid).removeClass("badge-primary");
+                        $("#status_"+grpid).addClass("d-none");
+                    }, 5000);
+            },
+            error: function (data) {
+                    $("#submit_btn_"+grpid).attr("disabled", false);
+                    $("#status_"+grpid).html("Error");
+                    $("#status_"+grpid).removeClass("badge-secondary");
+                    $("#status_"+grpid).addClass("badge-danger");   
+                    
+                    setTimeout(function() { 
+                        $("#status_"+grpid).removeClass("badge-secondary");
+                        $("#status_"+grpid).addClass("d-none");
+                    }, 5000);
+            }
+            });
+    }
+    return false;
+ });
+
 $(document).on('click','#btn_self_submit',function(){
     $('#self_feedback_form').submit();
  });
 
  $(document).on('click','#btn_peer_submit',function(){
     $('#peer_feedback_form').submit();
+ });
+
+ $(document).on('click','.grp_submit_button',function(){
+    var grpid = $(this).attr('data-grp-id');
+    $('#grp_submission_mark_'+grpid).submit();
  });
  
 

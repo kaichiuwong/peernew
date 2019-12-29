@@ -26,39 +26,46 @@
                     <th>Submitted by</th>
                     <th>Submission Time</th>
                     <th style="width: 70px;">Score</th>
-                    <th>Actions</th>
+                    <th style="width: 150px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach($assignment_topics as $a){ ?>
                 <tr>
-                  <?php echo form_open('Marking/save/',array("class"=>"form-horizontal")); ?>
+                  <?php echo form_open('Marking/save_group_submission/',array("class"=>"form-horizontal grp_submission_mark", "data-grp-id" => $a['topic_id'], "id"=>"grp_submission_mark_".$a['topic_id'])); ?>
                     <td><a href="javascript:void(0);" data-grp-name="<?php echo $a['topic']; ?>" data-href="<?php echo site_url('assignment_topic/topic_member/'.$a['topic_id']); ?>" class="group_info_open"><?php echo $a['topic']; ?></a></td>
                     <?php if (empty($a['filename'])): ?>
                       <td class="text-muted">No Submission for this group</td>
                       <td></td>
                       <td></td>
                       <td>
-                        <input type="hidden" name="asg_id" value="<?php echo $asg_id;?>" required/>
-                        <input type="hidden" name="topic_id" value="<?php echo $a['topic_id'];?>" required/>
-                        <input type="number" min="0" step="1" name="score" value="" class="form-control input-sm" id="score" required />
+                        <input type="hidden" name="asg_id" value="<?php echo $asg_id;?>" id="asg_id_<?php echo $a['topic_id'];?>" required/>
+                        <input type="hidden" name="topic_id" value="<?php echo $a['topic_id'];?>" id="topic_id_<?php echo $a['topic_id'];?>" required/>
+                        <input type="hidden" name="score_id" value="<?php echo $a['score_id'];?>" id="score_id_<?php echo $a['topic_id'];?>" required/>
+                        <input type="hidden" name="remark" value="<?php echo $a['remark'];?>" id="remark_<?php echo $a['topic_id'];?>"/>
+                        <input type="number" min="0" step="1" name="score" value="<?php echo $a['score'];?>" class="form-control input-sm" id="score_<?php echo $a['topic_id'];?>" required />
                       </td>
                       <td>
-                        <button type="submit" class="btn btn-info btn-sm">Save</a> 
+                        <button type="button" class="btn btn-info btn-sm grp_submit_button" data-grp-id="<?php echo $a['topic_id']; ?>" id="submit_btn_<?php echo $a['topic_id']; ?>">Save</button> 
+                        <span class='badge d-none' id="status_<?php echo $a['topic_id']; ?>"></span>
                       </td>
                     <?php else: ?>
                       <td><a href="<?php echo base_url().$a['filename']; ?>" target="_blank"><i class="fas fa-file"></i> <?php echo basename($a['filename']); ?></a></td>
                       <td><i class="fas fa-user"></i> <?php echo $a['user_id']; ?></td>
                       <td><i class="fas fa-clock"></i> <?php echo $a['submission_date']; ?> <?php echo ( $a['submission_date'] > $asg_deadline['date_value'] ) ? "<span class='badge badge-danger'>Late Submission</span>": ""; ?> </td>
                       <td>
-                        <input type="hidden" name="asg_id" value="<?php echo $asg_id;?>" required/>
-                        <input type="hidden" name="topic_id" value="<?php echo $a['topic_id'];?>" required/>
-                        <input type="number" min="0" step="1" name="score" value="" class="form-control input-sm" id="score" required />
+                      <input type="hidden" name="asg_id" value="<?php echo $asg_id;?>" id="asg_id_<?php echo $a['topic_id'];?>" required/>
+                        <input type="hidden" name="topic_id" value="<?php echo $a['topic_id'];?>" id="topic_id_<?php echo $a['topic_id'];?>" required/>
+                        <input type="hidden" name="score_id" value="<?php echo $a['score_id'];?>" id="score_id_<?php echo $a['topic_id'];?>" required/>
+                        <input type="hidden" name="remark" value="<?php echo $a['remark'];?>" id="remark_<?php echo $a['topic_id'];?>"/>
+                        <input type="number" min="0" step="1" name="score" value="<?php echo $a['score'];?>" class="form-control input-sm" id="score_<?php echo $a['topic_id'];?>" required />
                       </td>
                       <td>
-                        <button type="submit" class="btn btn-info btn-sm">Save</a> 
+                        <button type="button" class="btn btn-info btn-sm grp_submit_button" data-grp-id="<?php echo $a['topic_id']; ?>" id="submit_btn_<?php echo $a['topic_id']; ?>">Save</button> 
+                        <span class='badge d-none' id="status_<?php echo $a['topic_id']; ?>"></span>
                       </td>
                     <?php endif; ?>
+                    <?php echo form_close(); ?>
                 </tr>
                 <?php } ?>
             </tbody>
