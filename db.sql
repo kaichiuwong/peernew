@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2019 at 01:09 PM
+-- Generation Time: Dec 29, 2019 at 02:12 PM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -288,6 +288,35 @@ INSERT INTO `assignment_feedback` (`id`, `asg_id`, `question_id`, `reviewer`, `r
 (96, 11, 35, 'user3', 'user2', '0', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
 (97, 11, 36, 'user3', 'user1', 'Good teammate', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
 (98, 11, 36, 'user3', 'user2', 'He don''t participated at any activities.', '2019-12-16 02:34:31', '2019-12-16 02:34:58');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assignment_group_mark`
+--
+
+DROP TABLE IF EXISTS `assignment_group_mark`;
+CREATE TABLE IF NOT EXISTS `assignment_group_mark` (
+`id` int(11) NOT NULL,
+  `asg_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  `score` decimal(10,2) DEFAULT NULL,
+  `remark` text,
+  `last_upd_by` varchar(10) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `assignment_group_mark`
+--
+
+INSERT INTO `assignment_group_mark` (`id`, `asg_id`, `group_id`, `score`, `remark`, `last_upd_by`, `create_time`, `last_upd_time`) VALUES
+(2, 11, 73, '54.00', '', 'admin', '2019-12-29 23:14:49', '2019-12-29 23:55:51'),
+(3, 11, 94, '75.00', '', 'admin', '2019-12-29 23:44:26', '2019-12-30 00:00:34'),
+(7, 11, 113, '0.00', '', 'admin', '2019-12-30 00:00:43', '2019-12-30 00:00:43'),
+(8, 12, 462, '56.00', '', 'admin', '2019-12-30 00:01:52', '2019-12-30 00:01:52'),
+(9, 11, 74, '5.00', '', 'admin', '2019-12-30 00:05:34', '2019-12-30 00:05:47');
 
 -- --------------------------------------------------------
 
@@ -1187,7 +1216,7 @@ CREATE TABLE IF NOT EXISTS `submission` (
 
 INSERT INTO `submission` (`id`, `asg_id`, `topic_id`, `user_id`, `filename`, `submission_date`) VALUES
 (1, 11, 94, 'user1', './uploads/6512bd43d9caa6e02c990b0a82652dca/f4b9ec30ad9f68f89b29639786cb62ef/c96b4b75787a2cb4d32c4ef7a5a621db.pdf', '2019-12-13 17:18:52'),
-(4, 11, 73, 'user1', './uploads/6512bd43d9caa6e02c990b0a82652dca/d2ddea18f00665ce8623e36bd4e3c7c5/7b0a03486e7a22394400de4623a38960.pdf', '2019-12-16 21:54:55');
+(4, 11, 73, 'user1', './uploads/6512bd43d9caa6e02c990b0a82652dca/d2ddea18f00665ce8623e36bd4e3c7c5/7b0a03486e7a22394400de4623a38960.pdf', '2020-01-31 21:54:55');
 
 --
 -- Triggers `submission`
@@ -1352,6 +1381,28 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_topic_summary` (
 ,`assign_id` int(11)
 ,`topic` varchar(500)
 ,`topic_desc` mediumtext
+);
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `sv_group_submission`
+--
+DROP VIEW IF EXISTS `sv_group_submission`;
+CREATE TABLE IF NOT EXISTS `sv_group_submission` (
+`topic_id` int(11)
+,`topic` varchar(500)
+,`topic_desc` mediumtext
+,`asg_id` int(11)
+,`user_id` varchar(10)
+,`submission_id` int(11)
+,`filename` varchar(1000)
+,`submission_date` datetime
+,`score_id` int(11)
+,`score` decimal(10,2)
+,`remark` text
+,`marker` varchar(10)
+,`score_create_time` datetime
+,`score_last_upd_time` datetime
 );
 -- --------------------------------------------------------
 
@@ -2263,12 +2314,12 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `id`, `email`, `permission_level`, `locked`, `create_time`, `login_fail_cnt`, `last_login_time`, `reset_token`, `reset_time`, `last_upd_time`) VALUES
-('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2019-12-23 23:59:16', NULL, NULL, '2019-12-01 00:17:48'),
+('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2019-12-29 21:37:43', NULL, NULL, '2019-12-01 00:17:48'),
 ('staff1', '$1$346d40d8$806o0kWTuSUlndg8x0jZ81', '$1$346d40d85be1653b1b20eee806c93967', 'Account 1', 'Staff', '03007563', 'kaichiu.wong@utas.edu.au', 30, 0, '2019-11-15 22:34:45', 0, '2019-11-26 23:10:21', NULL, NULL, '2019-11-18 01:20:02'),
 ('staff2', '$1$9a121110$nYumg2W2TIJBS4FyX.I111', '$1$9a121110f95b57330d829119e6b09fef', 'Account 2', 'Staff', '000000', 'teacher@aaa.com', 30, 1, '2019-11-19 00:41:38', 0, '2019-11-20 02:58:19', NULL, NULL, '2019-11-19 00:41:38'),
 ('staff3', '$1$f14a37c0$xSu42pAzI3/.rsvzJL05L0', '$1$f14a37c00eae2ddf8f1303f98008e11f', 'Account 3', 'Staff', '32434', 'sdffe@srewrwe.com', 30, 1, '2019-12-02 02:11:50', 0, NULL, NULL, NULL, NULL),
 ('staff4', '$1$2bb3309b$uhfCK4zeU7Wm.5kZrcijT/', '$1$2bb3309b3a3f88a9b0bd5b219401a379', 'Account 4', 'Staff', '1432542', 'sdsfejoi@sdofreoi.com', 30, 1, '2019-12-02 02:13:52', 0, NULL, NULL, NULL, NULL),
-('user1', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'Account 1', 'Student', '492085', 'kcwong3@utas.edu.au', 10, 0, '2019-11-15 22:34:45', 0, '2019-12-23 22:34:49', NULL, NULL, '2019-11-18 01:22:08'),
+('user1', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'Account 1', 'Student', '492085', 'kcwong3@utas.edu.au', 10, 0, '2019-11-15 22:34:45', 0, '2019-12-28 00:46:05', NULL, NULL, '2019-11-18 01:22:08'),
 ('user10', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 10', 'Student', '169146', 'user10@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user100', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 100', 'Student', '899188', 'user100@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user101', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 101', 'Student', '810995', 'user101@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
@@ -2929,6 +2980,15 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
+-- Structure for view `sv_group_submission`
+--
+DROP TABLE IF EXISTS `sv_group_submission`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_group_submission` AS select `t`.`id` AS `topic_id`,`t`.`topic` AS `topic`,`t`.`topic_desc` AS `topic_desc`,`t`.`assign_id` AS `asg_id`,`s`.`user_id` AS `user_id`,`s`.`id` AS `submission_id`,`s`.`filename` AS `filename`,`s`.`submission_date` AS `submission_date`,`agm`.`id` AS `score_id`,`agm`.`score` AS `score`,`agm`.`remark` AS `remark`,`agm`.`last_upd_by` AS `marker`,`agm`.`create_time` AS `score_create_time`,`agm`.`last_upd_time` AS `score_last_upd_time` from ((`assignment_topic` `t` left join `submission` `s` on(((`t`.`id` = `s`.`topic_id`) and (`t`.`assign_id` = `s`.`asg_id`)))) left join `assignment_group_mark` `agm` on(((`t`.`id` = `agm`.`group_id`) and (`t`.`assign_id` = `agm`.`asg_id`))));
+
+-- --------------------------------------------------------
+
+--
 -- Structure for view `sv_topic_stat`
 --
 DROP TABLE IF EXISTS `sv_topic_stat`;
@@ -2974,6 +3034,12 @@ ALTER TABLE `assignment_date`
 --
 ALTER TABLE `assignment_feedback`
  ADD PRIMARY KEY (`id`), ADD KEY `asg_id` (`asg_id`), ADD KEY `question_id` (`question_id`), ADD KEY `reviewer` (`reviewer`), ADD KEY `reviewee` (`reviewee`);
+
+--
+-- Indexes for table `assignment_group_mark`
+--
+ALTER TABLE `assignment_group_mark`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `assignment_mark`
@@ -3066,6 +3132,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=46;
 --
 ALTER TABLE `assignment_feedback`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=99;
+--
+-- AUTO_INCREMENT for table `assignment_group_mark`
+--
+ALTER TABLE `assignment_group_mark`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `assignment_mark`
 --
