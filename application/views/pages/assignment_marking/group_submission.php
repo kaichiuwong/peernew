@@ -5,6 +5,13 @@
       <div class="col-sm-6">
         <h1><?php echo $this->session->userdata('asg_header'); ?></h1>
       </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="<?php echo site_url('Marking'); ?>">Assignment List</a></li>
+          <li class="breadcrumb-item active">Group Marking</li>
+          <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/peer/'.$asg_id); ?>">Peer Marking</a></li>
+        </ol>
+      </div>
     </div>
   </div><!-- /.container-fluid -->
 </section>

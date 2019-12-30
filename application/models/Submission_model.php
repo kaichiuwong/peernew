@@ -75,4 +75,17 @@ class Submission_model extends CI_Model
         $query = $this->db->query($query_str);
         return $query->result_array();
     }
+
+    function get_peer_review_summary($asg_id, $username = null)
+    {
+        $query_str  = " select s.* ";
+        $query_str .= " from sv_assignment_peer_summary s ";
+        $query_str .= " where s.asg_id=$asg_id ";
+        if ($username) {
+            $query_str .= " and s.username='$username' " ;
+        }
+        $query_str .= " order by s.sid; ";
+        $query = $this->db->query($query_str);
+        return $query->result_array();
+    }
 }

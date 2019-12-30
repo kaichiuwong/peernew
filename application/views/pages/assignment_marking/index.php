@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1><?php echo ($unit)?$unit." - " : ""; ?>Group Marking</h1>
+        <h1>Marking - Assignment List</h1>
       </div>
     </div>
   </div><!-- /.container-fluid -->
@@ -39,7 +39,8 @@
                     <td><?php echo $a['topic_count']; ?></td>
                     <td><?php echo $a['student_count']; ?></td>
                     <td>
-                        <a href="<?php echo site_url('Marking/group/'.$a['id']); ?>" class="btn btn-primary btn-sm">Select</a>
+                        <a href="<?php echo site_url('Marking/group/'.$a['id']); ?>" class="btn btn-primary btn-sm">Group</a>
+                        <a href="<?php echo site_url('Marking/peer/'.$a['id']); ?>" class="btn btn-primary btn-sm">Peer</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

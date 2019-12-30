@@ -36,6 +36,7 @@ if($('#asg-calendar').length){
 }
 
 $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
     $(".enable-datatable").DataTable({
         "paging": true,
         "lengthChange": true,
@@ -86,6 +87,20 @@ $('.group_info_open').on('click',function(){
     $('.modal-body').load(dataURL,function(){
         $('#loading-overlay').removeClass('overlay d-flex justify-content-center align-items-center');
         $('#loading-overlay').addClass('d-none');
+    });
+});
+
+
+$('.peer_mark_open').on('click',function(){
+    var dataURL = $(this).attr('data-href');
+    var username = $(this).attr('data-username');
+    $('#large-modal-body').html('');
+    $('#large-modal-header').html('Peer Marking Detail of ' + username);
+    $('#large-modal-loading-overlay').addClass('overlay d-flex justify-content-center align-items-center');
+    $('#large-modal').modal({show:true});
+    $('.modal-body').load(dataURL,function(){
+        $('#large-modal-loading-overlay').removeClass('overlay d-flex justify-content-center align-items-center');
+        $('#large-modal-loading-overlay').addClass('d-none');
     });
 });
 

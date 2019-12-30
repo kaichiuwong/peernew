@@ -1,3 +1,14 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Update Your Profile</h1>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
 <div class="card card-secondary">
     <div class="card-header">
         <h3 class="card-title">User Profile</h3>
@@ -33,11 +44,11 @@
               </div>
               <div class="form-group">
                 <label for="st_id">Student ID</label>
-                <input type="text"  value="<?php echo $st_id; ?>" class="form-control form-control-user" id="st_id" name="st_id" placeholder="Staff ID">
+                <input type="text"  value="<?php echo $st_id; ?>" class="form-control form-control-user" id="st_id" name="st_id" placeholder="Student ID"  readonly>
               </div>
               <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" value="<?php echo $email; ?>" class="form-control form-control-user" id="email" name="email" placeholder="Email Address" required>
+                <input type="email" value="<?php echo $email; ?>" class="form-control form-control-user" id="email" name="email" placeholder="Email Address" required readonly>
               </div>
               <div class="form-group">
                 <label for="plevel">System Permission Level</label>

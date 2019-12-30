@@ -8,6 +8,19 @@ class Marking extends MY_PasController {
         $this->load->model('Assignment_mark_model');
     } 
 
+    function index() 
+    {
+        if ($this->check_permission(20) ) {
+            $this->load->model('Assignment_model');
+            $data['assignments'] = $this->Assignment_model->get_all_assignments();
+            $data['unit'] = null;
+            $data['_view'] = 'pages/assignment_marking/index';
+            $this->load_header($data);
+            $this->load->view('templates/main',$data);
+            $this->load_footer($data);
+        }
+    }
+
     function group($asg_id = null)
     {
         if ($this->check_permission(20) ) {
@@ -23,23 +36,59 @@ class Marking extends MY_PasController {
                 $this->load->model('Assignment_date_model');
                 $data['asg_deadline'] = $this->Assignment_date_model->get_date_by_asg_id_key($asg_id, 'SUBMISSION_DEADLINE');
                 $data['_view'] = 'pages/assignment_marking/group_submission';
+                $this->load_header($data);
+                $this->load->view('templates/main',$data);
+                $this->load_footer($data);
             }
             else {
-                $this->load->model('Assignment_model');
-                $data['assignments'] = $this->Assignment_model->get_all_assignments();
-                $data['unit'] = null;
-                $data['_view'] = 'pages/assignment_marking/group';
+                redirect('Marking');
             }
-            $this->load_header($data);
-            $this->load->view('templates/main',$data);
-            $this->load_footer($data);
         }
     } 
 
-    function individual()
+    function peer($asg_id = null)
     {
         if ($this->check_permission(20) ) {
+            if ($asg_id) {
+                $this->load->model('Assignment_model');
+                $data['asg_id'] = $asg_id;
+                $data['assignment'] = $this->Assignment_model->get_assignment($asg_id);
+                $new_session_data = array('asg_id' => $asg_id, 'asg_header' => $data['assignment']['unit_code'] . ' - ' . $data['assignment']['title']);
+                $this->session->set_userdata($new_session_data);
 
+                $this->load->model('Submission_model');
+                $data['students'] = $this->Submission_model->get_peer_review_summary($asg_id);
+                $data['_view'] = 'pages/assignment_marking/peer_submission';
+                $this->load_header($data);
+                $this->load->view('templates/main',$data);
+                $this->load_footer($data);
+            }
+            else
+            {
+                redirect('Marking');
+            }
+        }
+    }
+
+    function peer_detail($asg_id = null, $group_id = null, $username = null)
+    {
+        if ($this->check_permission(20, false) ) {
+            if ($asg_id && $group_id && $username) {
+                $data['asg_id'] = $asg_id;
+                $data['group_id'] = $group_id;
+                $data['username'] = $username;
+                $this->load->model('Assignment_feedback_model'); 
+                $this->load->model('Assignment_question_model'); 
+                $this->load->model('Assignment_topic_model');
+                $this->load->model('Submission_model');
+                $data['summary'] = $this->Submission_model->get_peer_review_summary($asg_id,$username);
+                $data['assignment_questions_self'] = $this->Assignment_feedback_model->get_question_with_feedback($asg_id,$username,$username,'SELF');
+                $data['assignment_topics_member'] = $this->Assignment_topic_model->get_assignment_member($group_id);
+                foreach($data['assignment_topics_member'] as $member) {
+                    $data['assignment_questions_peer'][$member['user_id']] = $this->Assignment_feedback_model->get_question_with_feedback($asg_id,$member['user_id'],$username,'PEER');
+                }
+                $this->load->view('pages/assignment_marking/peer_detail',$data);
+            }
         }
     }
 

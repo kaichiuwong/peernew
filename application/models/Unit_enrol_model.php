@@ -14,7 +14,7 @@ class Unit_enrol_model extends CI_Model
     function get_unit_enrol_by_asgid($asg_id)
     {
         $query_str  = " select s.*, ata.id as ata_id, ata.topic_id ";
-        $query_str .= " from sv_assignemnt_student s ";
+        $query_str .= " from sv_assignment_student s ";
         $query_str .= " left join assignment_topic_allocation ata  ";
         $query_str .= " on s.username = ata.user_id and s.asg_id = ata.asg_id ";
         $query_str .= " where s.asg_id=$asg_id order by username; ";
@@ -24,7 +24,7 @@ class Unit_enrol_model extends CI_Model
 
     function get_all_unit_enrols()
     {
-        $query = $this->db->query("select * from sv_assignemnt_student order by id; ");
+        $query = $this->db->query("select * from sv_assignment_student order by id; ");
         return $query->result_array();
     }
 

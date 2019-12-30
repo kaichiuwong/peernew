@@ -41,7 +41,7 @@ class Assignment_model extends CI_Model
         {
             $this->db->where('username',$username);
             $this->db->where('sem_key',$sem);
-            return $this->db->get('sv_assignemnt_student')->result_array();
+            return $this->db->get('sv_assignment_student')->result_array();
         }
         return array();
     }

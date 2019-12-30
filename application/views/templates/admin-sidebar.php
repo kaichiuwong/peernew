@@ -36,28 +36,11 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item">
+            <a href="<?php echo site_url('Marking'); ?>" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Marking
-                <i class="fas fa-angle-left right"></i>
-              </p>
+              <p>Marking</p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?php echo site_url('Marking/group'); ?>" class="nav-link">
-                  <i class="fas fa-edit nav-icon"></i>
-                  <p>Group Marking</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?php echo site_url('Marking/individual'); ?>" class="nav-link">
-                  <i class="fas fa-edit nav-icon"></i>
-                  <p>Individual Marking</p>
-                </a>
-              </li>
-            </ul>
           </li>
           <li class="nav-header">System</li>
           <li class="nav-item">

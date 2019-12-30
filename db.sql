@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2019 at 02:12 PM
+-- Generation Time: Dec 30, 2019 at 01:43 PM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -30,16 +30,12 @@ BEGIN
      WHERE aq.asg_id = asg_id and af.reviewee=reviewee and af.reviewer != af.reviewee ;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_get_peer_review_stat`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_peer_review_stat`(IN `username` VARCHAR(10), IN `qid` INT)
+DROP PROCEDURE IF EXISTS `sp_get_peer_review`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_peer_review`(IN `username` VARCHAR(10), IN `qid` INT)
 BEGIN
-select asg_id, question_id, reviewee, avg(feedback) as average, VARIANCE(feedback) as var, min(cast(feedback as signed)) as min_score, max(cast(feedback as signed)) as max_score, sum(feedback) as total
-from assignment_feedback
-where reviewer != reviewee
-and reviewee = username
-and question_id = qid
-group by  asg_id, question_id, reviewee
-order by asg_id, reviewee, question_id; 
+select asg_id, reviewee, reviewer, total
+from sv_assignment_peer_sum
+where reviewee = username ; 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_get_question_feedback`$$
@@ -1283,10 +1279,36 @@ INSERT INTO `submission_log` (`id`, `asg_id`, `topic_id`, `user_id`, `filename`,
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `sv_assignemnt_student`
+-- Stand-in structure for view `sv_assignment_peer_stat`
 --
-DROP VIEW IF EXISTS `sv_assignemnt_student`;
-CREATE TABLE IF NOT EXISTS `sv_assignemnt_student` (
+DROP VIEW IF EXISTS `sv_assignment_peer_stat`;
+CREATE TABLE IF NOT EXISTS `sv_assignment_peer_stat` (
+`asg_id` int(11)
+,`reviewee` varchar(20)
+,`average` double
+,`var` double
+,`min_score` double
+,`max_score` double
+);
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `sv_assignment_peer_sum`
+--
+DROP VIEW IF EXISTS `sv_assignment_peer_sum`;
+CREATE TABLE IF NOT EXISTS `sv_assignment_peer_sum` (
+`asg_id` int(11)
+,`reviewee` varchar(20)
+,`reviewer` varchar(20)
+,`total` double
+);
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `sv_assignment_peer_summary`
+--
+DROP VIEW IF EXISTS `sv_assignment_peer_summary`;
+CREATE TABLE IF NOT EXISTS `sv_assignment_peer_summary` (
 `id` int(11)
 ,`asg_id` int(11)
 ,`asg_title` varchar(500)
@@ -1300,6 +1322,14 @@ CREATE TABLE IF NOT EXISTS `sv_assignemnt_student` (
 ,`last_name` varchar(255)
 ,`first_name` varchar(255)
 ,`sid` varchar(10)
+,`topic_id` int(11)
+,`topic` varchar(500)
+,`topic_desc` mediumtext
+,`peer_average` double
+,`peer_var` double
+,`peer_min_score` double
+,`peer_max_score` double
+,`group_score` decimal(10,2)
 );
 -- --------------------------------------------------------
 
@@ -1329,6 +1359,27 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_staff` (
 ,`sid` varchar(10)
 ,`email` varchar(255)
 ,`permission_level` int(11)
+);
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `sv_assignment_student`
+--
+DROP VIEW IF EXISTS `sv_assignment_student`;
+CREATE TABLE IF NOT EXISTS `sv_assignment_student` (
+`id` int(11)
+,`asg_id` int(11)
+,`asg_title` varchar(500)
+,`sem` varchar(100)
+,`sem_key` varchar(10)
+,`unit_id` int(11)
+,`unit_code` varchar(20)
+,`unit_description` varchar(500)
+,`username` varchar(20)
+,`email` varchar(255)
+,`last_name` varchar(255)
+,`first_name` varchar(255)
+,`sid` varchar(10)
 );
 -- --------------------------------------------------------
 
@@ -2314,7 +2365,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `id`, `email`, `permission_level`, `locked`, `create_time`, `login_fail_cnt`, `last_login_time`, `reset_token`, `reset_time`, `last_upd_time`) VALUES
-('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2019-12-29 21:37:43', NULL, NULL, '2019-12-01 00:17:48'),
+('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2019-12-30 22:17:15', NULL, NULL, '2019-12-01 00:17:48'),
 ('staff1', '$1$346d40d8$806o0kWTuSUlndg8x0jZ81', '$1$346d40d85be1653b1b20eee806c93967', 'Account 1', 'Staff', '03007563', 'kaichiu.wong@utas.edu.au', 30, 0, '2019-11-15 22:34:45', 0, '2019-11-26 23:10:21', NULL, NULL, '2019-11-18 01:20:02'),
 ('staff2', '$1$9a121110$nYumg2W2TIJBS4FyX.I111', '$1$9a121110f95b57330d829119e6b09fef', 'Account 2', 'Staff', '000000', 'teacher@aaa.com', 30, 1, '2019-11-19 00:41:38', 0, '2019-11-20 02:58:19', NULL, NULL, '2019-11-19 00:41:38'),
 ('staff3', '$1$f14a37c0$xSu42pAzI3/.rsvzJL05L0', '$1$f14a37c00eae2ddf8f1303f98008e11f', 'Account 3', 'Staff', '32434', 'sdffe@srewrwe.com', 30, 1, '2019-12-02 02:11:50', 0, NULL, NULL, NULL, NULL),
@@ -2926,11 +2977,29 @@ INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `
 -- --------------------------------------------------------
 
 --
--- Structure for view `sv_assignemnt_student`
+-- Structure for view `sv_assignment_peer_stat`
 --
-DROP TABLE IF EXISTS `sv_assignemnt_student`;
+DROP TABLE IF EXISTS `sv_assignment_peer_stat`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignemnt_student` AS select distinct `ue`.`id` AS `id`,`a`.`id` AS `asg_id`,`a`.`title` AS `asg_title`,`fn_sem_short_desc`(`un`.`sem`) AS `sem`,`un`.`sem` AS `sem_key`,`un`.`id` AS `unit_id`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`u`.`username` AS `username`,`u`.`email` AS `email`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid` from (((`assignment` `a` join `unit_enrol` `ue`) join `unit` `un`) join `user` `u`) where ((`a`.`unit_id` = `un`.`id`) and (`un`.`id` = `ue`.`unit_id`) and (`ue`.`user_id` = `u`.`username`) and (`a`.`public` = 1));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_peer_stat` AS select `sv_assignment_peer_sum`.`asg_id` AS `asg_id`,`sv_assignment_peer_sum`.`reviewee` AS `reviewee`,avg(`sv_assignment_peer_sum`.`total`) AS `average`,variance(`sv_assignment_peer_sum`.`total`) AS `var`,min(`sv_assignment_peer_sum`.`total`) AS `min_score`,max(`sv_assignment_peer_sum`.`total`) AS `max_score` from `sv_assignment_peer_sum` where (`sv_assignment_peer_sum`.`reviewer` <> `sv_assignment_peer_sum`.`reviewee`) group by `sv_assignment_peer_sum`.`asg_id`,`sv_assignment_peer_sum`.`reviewee` order by `sv_assignment_peer_sum`.`asg_id`,`sv_assignment_peer_sum`.`reviewee`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `sv_assignment_peer_sum`
+--
+DROP TABLE IF EXISTS `sv_assignment_peer_sum`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_peer_sum` AS select `assignment_feedback`.`asg_id` AS `asg_id`,`assignment_feedback`.`reviewee` AS `reviewee`,`assignment_feedback`.`reviewer` AS `reviewer`,sum((`assignment_feedback`.`feedback` + 0.0)) AS `total` from `assignment_feedback` where (`assignment_feedback`.`reviewer` <> `assignment_feedback`.`reviewee`) group by `assignment_feedback`.`asg_id`,`assignment_feedback`.`reviewee`,`assignment_feedback`.`reviewer` order by `assignment_feedback`.`asg_id`,`assignment_feedback`.`reviewee`,`assignment_feedback`.`reviewer`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `sv_assignment_peer_summary`
+--
+DROP TABLE IF EXISTS `sv_assignment_peer_summary`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_peer_summary` AS select `s`.`id` AS `id`,`s`.`asg_id` AS `asg_id`,`s`.`asg_title` AS `asg_title`,`s`.`sem` AS `sem`,`s`.`sem_key` AS `sem_key`,`s`.`unit_id` AS `unit_id`,`s`.`unit_code` AS `unit_code`,`s`.`unit_description` AS `unit_description`,`s`.`username` AS `username`,`s`.`email` AS `email`,`s`.`last_name` AS `last_name`,`s`.`first_name` AS `first_name`,`s`.`sid` AS `sid`,`t`.`topic_id` AS `topic_id`,`t`.`topic` AS `topic`,`t`.`topic_desc` AS `topic_desc`,`a`.`average` AS `peer_average`,`a`.`var` AS `peer_var`,`a`.`min_score` AS `peer_min_score`,`a`.`max_score` AS `peer_max_score`,`g`.`score` AS `group_score` from ((`sv_assignment_student` `s` left join `sv_assignment_peer_stat` `a` on(((`s`.`asg_id` = `a`.`asg_id`) and (`s`.`username` = `a`.`reviewee`)))) left join (`sv_assignment_topic_summary` `t` join `sv_group_submission` `g` on(((`t`.`assign_id` = `g`.`asg_id`) and (`t`.`topic_id` = `g`.`topic_id`)))) on(((`s`.`asg_id` = `t`.`assign_id`) and (`s`.`username` = `t`.`user_id`))));
 
 -- --------------------------------------------------------
 
@@ -2940,6 +3009,15 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `sv_assignment_staff`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_staff` AS select `a`.`id` AS `id`,`a`.`title` AS `title`,`a`.`type` AS `type`,`a`.`public` AS `public`,`st`.`topic_count` AS `topic_count`,`au`.`student_count` AS `student_count`,`a`.`outcome` AS `outcome`,`a`.`scenario` AS `scenario`,`a`.`unit_id` AS `unit_id`,`a`.`create_time` AS `create_time`,`a`.`last_upd_time` AS `last_upd_time`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`fn_sem_short_desc`(`un`.`sem`) AS `sem`,`un`.`sem` AS `sem_key`,`u`.`username` AS `username`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid`,`u`.`email` AS `email`,`u`.`permission_level` AS `permission_level` from (((((`assignment` `a` left join `unit_staff` `us` on((`a`.`unit_id` = `us`.`unit_id`))) left join `unit` `un` on((`a`.`unit_id` = `un`.`id`))) left join `user` `u` on((`us`.`username` = `u`.`username`))) left join `sv_assignment_topic_count` `st` on((`a`.`id` = `st`.`id`))) left join `sv_assignment_student_count` `au` on((`a`.`id` = `au`.`id`)));
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `sv_assignment_student`
+--
+DROP TABLE IF EXISTS `sv_assignment_student`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_student` AS select distinct `ue`.`id` AS `id`,`a`.`id` AS `asg_id`,`a`.`title` AS `asg_title`,`fn_sem_short_desc`(`un`.`sem`) AS `sem`,`un`.`sem` AS `sem_key`,`un`.`id` AS `unit_id`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`u`.`username` AS `username`,`u`.`email` AS `email`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid` from (((`assignment` `a` join `unit_enrol` `ue`) join `unit` `un`) join `user` `u`) where ((`a`.`unit_id` = `un`.`id`) and (`un`.`id` = `ue`.`unit_id`) and (`ue`.`user_id` = `u`.`username`));
 
 -- --------------------------------------------------------
 
