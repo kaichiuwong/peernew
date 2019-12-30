@@ -37,6 +37,7 @@ class Assignment_model extends CI_Model
     function get_all_assignments_student($username, $sem)
     {
         $this->db->order_by('id', 'desc');
+        $this->db->where('public',1);
         if(isset($username) && !empty($username))
         {
             $this->db->where('username',$username);
