@@ -33,8 +33,15 @@
                     <?php $last_day_str = date("d-m-Y"); ?>
                     <?php $today = date("d-m-Y"); ?>
                     <?php $now = date("Y-m-d H:i:s"); ?>
-                    <?php array_push($Assignment_dates, array('date_value'=> $now, 'description'=>'We are here', 'today'=> true, 'id' => null) ); ?>
-                    <?php usort($Assignment_dates, function($a, $b) {return $b['date_value'] < $a['date_value'];}); ?>
+                    <?php array_push($Assignment_dates, array('date_value'=> $now, 'description'=>'We are here', 'today'=> true, 'id' => null, 'key' => '_TODAY') ); ?>
+                    <?php usort($Assignment_dates, function($a, $b) {
+                        if ($b['date_value'] != $a['date_value']) {
+                          return $b['date_value'] < $a['date_value'];
+                        }
+                        else {
+                          return $b['key'] > $a['key'];
+                        }
+                        }); ?>
                     <?php foreach($Assignment_dates as $a):  ?>
                       <?php $earlier = true ; ?>
                       <?php $date_str = "Not yet defined"; ?>

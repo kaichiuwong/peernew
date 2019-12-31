@@ -20,13 +20,13 @@ class Assignment_date_model extends CI_Model
 
     function get_all_assignment_dates()
     {
-        $this->db->order_by('id', 'asc');
+        $this->db->order_by('date_value asc, key asc');
         return $this->db->get('assignment_date')->result_array();
     }
 
     function get_all_dates_by_asg_id($asg_id) 
     {
-        $this->db->order_by('date_value asc, id asc');
+        $this->db->order_by('date_value asc, key asc');
         $this->db->where('asg_id',$asg_id);
         return $this->db->get('assignment_date')->result_array();
     }

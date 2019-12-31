@@ -71,11 +71,11 @@
     <table class="table table-sm table-head-fixed table-hover">
         <thead>
             <tr>
-                <th>No.</th>
-                <th style="width: 50%">Question</th>
+                <th class="align-text-top">No.</th>
+                <th  class="align-text-top" style="width: 50%">Question</th>
                 <?php foreach($assignment_topics_member as $member) : ?>
                 <?php if ($member['user_id'] != $username) :?>
-                    <th><?php echo $member['first_name']; ?> <?php echo $member['last_name']; ?></th>
+                    <th class="align-text-top"><?php echo $member['first_name']; ?> <?php echo $member['last_name']; ?></th>
                 <?php endif; ?>
                 <?php endforeach; ?>
             </tr>
@@ -98,7 +98,7 @@
                         <?php $feedback_sum[$member['user_id']] += intval($feedback);?>
                         <td>
                             <select name="<?php echo 'feedback_'.$member['user_id'].'_'.$a['qid']; ?>"  class="form-control form-control-sm score score-<?php echo $member['user_id']; ?>" user-name="<?php echo $member['user_id']; ?>" disabled>
-                            <option value="" disabled  <?php echo empty($feedback)?"selected" :""; ?>>-- Select --</option>
+                            <option value="" disabled  <?php echo empty($feedback)?"selected" :""; ?>></option>
                             <option value="4" <?php echo ($feedback == "4")?"selected" :""; ?>>4 - Always</option>
                             <option value="3" <?php echo ($feedback == "3")?"selected" :""; ?>>3 - Nearly Always</option>
                             <option value="2" <?php echo ($feedback == "2")?"selected" :""; ?>>2 - Usually</option>
@@ -110,7 +110,7 @@
                     <?php case "GRADE": ?>
                         <td>
                             <select name="<?php echo 'feedback_'.$member['user_id'].'_'.$a['qid']; ?>"  class="form-control form-control-sm grade grade-<?php echo $member['user_id']; ?>" user-name="<?php echo $member['user_id']; ?>" disabled>
-                            <option value="" disabled <?php echo empty($feedback)?"selected" :""; ?>>-- Select --</option>
+                            <option value="" disabled <?php echo empty($feedback)?"selected" :""; ?>></option>
                             <option value="HD" <?php echo ($feedback == "HD")?"selected" :""; ?>>HD</option>
                             <option value="DN" <?php echo ($feedback == "DN")?"selected" :""; ?>>DN</option>
                             <option value="CR" <?php echo ($feedback == "CR")?"selected" :""; ?>>CR</option>
@@ -168,9 +168,9 @@
     <table class="table table-sm table-head-fixed table-hover">
         <thead>
             <tr>
-                <th>No.</th>
-                <th style="width: 50%">Question</th>
-                <th style="width: 40%">Answer</th>
+                <th class="align-text-top">No.</th>
+                <th class="align-text-top" style="width: 50%">Question</th>
+                <th class="align-text-top" style="width: 40%">Answer</th>
             </tr>
         </thead>
         <tbody>
@@ -184,7 +184,7 @@
                     case "SCALE": ?>
                     <td>
                         <select name="self_feedback_<?php echo $a['qid']; ?>"  class="form-control form-control-sm score" disabled>
-                        <option value="" disabled <?php echo empty($a['feedback'])?"selected": ""; ?>>-- Select --</option>
+                        <option value="" disabled <?php echo empty($a['feedback'])?"selected": ""; ?>></option>
                         <option value="4" <?php echo ($a['feedback'] == "4")?"selected": ""; ?>>4 - Always</option>
                         <option value="3" <?php echo ($a['feedback'] == "3")?"selected": ""; ?>>3 - Nearly Always</option>
                         <option value="2" <?php echo ($a['feedback'] == "2")?"selected": ""; ?>>2 - Usually</option>
@@ -196,7 +196,7 @@
                 <?php case "GRADE": ?>
                     <td>
                         <select name="self_feedback_<?php echo $a['qid']; ?>"  class="form-control form-control-sm grade" disabled>
-                        <option value="" disabled <?php echo empty($a['feedback'])?"selected": ""; ?>>-- Select --</option>
+                        <option value="" disabled <?php echo empty($a['feedback'])?"selected": ""; ?>></option>
                         <option value="HD" <?php echo ($a['feedback'] == "HD")?"selected": ""; ?>>HD</option>
                         <option value="DN" <?php echo ($a['feedback'] == "DN")?"selected": ""; ?>>DN</option>
                         <option value="CR" <?php echo ($a['feedback'] == "CR")?"selected": ""; ?>>CR</option>
