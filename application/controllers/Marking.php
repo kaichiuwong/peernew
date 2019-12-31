@@ -70,6 +70,79 @@ class Marking extends MY_PasController {
         }
     }
 
+    function final_score($asg_id = null)
+    {
+        if ($this->check_permission(20) ) {
+            if ($asg_id) {
+                $this->load->model('Assignment_model');
+                $data['asg_id'] = $asg_id;
+                $data['assignment'] = $this->Assignment_model->get_assignment($asg_id);
+                $new_session_data = array('asg_id' => $asg_id, 'asg_header' => $data['assignment']['unit_code'] . ' - ' . $data['assignment']['title']);
+                $this->session->set_userdata($new_session_data);
+
+                $this->load->model('Submission_model');
+                $data['students'] = $this->Submission_model->get_final_score($asg_id);
+                $data['_view'] = 'pages/assignment_marking/final_score';
+                $this->load_header($data);
+                $this->load->view('templates/main',$data);
+                $this->load_footer($data);
+            }
+            else
+            {
+                redirect('Marking');
+            }
+        }
+    }
+
+    function export_score($asg_id = null)
+    {
+        if ($this->check_permission(20) ) {
+            if ($asg_id) {
+                $this->load->library('excel');
+                $objPHPExcel = new PHPExcel();
+                $objPHPExcel->setActiveSheetIndex(0);
+                $objPHPExcel->getActiveSheet()->SetCellValue('A1', 'Unit');
+                $objPHPExcel->getActiveSheet()->SetCellValue('B1', 'Student ID');
+                $objPHPExcel->getActiveSheet()->SetCellValue('C1', 'Username');
+                $objPHPExcel->getActiveSheet()->SetCellValue('D1', 'Student Name');
+                $objPHPExcel->getActiveSheet()->SetCellValue('E1', 'Group');
+                $objPHPExcel->getActiveSheet()->SetCellValue('F1', 'Group Score');       
+                $objPHPExcel->getActiveSheet()->SetCellValue('G1', 'Peer Score');       
+                $objPHPExcel->getActiveSheet()->SetCellValue('H1', 'Total Score');       
+                $rowCount = 2;
+                $this->load->model('Submission_model');
+                $score_list = $this->Submission_model->get_final_score($asg_id);
+                $unit_code='';
+                foreach ($score_list as $list) {
+                    $unit_code=$list['unit_code'];
+                    $objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount, $list['unit_code']);
+                    $objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $list['sid']);
+                    $objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount, $list['username']);
+                    $objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount, $list['first_name']. ' ' . $list['last_name']);
+                    $objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, $list['topic']);
+                    $objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount, $list['group_score']?sprintf("%.2f", $list['group_score']):0);
+                    $objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount, $list['peer_score']?sprintf("%.2f", $list['peer_score']):0);
+                    $objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount, $list['total_score']?sprintf("%.2f", $list['total_score']):0);
+                    $rowCount++;
+                }
+                $filename = "final_score_". date("Ymd_His").".xlsx";
+                if ($unit_code)
+                {
+                    $filename = $unit_code."_final_score_". date("Ymd_His").".xlsx";
+                }
+                $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
+                $objWriter->save('./export/'.$filename);
+                // download file
+                header("Content-Type: application/vnd.ms-excel");
+                redirect(base_url()."/export/".$filename); 
+            }
+            else
+            {
+                redirect('Marking');
+            }
+        }
+    }
+
     function peer_detail($asg_id = null, $group_id = null, $username = null)
     {
         if ($this->check_permission(20, false) ) {
@@ -120,6 +193,46 @@ class Marking extends MY_PasController {
                 else 
                 {
                     $this->Assignment_mark_model->update_group_mark($score_id, $current_user, $params);
+                }
+                $done = true;
+                $http_code = 200;
+            }
+        }
+
+        return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header($http_code)
+            ->set_output( json_encode( array('score_id' => $score_id, 'status' => $done) ) );
+    }
+
+    function override_peer_mark()
+    {
+        header('Content-Type: application/json');
+        $done = false;
+        $http_code = 500;
+        $score_id = null;
+        if ($this->check_permission(20, false) ) {
+            if (isset($_POST['asg_id']) && isset($_POST['username']) ) {
+                $this->load->model('Assignment_mark_model');
+                $params = array(
+                    'asg_id' => $this->input->post('asg_id'),
+                    'username' => $this->input->post('username'),
+                    'score' => $this->input->post('score'),
+                    'remark' => $this->input->post('remark')
+                );
+                if (isset($_POST['score_id'])) {
+                    if ( !empty($_POST['score_id']) ) {
+                        $score_id = $this->input->post('score_id');
+                    }
+                }
+                $current_user = $this->get_login_user();
+                if (!$score_id) 
+                {
+                    $score_id = $this->Assignment_mark_model->create_peer_mark($current_user, $params);
+                }
+                else 
+                {
+                    $this->Assignment_mark_model->update_peer_mark($score_id, $current_user, $params);
                 }
                 $done = true;
                 $http_code = 200;

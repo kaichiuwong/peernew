@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2019 at 01:52 PM
+-- Generation Time: Dec 31, 2019 at 08:03 AM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -120,17 +120,15 @@ CREATE TABLE IF NOT EXISTS `assignment` (
   `public` int(11) NOT NULL DEFAULT '0' COMMENT '0 - private, 1 - open to public',
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `assignment`
 --
 
 INSERT INTO `assignment` (`id`, `title`, `type`, `outcome`, `scenario`, `unit_id`, `public`, `create_time`, `last_upd_time`) VALUES
-(1, 'Assignment 1', 1, '<p>Write an essay</p><p>''"''"'''''''''';'';'';'';''''&nbsp;</p>', 'An essay about security', 1, 0, '2019-11-17 22:44:34', '2019-12-10 23:47:08'),
 (11, 'Group Assignment', 1, '<p>You <strike>should </strike>be <sup>careful </sup>for <span style="font-size: 24px;"><b>the </b></span><a href="http://www.google.com" target="_blank"><b>following </b></a><sub>matrix</sub></p><table class="table table-bordered"><tbody><tr><td>11</td><td>12</td><td>13</td></tr><tr><td>21</td><td>22</td><td>23</td></tr><tr><td>31</td><td>32</td><td>33</td></tr><tr><td>41</td><td>42</td><td>43</td></tr></tbody></table><p><br></p>', '<h3><span style="font-family: " times="" new="" roman";"=""><b><u>Nothing</u></b> happens<b><u> <span style="font-size: 36px;">here</span></u></b></span></h3><p style="text-align: justify; line-height: 1;"><span style="font-family: " arial="" black";="" font-size:="" 18px;"="">﻿</span><span style="font-size: 18px;">﻿This is a <u>test </u>with <b>multiple </b>format.</span></p>', 7, 1, '2019-12-07 21:30:49', '2019-12-21 21:36:38'),
-(12, 'Design Requirement', 1, '<p><span style="background-color: rgb(255, 255, 0);">This </span>is a <b>test</b></p><p><b><br></b></p><p><b>''";!!''"''''''</b></p>', '<h6><u>This </u>is <b>another </b>test</h6>', 9, 0, '2019-12-08 00:18:03', '2019-12-10 23:46:24'),
-(13, 'Design Documentation', 1, '<p>You should be careful for the <a href="http://www.google.com" target="_blank"><b>following </b></a>matrix</p><table class="table table-bordered"><tbody><tr><td>11</td><td>12</td><td>13</td></tr><tr><td>21</td><td>22</td><td>23</td></tr><tr><td>31</td><td>32</td><td>33</td></tr><tr><td>41</td><td>42</td><td>43</td></tr></tbody></table><p><br></p>', '<h3><b><u><span style="font-family: &quot;Times New Roman&quot;;">Nothing happens here</span></u></b></h3>', 9, 0, '2019-12-08 21:36:48', '2019-12-10 22:48:25');
+(19, 'Requirement Analysis', 1, '', '', 9, 0, '2019-12-31 00:32:33', '2019-12-31 00:32:33');
 
 -- --------------------------------------------------------
 
@@ -148,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `assignment_date` (
   `last_upd_by` varchar(50) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=57 ;
 
 --
 -- Dumping data for table `assignment_date`
@@ -165,7 +163,18 @@ INSERT INTO `assignment_date` (`id`, `asg_id`, `key`, `description`, `date_value
 (9, 11, 'SELF_REVIEW_OPEN', 'Self review open date', '2019-12-21 09:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 23:19:51'),
 (10, 11, 'SELF_REVIEW_CLOSE', 'Self review close date', '2019-12-28 17:00:00', 'admin', '2019-12-17 00:48:09', '2019-12-17 00:48:09'),
 (11, 11, 'PEER_REVIEW_OPEN', 'Peer review open date', '2019-12-28 09:00:00', 'admin', '2019-12-17 00:48:10', '2019-12-17 23:20:06'),
-(12, 11, 'PEER_REVIEW_CLOSE', 'Peer review close date', '2019-12-31 17:00:00', 'admin', '2019-12-17 00:48:10', '2019-12-17 00:48:10');
+(12, 11, 'PEER_REVIEW_CLOSE', 'Peer review close date', '2019-12-31 17:00:00', 'admin', '2019-12-17 00:48:10', '2019-12-17 00:48:10'),
+(46, 19, 'ASG_OPEN', 'Assignment open to public date', NULL, 'admin', '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(47, 19, 'ASG_CLOSE', 'Assignment close from public date', NULL, 'admin', '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(48, 19, 'GRP_OPEN', 'Group Selection open date', NULL, 'admin', '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(49, 19, 'GRP_CLOSE', 'Group Selection close date', NULL, 'admin', '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(50, 19, 'SUBMISSION_OPEN', 'Assignment Submission Open Date', NULL, 'admin', '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(51, 19, 'SUBMISSION_DEADLINE', 'Assignment Submission Deadline', NULL, 'admin', '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(52, 19, 'SUBMISSION_CLOSE', 'Assignment Submission Close Date', NULL, 'admin', '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(53, 19, 'SELF_REVIEW_OPEN', 'Self review open date', NULL, 'admin', '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(54, 19, 'SELF_REVIEW_CLOSE', 'Self review close date', NULL, 'admin', '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(55, 19, 'PEER_REVIEW_OPEN', 'Peer review open date', NULL, 'admin', '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(56, 19, 'PEER_REVIEW_CLOSE', 'Peer review close date', NULL, 'admin', '2019-12-31 00:32:33', '2019-12-31 00:32:33');
 
 -- --------------------------------------------------------
 
@@ -183,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `assignment_feedback` (
   `feedback` text,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=99 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=154 ;
 
 --
 -- Dumping data for table `assignment_feedback`
@@ -283,7 +292,62 @@ INSERT INTO `assignment_feedback` (`id`, `asg_id`, `question_id`, `reviewer`, `r
 (95, 11, 35, 'user3', 'user1', '3', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
 (96, 11, 35, 'user3', 'user2', '0', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
 (97, 11, 36, 'user3', 'user1', 'Good teammate', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
-(98, 11, 36, 'user3', 'user2', 'He don''t participated at any activities.', '2019-12-16 02:34:31', '2019-12-16 02:34:58');
+(98, 11, 36, 'user3', 'user2', 'He don''t participated at any activities.', '2019-12-16 02:34:31', '2019-12-16 02:34:58'),
+(99, 11, 26, 'user28', 'user1', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(100, 11, 26, 'user28', 'user103', '3', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(101, 11, 26, 'user28', 'user136', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(102, 11, 26, 'user28', 'user2', '1', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(103, 11, 26, 'user28', 'user3', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(104, 11, 27, 'user28', 'user1', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(105, 11, 27, 'user28', 'user103', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(106, 11, 27, 'user28', 'user136', '3', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(107, 11, 27, 'user28', 'user2', '0', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(108, 11, 27, 'user28', 'user3', '3', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(109, 11, 28, 'user28', 'user1', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(110, 11, 28, 'user28', 'user103', '2', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(111, 11, 28, 'user28', 'user136', '2', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(112, 11, 28, 'user28', 'user2', '0', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(113, 11, 28, 'user28', 'user3', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(114, 11, 29, 'user28', 'user1', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(115, 11, 29, 'user28', 'user103', '3', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(116, 11, 29, 'user28', 'user136', '2', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(117, 11, 29, 'user28', 'user2', '1', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(118, 11, 29, 'user28', 'user3', '3', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(119, 11, 30, 'user28', 'user1', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(120, 11, 30, 'user28', 'user103', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(121, 11, 30, 'user28', 'user136', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(122, 11, 30, 'user28', 'user2', '0', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(123, 11, 30, 'user28', 'user3', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(124, 11, 31, 'user28', 'user1', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(125, 11, 31, 'user28', 'user103', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(126, 11, 31, 'user28', 'user136', '3', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(127, 11, 31, 'user28', 'user2', '1', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(128, 11, 31, 'user28', 'user3', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(129, 11, 32, 'user28', 'user1', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(130, 11, 32, 'user28', 'user103', '2', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(131, 11, 32, 'user28', 'user136', '2', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(132, 11, 32, 'user28', 'user2', '0', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(133, 11, 32, 'user28', 'user3', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(134, 11, 33, 'user28', 'user1', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(135, 11, 33, 'user28', 'user103', '3', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(136, 11, 33, 'user28', 'user136', '2', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(137, 11, 33, 'user28', 'user2', '1', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(138, 11, 33, 'user28', 'user3', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(139, 11, 34, 'user28', 'user1', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(140, 11, 34, 'user28', 'user103', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(141, 11, 34, 'user28', 'user136', '2', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(142, 11, 34, 'user28', 'user2', '0', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(143, 11, 34, 'user28', 'user3', '3', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(144, 11, 35, 'user28', 'user1', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(145, 11, 35, 'user28', 'user103', '4', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(146, 11, 35, 'user28', 'user136', '2', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(147, 11, 35, 'user28', 'user2', '0', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(148, 11, 35, 'user28', 'user3', '3', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(149, 11, 36, 'user28', 'user1', 'Our leader', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(150, 11, 36, 'user28', 'user103', 'N/A', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(151, 11, 36, 'user28', 'user136', 'N/A', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(152, 11, 36, 'user28', 'user2', 'I cannot see him to join our meetings', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
+(153, 11, 36, 'user28', 'user3', 'Good teammate', '2019-12-31 00:05:03', '2019-12-31 00:05:03');
 
 -- --------------------------------------------------------
 
@@ -308,30 +372,11 @@ CREATE TABLE IF NOT EXISTS `assignment_group_mark` (
 --
 
 INSERT INTO `assignment_group_mark` (`id`, `asg_id`, `group_id`, `score`, `remark`, `last_upd_by`, `create_time`, `last_upd_time`) VALUES
-(2, 11, 73, '54.00', '', 'admin', '2019-12-29 23:14:49', '2019-12-29 23:55:51'),
+(2, 11, 73, '65.95', '', 'admin', '2019-12-29 23:14:49', '2019-12-31 00:22:15'),
 (3, 11, 94, '75.00', '', 'admin', '2019-12-29 23:44:26', '2019-12-30 00:00:34'),
 (7, 11, 113, '0.00', '', 'admin', '2019-12-30 00:00:43', '2019-12-30 00:00:43'),
 (8, 12, 462, '56.00', '', 'admin', '2019-12-30 00:01:52', '2019-12-30 00:01:52'),
-(9, 11, 74, '5.00', '', 'admin', '2019-12-30 00:05:34', '2019-12-30 00:05:47');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `assignment_mark`
---
-
-DROP TABLE IF EXISTS `assignment_mark`;
-CREATE TABLE IF NOT EXISTS `assignment_mark` (
-`id` int(11) NOT NULL,
-  `asg_id` int(11) NOT NULL,
-  `student` varchar(10) NOT NULL,
-  `section` varchar(200) NOT NULL,
-  `percentage` decimal(10,0) NOT NULL DEFAULT '0',
-  `remark` text,
-  `last_upd_by` varchar(10) NOT NULL,
-  `create_time` datetime NOT NULL,
-  `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+(9, 11, 74, '1.00', '', 'admin', '2019-12-30 00:05:34', '2019-12-31 00:22:26');
 
 -- --------------------------------------------------------
 
@@ -355,14 +400,30 @@ CREATE TABLE IF NOT EXISTS `assignment_mark_criteria` (
   `last_upd_time` datetime NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `assignment_mark_criteria`
+-- Table structure for table `assignment_peer_mark`
 --
 
-INSERT INTO `assignment_mark_criteria` (`id`, `asg_id`, `weight`, `type`, `topic`, `hd`, `dn`, `cr`, `pp`, `nn`, `create_date`, `last_upd_time`) VALUES
-(11, 1, 50, 0, 'Design', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed vulputate odio ut enim blandit volutpat maecenas. Tristique risus nec feugiat in fermentum posuere urna. Non consectetur a erat nam at. Arcu cursus euismod quis viverra nibh cras pulvinar mattis. Gravida quis blandit turpis cursus. Vitae tempus quam pellentesque nec nam. Molestie a iaculis at erat pellentesque adipiscing commodo elit at. Vitae ultricies leo integer malesuada nunc. Amet consectetur adipiscing elit ut aliquam purus sit amet luctus. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu. Eu mi bibendum neque egestas congue quisque egestas diam in. Ipsum suspendisse ultrices gravida dictum fusce ut placerat. Tellus elementum sagittis vitae et leo duis ut.', 'Proin sed libero enim sed faucibus turpis. Sagittis orci a scelerisque purus semper eget duis. Ac placerat vestibulum lectus mauris ultrices eros in cursus. Faucibus ornare suspendisse sed nisi lacus. Imperdiet nulla malesuada pellentesque elit eget. Vulputate enim nulla aliquet porttitor lacus luctus accumsan tortor posuere. Vel risus commodo viverra maecenas accumsan. Montes nascetur ridiculus mus mauris vitae ultricies leo. Faucibus nisl tincidunt eget nullam non nisi est sit. Volutpat diam ut venenatis tellus in. Ut tristique et egestas quis ipsum suspendisse ultrices. Tincidunt id aliquet risus feugiat in.', 'Id venenatis a condimentum vitae. Massa tempor nec feugiat nisl pretium fusce id velit. Elit ut aliquam purus sit amet luctus. Purus in massa tempor nec feugiat nisl pretium fusce id. Sed risus pretium quam vulputate dignissim suspendisse in. Neque ornare aenean euismod elementum nisi quis eleifend quam. Tellus id interdum velit laoreet. Enim sit amet venenatis urna cursus. Enim blandit volutpat maecenas volutpat blandit aliquam etiam erat. Elit scelerisque mauris pellentesque pulvinar pellentesque habitant. Ornare aenean euismod elementum nisi quis eleifend quam adipiscing vitae. Dui vivamus arcu felis bibendum ut tristique et egestas quis. Nisi est sit amet facilisis magna. Quis hendrerit dolor magna eget est lorem. Velit sed ullamcorper morbi tincidunt.', 'Est placerat in egestas erat imperdiet sed euismod. Pretium fusce id velit ut tortor. Facilisi etiam dignissim diam quis enim lobortis. Imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada. Et ultrices neque ornare aenean euismod elementum nisi. Lectus nulla at volutpat diam ut venenatis tellus in metus. Enim ut tellus elementum sagittis vitae. Eu scelerisque felis imperdiet proin fermentum leo. Lacus sed turpis tincidunt id aliquet risus feugiat in. Odio morbi quis commodo odio aenean. Sollicitudin nibh sit amet commodo nulla facilisi nullam. Elit ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at augue. Nec dui nunc mattis enim ut. Vel orci porta non pulvinar neque laoreet suspendisse interdum consectetur. Egestas congue quisque egestas diam in arcu cursus.', 'Est sit amet facilisis magna. Ultrices mi tempus imperdiet nulla malesuada pellentesque elit eget gravida. Tellus in metus vulputate eu scelerisque felis imperdiet proin. Quis viverra nibh cras pulvinar mattis. Amet mauris commodo quis imperdiet massa tincidunt nunc. Non tellus orci ac auctor augue mauris augue neque gravida. Nunc scelerisque viverra mauris in aliquam. Nunc vel risus commodo viverra maecenas accumsan. Purus viverra accumsan in nisl nisi scelerisque eu ultrices vitae. Nunc mattis enim ut tellus elementum sagittis vitae et. Facilisi morbi tempus iaculis urna. Rhoncus dolor purus non enim praesent elementum. Fermentum iaculis eu non diam phasellus vestibulum. In fermentum posuere urna nec tincidunt praesent semper feugiat. Mauris pharetra et ultrices neque. Ipsum nunc aliquet bibendum enim facilisis gravida neque convallis.', '2019-12-05 01:20:09', '2019-12-05 01:20:09'),
-(12, 1, 30, 0, 'Presentation', 'Adipiscing bibendum est ultricies integer quis auctor elit sed vulputate. Habitant morbi tristique senectus et netus et malesuada fames. Quam quisque id diam vel quam elementum pulvinar etiam. Ut tristique et egestas quis ipsum. Lorem ipsum dolor sit amet consectetur adipiscing elit ut. Consectetur purus ut faucibus pulvinar. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Phasellus egestas tellus rutrum tellus. A condimentum vitae sapien pellentesque habitant. Ipsum dolor sit amet consectetur adipiscing elit duis. Facilisis volutpat est velit egestas dui. Auctor eu augue ut lectus arcu bibendum at varius vel. Nullam vehicula ipsum a arcu cursus. Mauris sit amet massa vitae tortor condimentum lacinia. Lorem mollis aliquam ut porttitor leo a diam. Tortor condimentum lacinia quis vel.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Iaculis at erat pellentesque adipiscing commodo. Convallis posuere morbi leo urna molestie at. A diam maecenas sed enim ut sem viverra aliquet. Cras ornare arcu dui vivamus arcu felis bibendum ut tristique. Ac turpis egestas integer eget aliquet nibh praesent tristique magna. Ultricies mi eget mauris pharetra et. Facilisis leo vel fringilla est ullamcorper eget nulla facilisi etiam. Sagittis id consectetur purus ut faucibus pulvinar elementum. Sit amet mauris commodo quis imperdiet massa tincidunt nunc. Sed risus pretium quam vulputate dignissim suspendisse. Facilisis gravida neque convallis a cras semper. Amet consectetur adipiscing elit pellentesque habitant morbi tristique. Ac ut consequat semper viverra nam libero justo. Vitae congue eu consequat ac felis donec et odio. Porttitor rhoncus dolor purus non enim praesent elementum.', 'Lacus luctus accumsan tortor posuere ac. Leo integer malesuada nunc vel risus commodo viverra maecenas accumsan. Enim neque volutpat ac tincidunt vitae semper quis lectus. Vulputate ut pharetra sit amet aliquam id diam maecenas ultricies. Tristique senectus et netus et malesuada fames ac turpis. Suscipit adipiscing bibendum est ultricies integer quis auctor elit sed. Habitant morbi tristique senectus et. Leo in vitae turpis massa sed elementum tempus egestas. Sed adipiscing diam donec adipiscing tristique risus. Tellus in hac habitasse platea. Pharetra magna ac placerat vestibulum. Praesent semper feugiat nibh sed pulvinar proin gravida. Ullamcorper eget nulla facilisi etiam. Malesuada bibendum arcu vitae elementum curabitur vitae. Tincidunt nunc pulvinar sapien et ligula. Mauris augue neque gravida in fermentum et. Lorem ipsum dolor sit amet.', 'Morbi leo urna molestie at elementum eu facilisis sed. Semper viverra nam libero justo. Massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin. Est placerat in egestas erat imperdiet sed. Semper quis lectus nulla at. Mauris vitae ultricies leo integer malesuada nunc. Tellus rutrum tellus pellentesque eu tincidunt. Vitae elementum curabitur vitae nunc sed velit dignissim sodales ut. Dis parturient montes nascetur ridiculus mus mauris. Ut ornare lectus sit amet est placerat in.', 'Enim nunc faucibus a pellentesque sit. In est ante in nibh mauris. Est placerat in egestas erat imperdiet sed. Facilisis magna etiam tempor orci eu. Nam aliquam sem et tortor consequat id porta nibh venenatis. Viverra tellus in hac habitasse platea. Egestas fringilla phasellus faucibus scelerisque. Libero justo laoreet sit amet cursus sit amet. Mi eget mauris pharetra et ultrices neque ornare. Neque gravida in fermentum et sollicitudin ac orci phasellus egestas. Ut porttitor leo a diam sollicitudin. Turpis egestas pretium aenean pharetra magna. Neque egestas congue quisque egestas diam in arcu. Augue ut lectus arcu bibendum at varius. Ridiculus mus mauris vitae ultricies.', '2019-12-05 01:21:02', '2019-12-05 01:21:02'),
-(13, 1, 100, 1, 'Quality Feedback', 'Vitae semper quis lectus nulla at. Aliquet bibendum enim facilisis gravida neque. Amet consectetur adipiscing elit duis tristique sollicitudin nibh. Sociis natoque penatibus et magnis dis. Tempor orci eu lobortis elementum nibh tellus molestie nunc non. Penatibus et magnis dis parturient montes nascetur ridiculus. In hac habitasse platea dictumst vestibulum rhoncus est pellentesque elit. Id venenatis a condimentum vitae sapien pellentesque habitant morbi tristique. Ipsum faucibus vitae aliquet nec. Lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit. A condimentum vitae sapien pellentesque habitant. Mi sit amet mauris commodo. Gravida arcu ac tortor dignissim convallis aenean. Pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. Turpis egestas pretium aenean pharetra magna ac. A cras semper auctor neque vitae tempus quam. Imperdiet sed euismod nisi porta lorem mollis aliquam. Quisque egestas diam in arcu cursus euismod quis viverra. Tortor at auctor urna nunc id cursus metus aliquam.', 'In est ante in nibh mauris cursus mattis molestie a. Posuere lorem ipsum dolor sit. In hac habitasse platea dictumst vestibulum. Arcu risus quis varius quam. Mauris ultrices eros in cursus turpis massa tincidunt dui ut. Mauris cursus mattis molestie a iaculis at erat pellentesque adipiscing. A arcu cursus vitae congue. Lobortis scelerisque fermentum dui faucibus in ornare. In iaculis nunc sed augue lacus viverra. At lectus urna duis convallis convallis tellus. Maecenas ultricies mi eget mauris pharetra et ultrices neque. Tortor aliquam nulla facilisi cras fermentum odio eu. Ut aliquam purus sit amet luctus. Blandit libero volutpat sed cras ornare arcu. Aliquet porttitor lacus luctus accumsan tortor. Ultrices in iaculis nunc sed augue. Eget arcu dictum varius duis at. Augue ut lectus arcu bibendum at varius vel. Ultrices vitae auctor eu augue ut lectus arcu.', 'Magna fringilla urna porttitor rhoncus dolor purus non enim praesent. Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat orci. Eget arcu dictum varius duis at consectetur lorem. Adipiscing commodo elit at imperdiet. Neque egestas congue quisque egestas diam in arcu cursus. Massa enim nec dui nunc mattis enim ut. Pellentesque adipiscing commodo elit at imperdiet. Netus et malesuada fames ac. Blandit cursus risus at ultrices mi tempus imperdiet. Faucibus vitae aliquet nec ullamcorper. Varius quam quisque id diam vel quam. Quam id leo in vitae turpis massa sed elementum.', 'Mattis pellentesque id nibh tortor. Quisque sagittis purus sit amet volutpat consequat mauris. Dapibus ultrices in iaculis nunc sed augue lacus viverra vitae. In mollis nunc sed id semper risus in hendrerit. Imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper. Mattis pellentesque id nibh tortor id aliquet lectus proin nibh. Netus et malesuada fames ac turpis egestas maecenas. Tempus imperdiet nulla malesuada pellentesque elit eget gravida cum. Risus sed vulputate odio ut enim blandit. Nullam non nisi est sit amet facilisis magna etiam. Purus semper eget duis at tellus. Et netus et malesuada fames ac turpis. Facilisis mauris sit amet massa vitae. Ut pharetra sit amet aliquam id diam maecenas ultricies mi. Porta lorem mollis aliquam ut porttitor. Massa vitae tortor condimentum lacinia quis vel eros. Ullamcorper sit amet risus nullam eget.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Platea dictumst quisque sagittis purus sit amet volutpat consequat mauris. Quis enim lobortis scelerisque fermentum dui faucibus in ornare. Ipsum a arcu cursus vitae. Aliquam ultrices sagittis orci a scelerisque purus semper eget. Elementum facilisis leo vel fringilla est ullamcorper. At imperdiet dui accumsan sit amet nulla facilisi morbi tempus. Ut consequat semper viverra nam libero justo. Semper feugiat nibh sed pulvinar proin. Porttitor massa id neque aliquam vestibulum morbi blandit. Magna ac placerat vestibulum lectus mauris ultrices eros. Morbi tincidunt ornare massa eget egestas purus viverra. Adipiscing bibendum est ultricies integer quis auctor. Facilisis mauris sit amet massa vitae tortor condimentum lacinia.', '2019-12-05 01:24:13', '2019-12-05 01:24:13');
+DROP TABLE IF EXISTS `assignment_peer_mark`;
+CREATE TABLE IF NOT EXISTS `assignment_peer_mark` (
+`id` int(11) NOT NULL,
+  `asg_id` int(11) NOT NULL,
+  `score` decimal(13,2) DEFAULT NULL,
+  `username` varchar(10) NOT NULL,
+  `remark` text,
+  `last_upd_by` varchar(10) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `assignment_peer_mark`
+--
+
+INSERT INTO `assignment_peer_mark` (`id`, `asg_id`, `score`, `username`, `remark`, `last_upd_by`, `create_time`, `last_upd_time`) VALUES
+(1, 11, '36.00', 'user3', NULL, 'admin', '2019-12-31 16:35:54', '2019-12-31 16:55:06');
 
 -- --------------------------------------------------------
 
@@ -387,16 +448,6 @@ CREATE TABLE IF NOT EXISTS `assignment_question` (
 --
 
 INSERT INTO `assignment_question` (`id`, `asg_id`, `question_order`, `question`, `answer_type`, `question_section`, `create_time`, `last_upd_time`) VALUES
-(1, 12, 1, 'How much time did you spend on the User Mapping assignment tasks? (hours)', 'TEXT', 'SELF', '2019-12-08 22:00:48', '2019-12-08 22:00:48'),
-(2, 12, 2, 'How much time did you spend on the Technical Development tasks? (hours)', 'TEXT', 'SELF', '2019-12-08 22:09:29', '2019-12-08 22:09:29'),
-(3, 12, 3, 'How much time did you spend on the Testing tasks? (hours)', 'TEXT', 'SELF', '2019-12-08 22:09:29', '2019-12-08 22:09:29'),
-(4, 12, 4, 'How much time did you spend on the Documentation tasks? (hours)', 'TEXT', 'SELF', '2019-12-08 22:09:29', '2019-12-08 22:09:29'),
-(5, 12, 5, 'What tasks did you TAKE A LEADING ROLE ON that contributed to the completion of the assignment task? (Please fully describe your contribution)', 'TEXT', 'SELF', '2019-12-08 22:09:29', '2019-12-08 22:09:29'),
-(6, 12, 6, 'What other tasks did you CONTRIBUTE to that helped towards the completion of the assignment task? (Please fully describe your contribution to each task) ', 'TEXT', 'SELF', '2019-12-08 22:09:29', '2019-12-08 22:09:29'),
-(7, 12, 7, 'Refer to your goals for improvement as described in your last self-review.  Describe the activities you have undertaken to improve in this area.', 'TEXT', 'SELF', '2019-12-08 22:09:29', '2019-12-08 22:09:29'),
-(8, 12, 8, 'What are your plans for project-related self-improvement during the next agile phase?  Describe the activities you will undertake to improve in this area.', 'TEXT', 'SELF', '2019-12-08 22:09:29', '2019-12-08 22:09:29'),
-(9, 12, 9, 'Refer to your goals for improvement as described in your last self-review.  Describe the activities you have undertaken to improve in this area.', 'TEXT', 'SELF', '2019-12-08 22:09:29', '2019-12-08 22:09:29'),
-(10, 12, 10, 'What are your plans for project-related self-improvement during the next agile phase?  Describe the activities you will undertake to improve in this area.', 'TEXT', 'SELF', '2019-12-08 22:09:29', '2019-12-08 22:09:29'),
 (11, 11, 1, 'How much time did you spend on the User Mapping assignment tasks? (hours)', 'TEXT', 'SELF', '2019-12-13 16:25:13', '2019-12-13 16:25:13'),
 (12, 11, 2, 'How much time did you spend on the Technical Development tasks? (hours)', 'TEXT', 'SELF', '2019-12-13 16:25:13', '2019-12-13 16:25:13'),
 (13, 11, 3, 'How much time did you spend on the Testing tasks? (hours)', 'TEXT', 'SELF', '2019-12-13 16:25:13', '2019-12-13 16:25:13'),
@@ -434,17 +485,14 @@ CREATE TABLE IF NOT EXISTS `assignment_topic` (
   `max` int(11) NOT NULL DEFAULT '0',
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=798 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=998 ;
 
 --
 -- Dumping data for table `assignment_topic`
 --
 
 INSERT INTO `assignment_topic` (`id`, `assign_id`, `topic`, `topic_desc`, `max`, `create_time`, `last_upd_time`) VALUES
-(1, 1, 'PGP', 'Hello world', 90, '2019-11-18 00:00:00', '2019-11-18 00:00:00'),
-(2, 1, 'Blockchain', 'Another Topic', 90, '2019-11-18 02:45:38', '2019-11-18 02:45:38'),
-(5, 1, '2FA Authentication', 'This is a test <span>hello</span>', 1, '2019-11-18 17:33:27', '2019-11-18 17:33:27'),
-(73, 11, 'Group 002', 'Group 002', 3, '2019-12-07 21:30:49', '2019-12-07 21:30:49'),
+(73, 11, 'Group 002', 'Group 002', 6, '2019-12-07 21:30:49', '2019-12-30 23:58:21'),
 (74, 11, 'Group 003', 'Group 003', 3, '2019-12-07 21:30:49', '2019-12-07 21:30:49'),
 (75, 11, 'Group 004', 'Group 004', 3, '2019-12-07 21:30:49', '2019-12-07 21:30:49'),
 (76, 11, 'Group 005', 'Group 005', 3, '2019-12-07 21:30:49', '2019-12-07 21:30:49'),
@@ -484,406 +532,206 @@ INSERT INTO `assignment_topic` (`id`, `assign_id`, `topic`, `topic_desc`, `max`,
 (110, 11, 'Group 039', 'Group 039', 3, '2019-12-07 21:30:49', '2019-12-07 21:30:49'),
 (111, 11, 'Group 040', 'Group 040', 3, '2019-12-07 21:30:49', '2019-12-07 21:30:49'),
 (113, 11, 'Group 001', 'Group 001', 4, '2019-12-07 21:52:37', '2019-12-07 21:54:53'),
-(264, 12, 'Group 001', 'Group 001', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(265, 12, 'Group 002', 'Group 002', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(266, 12, 'Group 003', 'Group 003', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(267, 12, 'Group 004', 'Group 004', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(268, 12, 'Group 005', 'Group 005', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(269, 12, 'Group 006', 'Group 006', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(270, 12, 'Group 007', 'Group 007', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(271, 12, 'Group 008', 'Group 008', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(272, 12, 'Group 009', 'Group 009', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(273, 12, 'Group 010', 'Group 010', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(274, 12, 'Group 011', 'Group 011', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(275, 12, 'Group 012', 'Group 012', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(276, 12, 'Group 013', 'Group 013', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(277, 12, 'Group 014', 'Group 014', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(278, 12, 'Group 015', 'Group 015', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(279, 12, 'Group 016', 'Group 016', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(280, 12, 'Group 017', 'Group 017', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(281, 12, 'Group 018', 'Group 018', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(282, 12, 'Group 019', 'Group 019', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(283, 12, 'Group 020', 'Group 020', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(284, 12, 'Group 021', 'Group 021', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(285, 12, 'Group 022', 'Group 022', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(286, 12, 'Group 023', 'Group 023', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(287, 12, 'Group 024', 'Group 024', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(288, 12, 'Group 025', 'Group 025', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(289, 12, 'Group 026', 'Group 026', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(290, 12, 'Group 027', 'Group 027', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(291, 12, 'Group 028', 'Group 028', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(292, 12, 'Group 029', 'Group 029', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(293, 12, 'Group 030', 'Group 030', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(294, 12, 'Group 031', 'Group 031', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(295, 12, 'Group 032', 'Group 032', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(296, 12, 'Group 033', 'Group 033', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(297, 12, 'Group 034', 'Group 034', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(298, 12, 'Group 035', 'Group 035', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(299, 12, 'Group 036', 'Group 036', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(300, 12, 'Group 037', 'Group 037', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(301, 12, 'Group 038', 'Group 038', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(302, 12, 'Group 039', 'Group 039', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(303, 12, 'Group 040', 'Group 040', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(304, 12, 'Group 041', 'Group 041', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(305, 12, 'Group 042', 'Group 042', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(306, 12, 'Group 043', 'Group 043', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(307, 12, 'Group 044', 'Group 044', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(308, 12, 'Group 045', 'Group 045', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(309, 12, 'Group 046', 'Group 046', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(310, 12, 'Group 047', 'Group 047', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(311, 12, 'Group 048', 'Group 048', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(312, 12, 'Group 049', 'Group 049', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(313, 12, 'Group 050', 'Group 050', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(314, 12, 'Group 051', 'Group 051', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(315, 12, 'Group 052', 'Group 052', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(316, 12, 'Group 053', 'Group 053', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(317, 12, 'Group 054', 'Group 054', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(318, 12, 'Group 055', 'Group 055', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(319, 12, 'Group 056', 'Group 056', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(320, 12, 'Group 057', 'Group 057', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(321, 12, 'Group 058', 'Group 058', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(322, 12, 'Group 059', 'Group 059', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(323, 12, 'Group 060', 'Group 060', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(324, 12, 'Group 061', 'Group 061', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(325, 12, 'Group 062', 'Group 062', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(326, 12, 'Group 063', 'Group 063', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(327, 12, 'Group 064', 'Group 064', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(328, 12, 'Group 065', 'Group 065', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(329, 12, 'Group 066', 'Group 066', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(330, 12, 'Group 067', 'Group 067', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(331, 12, 'Group 068', 'Group 068', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(332, 12, 'Group 069', 'Group 069', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(333, 12, 'Group 070', 'Group 070', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(334, 12, 'Group 071', 'Group 071', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(335, 12, 'Group 072', 'Group 072', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(336, 12, 'Group 073', 'Group 073', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(337, 12, 'Group 074', 'Group 074', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(338, 12, 'Group 075', 'Group 075', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(339, 12, 'Group 076', 'Group 076', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(340, 12, 'Group 077', 'Group 077', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(341, 12, 'Group 078', 'Group 078', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(342, 12, 'Group 079', 'Group 079', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(343, 12, 'Group 080', 'Group 080', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(344, 12, 'Group 081', 'Group 081', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(345, 12, 'Group 082', 'Group 082', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(346, 12, 'Group 083', 'Group 083', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(347, 12, 'Group 084', 'Group 084', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(348, 12, 'Group 085', 'Group 085', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(349, 12, 'Group 086', 'Group 086', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(350, 12, 'Group 087', 'Group 087', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(351, 12, 'Group 088', 'Group 088', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(352, 12, 'Group 089', 'Group 089', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(353, 12, 'Group 090', 'Group 090', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(354, 12, 'Group 091', 'Group 091', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(355, 12, 'Group 092', 'Group 092', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(356, 12, 'Group 093', 'Group 093', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(357, 12, 'Group 094', 'Group 094', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(358, 12, 'Group 095', 'Group 095', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(359, 12, 'Group 096', 'Group 096', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(360, 12, 'Group 097', 'Group 097', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(361, 12, 'Group 098', 'Group 098', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(362, 12, 'Group 099', 'Group 099', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(363, 12, 'Group 100', 'Group 100', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(364, 12, 'Group 101', 'Group 101', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(365, 12, 'Group 102', 'Group 102', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(366, 12, 'Group 103', 'Group 103', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(367, 12, 'Group 104', 'Group 104', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(368, 12, 'Group 105', 'Group 105', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(369, 12, 'Group 106', 'Group 106', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(370, 12, 'Group 107', 'Group 107', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(371, 12, 'Group 108', 'Group 108', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(372, 12, 'Group 109', 'Group 109', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(373, 12, 'Group 110', 'Group 110', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(374, 12, 'Group 111', 'Group 111', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(375, 12, 'Group 112', 'Group 112', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(376, 12, 'Group 113', 'Group 113', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(377, 12, 'Group 114', 'Group 114', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(378, 12, 'Group 115', 'Group 115', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(379, 12, 'Group 116', 'Group 116', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(380, 12, 'Group 117', 'Group 117', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(381, 12, 'Group 118', 'Group 118', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(382, 12, 'Group 119', 'Group 119', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(383, 12, 'Group 120', 'Group 120', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(384, 12, 'Group 121', 'Group 121', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(385, 12, 'Group 122', 'Group 122', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(386, 12, 'Group 123', 'Group 123', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(387, 12, 'Group 124', 'Group 124', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(388, 12, 'Group 125', 'Group 125', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(389, 12, 'Group 126', 'Group 126', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(390, 12, 'Group 127', 'Group 127', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(391, 12, 'Group 128', 'Group 128', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(392, 12, 'Group 129', 'Group 129', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(393, 12, 'Group 130', 'Group 130', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(394, 12, 'Group 131', 'Group 131', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(395, 12, 'Group 132', 'Group 132', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(396, 12, 'Group 133', 'Group 133', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(397, 12, 'Group 134', 'Group 134', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(398, 12, 'Group 135', 'Group 135', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(399, 12, 'Group 136', 'Group 136', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(400, 12, 'Group 137', 'Group 137', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(401, 12, 'Group 138', 'Group 138', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(402, 12, 'Group 139', 'Group 139', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(403, 12, 'Group 140', 'Group 140', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(404, 12, 'Group 141', 'Group 141', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(405, 12, 'Group 142', 'Group 142', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(406, 12, 'Group 143', 'Group 143', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(407, 12, 'Group 144', 'Group 144', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(408, 12, 'Group 145', 'Group 145', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(409, 12, 'Group 146', 'Group 146', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(410, 12, 'Group 147', 'Group 147', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(411, 12, 'Group 148', 'Group 148', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(412, 12, 'Group 149', 'Group 149', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(413, 12, 'Group 150', 'Group 150', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(414, 12, 'Group 151', 'Group 151', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(415, 12, 'Group 152', 'Group 152', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(416, 12, 'Group 153', 'Group 153', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(417, 12, 'Group 154', 'Group 154', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(418, 12, 'Group 155', 'Group 155', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(419, 12, 'Group 156', 'Group 156', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(420, 12, 'Group 157', 'Group 157', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(421, 12, 'Group 158', 'Group 158', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(422, 12, 'Group 159', 'Group 159', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(423, 12, 'Group 160', 'Group 160', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(424, 12, 'Group 161', 'Group 161', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(425, 12, 'Group 162', 'Group 162', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(426, 12, 'Group 163', 'Group 163', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(427, 12, 'Group 164', 'Group 164', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(428, 12, 'Group 165', 'Group 165', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(429, 12, 'Group 166', 'Group 166', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(430, 12, 'Group 167', 'Group 167', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(431, 12, 'Group 168', 'Group 168', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(432, 12, 'Group 169', 'Group 169', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(433, 12, 'Group 170', 'Group 170', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(434, 12, 'Group 171', 'Group 171', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(435, 12, 'Group 172', 'Group 172', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(436, 12, 'Group 173', 'Group 173', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(437, 12, 'Group 174', 'Group 174', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(438, 12, 'Group 175', 'Group 175', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(439, 12, 'Group 176', 'Group 176', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(440, 12, 'Group 177', 'Group 177', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(441, 12, 'Group 178', 'Group 178', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(442, 12, 'Group 179', 'Group 179', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(443, 12, 'Group 180', 'Group 180', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(444, 12, 'Group 181', 'Group 181', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(445, 12, 'Group 182', 'Group 182', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(446, 12, 'Group 183', 'Group 183', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(447, 12, 'Group 184', 'Group 184', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(448, 12, 'Group 185', 'Group 185', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(449, 12, 'Group 186', 'Group 186', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(450, 12, 'Group 187', 'Group 187', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(451, 12, 'Group 188', 'Group 188', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(452, 12, 'Group 189', 'Group 189', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(453, 12, 'Group 190', 'Group 190', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(454, 12, 'Group 191', 'Group 191', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(455, 12, 'Group 192', 'Group 192', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(456, 12, 'Group 193', 'Group 193', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(457, 12, 'Group 194', 'Group 194', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(458, 12, 'Group 195', 'Group 195', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(459, 12, 'Group 196', 'Group 196', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(460, 12, 'Group 197', 'Group 197', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(461, 12, 'Group 198', 'Group 198', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(462, 12, 'Group 199', 'Group 199', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(463, 12, 'Group 200', 'Group 200', 3, '2019-12-08 00:18:03', '2019-12-08 00:18:03'),
-(464, 13, 'Group 001', 'Group 001', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(465, 13, 'Group 002', 'Group 002', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(466, 13, 'Group 003', 'Group 003', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(467, 13, 'Group 004', 'Group 004', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(468, 13, 'Group 005', 'Group 005', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(469, 13, 'Group 006', 'Group 006', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(470, 13, 'Group 007', 'Group 007', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(471, 13, 'Group 008', 'Group 008', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(472, 13, 'Group 009', 'Group 009', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(473, 13, 'Group 010', 'Group 010', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(474, 13, 'Group 011', 'Group 011', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(475, 13, 'Group 012', 'Group 012', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(476, 13, 'Group 013', 'Group 013', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(477, 13, 'Group 014', 'Group 014', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(478, 13, 'Group 015', 'Group 015', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(479, 13, 'Group 016', 'Group 016', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(480, 13, 'Group 017', 'Group 017', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(481, 13, 'Group 018', 'Group 018', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(482, 13, 'Group 019', 'Group 019', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(483, 13, 'Group 020', 'Group 020', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(484, 13, 'Group 021', 'Group 021', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(485, 13, 'Group 022', 'Group 022', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(486, 13, 'Group 023', 'Group 023', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(487, 13, 'Group 024', 'Group 024', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(488, 13, 'Group 025', 'Group 025', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(489, 13, 'Group 026', 'Group 026', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(490, 13, 'Group 027', 'Group 027', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(491, 13, 'Group 028', 'Group 028', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(492, 13, 'Group 029', 'Group 029', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(493, 13, 'Group 030', 'Group 030', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(494, 13, 'Group 031', 'Group 031', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(495, 13, 'Group 032', 'Group 032', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(496, 13, 'Group 033', 'Group 033', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(497, 13, 'Group 034', 'Group 034', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(498, 13, 'Group 035', 'Group 035', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(499, 13, 'Group 036', 'Group 036', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(500, 13, 'Group 037', 'Group 037', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(501, 13, 'Group 038', 'Group 038', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(502, 13, 'Group 039', 'Group 039', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(503, 13, 'Group 040', 'Group 040', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(504, 13, 'Group 041', 'Group 041', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(505, 13, 'Group 042', 'Group 042', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(506, 13, 'Group 043', 'Group 043', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(507, 13, 'Group 044', 'Group 044', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(508, 13, 'Group 045', 'Group 045', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(509, 13, 'Group 046', 'Group 046', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(510, 13, 'Group 047', 'Group 047', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(511, 13, 'Group 048', 'Group 048', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(512, 13, 'Group 049', 'Group 049', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(513, 13, 'Group 050', 'Group 050', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(514, 13, 'Group 051', 'Group 051', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(515, 13, 'Group 052', 'Group 052', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(516, 13, 'Group 053', 'Group 053', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(517, 13, 'Group 054', 'Group 054', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(518, 13, 'Group 055', 'Group 055', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(519, 13, 'Group 056', 'Group 056', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(520, 13, 'Group 057', 'Group 057', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(521, 13, 'Group 058', 'Group 058', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(522, 13, 'Group 059', 'Group 059', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(523, 13, 'Group 060', 'Group 060', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(524, 13, 'Group 061', 'Group 061', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(525, 13, 'Group 062', 'Group 062', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(526, 13, 'Group 063', 'Group 063', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(527, 13, 'Group 064', 'Group 064', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(528, 13, 'Group 065', 'Group 065', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(529, 13, 'Group 066', 'Group 066', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(530, 13, 'Group 067', 'Group 067', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(531, 13, 'Group 068', 'Group 068', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(532, 13, 'Group 069', 'Group 069', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(533, 13, 'Group 070', 'Group 070', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(534, 13, 'Group 071', 'Group 071', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(535, 13, 'Group 072', 'Group 072', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(536, 13, 'Group 073', 'Group 073', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(537, 13, 'Group 074', 'Group 074', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(538, 13, 'Group 075', 'Group 075', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(539, 13, 'Group 076', 'Group 076', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(540, 13, 'Group 077', 'Group 077', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(541, 13, 'Group 078', 'Group 078', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(542, 13, 'Group 079', 'Group 079', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(543, 13, 'Group 080', 'Group 080', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(544, 13, 'Group 081', 'Group 081', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(545, 13, 'Group 082', 'Group 082', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(546, 13, 'Group 083', 'Group 083', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(547, 13, 'Group 084', 'Group 084', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(548, 13, 'Group 085', 'Group 085', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(549, 13, 'Group 086', 'Group 086', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(550, 13, 'Group 087', 'Group 087', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(551, 13, 'Group 088', 'Group 088', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(552, 13, 'Group 089', 'Group 089', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(553, 13, 'Group 090', 'Group 090', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(554, 13, 'Group 091', 'Group 091', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(555, 13, 'Group 092', 'Group 092', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(556, 13, 'Group 093', 'Group 093', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(557, 13, 'Group 094', 'Group 094', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(558, 13, 'Group 095', 'Group 095', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(559, 13, 'Group 096', 'Group 096', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(560, 13, 'Group 097', 'Group 097', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(561, 13, 'Group 098', 'Group 098', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(562, 13, 'Group 099', 'Group 099', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(563, 13, 'Group 100', 'Group 100', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(564, 13, 'Group 101', 'Group 101', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(565, 13, 'Group 102', 'Group 102', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(566, 13, 'Group 103', 'Group 103', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(567, 13, 'Group 104', 'Group 104', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(568, 13, 'Group 105', 'Group 105', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(569, 13, 'Group 106', 'Group 106', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(570, 13, 'Group 107', 'Group 107', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(571, 13, 'Group 108', 'Group 108', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(572, 13, 'Group 109', 'Group 109', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(573, 13, 'Group 110', 'Group 110', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(574, 13, 'Group 111', 'Group 111', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(575, 13, 'Group 112', 'Group 112', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(576, 13, 'Group 113', 'Group 113', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(577, 13, 'Group 114', 'Group 114', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(578, 13, 'Group 115', 'Group 115', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(579, 13, 'Group 116', 'Group 116', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(580, 13, 'Group 117', 'Group 117', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(581, 13, 'Group 118', 'Group 118', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(582, 13, 'Group 119', 'Group 119', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(583, 13, 'Group 120', 'Group 120', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(584, 13, 'Group 121', 'Group 121', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(585, 13, 'Group 122', 'Group 122', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(586, 13, 'Group 123', 'Group 123', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(587, 13, 'Group 124', 'Group 124', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(588, 13, 'Group 125', 'Group 125', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(589, 13, 'Group 126', 'Group 126', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(590, 13, 'Group 127', 'Group 127', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(591, 13, 'Group 128', 'Group 128', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(592, 13, 'Group 129', 'Group 129', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(593, 13, 'Group 130', 'Group 130', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(594, 13, 'Group 131', 'Group 131', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(595, 13, 'Group 132', 'Group 132', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(596, 13, 'Group 133', 'Group 133', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(597, 13, 'Group 134', 'Group 134', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(598, 13, 'Group 135', 'Group 135', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(599, 13, 'Group 136', 'Group 136', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(600, 13, 'Group 137', 'Group 137', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(601, 13, 'Group 138', 'Group 138', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(602, 13, 'Group 139', 'Group 139', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(603, 13, 'Group 140', 'Group 140', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(604, 13, 'Group 141', 'Group 141', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(605, 13, 'Group 142', 'Group 142', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(606, 13, 'Group 143', 'Group 143', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(607, 13, 'Group 144', 'Group 144', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(608, 13, 'Group 145', 'Group 145', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(609, 13, 'Group 146', 'Group 146', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(610, 13, 'Group 147', 'Group 147', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(611, 13, 'Group 148', 'Group 148', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(612, 13, 'Group 149', 'Group 149', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(613, 13, 'Group 150', 'Group 150', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(614, 13, 'Group 151', 'Group 151', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(615, 13, 'Group 152', 'Group 152', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(616, 13, 'Group 153', 'Group 153', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(617, 13, 'Group 154', 'Group 154', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(618, 13, 'Group 155', 'Group 155', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(619, 13, 'Group 156', 'Group 156', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(620, 13, 'Group 157', 'Group 157', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(621, 13, 'Group 158', 'Group 158', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(622, 13, 'Group 159', 'Group 159', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(623, 13, 'Group 160', 'Group 160', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(624, 13, 'Group 161', 'Group 161', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(625, 13, 'Group 162', 'Group 162', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(626, 13, 'Group 163', 'Group 163', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(627, 13, 'Group 164', 'Group 164', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(628, 13, 'Group 165', 'Group 165', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(629, 13, 'Group 166', 'Group 166', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(630, 13, 'Group 167', 'Group 167', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(631, 13, 'Group 168', 'Group 168', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(632, 13, 'Group 169', 'Group 169', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(633, 13, 'Group 170', 'Group 170', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(634, 13, 'Group 171', 'Group 171', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(635, 13, 'Group 172', 'Group 172', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(636, 13, 'Group 173', 'Group 173', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(637, 13, 'Group 174', 'Group 174', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(638, 13, 'Group 175', 'Group 175', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(639, 13, 'Group 176', 'Group 176', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(640, 13, 'Group 177', 'Group 177', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(641, 13, 'Group 178', 'Group 178', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(642, 13, 'Group 179', 'Group 179', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(643, 13, 'Group 180', 'Group 180', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(644, 13, 'Group 181', 'Group 181', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(645, 13, 'Group 182', 'Group 182', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(646, 13, 'Group 183', 'Group 183', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(647, 13, 'Group 184', 'Group 184', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(648, 13, 'Group 185', 'Group 185', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(649, 13, 'Group 186', 'Group 186', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(650, 13, 'Group 187', 'Group 187', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(651, 13, 'Group 188', 'Group 188', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(652, 13, 'Group 189', 'Group 189', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(653, 13, 'Group 190', 'Group 190', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(654, 13, 'Group 191', 'Group 191', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(655, 13, 'Group 192', 'Group 192', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(656, 13, 'Group 193', 'Group 193', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(657, 13, 'Group 194', 'Group 194', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(658, 13, 'Group 195', 'Group 195', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(659, 13, 'Group 196', 'Group 196', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(660, 13, 'Group 197', 'Group 197', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(661, 13, 'Group 198', 'Group 198', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(662, 13, 'Group 199', 'Group 199', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48'),
-(663, 13, 'Group 200', 'Group 200', 3, '2019-12-08 21:36:48', '2019-12-08 21:36:48');
+(798, 19, 'Group 001', 'Group 001', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(799, 19, 'Group 002', 'Group 002', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(800, 19, 'Group 003', 'Group 003', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(801, 19, 'Group 004', 'Group 004', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(802, 19, 'Group 005', 'Group 005', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(803, 19, 'Group 006', 'Group 006', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(804, 19, 'Group 007', 'Group 007', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(805, 19, 'Group 008', 'Group 008', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(806, 19, 'Group 009', 'Group 009', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(807, 19, 'Group 010', 'Group 010', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(808, 19, 'Group 011', 'Group 011', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(809, 19, 'Group 012', 'Group 012', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(810, 19, 'Group 013', 'Group 013', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(811, 19, 'Group 014', 'Group 014', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(812, 19, 'Group 015', 'Group 015', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(813, 19, 'Group 016', 'Group 016', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(814, 19, 'Group 017', 'Group 017', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(815, 19, 'Group 018', 'Group 018', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(816, 19, 'Group 019', 'Group 019', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(817, 19, 'Group 020', 'Group 020', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(818, 19, 'Group 021', 'Group 021', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(819, 19, 'Group 022', 'Group 022', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(820, 19, 'Group 023', 'Group 023', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(821, 19, 'Group 024', 'Group 024', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(822, 19, 'Group 025', 'Group 025', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(823, 19, 'Group 026', 'Group 026', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(824, 19, 'Group 027', 'Group 027', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(825, 19, 'Group 028', 'Group 028', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(826, 19, 'Group 029', 'Group 029', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(827, 19, 'Group 030', 'Group 030', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(828, 19, 'Group 031', 'Group 031', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(829, 19, 'Group 032', 'Group 032', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(830, 19, 'Group 033', 'Group 033', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(831, 19, 'Group 034', 'Group 034', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(832, 19, 'Group 035', 'Group 035', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(833, 19, 'Group 036', 'Group 036', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(834, 19, 'Group 037', 'Group 037', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(835, 19, 'Group 038', 'Group 038', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(836, 19, 'Group 039', 'Group 039', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(837, 19, 'Group 040', 'Group 040', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(838, 19, 'Group 041', 'Group 041', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(839, 19, 'Group 042', 'Group 042', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(840, 19, 'Group 043', 'Group 043', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(841, 19, 'Group 044', 'Group 044', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(842, 19, 'Group 045', 'Group 045', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(843, 19, 'Group 046', 'Group 046', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(844, 19, 'Group 047', 'Group 047', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(845, 19, 'Group 048', 'Group 048', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(846, 19, 'Group 049', 'Group 049', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(847, 19, 'Group 050', 'Group 050', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(848, 19, 'Group 051', 'Group 051', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(849, 19, 'Group 052', 'Group 052', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(850, 19, 'Group 053', 'Group 053', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(851, 19, 'Group 054', 'Group 054', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(852, 19, 'Group 055', 'Group 055', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(853, 19, 'Group 056', 'Group 056', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(854, 19, 'Group 057', 'Group 057', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(855, 19, 'Group 058', 'Group 058', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(856, 19, 'Group 059', 'Group 059', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(857, 19, 'Group 060', 'Group 060', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(858, 19, 'Group 061', 'Group 061', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(859, 19, 'Group 062', 'Group 062', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(860, 19, 'Group 063', 'Group 063', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(861, 19, 'Group 064', 'Group 064', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(862, 19, 'Group 065', 'Group 065', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(863, 19, 'Group 066', 'Group 066', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(864, 19, 'Group 067', 'Group 067', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(865, 19, 'Group 068', 'Group 068', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(866, 19, 'Group 069', 'Group 069', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(867, 19, 'Group 070', 'Group 070', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(868, 19, 'Group 071', 'Group 071', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(869, 19, 'Group 072', 'Group 072', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(870, 19, 'Group 073', 'Group 073', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(871, 19, 'Group 074', 'Group 074', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(872, 19, 'Group 075', 'Group 075', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(873, 19, 'Group 076', 'Group 076', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(874, 19, 'Group 077', 'Group 077', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(875, 19, 'Group 078', 'Group 078', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(876, 19, 'Group 079', 'Group 079', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(877, 19, 'Group 080', 'Group 080', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(878, 19, 'Group 081', 'Group 081', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(879, 19, 'Group 082', 'Group 082', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(880, 19, 'Group 083', 'Group 083', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(881, 19, 'Group 084', 'Group 084', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(882, 19, 'Group 085', 'Group 085', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(883, 19, 'Group 086', 'Group 086', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(884, 19, 'Group 087', 'Group 087', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(885, 19, 'Group 088', 'Group 088', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(886, 19, 'Group 089', 'Group 089', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(887, 19, 'Group 090', 'Group 090', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(888, 19, 'Group 091', 'Group 091', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(889, 19, 'Group 092', 'Group 092', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(890, 19, 'Group 093', 'Group 093', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(891, 19, 'Group 094', 'Group 094', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(892, 19, 'Group 095', 'Group 095', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(893, 19, 'Group 096', 'Group 096', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(894, 19, 'Group 097', 'Group 097', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(895, 19, 'Group 098', 'Group 098', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(896, 19, 'Group 099', 'Group 099', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(897, 19, 'Group 100', 'Group 100', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(898, 19, 'Group 101', 'Group 101', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(899, 19, 'Group 102', 'Group 102', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(900, 19, 'Group 103', 'Group 103', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(901, 19, 'Group 104', 'Group 104', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(902, 19, 'Group 105', 'Group 105', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(903, 19, 'Group 106', 'Group 106', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(904, 19, 'Group 107', 'Group 107', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(905, 19, 'Group 108', 'Group 108', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(906, 19, 'Group 109', 'Group 109', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(907, 19, 'Group 110', 'Group 110', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(908, 19, 'Group 111', 'Group 111', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(909, 19, 'Group 112', 'Group 112', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(910, 19, 'Group 113', 'Group 113', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(911, 19, 'Group 114', 'Group 114', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(912, 19, 'Group 115', 'Group 115', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(913, 19, 'Group 116', 'Group 116', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(914, 19, 'Group 117', 'Group 117', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(915, 19, 'Group 118', 'Group 118', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(916, 19, 'Group 119', 'Group 119', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(917, 19, 'Group 120', 'Group 120', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(918, 19, 'Group 121', 'Group 121', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(919, 19, 'Group 122', 'Group 122', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(920, 19, 'Group 123', 'Group 123', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(921, 19, 'Group 124', 'Group 124', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(922, 19, 'Group 125', 'Group 125', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(923, 19, 'Group 126', 'Group 126', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(924, 19, 'Group 127', 'Group 127', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(925, 19, 'Group 128', 'Group 128', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(926, 19, 'Group 129', 'Group 129', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(927, 19, 'Group 130', 'Group 130', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(928, 19, 'Group 131', 'Group 131', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(929, 19, 'Group 132', 'Group 132', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(930, 19, 'Group 133', 'Group 133', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(931, 19, 'Group 134', 'Group 134', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(932, 19, 'Group 135', 'Group 135', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(933, 19, 'Group 136', 'Group 136', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(934, 19, 'Group 137', 'Group 137', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(935, 19, 'Group 138', 'Group 138', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(936, 19, 'Group 139', 'Group 139', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(937, 19, 'Group 140', 'Group 140', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(938, 19, 'Group 141', 'Group 141', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(939, 19, 'Group 142', 'Group 142', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(940, 19, 'Group 143', 'Group 143', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(941, 19, 'Group 144', 'Group 144', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(942, 19, 'Group 145', 'Group 145', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(943, 19, 'Group 146', 'Group 146', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(944, 19, 'Group 147', 'Group 147', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(945, 19, 'Group 148', 'Group 148', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(946, 19, 'Group 149', 'Group 149', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(947, 19, 'Group 150', 'Group 150', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(948, 19, 'Group 151', 'Group 151', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(949, 19, 'Group 152', 'Group 152', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(950, 19, 'Group 153', 'Group 153', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(951, 19, 'Group 154', 'Group 154', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(952, 19, 'Group 155', 'Group 155', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(953, 19, 'Group 156', 'Group 156', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(954, 19, 'Group 157', 'Group 157', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(955, 19, 'Group 158', 'Group 158', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(956, 19, 'Group 159', 'Group 159', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(957, 19, 'Group 160', 'Group 160', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(958, 19, 'Group 161', 'Group 161', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(959, 19, 'Group 162', 'Group 162', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(960, 19, 'Group 163', 'Group 163', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(961, 19, 'Group 164', 'Group 164', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(962, 19, 'Group 165', 'Group 165', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(963, 19, 'Group 166', 'Group 166', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(964, 19, 'Group 167', 'Group 167', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(965, 19, 'Group 168', 'Group 168', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(966, 19, 'Group 169', 'Group 169', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(967, 19, 'Group 170', 'Group 170', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(968, 19, 'Group 171', 'Group 171', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(969, 19, 'Group 172', 'Group 172', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(970, 19, 'Group 173', 'Group 173', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(971, 19, 'Group 174', 'Group 174', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(972, 19, 'Group 175', 'Group 175', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(973, 19, 'Group 176', 'Group 176', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(974, 19, 'Group 177', 'Group 177', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(975, 19, 'Group 178', 'Group 178', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(976, 19, 'Group 179', 'Group 179', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(977, 19, 'Group 180', 'Group 180', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(978, 19, 'Group 181', 'Group 181', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(979, 19, 'Group 182', 'Group 182', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(980, 19, 'Group 183', 'Group 183', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(981, 19, 'Group 184', 'Group 184', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(982, 19, 'Group 185', 'Group 185', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(983, 19, 'Group 186', 'Group 186', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(984, 19, 'Group 187', 'Group 187', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(985, 19, 'Group 188', 'Group 188', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(986, 19, 'Group 189', 'Group 189', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(987, 19, 'Group 190', 'Group 190', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(988, 19, 'Group 191', 'Group 191', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(989, 19, 'Group 192', 'Group 192', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(990, 19, 'Group 193', 'Group 193', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(991, 19, 'Group 194', 'Group 194', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(992, 19, 'Group 195', 'Group 195', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(993, 19, 'Group 196', 'Group 196', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(994, 19, 'Group 197', 'Group 197', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(995, 19, 'Group 198', 'Group 198', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(996, 19, 'Group 199', 'Group 199', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33'),
+(997, 19, 'Group 200', 'Group 200', 3, '2019-12-31 00:32:33', '2019-12-31 00:32:33');
 
 -- --------------------------------------------------------
 
@@ -899,275 +747,21 @@ CREATE TABLE IF NOT EXISTS `assignment_topic_allocation` (
   `topic_id` int(11) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=268 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=273 ;
 
 --
 -- Dumping data for table `assignment_topic_allocation`
 --
 
 INSERT INTO `assignment_topic_allocation` (`id`, `asg_id`, `user_id`, `topic_id`, `create_time`, `last_upd_time`) VALUES
-(1, 12, 'user9', 327, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(2, 12, 'user11', 438, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(3, 12, 'user15', 378, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(4, 12, 'user17', 427, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(5, 12, 'user20', 396, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(6, 12, 'user21', 377, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(7, 12, 'user22', 407, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(8, 12, 'user24', 264, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(9, 12, 'user25', 340, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(10, 12, 'user26', 269, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(11, 12, 'user30', 418, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(12, 12, 'user32', 414, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(13, 12, 'user35', 355, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(14, 12, 'user36', 346, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(15, 12, 'user38', 377, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(16, 12, 'user39', 268, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(17, 12, 'user41', 357, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(18, 12, 'user42', 371, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(19, 12, 'user43', 399, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(20, 12, 'user46', 407, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(21, 12, 'user51', 392, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(22, 12, 'user56', 437, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(23, 12, 'user61', 400, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(24, 12, 'user63', 289, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(25, 12, 'user64', 344, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(26, 12, 'user65', 272, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(27, 12, 'user69', 316, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(28, 12, 'user80', 401, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(29, 12, 'user88', 350, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(30, 12, 'user90', 434, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(31, 12, 'user91', 317, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(32, 12, 'user92', 344, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(33, 12, 'user93', 444, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(34, 12, 'user95', 453, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(35, 12, 'user97', 318, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(36, 12, 'user100', 364, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(37, 12, 'user105', 427, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(38, 12, 'user106', 409, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(39, 12, 'user107', 390, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(40, 12, 'user108', 380, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(41, 12, 'user111', 269, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(42, 12, 'user113', 283, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(43, 12, 'user115', 409, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(44, 12, 'user118', 345, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(45, 12, 'user119', 357, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(46, 12, 'user125', 404, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(47, 12, 'user134', 318, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(48, 12, 'user137', 403, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(49, 12, 'user138', 293, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(50, 12, 'user140', 283, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(51, 12, 'user144', 306, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(52, 12, 'user145', 274, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(53, 12, 'user149', 449, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(54, 12, 'user151', 268, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(55, 12, 'user152', 394, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(56, 12, 'user153', 452, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(57, 12, 'user155', 335, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(58, 12, 'user157', 293, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(59, 12, 'user160', 280, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(60, 12, 'user165', 308, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(61, 12, 'user166', 361, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(62, 12, 'user171', 330, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(63, 12, 'user173', 306, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(64, 12, 'user177', 332, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(65, 12, 'user178', 416, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(66, 12, 'user179', 393, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(67, 12, 'user185', 296, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(68, 12, 'user188', 333, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(69, 12, 'user189', 418, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(70, 12, 'user194', 454, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(71, 12, 'user195', 270, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(72, 12, 'user196', 288, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(73, 12, 'user197', 448, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(74, 12, 'user199', 342, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(75, 12, 'user200', 434, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(76, 12, 'user205', 395, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(77, 12, 'user206', 459, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(78, 12, 'user209', 454, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(79, 12, 'user211', 444, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(80, 12, 'user213', 413, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(81, 12, 'user215', 327, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(82, 12, 'user216', 266, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(83, 12, 'user217', 361, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(84, 12, 'user220', 457, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(85, 12, 'user224', 436, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(86, 12, 'user225', 440, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(87, 12, 'user226', 378, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(88, 12, 'user228', 391, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(89, 12, 'user229', 454, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(90, 12, 'user232', 394, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(91, 12, 'user234', 396, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(92, 12, 'user235', 297, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(93, 12, 'user237', 379, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(94, 12, 'user238', 383, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(95, 12, 'user240', 390, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(96, 12, 'user241', 371, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(97, 12, 'user243', 458, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(98, 12, 'user245', 349, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(99, 12, 'user246', 342, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(100, 12, 'user247', 346, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(101, 12, 'user251', 387, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(102, 12, 'user253', 349, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(103, 12, 'user255', 353, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(104, 12, 'user259', 331, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(105, 12, 'user265', 456, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(106, 12, 'user267', 406, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(107, 12, 'user268', 439, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(108, 12, 'user269', 328, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(109, 12, 'user270', 328, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(110, 12, 'user273', 463, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(111, 12, 'user276', 407, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(112, 12, 'user278', 438, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(113, 12, 'user279', 453, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(114, 12, 'user280', 444, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(115, 12, 'user282', 347, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(116, 12, 'user285', 296, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(117, 12, 'user289', 329, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(118, 12, 'user293', 293, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(119, 12, 'user294', 346, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(120, 12, 'user297', 341, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(121, 12, 'user298', 331, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(122, 12, 'user299', 408, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(123, 12, 'user302', 453, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(124, 12, 'user303', 348, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(125, 12, 'user305', 377, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(126, 12, 'user308', 266, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(127, 12, 'user310', 281, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(128, 12, 'user314', 305, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(129, 12, 'user316', 278, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(130, 12, 'user318', 288, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(131, 12, 'user320', 332, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(132, 12, 'user322', 383, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(133, 12, 'user324', 384, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(134, 12, 'user326', 290, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(135, 12, 'user330', 268, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(136, 12, 'user334', 393, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(137, 12, 'user339', 270, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(138, 12, 'user340', 317, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(139, 12, 'user341', 317, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(140, 12, 'user344', 355, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(141, 12, 'user347', 332, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(142, 12, 'user348', 273, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(143, 12, 'user349', 430, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(144, 12, 'user350', 409, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(145, 12, 'user354', 420, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(146, 12, 'user355', 308, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(147, 12, 'user356', 266, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(148, 12, 'user361', 386, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(149, 12, 'user363', 463, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(150, 12, 'user364', 388, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(151, 12, 'user365', 290, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(152, 12, 'user366', 413, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(153, 12, 'user368', 430, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(154, 12, 'user371', 404, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(155, 12, 'user379', 352, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(156, 12, 'user380', 280, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(157, 12, 'user385', 282, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(158, 12, 'user386', 329, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(159, 12, 'user392', 403, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(160, 12, 'user393', 391, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(161, 12, 'user394', 316, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(162, 12, 'user396', 414, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(163, 12, 'user399', 434, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(164, 12, 'user401', 274, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(165, 12, 'user402', 408, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(166, 12, 'user403', 439, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(167, 12, 'user409', 396, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(168, 12, 'user410', 457, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(169, 12, 'user412', 364, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(170, 12, 'user413', 439, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(171, 12, 'user416', 307, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(172, 12, 'user417', 380, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(173, 12, 'user418', 459, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(174, 12, 'user419', 328, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(175, 12, 'user420', 416, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(176, 12, 'user421', 437, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(177, 12, 'user429', 329, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(178, 12, 'user432', 331, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(179, 12, 'user435', 425, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(180, 12, 'user436', 350, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(181, 12, 'user437', 426, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(182, 12, 'user439', 386, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(183, 12, 'user441', 355, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(184, 12, 'user442', 416, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(185, 12, 'user443', 388, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(186, 12, 'user446', 426, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(187, 12, 'user447', 272, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(188, 12, 'user449', 345, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(189, 12, 'user452', 425, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(190, 12, 'user453', 404, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(191, 12, 'user454', 378, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(192, 12, 'user457', 342, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(193, 12, 'user458', 272, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(194, 12, 'user460', 305, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(195, 12, 'user461', 406, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(196, 12, 'user462', 457, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(197, 12, 'user465', 381, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(198, 12, 'user466', 451, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(199, 12, 'user468', 307, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(200, 12, 'user469', 285, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(201, 12, 'user471', 380, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(202, 12, 'user478', 280, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(203, 12, 'user481', 318, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(204, 12, 'user482', 361, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(205, 12, 'user485', 285, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(206, 12, 'user486', 381, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(207, 12, 'user487', 364, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(208, 12, 'user489', 264, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(209, 12, 'user490', 265, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(210, 12, 'user491', 335, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(211, 12, 'user492', 325, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(212, 12, 'user493', 451, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(213, 12, 'user495', 458, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(214, 12, 'user496', 401, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(215, 12, 'user497', 306, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(216, 12, 'user498', 368, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(217, 12, 'user501', 368, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(218, 12, 'user505', 282, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(219, 12, 'user507', 265, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(220, 12, 'user514', 353, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(221, 12, 'user515', 286, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(222, 12, 'user516', 456, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(223, 12, 'user519', 452, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(224, 12, 'user523', 420, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(225, 12, 'user525', 282, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(226, 12, 'user526', 399, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(227, 12, 'user529', 347, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(228, 12, 'user530', 438, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(229, 12, 'user536', 341, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(230, 12, 'user541', 274, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(231, 12, 'user542', 327, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(232, 12, 'user543', 395, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(233, 12, 'user544', 393, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(234, 12, 'user545', 330, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(235, 12, 'user547', 400, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(236, 12, 'user549', 383, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(237, 12, 'user550', 381, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(238, 12, 'user551', 436, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(239, 12, 'user552', 305, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(240, 12, 'user556', 275, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(241, 12, 'user563', 350, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(242, 12, 'user564', 449, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(243, 12, 'user569', 287, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(244, 12, 'user571', 330, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(245, 12, 'user572', 414, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(246, 12, 'user574', 427, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(247, 12, 'user576', 440, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(248, 12, 'user579', 458, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(249, 12, 'user582', 433, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(250, 12, 'user584', 357, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(251, 12, 'user587', 401, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(252, 12, 'user590', 301, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(253, 12, 'user594', 291, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(254, 12, 'user596', 347, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(255, 12, 'user597', 448, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(256, 12, 'user599', 281, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(257, 12, 'user600', 436, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(258, 12, 'user601', 264, '2019-12-08 15:58:03', '2019-12-08 15:58:03'),
-(262, 1, 'user1', 5, '2019-12-12 18:01:58', '2019-12-12 18:01:58'),
 (265, 11, 'user2', 73, '2019-12-14 00:20:21', '2019-12-14 00:20:21'),
 (266, 11, 'user3', 73, '2019-12-14 00:20:33', '2019-12-14 00:20:33'),
-(267, 11, 'user1', 73, '2019-12-17 23:24:53', '2019-12-17 23:24:53');
+(267, 11, 'user1', 73, '2019-12-17 23:24:53', '2019-12-17 23:24:53'),
+(268, 11, 'user28', 73, '2019-12-30 23:58:50', '2019-12-30 23:58:50'),
+(269, 11, 'user136', 73, '2019-12-30 23:58:57', '2019-12-30 23:58:57'),
+(270, 11, 'user103', 73, '2019-12-30 23:59:03', '2019-12-30 23:59:03'),
+(271, 11, 'user109', 113, '2019-12-30 23:59:18', '2019-12-30 23:59:18'),
+(272, 11, 'user102', 81, '2019-12-30 23:59:27', '2019-12-30 23:59:27');
 
 -- --------------------------------------------------------
 
@@ -1330,6 +924,9 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_peer_summary` (
 ,`peer_min_score` double
 ,`peer_max_score` double
 ,`group_score` decimal(10,2)
+,`override_score_id` int(11)
+,`override_score` decimal(13,2)
+,`override_score_remark` text
 );
 -- --------------------------------------------------------
 
@@ -2366,7 +1963,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `id`, `email`, `permission_level`, `locked`, `create_time`, `login_fail_cnt`, `last_login_time`, `reset_token`, `reset_time`, `last_upd_time`) VALUES
-('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2019-12-30 22:17:15', NULL, NULL, '2019-12-01 00:17:48'),
+('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2019-12-31 15:28:19', NULL, NULL, '2019-12-01 00:17:48'),
 ('staff1', '$1$346d40d8$806o0kWTuSUlndg8x0jZ81', '$1$346d40d85be1653b1b20eee806c93967', 'Account 1', 'Staff', '03007563', 'kaichiu.wong@utas.edu.au', 30, 0, '2019-11-15 22:34:45', 0, '2019-11-26 23:10:21', NULL, NULL, '2019-11-18 01:20:02'),
 ('staff2', '$1$9a121110$nYumg2W2TIJBS4FyX.I111', '$1$9a121110f95b57330d829119e6b09fef', 'Account 2', 'Staff', '000000', 'teacher@aaa.com', 30, 1, '2019-11-19 00:41:38', 0, '2019-11-20 02:58:19', NULL, NULL, '2019-11-19 00:41:38'),
 ('staff3', '$1$f14a37c0$xSu42pAzI3/.rsvzJL05L0', '$1$f14a37c00eae2ddf8f1303f98008e11f', 'Account 3', 'Staff', '32434', 'sdffe@srewrwe.com', 30, 1, '2019-12-02 02:11:50', 0, NULL, NULL, NULL, NULL),
@@ -2376,7 +1973,7 @@ INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `
 ('user100', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 100', 'Student', '899188', 'user100@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user101', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 101', 'Student', '810995', 'user101@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user102', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 102', 'Student', '454765', 'user102@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
-('user103', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 103', 'Student', '109577', 'user103@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
+('user103', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 103', 'Student', '109577', 'user103@abc.com', 10, 0, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user104', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 104', 'Student', '525554', 'user104@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user105', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 105', 'Student', '839001', 'user105@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user106', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 106', 'Student', '746875', 'user106@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
@@ -2412,7 +2009,7 @@ INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `
 ('user133', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 133', 'Student', '346637', 'user133@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user134', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 134', 'Student', '594813', 'user134@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user135', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 135', 'Student', '133429', 'user135@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
-('user136', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 136', 'Student', '104999', 'user136@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
+('user136', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 136', 'Student', '104999', 'user136@abc.com', 10, 0, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user137', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 137', 'Student', '471149', 'user137@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user138', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 138', 'Student', '685977', 'user138@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user139', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 139', 'Student', '964285', 'user139@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
@@ -2571,7 +2168,7 @@ INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `
 ('user277', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 277', 'Student', '814544', 'user277@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user278', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 278', 'Student', '352700', 'user278@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user279', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 279', 'Student', '273567', 'user279@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
-('user28', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 28', 'Student', '104735', 'user28@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
+('user28', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 28', 'Student', '104735', 'user28@abc.com', 10, 0, '2019-12-08 00:28:00', 0, '2019-12-31 00:01:36', NULL, NULL, '2019-12-08 00:28:00'),
 ('user280', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 280', 'Student', '870698', 'user280@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user281', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 281', 'Student', '807457', 'user281@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user282', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 282', 'Student', '255574', 'user282@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
@@ -3000,7 +2597,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sv_assignment_peer_summary`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_peer_summary` AS select `s`.`id` AS `id`,`s`.`asg_id` AS `asg_id`,`s`.`asg_title` AS `asg_title`,`s`.`sem` AS `sem`,`s`.`sem_key` AS `sem_key`,`s`.`unit_id` AS `unit_id`,`s`.`unit_code` AS `unit_code`,`s`.`unit_description` AS `unit_description`,`s`.`username` AS `username`,`s`.`email` AS `email`,`s`.`last_name` AS `last_name`,`s`.`first_name` AS `first_name`,`s`.`sid` AS `sid`,`t`.`topic_id` AS `topic_id`,`t`.`topic` AS `topic`,`t`.`topic_desc` AS `topic_desc`,`a`.`average` AS `peer_average`,`a`.`var` AS `peer_var`,`a`.`min_score` AS `peer_min_score`,`a`.`max_score` AS `peer_max_score`,`g`.`score` AS `group_score` from ((`sv_assignment_student` `s` left join `sv_assignment_peer_stat` `a` on(((`s`.`asg_id` = `a`.`asg_id`) and (`s`.`username` = `a`.`reviewee`)))) left join (`sv_assignment_topic_summary` `t` join `sv_group_submission` `g` on(((`t`.`assign_id` = `g`.`asg_id`) and (`t`.`topic_id` = `g`.`topic_id`)))) on(((`s`.`asg_id` = `t`.`assign_id`) and (`s`.`username` = `t`.`user_id`))));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_peer_summary` AS select `s`.`id` AS `id`,`s`.`asg_id` AS `asg_id`,`s`.`asg_title` AS `asg_title`,`s`.`sem` AS `sem`,`s`.`sem_key` AS `sem_key`,`s`.`unit_id` AS `unit_id`,`s`.`unit_code` AS `unit_code`,`s`.`unit_description` AS `unit_description`,`s`.`username` AS `username`,`s`.`email` AS `email`,`s`.`last_name` AS `last_name`,`s`.`first_name` AS `first_name`,`s`.`sid` AS `sid`,`t`.`topic_id` AS `topic_id`,`t`.`topic` AS `topic`,`t`.`topic_desc` AS `topic_desc`,`a`.`average` AS `peer_average`,`a`.`var` AS `peer_var`,`a`.`min_score` AS `peer_min_score`,`a`.`max_score` AS `peer_max_score`,`g`.`score` AS `group_score`,`p`.`id` AS `override_score_id`,`p`.`score` AS `override_score`,`p`.`remark` AS `override_score_remark` from (((`sv_assignment_student` `s` left join `sv_assignment_peer_stat` `a` on(((`s`.`asg_id` = `a`.`asg_id`) and (`s`.`username` = `a`.`reviewee`)))) left join `assignment_peer_mark` `p` on(((`s`.`asg_id` = `p`.`asg_id`) and (`p`.`username` = `a`.`reviewee`)))) left join (`sv_assignment_topic_summary` `t` join `sv_group_submission` `g` on(((`t`.`assign_id` = `g`.`asg_id`) and (`t`.`topic_id` = `g`.`topic_id`)))) on(((`s`.`asg_id` = `t`.`assign_id`) and (`s`.`username` = `t`.`user_id`))));
 
 -- --------------------------------------------------------
 
@@ -3121,16 +2718,16 @@ ALTER TABLE `assignment_group_mark`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `assignment_mark`
---
-ALTER TABLE `assignment_mark`
- ADD PRIMARY KEY (`id`), ADD KEY `asg_id` (`asg_id`), ADD KEY `student` (`student`);
-
---
 -- Indexes for table `assignment_mark_criteria`
 --
 ALTER TABLE `assignment_mark_criteria`
  ADD PRIMARY KEY (`id`), ADD KEY `asg_id` (`asg_id`);
+
+--
+-- Indexes for table `assignment_peer_mark`
+--
+ALTER TABLE `assignment_peer_mark`
+ ADD PRIMARY KEY (`id`), ADD KEY `asg_id` (`asg_id`), ADD KEY `username` (`username`);
 
 --
 -- Indexes for table `assignment_question`
@@ -3200,32 +2797,32 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `assignment`
 --
 ALTER TABLE `assignment`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `assignment_date`
 --
 ALTER TABLE `assignment_date`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=46;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=57;
 --
 -- AUTO_INCREMENT for table `assignment_feedback`
 --
 ALTER TABLE `assignment_feedback`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=99;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=154;
 --
 -- AUTO_INCREMENT for table `assignment_group_mark`
 --
 ALTER TABLE `assignment_group_mark`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
--- AUTO_INCREMENT for table `assignment_mark`
---
-ALTER TABLE `assignment_mark`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `assignment_mark_criteria`
 --
 ALTER TABLE `assignment_mark_criteria`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+--
+-- AUTO_INCREMENT for table `assignment_peer_mark`
+--
+ALTER TABLE `assignment_peer_mark`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `assignment_question`
 --
@@ -3235,12 +2832,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
 -- AUTO_INCREMENT for table `assignment_topic`
 --
 ALTER TABLE `assignment_topic`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=798;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=998;
 --
 -- AUTO_INCREMENT for table `assignment_topic_allocation`
 --
 ALTER TABLE `assignment_topic_allocation`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=268;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=273;
 --
 -- AUTO_INCREMENT for table `submission`
 --
@@ -3281,17 +2878,17 @@ ADD CONSTRAINT `feedback_reviewee_fk` FOREIGN KEY (`reviewee`) REFERENCES `user`
 ADD CONSTRAINT `feedback_reviewer_fk` FOREIGN KEY (`reviewer`) REFERENCES `user` (`username`);
 
 --
--- Constraints for table `assignment_mark`
---
-ALTER TABLE `assignment_mark`
-ADD CONSTRAINT `asg_mark_user_fk` FOREIGN KEY (`student`) REFERENCES `user` (`username`),
-ADD CONSTRAINT `asg_mark_id_fk` FOREIGN KEY (`asg_id`) REFERENCES `assignment` (`id`);
-
---
 -- Constraints for table `assignment_mark_criteria`
 --
 ALTER TABLE `assignment_mark_criteria`
 ADD CONSTRAINT `asg_id_mark` FOREIGN KEY (`asg_id`) REFERENCES `assignment` (`id`);
+
+--
+-- Constraints for table `assignment_peer_mark`
+--
+ALTER TABLE `assignment_peer_mark`
+ADD CONSTRAINT `asg_peer_mk_user_fk` FOREIGN KEY (`username`) REFERENCES `user` (`username`),
+ADD CONSTRAINT `asg_mark_id_fk` FOREIGN KEY (`asg_id`) REFERENCES `assignment` (`id`);
 
 --
 -- Constraints for table `assignment_question`

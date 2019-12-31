@@ -8,8 +8,9 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="<?php echo site_url('Marking'); ?>">Assignment List</a></li>
-          <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/group/'.$asg_id); ?>">Group Marking</a></li>
-          <li class="breadcrumb-item active">Peer Marking</li>
+          <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/group/'.$asg_id); ?>">Group Score</a></li>
+          <li class="breadcrumb-item active">Peer Score</li>
+          <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/final_score/'.$asg_id); ?>">Final Score</a></li>
         </ol>
       </div>
     </div>
@@ -43,6 +44,7 @@
             <tbody>
                 <?php foreach($students as $a): ?>
                 <tr>
+                  <?php echo form_open('Marking/override_peer_mark/',array("class"=>"form-horizontal peer_submission_mark", "data-username" => $a['username'], "id"=>"peer_submission_mark_".$a['username'])); ?>
                     <td><a href="<?php echo site_url('Member/full_profile/'.$a['username']); ?>"><?php echo $a['sid']; ?></a></td>
                     <td><?php echo $a['username']; ?></td>
                     <td><?php echo $a['first_name'] . ' ' . $a['last_name'] ; ?></td>
@@ -63,14 +65,16 @@
                       <?php endif; ?>
                     </td>
                     <td>
-                      <input type="hidden" name="asg_id" value="<?php echo $asg_id;?>" id="asg_id_<?php echo $a['topic_id'];?>" required/>
-                      <input type="hidden" name="topic_id" value="<?php echo $a['topic_id'];?>" id="topic_id_<?php echo $a['topic_id'];?>" required/>
-                      <input type="number" min="0" step="1" name="score" value="" class="form-control input-sm" id="score_<?php echo $a['topic_id'];?>" required />
+                      <input type="hidden" name="asg_id" value="<?php echo $asg_id;?>" id="asg_id_<?php echo $a['username'];?>" required/>
+                      <input type="hidden" name="score_id" value="<?php echo $a['override_score_id'];?>" id="score_id_<?php echo $a['username'];?>" required/>
+                      <input type="hidden" name="username" value="<?php echo $a['username'];?>" id="username_<?php echo $a['username'];?>" required/>
+                      <input type="number" min="0" step="1" name="score" value="<?php echo $a['override_score'];?>" class="form-control input-sm" id="score_<?php echo $a['username'];?>" required />
                     </td>
                     <td>
-                      <button type="button" class="btn btn-info btn-sm grp_submit_button" data-grp-id="<?php echo $a['topic_id']; ?>" id="submit_btn_<?php echo $a['topic_id']; ?>">Save</button> 
-                      <span class='badge d-none' id="status_<?php echo $a['topic_id']; ?>"></span>
+                      <button type="button" class="btn btn-info btn-sm peer_submit_button" data-username="<?php echo $a['username']; ?>" id="submit_btn_<?php echo $a['username']; ?>">Save</button> 
+                      <span class='badge d-none' id="status_<?php echo $a['username']; ?>"></span>
                     </td>
+                  <?php echo form_close(); ?>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
