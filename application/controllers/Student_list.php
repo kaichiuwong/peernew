@@ -11,7 +11,7 @@ class Student_list extends MY_PasController{
     function index($asg_id)
     {
         if ($asg_id) {
-            if ($this->check_permission(20)) {
+            if ($this->check_permission(30)) {
                 $data['asg_id'] = $asg_id;
                 $data['_view'] = 'pages/studentlist/index';
                 $data['students'] = $this->Unit_enrol_model->get_unit_enrol_by_asgid($asg_id);
@@ -28,16 +28,18 @@ class Student_list extends MY_PasController{
     
     function assign_grp() 
     {
-        $ata_id=$this->input->post('ata_id');
-        $user_id=$this->input->post('user_id');
-        $asg_id=$this->input->post('asg_id');
-        $group_id=$this->input->post('group_id');
-        if ($asg_id) {
-            $this->Unit_enrol_model->assignment_topic_allocation($ata_id, $asg_id, $user_id, $group_id);
-            redirect('student_list/index/'.$asg_id);
-        }
-        else {
-            redirect('assignmentadmin');
+        if ($this->check_permission(30)) {
+            $ata_id=$this->input->post('ata_id');
+            $user_id=$this->input->post('user_id');
+            $asg_id=$this->input->post('asg_id');
+            $group_id=$this->input->post('group_id');
+            if ($asg_id) {
+                $this->Unit_enrol_model->assignment_topic_allocation($ata_id, $asg_id, $user_id, $group_id);
+                redirect('student_list/index/'.$asg_id);
+            }
+            else {
+                redirect('assignmentadmin');
+            }
         }
     }
 

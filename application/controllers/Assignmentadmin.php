@@ -10,7 +10,7 @@ class Assignmentadmin extends MY_PasController {
 
     function index($unit_code = null)
     {
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             if ($unit_code) {
                 $data['assignments'] = $this->Assignment_model->get_all_assignments_by_unit($unit_code);
                 $data['unit'] = strtoupper($unit_code);
@@ -28,7 +28,7 @@ class Assignmentadmin extends MY_PasController {
 
     function info($asg_id)
     {
-        if ($this->check_permission(20) ) {
+        if ($this->check_permission(30) ) {
             $data['asg_id'] = $asg_id;
             $data['assignment'] = $this->Assignment_model->get_assignment($asg_id);
             
@@ -50,7 +50,7 @@ class Assignmentadmin extends MY_PasController {
 
     function add()
     {
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             $this->load->library('form_validation');
 
             $this->form_validation->set_rules('type','Assignment Type','required');
@@ -99,7 +99,7 @@ class Assignmentadmin extends MY_PasController {
     }  
 
     function edit($asg_id)    {
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             $data['asg_id'] = $asg_id;
             // check if the assignment exists before trying to edit it
             $data['assignment'] = $this->Assignment_model->get_assignment($asg_id);
@@ -146,7 +146,7 @@ class Assignmentadmin extends MY_PasController {
 
     function remove($asg_id)
     {
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             $data['asg_id'] = $asg_id;
             $assignment = $this->Assignment_model->get_assignment($asg_id);
 
@@ -163,7 +163,7 @@ class Assignmentadmin extends MY_PasController {
 
     function public_switch($asg_id)
     {
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             if (!empty($asg_id)) {
                 $this->Assignment_model->public_switch($asg_id);
             }

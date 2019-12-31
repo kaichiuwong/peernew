@@ -9,24 +9,26 @@ class Assignment_date extends MY_PasController{
 
     function index($asg_id)
     {
-        if ($asg_id) {
-            $data['asg_id'] = $asg_id;
-            if ($this->check_permission(20)) {
-                $data['_view'] = 'pages/Assignment_date/index';
-                $data['Assignment_dates'] = $this->Assignment_date_model->get_all_dates_by_asg_id($asg_id);
-                $this->load_header($data);
-                $this->load->view('templates/main',$data);
-                $this->load_footer($data);
+        if ($this->check_permission(30)) {
+            if ($asg_id) {
+                $data['asg_id'] = $asg_id;
+                if ($this->check_permission(20)) {
+                    $data['_view'] = 'pages/Assignment_date/index';
+                    $data['Assignment_dates'] = $this->Assignment_date_model->get_all_dates_by_asg_id($asg_id);
+                    $this->load_header($data);
+                    $this->load->view('templates/main',$data);
+                    $this->load_footer($data);
+                }
             }
-        }
-        else {
-            redirect('assignmentadmin');
+            else {
+                redirect('assignmentadmin');
+            }
         }
     }
 
     function edit($asg_id,$id)
     {   
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             $data['asg_id'] = $asg_id;
             $data['Assignment_date'] = $this->Assignment_date_model->get_assignment_date($id);
             
@@ -57,7 +59,7 @@ class Assignment_date extends MY_PasController{
     function json($asg_id) 
     {
         $output_array = array();
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             $asg_dates = $this->Assignment_date_model->get_all_dates_by_asg_id($asg_id);
             foreach($asg_dates as $d) {
                 $bg_color = "#d9534f";

@@ -26,7 +26,7 @@ class Assignment_topic extends MY_PasController{
 
     function add($asg_id)
     {   
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             $data['asg_id'] = $asg_id;
             $this->load->library('form_validation');
             
@@ -59,7 +59,7 @@ class Assignment_topic extends MY_PasController{
 
     function edit($asg_id,$id)
     {   
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             $data['asg_id'] = $asg_id;
             $data['assignment_topic'] = $this->Assignment_topic_model->get_assignment_topic($id);
             
@@ -98,7 +98,7 @@ class Assignment_topic extends MY_PasController{
 
     function remove($asg_id,$id)
     {
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             $data['asg_id'] = $asg_id;
             $assignment_topic = $this->Assignment_topic_model->get_assignment_topic($id);
 

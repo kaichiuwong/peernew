@@ -16,8 +16,11 @@ class MY_PasController extends CI_Controller
                 case $plevel >= 90:
                     $this->user_role = "admin";
                     break;
+                case $plevel >= 30:
+                    $this->user_role = "lecturer";
+                    break;
                 case $plevel >= 20:
-                    $this->user_role = "staff";
+                    $this->user_role = "tutor";
                     break;
                 case $plevel >= 10:
                     $this->user_role = "user";

@@ -9,7 +9,7 @@ class Assignment_question extends MY_PasController{
 
     function index($asg_id, $type = 'PEER')
     {
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             if ($asg_id) {
                 $type=strtoupper($type);
                 $data['asg_id'] = $asg_id;
@@ -31,7 +31,7 @@ class Assignment_question extends MY_PasController{
 
     function add($asg_id, $type)
     {   
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             $type=strtoupper($type);
             $data['asg_id'] = $asg_id;
             $data['type'] = $type;
@@ -60,7 +60,7 @@ class Assignment_question extends MY_PasController{
 
     function edit($asg_id, $type, $id)
     {   
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             $type=strtoupper($type);
             $data['asg_id'] = $asg_id;
             $data['type'] = $type;
@@ -102,7 +102,7 @@ class Assignment_question extends MY_PasController{
 
     function remove($asg_id,$type,$id)
     {
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             $type=strtoupper($type);
             $data['asg_id'] = $asg_id;
             $data['type'] = $type;
@@ -120,7 +120,7 @@ class Assignment_question extends MY_PasController{
     
     function remove_all($asg_id, $type)
     {
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             $type=strtoupper($type);
             $data['asg_id'] = $asg_id;
             $data['type'] = $type;
@@ -132,7 +132,7 @@ class Assignment_question extends MY_PasController{
     
     function copy_question() 
     {
-        if ($this->check_permission(20)) {
+        if ($this->check_permission(30)) {
             $from_id = $this->input->post('from_id') ;
             $to_id = $this->input->post('to_id') ;
             $question_section = $this->input->post('question_section') ;
