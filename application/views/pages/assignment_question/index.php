@@ -39,8 +39,8 @@
             <select name="from_id" class="form-control-sm" required>
                 <option value="" disabled selected>*** Copy questions from other assignment ***</option>
                 <?php foreach($all_assignments as $asg){ ?>
-                  <?php if ($asg['id'] !=$asg_id) : ?>
-                  <option value="<?php echo $asg['id']; ?>" ><?php echo $asg['unit_code']; ?> (<?php echo $asg['sem']; ?>) - <?php echo $asg['title']; ?></option>
+                  <?php if ($asg['asg_id'] !=$asg_id) : ?>
+                  <option value="<?php echo $asg['asg_id']; ?>" ><?php echo $asg['unit_code']; ?> (<?php echo $asg['sem']; ?>) - <?php echo $asg['title']; ?></option>
                   <?php endif; ?>
                 <?php } ?>
             </select>

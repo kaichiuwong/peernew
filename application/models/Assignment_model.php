@@ -20,23 +20,27 @@ class Assignment_model extends CI_Model
 
     function get_all_assignments()
     {
-        $this->db->order_by('id', 'desc');
-        return $this->db->get('sv_assignment_staff')->result_array();
+        $query = $this->db->query("select distinct s.asg_id, s.title, s.type, s.public, s.topic_count, s.student_count,s.outcome, s.scenario, s.unit_id, s.unit_code, s.unit_description, s.sem, s.sem_key from sv_assignment_staff s order by s.asg_id; ");
+        return $query->result_array();
     }
 
     function get_all_assignments_by_unit($unit_code, $sem = null)
     {
-        $this->db->where('unit_code', $unit_code);
+        $query_str = "select distinct s.asg_id, s.title, s.type, s.public, s.topic_count, s.student_count,s.outcome, s.scenario, s.unit_id, s.unit_code, s.unit_description, s.sem, s.sem_key ";
+        $query_str .= " from sv_assignment_staff s  ";
+        $query_str .= " where unit_code = '$unit_code' ";
+
         if ($sem) {
-            $this->db->where('sem_key', $sem);
+            $query_str .= " and sem_key = '$sem' ";
         }
-        $this->db->order_by('sem desc, id asc');
-        return $this->db->get('sv_assignment_staff')->result_array();
+        $query_str .= " order by sem desc, s.asg_id; ";
+        $query = $this->db->query($query_str );
+        return $query->result_array();
     }
     
     function get_all_assignments_student($username, $sem)
     {
-        $this->db->order_by('id', 'desc');
+        $this->db->order_by('asg_id', 'desc');
         $this->db->where('public',1);
         if(isset($username) && !empty($username))
         {
