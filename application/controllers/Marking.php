@@ -12,7 +12,14 @@ class Marking extends MY_PasController {
     {
         if ($this->check_permission(20) ) {
             $this->load->model('Assignment_model');
-            $data['assignments'] = $this->Assignment_model->get_all_assignments();
+            if ($this->check_permission(90, false)) 
+            {
+                $data['assignments'] = $this->Assignment_model->get_all_assignments();
+            }
+            else 
+            {
+                $data['assignments'] = $this->Assignment_model->get_all_assignments($this->get_login_user());
+            }
             $data['unit'] = null;
             $data['_view'] = 'pages/assignment_marking/index';
             $this->load_header($data);

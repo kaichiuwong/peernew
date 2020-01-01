@@ -18,9 +18,16 @@ class Assignment_model extends CI_Model
         return $this->db->count_all_results();
     }
 
-    function get_all_assignments()
+    function get_all_assignments($username = null)
     {
-        $query = $this->db->query("select distinct s.asg_id, s.title, s.type, s.public, s.topic_count, s.student_count,s.outcome, s.scenario, s.unit_id, s.unit_code, s.unit_description, s.sem, s.sem_key from sv_assignment_staff s order by s.asg_id; ");
+        $query_str = "select distinct s.asg_id, s.title, s.type, s.public, s.topic_count, s.student_count,s.outcome, s.scenario, s.unit_id, s.unit_code, s.unit_description, s.sem, s.sem_key ";
+        $query_str .= " from sv_assignment_staff s  ";
+        if ($username) 
+        {
+            $query_str .= " where username = '$username' ";
+        }
+        $query_str .= " order by sem desc, s.asg_id; ";
+        $query = $this->db->query($query_str );
         return $query->result_array();
     }
 
@@ -29,7 +36,6 @@ class Assignment_model extends CI_Model
         $query_str = "select distinct s.asg_id, s.title, s.type, s.public, s.topic_count, s.student_count,s.outcome, s.scenario, s.unit_id, s.unit_code, s.unit_description, s.sem, s.sem_key ";
         $query_str .= " from sv_assignment_staff s  ";
         $query_str .= " where unit_code = '$unit_code' ";
-
         if ($sem) {
             $query_str .= " and sem_key = '$sem' ";
         }
