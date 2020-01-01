@@ -208,7 +208,7 @@ class MY_PasController extends CI_Controller
     public function load_header($data = array()) {
         $data['user'] = $this->get_login_username();
         $this->load->view('templates/'.$this->user_role.'-header', $data);
-        $this->load->view('templates/topbar', $data);
+        $this->load->view('templates/'.$this->user_role.'-topbar', $data);
         $this->load->view('templates/'.$this->user_role.'-sidebar', $data);
     }
 

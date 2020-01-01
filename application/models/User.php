@@ -4,7 +4,6 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class User extends CI_Model {
 
     function getUserlist(){
-        $response = array();
         $query = $this->db->query("SELECT * FROM `user` ORDER BY username; ");
         return $query->result_array();
     }
@@ -17,6 +16,12 @@ class User extends CI_Model {
         else  {
             return null;
         }
+    }
+
+    function get_user_list_by_permission($level)
+    {
+        $query = $this->db->query("SELECT * FROM `user` where permission_level = ".$level." ORDER BY username; ");
+        return $query->result_array();
     }
     
     function getUserInfoByEmail($email) {

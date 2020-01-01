@@ -9,7 +9,7 @@ class Assignment_model extends CI_Model
 
     function get_assignment($id)
     {
-        return $this->db->get_where('sv_assignment_staff',array('id'=>$id))->row_array();
+        return $this->db->get_where('sv_assignment_staff',array('asg_id'=>$id))->row_array();
     }
 
     function get_all_assignments_count()
