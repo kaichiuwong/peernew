@@ -53,6 +53,7 @@
     </div>
     <div class="card-footer">
         <button type="submit" class="btn btn-primary btn-sm">Save Change</button>
+        <a href="<?php echo site_url('Useradministration'); ?>" class="btn btn-secondary btn-sm">Cancel</a>
     </div>
     <?php echo form_close(); ?>
 </div>

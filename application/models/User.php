@@ -9,7 +9,7 @@ class User extends CI_Model {
     }
   
     function getUserInfo($username) {
-        $query = $this->db->query("SELECT * FROM `user` WHERE lower(`username`)=lower('$username') ;");  
+        $query = $this->db->query("SELECT * FROM `user` WHERE lower(`username`)=lower(trim('$username')) ;");  
         if($query->num_rows() > 0) {
             return $query->result();
         }
@@ -72,7 +72,7 @@ class User extends CI_Model {
             }
             $data['last_upd_time'] = current_time();
 
-            $this->db->where('username', $username);
+            $this->db->where('username', trim(strtolower(username)));
             $this->db->update('user', $data);
             
             if (!empty($newinfo['password'])) {
@@ -89,7 +89,7 @@ class User extends CI_Model {
         if (!empty($newinfo)) {
             $newsalt = '$1$'.bin2hex(openssl_random_pseudo_bytes(16));
             $data = array(
-                'username' => $newinfo['username'],
+                'username' => trim(strtolower($newinfo['username'])),
                 'last_name' => $newinfo['last_name'],
                 'first_name' => $newinfo['first_name'],
                 'id' => $newinfo['id'],
@@ -97,6 +97,7 @@ class User extends CI_Model {
                 'permission_level' => $newinfo['plevel'],
                 'salt' => $newsalt,
                 'password' => crypt($newinfo['password'],$newsalt),
+                'locked' => 0,
                 'last_upd_time' => current_time(),
                 'create_time' => current_time()
             );

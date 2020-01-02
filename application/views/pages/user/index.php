@@ -23,6 +23,7 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body table-responsive p-3">
+        <a href="<?php echo site_url('Member/create/'); ?>" class="btn btn-sm btn-success">Create User</a>
         <table class="table table-sm table-head-fixed table-hover enable-datatable">
             <thead>
                 <tr>
