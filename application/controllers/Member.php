@@ -82,9 +82,9 @@ class Member extends MY_PasController {
         if ($this->check_permission(90)) {
             if (isset($_POST['username'])) {
                 $param = array(
-                    'first_name' => $this->input->post('first_name'),
-                    'last_name' => $this->input->post('last_name'),
-                    'sid' => $this->input->post('st_id'),
+                    'first_name' => $this->input->post('firstname'),
+                    'last_name' => $this->input->post('lastname'),
+                    'id' => $this->input->post('st_id'),
                     'email' => $this->input->post('email'),
                     'plevel'  => $this->input->post('plevel')
                 );

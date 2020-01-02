@@ -49,6 +49,7 @@
                         <div class="input-group">
                             <input type="hidden" name="username" value="<?php echo $a['username']; ?>" />
                             <span class="input-group-btn">
+                                <a href="<?php echo site_url('Member/full_profile/'.$a['username']); ?>" class="btn btn-sm btn-primary">Profile</a>
                                 <button class="btn btn-sm btn-<?php echo $a['locked']? "success":"danger";?> btn-sm" type="submit" tabindex="-1"><?php echo $a['locked']? "Unlock":"Lock";?></button>
                             </span>
                         </div>
