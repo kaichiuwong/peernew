@@ -44,15 +44,15 @@
               </div>
               <div class="form-group">
                 <label for="st_id">Student ID</label>
-                <input type="text"  value="<?php echo $st_id; ?>" class="form-control form-control-user" id="st_id" name="st_id" placeholder="Student ID"  readonly>
+                <input type="text"  value="<?php echo $st_id; ?>" class="form-control form-control-user" placeholder="Student ID"  readonly>
               </div>
               <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" value="<?php echo $email; ?>" class="form-control form-control-user" id="email" name="email" placeholder="Email Address" required readonly>
+                <input type="email" value="<?php echo $email; ?>" class="form-control form-control-user" placeholder="Email Address" required readonly>
               </div>
               <div class="form-group">
                 <label for="plevel">System Permission Level</label>
-                <input type="text" value="<?php echo $permission_level; ?>" class="form-control form-control-user" id="plevel" name="plevel" placeholder="System Permission Level" readonly>
+                <input type="text" value="<?php echo $permission_level; ?>" class="form-control form-control-user" placeholder="System Permission Level" readonly>
               </div>
               <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">

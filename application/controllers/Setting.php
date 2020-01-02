@@ -41,8 +41,6 @@ class Setting extends MY_PasController {
             $new_info = array(
                 'last_name' =>  $this->input->post('lastname'),
                 'first_name' =>  $this->input->post('firstname'),
-                'id' => $this->input->post('st_id'),
-                'email' => $this->input->post('email'),
                 'password'  => $this->input->post('password')
             );
             $this->User->updateUserInfo($username,$new_info);
