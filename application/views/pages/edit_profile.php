@@ -43,7 +43,7 @@
                 <select name="plevel" class="form-control form-control-user" required>
                   <option value="" <?php echo (empty($plevel))?"selected":""; ?> disabled>*** Permission Level ***</option>
                   <option value="90" <?php echo ($plevel>=90)?"selected":"" ; ?> >Administrator</option>
-                  <option value="30" <?php echo ($plevel>=30 && $plevel<90)?"selected":"" ; ?> >Unit Coordinator</option>
+                  <option value="30" <?php echo ($plevel>=30 && $plevel<90)?"selected":"" ; ?> >Lecturer</option>
                   <option value="20" <?php echo ($plevel>=20 && $plevel<30)?"selected":"" ; ?> >Tutor</option>
                   <option value="10" <?php echo ($plevel>=10 && $plevel<20)?"selected":"" ; ?> >Student</option>
                   <option value="0" <?php echo ($plevel<10)?"selected":"" ; ?> >Limited User</option>
