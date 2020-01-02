@@ -131,6 +131,17 @@ class User extends CI_Model {
         }
         return $this->db->affected_rows();
     }
+
+    function is_locked($username) {
+        $query = $this->db->query("SELECT locked FROM `user` WHERE lower(`username`)=lower(trim('$username')) and locked <> 0 ;");  
+        if($query->num_rows() > 0) {
+            return true;
+        }
+        else  {
+            return false;
+        }
+    }
+
     
     function lockuser($username) {
         $query_str  = "UPDATE `user` " ;

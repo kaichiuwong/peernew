@@ -112,7 +112,7 @@ class MY_PasController extends CI_Controller
         
         if (!$this->is_session_valid()) {
             if ($redirect) {
-                redirect('Usercontrol');
+                redirect('Usercontrol/logout');
             }
             return false;
         }
@@ -123,6 +123,14 @@ class MY_PasController extends CI_Controller
                     $data['_view'] = 'pages/deny';
                     $this->load->view('templates/main',$data);
                     $this->load_footer();
+                }
+                return false;
+            }
+            $this->load->model('User');
+            if ($this->User->is_locked($this->get_login_user())) 
+            {
+                if ($redirect) {
+                    redirect('Usercontrol/login/locked');
                 }
                 return false;
             }

@@ -16,13 +16,12 @@ Class Usercontrol extends CI_Controller {
     }
 
     // Check for user login process
-    public function login() {
+    public function login($lock = false) {
         if (isset($_POST['username'])) {
             $this->form_validation->set_rules('username', 'Username', 'trim|required');
             $this->form_validation->set_rules('password', 'Password', 'trim|required');
 
             if ($this->form_validation->run() == FALSE) {
-                $data['error_message'] = $this->input->post('password');
                 $this->load->view('login', $data);
             } else {
                 $username = $this->input->post('username');
@@ -57,7 +56,7 @@ Class Usercontrol extends CI_Controller {
                         }
                     }
                     else {
-                        $data['error_message'] = 'Account locked due to multiple failure login attempts. Please contact System Administrator to unlock your account.';
+                        $data['error_message'] = 'Account locked by the system. Please contact System Administrator to unlock your account.';
                         $this->load->view('login', $data);
                     }
                 }
@@ -68,7 +67,14 @@ Class Usercontrol extends CI_Controller {
             }
         }
         else {
-            $this->load->view('login');
+            $sess_array = array(
+                'username' => ''
+            );
+            $this->session->unset_userdata('logged_in', $sess_array);
+            if (!empty($lock)) {
+                $data['error_message'] = 'Account locked by your administrator. Please contact System Administrator to unlock your account.';
+            }
+            $this->load->view('login',$data);
         }
     }
 
