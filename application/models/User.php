@@ -70,6 +70,7 @@ class User extends CI_Model {
             if (isset($newinfo['plevel'])) {
                 $data['permission_level'] = $newinfo['plevel'];
             }
+            $data['last_upd_time'] = current_time();
 
             $this->db->where('username', $username);
             $this->db->update('user', $data);
@@ -96,6 +97,7 @@ class User extends CI_Model {
                 'permission_level' => $newinfo['plevel'],
                 'salt' => $newsalt,
                 'password' => crypt($newinfo['password'],$newsalt),
+                'last_upd_time' => current_time(),
                 'create_time' => current_time()
             );
             $this->db->insert('user', $data);
