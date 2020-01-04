@@ -17,6 +17,7 @@ Class Usercontrol extends CI_Controller {
 
     // Check for user login process
     public function login($lock = false) {
+        $data = array();
         if (isset($_POST['username'])) {
             $this->form_validation->set_rules('username', 'Username', 'trim|required');
             $this->form_validation->set_rules('password', 'Password', 'trim|required');
