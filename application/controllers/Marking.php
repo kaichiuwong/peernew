@@ -77,6 +77,27 @@ class Marking extends MY_PasController {
         }
     }
 
+    function give_indiv_feedback($asg_id = null, $group_id = null, $username = null)
+    {
+        if ($this->check_permission(20, false) ) {
+            if ($asg_id && $group_id && $username) {
+                $data['asg_id'] = $asg_id;
+                $data['group_id'] = $group_id;
+                $data['username'] = $username;
+                $this->load->model('Submission_model');
+                $data['summary'] = $this->Submission_model->get_peer_review_summary($asg_id,$username);
+                $data['_view'] = 'pages/assignment_marking/feedback';
+                $this->load_header($data);
+                $this->load->view('templates/main',$data);
+                $this->load_footer($data);
+            }
+            else
+            {
+                redirect('Marking');
+            }
+        }
+    }
+
     function final_score($asg_id = null)
     {
         if ($this->check_permission(20) ) {
@@ -223,10 +244,14 @@ class Marking extends MY_PasController {
                 $this->load->model('Assignment_mark_model');
                 $params = array(
                     'asg_id' => $this->input->post('asg_id'),
-                    'username' => $this->input->post('username'),
-                    'score' => $this->input->post('score'),
-                    'remark' => $this->input->post('remark')
+                    'username' => $this->input->post('username')
                 );
+                if (isset($_POST['score'])) {
+                    $params['score'] = $this->input->post('score');
+                }
+                if (isset($_POST['remark'])) {
+                    $params['remark'] = $this->input->post('remark');
+                }
                 if (isset($_POST['score_id'])) {
                     if ( !empty($_POST['score_id']) ) {
                         $score_id = $this->input->post('score_id');

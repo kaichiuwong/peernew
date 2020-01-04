@@ -9,6 +9,16 @@
   </div>
   <!-- /.card-header -->
   <div class="card-body">
+    <div class="callout callout-success">
+        <h5><b>Score: </b>
+            <?php echo sprintf("%.2f", ($summary[0]['override_score'] != NULL)? $summary[0]['override_score']:$summary[0]['peer_average']) ; ?>
+            <?php echo ($summary[0]['override_score'] != NULL)? "<small class='text-muted'><i>Overrided</i></small>":"" ; ?>
+        </h5>
+        <?php if (!empty($summary[0]['override_score_remark'])): ?>
+        <p><b>Teacher's feedback:</b></p>
+        <span><?php echo $summary[0]['override_score_remark']; ?></span>
+        <?php endif; ?>
+    </div>
     <table class="table table-sm table-head-fixed table-hover">
         <thead>
             <tr>

@@ -36,7 +36,7 @@ if($('#asg-calendar').length){
 }
 
 $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip();
     $(".enable-datatable").DataTable({
         "paging": true,
         "lengthChange": true,
@@ -47,20 +47,7 @@ $(function () {
         "pageLength": 100
     });
 
-    $(".enable-editor").summernote({
-        height: 300,
-        toolbar: [
-            [ 'style', [ 'style' ] ],
-            [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
-            [ 'fontname', [ 'fontname' ] ],
-            [ 'fontsize', [ 'fontsize' ] ],
-            [ 'color', [ 'color' ] ],
-            [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
-            [ 'table', [ 'table' ] ],
-            [ 'insert', [ 'link'] ],
-            [ 'view', [ 'undo', 'redo', 'fullscreen' ] ]
-        ]
-    });
+    enable_editor();
 
     if($('#datetimepicker1').length) {
         $('#datetimepicker1').datetimepicker({
@@ -101,9 +88,10 @@ $('.peer_mark_open').on('click',function(){
     $('.modal-body').load(dataURL,function(){
         $('#large-modal-loading-overlay').removeClass('overlay d-flex justify-content-center align-items-center');
         $('#large-modal-loading-overlay').addClass('d-none');
+        document.querySelector("#large-modal-body");
+        enable_editor();
     });
 });
-
 
 $(document).on('change', '.custom-file-input', function (event) {
     $(this).next('.custom-file-label').html('<i class="fas fa-file"></i> ' + event.target.files[0].name);
@@ -195,6 +183,47 @@ $(document).on('submit','#peer_feedback_form',function(event){
         alert("Please select a file to upload.");
     }
  });
+
+ $(document).on('click','.remark_submit_btn',function(){
+    event.preventDefault();
+    var data_id="";
+    var form = $('#remark_form'+data_id);
+    var url = form.attr('action');
+    $("#remark_submit_btn"+data_id).attr("disabled", true);
+    $("#status_remark"+data_id).html("Saving");
+    $("#status_remark"+data_id).removeClass("d-none badge-primary badge-danger");
+    $("#status_remark"+data_id).addClass("badge-secondary");    
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: form.serialize(),
+        success: function(data)
+        {
+                $("#remark_score_id"+data_id).val(data.score_id);
+                $("#remark_submit_btn"+data_id).attr("disabled", false);
+                $("#status_remark"+data_id).html("Saved");
+                $("#status_remark"+data_id).removeClass("badge-secondary");
+                $("#status_remark"+data_id).addClass("badge-primary");
+                
+                setTimeout(function() { 
+                    $("#status_remark"+data_id).removeClass("badge-primary");
+                    $("#status_remark"+data_id).addClass("d-none");
+                }, 5000);
+        },
+        error: function (data) {
+                $("#remark_submit_btn"+data_id).attr("disabled", false);
+                $("#status_remark"+data_id).html("Error");
+                $("#status_remark"+data_id).removeClass("badge-secondary");
+                $("#status_remark"+data_id).addClass("badge-danger");   
+                
+                setTimeout(function() { 
+                    $("#status_remark"+data_id).removeClass("badge-secondary");
+                    $("#status_remark"+data_id).addClass("d-none");
+                }, 5000);
+        }
+        });
+ });
+
 
  $(document).on('submit','.grp_submission_mark',function(event){
     event.preventDefault();
@@ -342,6 +371,23 @@ $(document).ready(function () {
     load_peer_review_form();
 
 });
+
+function enable_editor() {
+    $(".enable-editor").summernote({
+        height: 300,
+        toolbar: [
+            [ 'style', [ 'style' ] ],
+            [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
+            [ 'fontname', [ 'fontname' ] ],
+            [ 'fontsize', [ 'fontsize' ] ],
+            [ 'color', [ 'color' ] ],
+            [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
+            [ 'table', [ 'table' ] ],
+            [ 'insert', [ 'link'] ],
+            [ 'view', [ 'undo', 'redo', 'fullscreen' ] ]
+        ]
+    });
+}
 
 function calc_feedback_sum(peername) {
     var score_class = '.score-' + peername;
