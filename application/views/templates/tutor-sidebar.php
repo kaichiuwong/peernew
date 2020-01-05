@@ -16,24 +16,27 @@
               <p>Home</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="<?php echo site_url('Assignment'); ?>" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
-              <p>Assignments</p>
-            </a>
-          </li>
+          <li class="nav-header">Assignment</li>
           <li class="nav-item">
             <a href="<?php echo site_url('Marking'); ?>" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
+              <i class="nav-icon fas fa-tasks"></i>
               <p>Marking</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="<?php echo site_url('Assignment'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-file-upload"></i>
+              <p>Submission</p>
+            </a>
+          </li>
+          <li class="nav-header">Help</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-file"></i>
               <p>FAQs</p>
             </a>
           </li>
+          <li class="nav-header"></li>
           <li class="nav-item">
             <a href="<?php echo site_url('Usercontrol/logout'); ?>" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
