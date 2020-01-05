@@ -56,3 +56,14 @@ function get_permission_level_desc($level)
 function current_time() {
     return mdate("%Y-%m-%d %H:%i:%s",now());
 }
+
+function encode_id($id)
+{
+    return urlencode(base64_encode(HASH_SALT.$id));
+}
+
+function decode_id($str)
+{
+    $decoded_id = base64_decode(urldecode($str));
+    return str_replace(HASH_SALT,"",$decoded_id);
+}

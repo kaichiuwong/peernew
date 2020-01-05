@@ -90,3 +90,4 @@ defined('EXT')                       OR define('EXT', '.php');
 defined('RECORDS_PER_PAGE')          OR define('RECORDS_PER_PAGE', 100);
 defined('USER_ALLOW_FAIL_LOGIN')     OR define('USER_ALLOW_FAIL_LOGIN', 3);
 defined('SESSION_EXPIRE_TIME')       OR define('SESSION_EXPIRE_TIME', 3600);
+defined('HASH_SALT')                 OR define('HASH_SALT',"bftLuKzknhyJ5xH5Q5RVuIwP4bkZSvA4");

@@ -33,7 +33,7 @@
                     <td><?php echo $a['sem']; ?></td>
                     <td><?php echo $a['asg_title']; ?></td>
                     <td>
-                        <a href="<?php echo site_url('assignment/info/'.$a['asg_id']); ?>" class="btn btn-info btn-sm">Select</a> 
+                        <a href="<?php echo site_url('assignment/info/'.encode_id($a['asg_id'])); ?>" class="btn btn-info btn-sm">Select</a> 
                     </td>
                 </tr>
             <?php } ?>

@@ -256,5 +256,4 @@ class MY_PasController extends CI_Controller
     public function load_footer($data = array()) {
         $this->load->view('templates/'.$this->user_role.'-footer', $data);
     }
-
 }
