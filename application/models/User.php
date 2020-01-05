@@ -72,7 +72,7 @@ class User extends CI_Model {
             }
             $data['last_upd_time'] = current_time();
 
-            $this->db->where('username', trim(strtolower(username)));
+            $this->db->where('username', trim(strtolower($username)));
             $this->db->update('user', $data);
             
             if (!empty($newinfo['password'])) {

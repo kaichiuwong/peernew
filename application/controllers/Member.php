@@ -132,7 +132,7 @@ class Member extends MY_PasController {
                     'email' => $this->input->post('email'),
                     'plevel'  => $this->input->post('plevel')
                 );
-                $this->User->updateUserInfo($this->input->post('username'), $param);
+                $result = $this->User->updateUserInfo($this->input->post('username'), $param);
             }
             redirect('Member/edit_profile/'.$username);
         }
