@@ -86,7 +86,27 @@ class Marking extends MY_PasController {
                 $data['username'] = $username;
                 $this->load->model('Submission_model');
                 $data['summary'] = $this->Submission_model->get_peer_review_summary($asg_id,$username);
-                $data['_view'] = 'pages/assignment_marking/feedback';
+                $data['_view'] = 'pages/assignment_marking/indiv_feedback';
+                $this->load_header($data);
+                $this->load->view('templates/main',$data);
+                $this->load_footer($data);
+            }
+            else
+            {
+                redirect('Marking');
+            }
+        }
+    }
+
+    function give_group_feedback($asg_id = null, $group_id = null)
+    {
+        if ($this->check_permission(20, false) ) {
+            if ($asg_id && $group_id) {
+                $data['asg_id'] = $asg_id;
+                $data['group_id'] = $group_id;
+                $this->load->model('Submission_model');
+                $data['summary'] = $this->Submission_model->get_group_submission($asg_id);
+                $data['_view'] = 'pages/assignment_marking/group_feedback';
                 $this->load_header($data);
                 $this->load->view('templates/main',$data);
                 $this->load_footer($data);
@@ -204,10 +224,14 @@ class Marking extends MY_PasController {
                 $this->load->model('Assignment_mark_model');
                 $params = array(
                     'asg_id' => $this->input->post('asg_id'),
-                    'group_id' => $this->input->post('topic_id'),
-                    'score' => $this->input->post('score'),
-                    'remark' => $this->input->post('remark')
+                    'group_id' => $this->input->post('topic_id')
                 );
+                if (isset($_POST['score'])) {
+                    $params['score'] = $this->input->post('score');
+                }
+                if (isset($_POST['remark'])) {
+                    $params['remark'] = $this->input->post('remark');
+                }
                 if (isset($_POST['score_id'])) {
                     if ( !empty($_POST['score_id']) ) {
                         $score_id = $this->input->post('score_id');

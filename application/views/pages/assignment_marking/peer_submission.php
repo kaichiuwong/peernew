@@ -76,7 +76,7 @@
                     </td>
                     <td>
                       <button type="button" class="btn btn-primary btn-sm peer_submit_button" data-username="<?php echo $a['username']; ?>" id="submit_btn_<?php echo $a['username']; ?>">Save</button> 
-                      <a href="<?php echo site_url('Marking/give_indiv_feedback/'.$asg_id.'/'.$a['topic_id'].'/'.$a['username']); ?>" class="btn btn-info btn-sm">Give Feedbacks</a>
+                      <a href="<?php echo site_url('Marking/give_indiv_feedback/'.$asg_id.'/'.$a['topic_id'].'/'.$a['username']); ?>" class="btn btn-info btn-sm">Provide Individual Feedback</a>
                     </td>
                   <?php echo form_close(); ?>
                 </tr>
