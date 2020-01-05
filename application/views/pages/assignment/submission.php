@@ -26,7 +26,7 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body">
-            You need to select an assignment group before submit any assignment.
+            You are required to select an assignment group before submit any assignment.
       </div>
       <!-- /.card-body -->
     </div>
@@ -37,7 +37,7 @@
             <h3 class="card-title"><span class="badge badge-success">Part A</span> Submission</h3>
         </div>
         <!-- /.card-header -->
-        <div class="card-body" id="submission_card" data-href="<?php echo site_url('Assignment/asg_upload_form/'.$asg_id.'/'.$assignment_topic['topic_id']); ?>">
+        <div class="card-body" id="submission_card" data-href="<?php echo site_url('Assignment/asg_upload_form/'.$asg_id.'/'.encode_id($assignment_topic['topic_id'])); ?>">
 
         </div>
         <!-- /.card-body -->
@@ -55,7 +55,7 @@
             <h3 class="card-title"><span class="badge badge-success">Part B</span> Self Evaluation Questions</h3>
         </div>
         <!-- /.card-header -->
-        <div class="card-body" id="self_feedback_card" data-href="<?php echo site_url('Assignment/self_feedback_form/'.$asg_id.'/'.$assignment_topic['topic_id']); ?>">
+        <div class="card-body" id="self_feedback_card" data-href="<?php echo site_url('Assignment/self_feedback_form/'.$asg_id.'/'.encode_id($assignment_topic['topic_id'])); ?>">
 
         </div>
         <!-- /.card-body -->
@@ -75,7 +75,7 @@
         </div>
         <!-- /.card-header -->
         
-        <div class="card-body" id="peer_feedback_card" data-href="<?php echo site_url('Assignment/peer_feedback_form/'.$asg_id.'/'.$assignment_topic['topic_id']); ?>">
+        <div class="card-body" id="peer_feedback_card" data-href="<?php echo site_url('Assignment/peer_feedback_form/'.$asg_id.'/'.encode_id($assignment_topic['topic_id'])); ?>">
 
         </div>
         <!-- /.card-body -->

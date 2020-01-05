@@ -59,11 +59,12 @@ function current_time() {
 
 function encode_id($id)
 {
-    return urlencode(base64_encode(HASH_SALT.$id));
+    $id=(double)($id*99347.4564664);
+    return strrev(urlencode(base64_encode($id)));
 }
 
 function decode_id($str)
 {
-    $decoded_id = base64_decode(urldecode($str));
-    return str_replace(HASH_SALT,"",$decoded_id);
+    $decoded_id = base64_decode(urldecode(strrev($str)));
+    return $decoded_id/99347.4564664;
 }

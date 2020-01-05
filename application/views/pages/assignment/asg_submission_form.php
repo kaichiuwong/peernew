@@ -19,11 +19,11 @@
 <div class="tab-content" id="custom-content-above-tabContent">
     <div class="tab-pane fade show active" id="submission-info" role="tabpanel" aria-labelledby="submission-info-tab">
     <?php if ($submission_condition["result"]) : ?>
-        <?php echo form_open_multipart('Assignment/asg_upload_form/'.$asg_id.'/'.$assignment_topic['topic_id'],array("id"=>"asg_submit_form")); ?>
+        <?php echo form_open_multipart('Assignment/asg_upload_form/'.$asg_id.'/'.encode_id($assignment_topic['topic_id']),array("id"=>"asg_submit_form")); ?>
             <div class="form-group">
             <input type="hidden" value="<?php echo $asg_id; ?>" name="asg_id" />
-            <input type="hidden" value="<?php echo $assignment_topic['topic_id']; ?>" name="grp_id" />
-            <input type="hidden" value="<?php echo $username; ?>" name="username" />
+            <input type="hidden" value="<?php echo encode_id($assignment_topic['topic_id']); ?>" name="grp_id" />
+            <input type="hidden" value="<?php echo encode_id($username); ?>" name="username" />
             <label for="assignment_file">Upload Assignment File</label>
             <div class="input-group">
                 <div class="custom-file">

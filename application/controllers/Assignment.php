@@ -82,7 +82,7 @@ class Assignment extends MY_PasController {
                     $data['submission_condition']  = $this->is_open(decode_id($asg_id),'GRP_OPEN','GRP_CLOSE', false);
                     if ($data['submission_condition']['result']) {
                         $this->load->model('Assignment_topic_model');
-                        $this->Assignment_topic_model->leave_topic(decode_id($asg_id), $this->get_login_user(),$topic_id );
+                        $this->Assignment_topic_model->leave_topic(decode_id($asg_id), $this->get_login_user(),decode_id($topic_id) );
                     }
                     redirect('Assignment/group/'.$asg_id);
                 }
@@ -101,7 +101,7 @@ class Assignment extends MY_PasController {
                     $data['submission_condition']  = $this->is_open(decode_id($asg_id),'GRP_OPEN','GRP_CLOSE', false);
                     if ($data['submission_condition']['result']) {
                         $this->load->model('Assignment_topic_model');
-                        $this->Assignment_topic_model->join_topic(decode_id($asg_id), $this->get_login_user(),$topic_id );
+                        $this->Assignment_topic_model->join_topic(decode_id($asg_id), $this->get_login_user(),decode_id($topic_id) );
                     }
                     redirect('Assignment/group/'.$asg_id);
                 }
@@ -116,7 +116,7 @@ class Assignment extends MY_PasController {
     {
         if ($this->check_permission(10)) {
             $this->load->model('Assignment_topic_model');
-            $data['assignment_topics'] = $this->Assignment_topic_model->get_assignment_member($id);
+            $data['assignment_topics'] = $this->Assignment_topic_model->get_assignment_member(decode_id($id));
             $this->load->view('pages/assignment/group_member',$data);
         }
     }
@@ -143,10 +143,10 @@ class Assignment extends MY_PasController {
                         if ($upload_result) {
                             $upload_data = $this->upload->data();
                             $this->load->model('Submission_model');
-                            $this->Submission_model->delete_submission_by_group(decode_id($this->input->post('asg_id')), $this->input->post('grp_id'));
+                            $this->Submission_model->delete_submission_by_group(decode_id($this->input->post('asg_id')), decode_id($this->input->post('grp_id')));
                             $this->Submission_model->submit_assignment(decode_id($this->input->post('asg_id')),
-                                                                        $this->input->post('grp_id'),
-                                                                        $this->input->post('username'),
+                                                                       decode_id( $this->input->post('grp_id')),
+                                                                       decode_id( $this->input->post('username')),
                                                                         $config['upload_path'].$upload_data['file_name']);
                         }
                         else {

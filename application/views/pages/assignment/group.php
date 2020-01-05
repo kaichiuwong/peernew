@@ -45,11 +45,11 @@
                             <?php if ($a['id'] == $assignment_topic['topic_id']) { ?>
                             <tr>
                                 <td><?php echo $a['topic']; ?> <span class="badge badge-info">Selected</span></td>
-                                <td><a href="javascript:void(0);" data-grp-name="<?php echo $a['topic']; ?>" data-href="<?php echo site_url('assignment/topic_member/'.$a['id']); ?>" class="group_info_open"><?php echo $a['cnt']; ?></a></td>
+                                <td><a href="javascript:void(0);" data-grp-name="<?php echo $a['topic']; ?>" data-href="<?php echo site_url('assignment/topic_member/'.encode_id($a['id'])); ?>" class="group_info_open"><?php echo $a['cnt']; ?></a></td>
                                 <td><?php echo $a['max']; ?></td>
                                 <td>
                                     <?php if ($submission_condition['result']) : ?>
-                                      <a href="<?php echo site_url('assignment/leave_group/'.$asg_id.'/'.$a['id']); ?>" class="btn btn-danger btn-sm">Leave Group</a>
+                                      <a href="<?php echo site_url('assignment/leave_group/'.$asg_id.'/'.encode_id($a['id'])); ?>" class="btn btn-danger btn-sm">Leave Group</a>
                                     <?php endif; ?>
                                 </td>
                             </tr>
@@ -57,14 +57,14 @@
                         <?php } else { ?>
                             <tr>
                                 <td><?php echo $a['topic']; ?></td>
-                                <td><a href="javascript:void(0);" data-grp-name="<?php echo $a['topic']; ?>" data-href="<?php echo site_url('assignment/topic_member/'.$a['id']); ?>" class="group_info_open"><?php echo $a['cnt']; ?></a></td>
+                                <td><a href="javascript:void(0);" data-grp-name="<?php echo $a['topic']; ?>" data-href="<?php echo site_url('assignment/topic_member/'.encode_id($a['id'])); ?>" class="group_info_open"><?php echo $a['cnt']; ?></a></td>
                                 <td><?php echo $a['max']; ?></td>
                                 <td>
                                     <?php if ($a['cnt'] >= $a['max']) { ?>
                                     <span class="badge badge-danger">Full</span>
                                     <?php } else { ?>
                                       <?php if ($submission_condition['result']) : ?>
-                                        <a href="<?php echo site_url('assignment/join_group/'.$asg_id.'/'.$a['id']); ?>" class="btn btn-primary btn-sm">Join Group</a>
+                                        <a href="<?php echo site_url('assignment/join_group/'.$asg_id.'/'.encode_id($a['id'])); ?>" class="btn btn-primary btn-sm">Join Group</a>
                                       <?php endif; ?>
                                     <?php } ?>
                                 </td>
