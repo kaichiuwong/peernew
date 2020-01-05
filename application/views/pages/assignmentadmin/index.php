@@ -42,7 +42,7 @@
                     <td><a href="<?php echo site_url('Student_list/index/'.$a['asg_id']); ?>"><?php echo $a['student_count']; ?></a></td>
                     <td><?php echo $a['public']?'<i class="fas fa-users"></i> Public':'<i class="fas fa-lock"></i> Private'; ?></td>
                     <td>
-                        <a href="<?php echo site_url('Assignmentadmin/info/'.$a['asg_id']); ?>" class="btn btn-primary btn-sm">Info</a>
+                        <a href="<?php echo site_url('Assignmentadmin/info/'.$a['asg_id']); ?>" class="btn btn-primary btn-sm">Edit</a>
                         <a href="<?php echo site_url('Assignmentadmin/remove/'.$a['asg_id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are your confirm to remove this assignment?');">Delete</a>
                         <?php if ($a['public']): ?>
                         <a href="<?php echo site_url('Assignmentadmin/public_switch/'.$a['asg_id']); ?>" class="btn btn-dark btn-sm">Make Private</a> 

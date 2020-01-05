@@ -79,7 +79,8 @@
         </table>
     </div>
     <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary btn-sm">Create</button>
+        <a href="<?php echo site_url('assignment_question/index/'.$asg_id.'/peer'); ?>" class="btn btn-sm btn-secondary">Cancel</a>
     </div>
     <?php echo form_close(); ?>
 </div>

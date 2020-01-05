@@ -36,7 +36,7 @@
                     <th class="align-text-top">Group</th>
                     <th class="align-text-top">Group Score</th>
                     <th class="align-text-top">Average Peer Score</th>
-                    <th class="align-text-top">Status</th>
+                    <th class="align-text-top" style="width: 100px;">Status</th>
                     <th class="align-text-top" style="width: 70px;">Override Peer Score</th>
                     <th class="align-text-top">Actions</th>
                 </tr>
@@ -66,6 +66,7 @@
                       <?php if (!empty($a['override_score_remark'])) : ?>
                           <span class="text-success" data-toggle="tooltip" data-placement="top" title="Feedbacks Provided"><i class="fas fa-comment-alt"></i></span>
                       <?php endif; ?>
+                      <span class='badge d-none' id="status_<?php echo $a['username']; ?>"></span>
                     </td>
                     <td>
                       <input type="hidden" name="asg_id" value="<?php echo $asg_id;?>" id="asg_id_<?php echo $a['username'];?>" required/>
@@ -76,7 +77,6 @@
                     <td>
                       <button type="button" class="btn btn-primary btn-sm peer_submit_button" data-username="<?php echo $a['username']; ?>" id="submit_btn_<?php echo $a['username']; ?>">Save</button> 
                       <a href="<?php echo site_url('Marking/give_indiv_feedback/'.$asg_id.'/'.$a['topic_id'].'/'.$a['username']); ?>" class="btn btn-info btn-sm">Give Feedbacks</a>
-                      <span class='badge d-none' id="status_<?php echo $a['username']; ?>"></span>
                     </td>
                   <?php echo form_close(); ?>
                 </tr>

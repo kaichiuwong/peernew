@@ -57,7 +57,8 @@
         </div>
     </div>
     <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-sm btn-primary">Save</button>
+        <a href="<?php echo site_url('assignment_topic/index/'.$asg_id); ?>" class="btn btn-sm btn-secondary">Cancel</a>
     </div>
     <?php echo form_close(); ?>
 </div>

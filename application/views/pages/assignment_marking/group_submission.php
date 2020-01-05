@@ -54,7 +54,7 @@
                         <input type="number" min="0" step="1" name="score" value="<?php echo $a['score'];?>" class="form-control input-sm" id="score_<?php echo $a['topic_id'];?>" required />
                       </td>
                       <td>
-                        <button type="button" class="btn btn-info btn-sm grp_submit_button" data-grp-id="<?php echo $a['topic_id']; ?>" id="submit_btn_<?php echo $a['topic_id']; ?>">Save</button> 
+                        <button type="button" class="btn btn-primary btn-sm grp_submit_button" data-grp-id="<?php echo $a['topic_id']; ?>" id="submit_btn_<?php echo $a['topic_id']; ?>">Save</button> 
                         <span class='badge d-none' id="status_<?php echo $a['topic_id']; ?>"></span>
                       </td>
                     <?php else: ?>
@@ -69,7 +69,7 @@
                         <input type="number" min="0" step="1" name="score" value="<?php echo $a['score'];?>" class="form-control input-sm" id="score_<?php echo $a['topic_id'];?>" required />
                       </td>
                       <td>
-                        <button type="button" class="btn btn-info btn-sm grp_submit_button" data-grp-id="<?php echo $a['topic_id']; ?>" id="submit_btn_<?php echo $a['topic_id']; ?>">Save</button> 
+                        <button type="button" class="btn btn-primary btn-sm grp_submit_button" data-grp-id="<?php echo $a['topic_id']; ?>" id="submit_btn_<?php echo $a['topic_id']; ?>">Save</button> 
                         <span class='badge d-none' id="status_<?php echo $a['topic_id']; ?>"></span>
                       </td>
                     <?php endif; ?>

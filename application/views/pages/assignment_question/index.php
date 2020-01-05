@@ -67,7 +67,7 @@
                     <td><?php echo $a['question']; ?></td>
                     <td><?php echo $a['answer_type']; ?></td>
                     <td>
-                        <a href="<?php echo site_url('assignment_question/edit/'.$asg_id.'/'.$type.'/'.$a['id']); ?>" class="btn btn-info btn-sm">Edit</a> 
+                        <a href="<?php echo site_url('assignment_question/edit/'.$asg_id.'/'.$type.'/'.$a['id']); ?>" class="btn btn-primary btn-sm">Edit</a> 
                         <a href="<?php echo site_url('assignment_question/remove/'.$asg_id.'/'.$type.'/'.$a['id']); ?>" class="btn btn-danger btn-sm">Delete</a>
                     </td>
                 </tr>

@@ -73,7 +73,8 @@
         </table>
     </div>
     <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary btn-sm">Save</button>
+        <a href="<?php echo site_url('assignment_question/index/'.$asg_id).'/'.strtolower($assignment_question['question_section']); ?>" class="btn btn-sm btn-secondary">Cancel</a>
     </div>
     <?php echo form_close(); ?>
 </div>

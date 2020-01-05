@@ -48,7 +48,7 @@
                     <td><a href="javascript:void(0);" data-grp-name="<?php echo $a['topic']; ?>" data-href="<?php echo site_url('assignment_topic/topic_member/'.$a['id']); ?>" class="group_info_open"><?php echo $a['cnt']; ?></a></td>
                     <td><?php echo $a['max']; ?></td>
                     <td>
-                        <a href="<?php echo site_url('assignment_topic/edit/'.$asg_id.'/'.$a['id']); ?>" class="btn btn-info btn-sm">Edit</a> 
+                        <a href="<?php echo site_url('assignment_topic/edit/'.$asg_id.'/'.$a['id']); ?>" class="btn btn-primary btn-sm">Edit</a> 
                         <a href="<?php echo site_url('assignment_topic/remove/'.$asg_id.'/'.$a['id']); ?>" class="btn btn-danger btn-sm">Delete</a>
                     </td>
                 </tr>
