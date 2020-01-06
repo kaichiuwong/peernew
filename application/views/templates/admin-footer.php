@@ -19,7 +19,7 @@
 <script src="<?php echo base_url(); ?>/assets/dist/js/adminlte.min.js"></script>
 <script src="<?php echo base_url(); ?>/assets/plugins/summernote/summernote-bs4.min.js"></script>
 <script src="<?php echo base_url(); ?>/assets/plugins/moment/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="<?php echo base_url(); ?>/assets/plugins/datetimepicker/tempusdominus-bootstrap-4.min.js"></script>
 <script src="<?php echo base_url(); ?>/assets/plugins/fullcalendar-core/main.js"></script>
 <script src="<?php echo base_url(); ?>/assets/plugins/fullcalendar-interaction/main.js"></script>
 <script src="<?php echo base_url(); ?>/assets/plugins/fullcalendar-daygrid/main.js"></script>

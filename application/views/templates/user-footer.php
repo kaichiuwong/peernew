@@ -17,7 +17,6 @@
 <script src="<?php echo base_url(); ?>/assets/plugins/datatables/jquery.dataTables.js"></script>
 <script src="<?php echo base_url(); ?>/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <script src="<?php echo base_url(); ?>/assets/dist/js/adminlte.min.js"></script>
-<script src="<?php echo base_url(); ?>/assets/plugins/summernote/summernote-bs4.min.js"></script>
 <script src="<?php echo base_url(); ?>/assets/dist/js/demo.js"></script>
 <script src="<?php echo base_url(); ?>/assets/dist/js/pas.js?t=<?php echo rand(); ?>"></script>
 </body>

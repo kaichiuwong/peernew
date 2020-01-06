@@ -1,13 +1,21 @@
-<?php $now = time(); ?>
-<div class="alert alert-<?php echo $submission_condition['result']? "success" : "danger" ; ?>" role="alert">
-    <?php if ($submission_condition['result']): ?>
-        <span class='text-bold'><?php echo $asg_deadline['description'] ;?></span>: <?php echo $asg_deadline['date_value'] ;?> 
+<?php if ($submission_condition['result']): ?>
+    <?php if (current_time() > $asg_deadline['date_value']): ?>
+        <div class="alert alert-warning" role="alert">
+            <span class='text-bold'><i class='fas fa-exclamation-triangle'></i> <?php echo $asg_deadline['description'] ;?> is over.</span><br />
+            <span class='text-bold'><?php echo $asg_deadline['description'] ;?></span>: <?php echo $asg_deadline['date_value'] ;?>
+        </div>
     <?php else: ?>
+        <div class="alert alert-success" role="alert">
+            <span class='text-bold'><?php echo $asg_deadline['description'] ;?></span>: <?php echo $asg_deadline['date_value'] ;?>
+        </div>
+    <?php endif; ?>
+<?php else: ?>
+    <div class="alert alert-danger" role="alert">
         <?php echo $submission_condition['result']? "":"<span class='text-bold'><i class='fas fa-exclamation-triangle'></i> This section is closed for changes.</span><br />" ;?>
         <?php echo $submission_condition['open_date']? $submission_condition['open_desc']. ": ".$submission_condition['open_date']."<br />" : "" ; ?>
         <?php echo $submission_condition['close_date']? $submission_condition['close_desc']. ": ".$submission_condition['close_date'] : "" ; ?>
-    <?php endif; ?>
-</div>
+    </div>
+<?php endif; ?>
 <ul class="nav nav-tabs" id="custom-content-above-tab" role="tablist">
     <li class="nav-item">
     <a class="nav-link active" id="submission-info-tab" data-toggle="pill" href="#submission-info" role="tab" aria-controls="submission-info" aria-selected="true"><i class="fas fa-file-upload"></i> Upload Assignment</a>

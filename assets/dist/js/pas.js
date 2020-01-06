@@ -37,27 +37,9 @@ if($('#asg-calendar').length){
 
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
-    $(".enable-datatable").DataTable({
-        "paging": true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "pageLength": 100
-    });
-
+    enable_datatable();
     enable_editor();
-
-    if($('#datetimepicker1').length) {
-        $('#datetimepicker1').datetimepicker({
-            format: "YYYY-MM-DD HH:mm:ss",
-            widgetPositioning: {
-                horizontal: 'left',
-                vertical: 'auto'
-            }
-        });
-    }
+    enable_datepicker();
 });
 
 $('#date_value').on('click',function(){
@@ -372,21 +354,51 @@ $(document).ready(function () {
 
 });
 
+function enable_datatable() 
+{
+    if ($(".enable-datatable").length) {
+        $(".enable-datatable").DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "pageLength": 100
+        });
+    }
+}
+
+function enable_datepicker()
+{
+    if($('#datetimepicker1').length) {
+        $('#datetimepicker1').datetimepicker({
+            format: "YYYY-MM-DD HH:mm:ss",
+            widgetPositioning: {
+                horizontal: 'left',
+                vertical: 'auto'
+            }
+        });
+    }
+}
+
 function enable_editor() {
-    $(".enable-editor").summernote({
-        height: 300,
-        toolbar: [
-            [ 'style', [ 'style' ] ],
-            [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
-            [ 'fontname', [ 'fontname' ] ],
-            [ 'fontsize', [ 'fontsize' ] ],
-            [ 'color', [ 'color' ] ],
-            [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
-            [ 'table', [ 'table' ] ],
-            [ 'insert', [ 'link'] ],
-            [ 'view', [ 'undo', 'redo', 'fullscreen' ] ]
-        ]
-    });
+    if($(".enable-editor").length) {
+        $(".enable-editor").summernote({
+            height: 300,
+            toolbar: [
+                [ 'style', [ 'style' ] ],
+                [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
+                [ 'fontname', [ 'fontname' ] ],
+                [ 'fontsize', [ 'fontsize' ] ],
+                [ 'color', [ 'color' ] ],
+                [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
+                [ 'table', [ 'table' ] ],
+                [ 'insert', [ 'link'] ],
+                [ 'view', [ 'undo', 'redo', 'fullscreen' ] ]
+            ]
+        });
+    }
 }
 
 function calc_feedback_sum(peername) {
