@@ -90,4 +90,7 @@ defined('EXT')                       OR define('EXT', '.php');
 defined('RECORDS_PER_PAGE')          OR define('RECORDS_PER_PAGE', 100);
 defined('USER_ALLOW_FAIL_LOGIN')     OR define('USER_ALLOW_FAIL_LOGIN', 3);
 defined('SESSION_EXPIRE_TIME')       OR define('SESSION_EXPIRE_TIME', 3600);
-defined('HASH_SALT')                 OR define('HASH_SALT',4357489375893265);
+defined('ID_ENCRYPT_METHOD')         OR define('ID_ENCRYPT_METHOD',"AES-256-CBC");
+defined('ID_HASH_METHOD')            OR define('ID_HASH_METHOD',"sha256");
+defined('ID_SECERT_KEY')             OR define('ID_SECERT_KEY','6w9z$C&F)J@McQfTjWnZr4u7x!A%D*G-');
+defined('ID_SECERT_IV')              OR define('ID_SECERT_IV',"743777397A244326");

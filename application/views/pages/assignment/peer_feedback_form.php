@@ -16,10 +16,10 @@
 <fieldset <?php echo $submission_condition['result']? "" : 'disabled="disabled"' ; ?>>
     <input type="hidden" name="asg_id" value="<?php echo $asg_id; ?>" />
     <input type="hidden" name="topic_id" value="<?php echo $topic_id; ?>" />
-    <input type="hidden" name="reviewer" value="<?php echo $username; ?>" />
+    <input type="hidden" name="reviewer" value="<?php echo encode_id($username); ?>" />
     <?php foreach($assignment_topics_member as $member):  ?>
     <?php if ($member['user_id'] != $username) :?>
-    <input type="hidden" name="reviewee[]" value="<?php echo $member['user_id']; ?>" />
+    <input type="hidden" name="reviewee[]" value="<?php echo encode_id($member['user_id']); ?>" />
     <?php $feedback_sum[$member['user_id']] = 0; ?>
     <?php endif; ?>
     <?php endforeach; ?>
@@ -41,20 +41,22 @@
             <tr>
                 <td>
                     <span class="text-bold">Q<?php echo $a['question_order'];?>.</span>
-                    <input type="hidden" name="question_id[]" value="<?php echo $a['qid']; ?>" />
+                    <input type="hidden" name="question_id[]" value="<?php echo encode_id($a['qid']); ?>" />
                 </td>
                 <td class="text-justify"><?php echo $a['question']; ?></td>
                 <?php foreach($assignment_topics_member as $member):  ?>
                 <?php if ($member['user_id'] != $username) :?>
                     <?php $feedback = $assignment_questions_peer[$member['user_id']][$idx]['feedback']; ?>
                     <?php $feedback_id = $assignment_questions_peer[$member['user_id']][$idx]['id']; ?>
-                    <input type="hidden" name="feedback_id_<?php echo $member['user_id'].'_'.$a['qid']; ?>" value="<?php echo $feedback_id; ?>" />
+                    <?php $jsMbrID = encode_id($member['user_id']); ?>
+                    <?php $jsID = encode_id($member['user_id']).'_'.encode_id($a['qid']); ?>
+                    <input type="hidden" name="feedback_id_<?php echo $jsID; ?>" value="<?php echo ($feedback_id)?encode_id($feedback_id):""; ?>" />
 
                     <?php switch ($a['answer_type']):
                         case "SCALE": ?>
                         <?php $feedback_sum[$member['user_id']] += intval($feedback);?>
                         <td>
-                            <select name="<?php echo 'feedback_'.$member['user_id'].'_'.$a['qid']; ?>"  class="form-control form-control-sm score score-<?php echo $member['user_id']; ?>" user-name="<?php echo $member['user_id']; ?>" required>
+                            <select name="<?php echo 'feedback_'.$jsID; ?>"  class="form-control form-control-sm score score-<?php echo $jsMbrID; ?>" user-name="<?php echo $jsMbrID; ?>" required>
                             <option value="" disabled  <?php echo empty($feedback)?"selected" :""; ?>>-- Select --</option>
                             <option value="4" <?php echo ($feedback == "4")?"selected" :""; ?>>4 - Always</option>
                             <option value="3" <?php echo ($feedback == "3")?"selected" :""; ?>>3 - Nearly Always</option>
@@ -66,7 +68,7 @@
                     <?php break; ?>
                     <?php case "GRADE": ?>
                         <td>
-                            <select name="<?php echo 'feedback_'.$member['user_id'].'_'.$a['qid']; ?>"  class="form-control form-control-sm grade grade-<?php echo $member['user_id']; ?>" user-name="<?php echo $member['user_id']; ?>" required>
+                            <select name="<?php echo 'feedback_'.$jsID; ?>"  class="form-control form-control-sm grade grade-<?php echo $jsMbrID; ?>" user-name="<?php echo $jsMbrID; ?>" required>
                             <option value="" disabled <?php echo empty($feedback)?"selected" :""; ?>>-- Select --</option>
                             <option value="HD" <?php echo ($feedback == "HD")?"selected" :""; ?>>HD</option>
                             <option value="DN" <?php echo ($feedback == "DN")?"selected" :""; ?>>DN</option>
@@ -78,12 +80,12 @@
                     <?php break; ?>
                     <?php case "SCORE": ?>
                         <td>
-                            <input type="number" min="0" max="100" step="1" value="<?php echo html_escape($feedback); ?>" name="<?php echo 'feedback_'.$member['user_id'].'_'.$a['qid']; ?>" class="form-control form-control-sm" required/>
+                            <input type="number" min="0" max="100" step="1" value="<?php echo html_escape($feedback); ?>" name="<?php echo 'feedback_'.$jsID; ?>" class="form-control form-control-sm" required/>
                         </td>
                     <?php break; ?>
                     <?php default: ?>
                         <td>
-                            <input type="text" value="<?php echo html_escape($feedback); ?>" name="<?php echo 'feedback_'.$member['user_id'].'_'.$a['qid']; ?>" class="form-control form-control-sm" required/>
+                            <input type="text" value="<?php echo html_escape($feedback); ?>" name="<?php echo 'feedback_'.$jsID; ?>" class="form-control form-control-sm" required/>
                         </td>
                     <?php break; ?>
                     <?php endswitch; ?>
@@ -99,7 +101,8 @@
                 <td class="text-bold">Total</td>
                 <?php foreach($assignment_topics_member as $member): ?>
                 <?php if ($member['user_id'] != $username) :?>
-                    <td class="text-bold" id="sum_<?php echo $member['user_id']; ?>" class="sum sum-<?php echo $member['user_id']; ?>" user-name="<?php echo $member['user_id']; ?>"><?php echo  $feedback_sum[$member['user_id']]; ?></td>
+                    <?php $jsMbrID = encode_id($member['user_id']); ?>
+                    <td class="text-bold" id="sum_<?php echo $jsMbrID; ?>" class="sum sum-<?php echo $jsMbrID; ?>" user-name="<?php echo $jsMbrID; ?>"><?php echo  $feedback_sum[$member['user_id']]; ?></td>
                 <?php endif; ?>
                 <?php endforeach; ?>
             </tr>
