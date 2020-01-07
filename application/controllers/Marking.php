@@ -247,14 +247,9 @@ class Marking extends MY_PasController {
                 }
             }
             $current_user = $this->get_login_user();
-            if (!$score_id) 
-            {
-                $score_id = $this->Assignment_mark_model->create_group_mark($current_user, $params);
-            }
-            else 
-            {
-                $this->Assignment_mark_model->update_group_mark(decode_id($score_id), $current_user, $params);
-            }
+            empty($score_id)? 
+                ( $score_id = encode_id($this->Assignment_mark_model->create_group_mark($current_user, $params)) ) :
+                ( $this->Assignment_mark_model->update_group_mark(decode_id($score_id), $current_user, $params) ) ;
             $done = true;
             $http_code = 200;
         } while(0);
@@ -279,26 +274,17 @@ class Marking extends MY_PasController {
                 'asg_id' => decode_id($this->input->post('asg_id')),
                 'username' => decode_id($this->input->post('username'))
             );
-            if (isset($_POST['score'])) {
-                $params['score'] = $this->input->post('score');
-            }
-            if (isset($_POST['remark'])) {
-                $params['remark'] = $this->input->post('remark');
-            }
+            if (isset($_POST['score'])) $params['score'] = $this->input->post('score');
+            if (isset($_POST['remark'])) $params['remark'] = $this->input->post('remark');
             if (isset($_POST['score_id'])) {
                 if ( !empty($_POST['score_id']) ) {
                     $score_id = $this->input->post('score_id');
                 }
             }
             $current_user = $this->get_login_user();
-            if (!$score_id) 
-            {
-                $score_id = $this->Assignment_mark_model->create_peer_mark($current_user, $params);
-            }
-            else 
-            {
-                $this->Assignment_mark_model->update_peer_mark(decode_id($score_id), $current_user, $params);
-            }
+            empty($score_id)? 
+                ( $score_id = encode_id($this->Assignment_mark_model->create_peer_mark($current_user, $params)) ) :
+                ( $this->Assignment_mark_model->update_peer_mark(decode_id($score_id), $current_user, $params) ) ;
             $done = true;
             $http_code = 200;
         } while(0);
