@@ -57,16 +57,25 @@ function current_time() {
     return mdate("%Y-%m-%d %H:%i:%s",now());
 }
 
-function encode_id($id)
+function encode_id($id, $prefix="")
 {
     $key = hash(ID_HASH_METHOD, ID_SECERT_KEY);
     $iv = substr(hash(ID_HASH_METHOD, ID_SECERT_IV), 0, 16);
+    if (!empty($prefix)) {
+        $id = $prefix . $id ;
+    }
     return urlencode(base64_encode(openssl_encrypt($id, ID_ENCRYPT_METHOD, $key, 0, $iv)));
 }
 
-function decode_id($str)
+function decode_id($str, $prefix="")
 {
     $key = hash(ID_HASH_METHOD, ID_SECERT_KEY);
     $iv = substr(hash(ID_HASH_METHOD, ID_SECERT_IV), 0, 16);
-    return  openssl_decrypt(base64_decode($str), ID_ENCRYPT_METHOD, $key, 0, $iv);
+    $plain = openssl_decrypt(base64_decode($str), ID_ENCRYPT_METHOD, $key, 0, $iv);
+    if (!empty($prefix)) {
+        if (0 === strpos($plain, $prefix)) {
+            $plain = substr($plain, strlen($prefix));
+        }
+    }
+    return $plain;
 }

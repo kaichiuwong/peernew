@@ -256,4 +256,30 @@ class MY_PasController extends CI_Controller
     public function load_footer($data = array()) {
         $this->load->view('templates/'.$this->user_role.'-footer', $data);
     }
+
+    public function assignment_check($asg_id, $decode = true)
+    {
+        $check_result = false;
+        $asg_header = "";
+        $assignment_rst = array();
+        $decode_asg_id = $asg_id;
+        do {
+            if (empty($asg_id))  break;
+
+            if ($decode) {
+                $decode_asg_id = decode_id($asg_id);
+                if (empty($decode_asg_id)) break;
+            }
+
+            if (!$this->is_allow_view_asg($decode_asg_id))  break;
+
+            $assignment_rst = $this->Assignment_model->get_assignment($decode_asg_id);
+            if (!isset($assignment_rst['id'])) break;
+
+            $asg_header = $assignment_rst['unit_code'] . ' - ' . $assignment_rst['title'] ;
+            $check_result = true;
+        } while(0);
+
+        return array ("result" => $check_result, "decode_asg_id" => $decode_asg_id, "asg_header" => $asg_header, "asg_info" => $assignment_rst);
+    }
 }
