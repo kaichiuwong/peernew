@@ -39,9 +39,7 @@
                     <td><?php echo $a['topic_count']; ?></td>
                     <td><?php echo $a['student_count']; ?></td>
                     <td>
-                        <a href="<?php echo site_url('Marking/group/'.$a['asg_id']); ?>" class="btn btn-primary btn-sm">Group Score</a>
-                        <a href="<?php echo site_url('Marking/peer/'.$a['asg_id']); ?>" class="btn btn-primary btn-sm">Peer Score</a>
-                        <a href="<?php echo site_url('Marking/final_score/'.$a['asg_id']); ?>" class="btn btn-success btn-sm">Export Score</a>
+                        <a href="<?php echo site_url('Marking/group/'.encode_id($a['asg_id'])); ?>" class="btn btn-primary btn-sm">Select</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

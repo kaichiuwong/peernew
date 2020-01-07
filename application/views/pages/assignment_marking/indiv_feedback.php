@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1><?php echo $this->session->userdata('asg_header'); ?></h1>
+        <h1><?php echo $asg_header; ?></h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -28,9 +28,9 @@
       <!-- /.card-header -->
       <?php echo form_open('Marking/override_peer_mark/',array("class"=>"form-horizontal", "id"=>"remark_form")); ?>
       <div class="card-body">
-        <input type="hidden" id="remark_username" name="username" value="<?php echo $summary[0]['username']; ?>" />
-        <input type="hidden" id="remark_asg_id" name="asg_id" value="<?php echo $summary[0]['asg_id']; ?>" />
-        <input type="hidden" id="remark_score_id" name="score_id" value="<?php echo $summary[0]['override_score_id']; ?>" />
+        <input type="hidden" id="remark_username" name="username" value="<?php echo encode_id($summary[0]['username']); ?>" />
+        <input type="hidden" id="remark_asg_id" name="asg_id" value="<?php echo encode_id($summary[0]['asg_id']); ?>" />
+        <input type="hidden" id="remark_score_id" name="score_id" value="<?php echo encode_id($summary[0]['override_score_id']); ?>" />
         <div class="col-md-12">
             <textarea name="remark" id="remark" class="form-control textarea enable-editor" rows="5"><?php echo $summary[0]['override_score_remark']; ?></textarea>
         </div>

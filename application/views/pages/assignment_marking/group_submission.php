@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1><?php echo $this->session->userdata('asg_header'); ?></h1>
+        <h1><?php echo $asg_header; ?></h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -41,8 +41,9 @@
             <tbody>
                 <?php foreach($assignment_topics as $a){ ?>
                 <tr>
-                  <?php echo form_open('Marking/save_group_submission/',array("class"=>"form-horizontal grp_submission_mark", "data-grp-id" => $a['topic_id'], "id"=>"grp_submission_mark_".$a['topic_id'])); ?>
-                    <td><a href="javascript:void(0);" data-grp-name="<?php echo $a['topic']; ?>" data-href="<?php echo site_url('assignment_topic/topic_member/'.$a['topic_id']); ?>" class="group_info_open"><?php echo $a['topic']; ?></a></td>
+                  <?php $encode_topic_id = encode_id($a['topic_id']); ?>
+                  <?php echo form_open('Marking/save_group_submission/',array("class"=>"form-horizontal grp_submission_mark", "data-grp-id" => $encode_topic_id, "id"=>"grp_submission_mark_".$encode_topic_id)); ?>
+                    <td><a href="javascript:void(0);" data-grp-name="<?php echo $a['topic']; ?>" data-href="<?php echo site_url('Assignment/topic_member/'.$encode_topic_id); ?>" class="group_info_open"><?php echo $a['topic']; ?></a></td>
                     <?php if (empty($a['filename'])): ?>
                       <td class="text-muted">No Submission for this group</td>
                       <td></td>
@@ -56,17 +57,17 @@
                         <?php if (!empty($a['remark'])) : ?>
                             <span class="text-success" data-toggle="tooltip" data-placement="top" title="Feedbacks Provided"><i class="fas fa-comment-alt"></i></span>
                         <?php endif; ?>
-                        <span class='badge d-none' id="status_<?php echo $a['topic_id']; ?>"></span>
+                        <span class='badge d-none' id="status_<?php echo $encode_topic_id; ?>"></span>
                       </td>
                       <td>
-                        <input type="hidden" name="asg_id" value="<?php echo $asg_id;?>" id="asg_id_<?php echo $a['topic_id'];?>" required/>
-                        <input type="hidden" name="topic_id" value="<?php echo $a['topic_id'];?>" id="topic_id_<?php echo $a['topic_id'];?>" required/>
-                        <input type="hidden" name="score_id" value="<?php echo $a['score_id'];?>" id="score_id_<?php echo $a['topic_id'];?>" required/>
-                        <input type="number" min="0" step="1" name="score" value="<?php echo $a['score'];?>" class="form-control input-sm" id="score_<?php echo $a['topic_id'];?>" required />
+                        <input type="hidden" name="asg_id" value="<?php echo $asg_id;?>" id="asg_id_<?php echo $encode_topic_id;?>" required/>
+                        <input type="hidden" name="topic_id" value="<?php echo $encode_topic_id;?>" id="topic_id_<?php echo $encode_topic_id;?>" required/>
+                        <input type="hidden" name="score_id" value="<?php echo (empty($a['score_id']))?"": encode_id($a['score_id']);?>" id="score_id_<?php echo $encode_topic_id;?>" required/>
+                        <input type="number" min="0" step="1" name="score" value="<?php echo $a['score'];?>" class="form-control input-sm" id="score_<?php echo $encode_topic_id;?>" required />
                       </td>
                       <td>
-                        <button type="button" class="btn btn-primary btn-sm grp_submit_button" data-grp-id="<?php echo $a['topic_id']; ?>" id="submit_btn_<?php echo $a['topic_id']; ?>">Save</button> 
-                        <a href="<?php echo site_url('Marking/give_group_feedback/'.$asg_id.'/'.$a['topic_id']); ?>" class="btn btn-info btn-sm">Edit Group Feedback</a>
+                        <button type="button" class="btn btn-primary btn-sm grp_submit_button" data-grp-id="<?php echo $encode_topic_id; ?>" id="submit_btn_<?php echo $encode_topic_id; ?>">Save</button> 
+                        <a href="<?php echo site_url('Marking/give_group_feedback/'.$asg_id.'/'.$encode_topic_id); ?>" class="btn btn-info btn-sm">Edit Group Feedback</a>
                       </td>
                     <?php echo form_close(); ?>
                 </tr>

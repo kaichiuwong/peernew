@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1><?php echo $this->session->userdata('asg_header'); ?></h1>
+        <h1><?php echo $asg_header; ?></h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -28,9 +28,9 @@
       <!-- /.card-header -->
       <?php echo form_open('Marking/save_group_submission/',array("class"=>"form-horizontal", "id"=>"remark_form")); ?>
       <div class="card-body">
-        <input type="hidden" id="remark_asg_id" name="asg_id" value="<?php echo $summary[0]['asg_id']; ?>" />
-        <input type="hidden" id="remark_topic_id" name="topic_id" value="<?php echo $summary[0]['topic_id']; ?>" />
-        <input type="hidden" id="remark_score_id" name="score_id" value="<?php echo $summary[0]['score_id']; ?>" />
+        <input type="hidden" id="remark_asg_id" name="asg_id" value="<?php echo encode_id($summary[0]['asg_id']); ?>" />
+        <input type="hidden" id="remark_topic_id" name="topic_id" value="<?php echo encode_id($summary[0]['topic_id']); ?>" />
+        <input type="hidden" id="remark_score_id" name="score_id" value="<?php echo encode_id($summary[0]['score_id']); ?>" />
         <div class="col-md-12">
             <textarea name="remark" id="remark" class="form-control textarea enable-editor" rows="5"><?php echo $summary[0]['remark']; ?></textarea>
         </div>

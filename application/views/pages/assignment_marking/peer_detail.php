@@ -32,7 +32,7 @@
         <tbody>
             <?php foreach($summary as $a): ?>
             <tr>
-                <td><a href="<?php echo site_url('Member/full_profile/'.$a['username']); ?>"><?php echo $a['sid']; ?></a></td>
+                <td><a href="<?php echo site_url('Member/full_profile/'.encode_id($a['username'])); ?>"><?php echo $a['sid']; ?></a></td>
                 <td><?php echo $a['username']; ?></td>
                 <td><?php echo $a['first_name'] . ' ' . $a['last_name'] ; ?></td>
                 <?php if (empty($a['topic_id'])) : ?>
@@ -82,7 +82,7 @@
   <!-- /.card-header -->
   <div class="card-body">
     <?php foreach($assignment_topics_member as $member):  ?>
-        <?php if ($member['user_id'] != $username) :?>
+        <?php if (encode_id($member['user_id']) != $username) :?>
         <?php $feedback_sum[$member['user_id']] = 0; ?>
         <?php endif; ?>
     <?php endforeach; ?>
@@ -92,7 +92,7 @@
                 <th class="align-text-top">No.</th>
                 <th  class="align-text-top" style="width: 50%">Question</th>
                 <?php foreach($assignment_topics_member as $member) : ?>
-                <?php if ($member['user_id'] != $username) :?>
+                <?php if (encode_id($member['user_id']) != $username) :?>
                     <th class="align-text-top"><?php echo $member['first_name']; ?> <?php echo $member['last_name']; ?></th>
                 <?php endif; ?>
                 <?php endforeach; ?>
@@ -107,7 +107,7 @@
                 </td>
                 <td class="text-justify"><?php echo $a['question']; ?></td>
                 <?php foreach($assignment_topics_member as $member):  ?>
-                <?php if ($member['user_id'] != $username) :?>
+                <?php if (encode_id($member['user_id']) != $username) :?>
                     <?php $feedback = $assignment_questions_peer[$member['user_id']][$idx]['feedback']; ?>
                     <?php $feedback_id = $assignment_questions_peer[$member['user_id']][$idx]['id']; ?>
 
@@ -159,7 +159,7 @@
                 <td></td>
                 <td class="text-bold">Total</td>
                 <?php foreach($assignment_topics_member as $member): ?>
-                <?php if ($member['user_id'] != $username) :?>
+                <?php if (encode_id($member['user_id']) != $username) :?>
                     <td class="text-bold" id="sum_<?php echo $member['user_id']; ?>" class="sum sum-<?php echo $member['user_id']; ?>" user-name="<?php echo $member['user_id']; ?>"><?php echo  $feedback_sum[$member['user_id']]; ?></td>
                 <?php endif; ?>
                 <?php endforeach; ?>

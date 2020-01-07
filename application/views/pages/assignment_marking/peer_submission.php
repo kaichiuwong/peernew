@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1><?php echo $this->session->userdata('asg_header'); ?></h1>
+        <h1><?php echo $asg_header; ?></h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -45,7 +45,7 @@
                 <?php foreach($students as $a): ?>
                 <tr>
                   <?php echo form_open('Marking/override_peer_mark/',array("class"=>"form-horizontal peer_submission_mark", "data-username" => $a['username'], "id"=>"peer_submission_mark_".$a['username'])); ?>
-                    <td><a href="<?php echo site_url('Member/full_profile/'.$a['username']); ?>"><?php echo $a['sid']; ?></a></td>
+                    <td><a href="<?php echo site_url('Member/full_profile/'.encode_id($a['username'])); ?>"><?php echo $a['sid']; ?></a></td>
                     <td><?php echo $a['username']; ?></td>
                     <td><?php echo $a['first_name'] . ' ' . $a['last_name'] ; ?></td>
                     <?php if (empty($a['topic_id'])) : ?>
@@ -56,7 +56,7 @@
                       <td><?php echo $a['topic'] ; ?></td>
                       <td><?php echo sprintf("%.2f", $a['group_score']) ; ?></td>
                       <td>
-                        <a href="javascript:void(0);" data-username="<?php echo $a['username']; ?>" data-href="<?php echo site_url('Marking/peer_detail/'.$asg_id.'/'.$a['topic_id'].'/'.$a['username']); ?>" class="peer_mark_open"><?php echo sprintf("%.2f", $a['peer_average']) ; ?></a>
+                        <a href="javascript:void(0);" data-username="<?php echo $a['username']; ?>" data-href="<?php echo site_url('Marking/peer_detail/'.$asg_id.'/'.encode_id($a['topic_id']).'/'.encode_id($a['username'])); ?>" class="peer_mark_open"><?php echo sprintf("%.2f", $a['peer_average']) ; ?></a>
                       </td>
                     <?php endif; ?>
                     <td>
@@ -70,13 +70,13 @@
                     </td>
                     <td>
                       <input type="hidden" name="asg_id" value="<?php echo $asg_id;?>" id="asg_id_<?php echo $a['username'];?>" required/>
-                      <input type="hidden" name="score_id" value="<?php echo $a['override_score_id'];?>" id="score_id_<?php echo $a['username'];?>" required/>
-                      <input type="hidden" name="username" value="<?php echo $a['username'];?>" id="username_<?php echo $a['username'];?>" required/>
+                      <input type="hidden" name="score_id" value="<?php echo (empty($a['override_score_id']))?"":encode_id($a['override_score_id']) ;?>" id="score_id_<?php echo $a['username'];?>"/>
+                      <input type="hidden" name="username" value="<?php echo encode_id($a['username']);?>" id="username_<?php echo $a['username'];?>" required/>
                       <input type="number" min="0" step="1" name="score" value="<?php echo $a['override_score'];?>" class="form-control input-sm" id="score_<?php echo $a['username'];?>" required />
                     </td>
                     <td>
                       <button type="button" class="btn btn-primary btn-sm peer_submit_button" data-username="<?php echo $a['username']; ?>" id="submit_btn_<?php echo $a['username']; ?>">Save</button> 
-                      <a href="<?php echo site_url('Marking/give_indiv_feedback/'.$asg_id.'/'.$a['topic_id'].'/'.$a['username']); ?>" class="btn btn-info btn-sm">Provide Individual Feedback</a>
+                      <a href="<?php echo site_url('Marking/give_indiv_feedback/'.$asg_id.'/'.encode_id($a['topic_id']).'/'.encode_id($a['username'])); ?>" class="btn btn-info btn-sm">Provide Individual Feedback</a>
                     </td>
                   <?php echo form_close(); ?>
                 </tr>
