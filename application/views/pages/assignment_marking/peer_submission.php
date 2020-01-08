@@ -10,6 +10,7 @@
           <li class="breadcrumb-item"><a href="<?php echo site_url('Marking'); ?>">Assignment List</a></li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/group/'.$asg_id); ?>">Group Score</a></li>
           <li class="breadcrumb-item active">Peer Score</li>
+          <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/default_feedback/'.$asg_id); ?>">Default Feedbacks</a></li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/final_score/'.$asg_id); ?>">Export Score</a></li>
         </ol>
       </div>
@@ -76,7 +77,7 @@
                     </td>
                     <td>
                       <button type="button" class="btn btn-primary btn-sm peer_submit_button" data-username="<?php echo $a['username']; ?>" id="submit_btn_<?php echo $a['username']; ?>">Save</button> 
-                      <a href="<?php echo site_url('Marking/give_indiv_feedback/'.$asg_id.'/'.encode_id($a['topic_id']).'/'.encode_id($a['username'])); ?>" class="btn btn-info btn-sm">Provide Individual Feedback</a>
+                      <a href="<?php echo site_url('Marking/give_indiv_feedback/'.$asg_id.'/'.encode_id($a['topic_id']).'/'.encode_id($a['username'])); ?>" class="btn btn-info btn-sm">Customise Individual Feedback</a>
                     </td>
                   <?php echo form_close(); ?>
                 </tr>

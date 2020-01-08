@@ -86,4 +86,74 @@ class Assignment_feedback_model extends CI_Model
         return $this->db->delete('assignment_feedback',array('asg_id'=>$asg_id, 'question_section'=>$type));
     }
 
+    function get_assignment_default_feedbacks($asg_id)
+    {
+        $query = $this->db->query("select t.* from assignment_default_feedback t where t.asg_id=$asg_id order by section, threshold desc; ");
+        return $query->result_array();
+    }
+
+    function get_default_feedback($asg_id, $section, $score)
+    {
+        $query = $this->db->query("SELECT * FROM `assignment_default_feedback` where $score >= threshold and section='$section' and asg_id = $asg_id order by threshold desc limit 1; ");
+        return $query->row_array();
+    }
+
+    function add_assignment_default_feedback($params,$username)
+    {
+        $params['last_upd_by'] = $username;
+        $params['create_time'] = current_time();
+        $params['last_upd_time'] = current_time();
+        $this->db->insert('assignment_default_feedback',$params);
+        return $this->db->insert_id();
+    }
+
+    function update_assignment_default_feedback($id,$params)
+    {
+        $params['last_upd_by'] = $username;
+        $params['last_upd_time'] = current_time();
+        $this->db->where('id',$id);
+        return $this->db->update('assignment_default_feedback',$params);
+    }
+
+    function delete_assignment_default_feedback($id)
+    {
+        return $this->db->delete('assignment_default_feedback',array('id'=>$id));
+    }
+
+    function add_default_feedback($asg_id,$username) 
+    {
+        $default_section = array(
+            "GROUP" => "Group Default Feedbacks",
+            "PEER"=> "Individual Default Feedbacks",
+            "PEER_VARIANCE" => "Individual Variance Feedbacks"
+        );
+        $default_threshold_entry = array(
+            0 => null, 
+            50 => null, 
+            60 => null, 
+            70 => null, 
+            80 => null
+        );
+        $default_variance_entry = array(
+            0 => null,
+            20 => null
+        );
+
+        foreach ($default_section as $section) {
+            $a = $default_threshold_entry;
+            if ($section == "PEER_VARIANCE") 
+            {
+                $a = $default_variance_entry ;
+            }
+            foreach ($a as $key => $value) {
+                $params = array (
+                    "asg_id" => $asg_id,
+                    "section" => $section,
+                    "threshold" => $key,
+                    "feedback" => $value
+                );
+                $this->add_assignment_default_feedback($params, $username);
+            }
+        }
+    }
 }

@@ -33,6 +33,30 @@ class Marking extends MY_PasController {
         } while (0);
     }
 
+    function default_feedback($asg_id = null)
+    {
+        $done = false;
+        do 
+        {
+            if (!$this->check_permission(30) )  break ;
+            $asg_result = $this->assignment_check($asg_id);
+            if (!$asg_result['result']) break;
+            $decode_asg_id = $asg_result['decode_asg_id'];
+            $data['assignment'] = $asg_result['asg_info'];
+            $data['asg_header'] = $asg_result['asg_header'];
+            $data['asg_id'] = $asg_id;
+
+            $data['default_feedbacks'] = $this->Assignment_feedback_model->get_assignment_default_feedbacks($decode_asg_id);
+            $data['_view'] = 'pages/assignment_marking/default_feedback';
+            $this->load_header($data);
+            $this->load->view('templates/main',$data);
+            $this->load_footer($data);
+            $done = true;
+        } while(0);
+
+        if (!$done) redirect("Marking");
+    }
+
     function group($asg_id = null)
     {
         $done = false;

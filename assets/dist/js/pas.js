@@ -385,7 +385,7 @@ function enable_datepicker()
 function enable_editor() {
     if($(".enable-editor").length) {
         $(".enable-editor").summernote({
-            height: 300,
+            height: 200,
             toolbar: [
                 [ 'style', [ 'style' ] ],
                 [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],

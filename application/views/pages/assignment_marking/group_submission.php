@@ -10,6 +10,7 @@
           <li class="breadcrumb-item"><a href="<?php echo site_url('Marking'); ?>">Assignment List</a></li>
           <li class="breadcrumb-item active">Group Score</li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/peer/'.$asg_id); ?>">Peer Score</a></li>
+          <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/default_feedback/'.$asg_id); ?>">Default Feedbacks</a></li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/final_score/'.$asg_id); ?>">Export Score</a></li>
         </ol>
       </div>
@@ -67,7 +68,7 @@
                       </td>
                       <td>
                         <button type="button" class="btn btn-primary btn-sm grp_submit_button" data-grp-id="<?php echo $encode_topic_id; ?>" id="submit_btn_<?php echo $encode_topic_id; ?>">Save</button> 
-                        <a href="<?php echo site_url('Marking/give_group_feedback/'.$asg_id.'/'.$encode_topic_id); ?>" class="btn btn-info btn-sm">Edit Group Feedback</a>
+                        <a href="<?php echo site_url('Marking/give_group_feedback/'.$asg_id.'/'.$encode_topic_id); ?>" class="btn btn-info btn-sm">Customise Group Feedback</a>
                       </td>
                     <?php echo form_close(); ?>
                 </tr>

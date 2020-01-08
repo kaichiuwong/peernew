@@ -82,6 +82,9 @@ class Assignmentadmin extends MY_PasController {
 
                     $this->load->model('Assignment_date_model');
                     $this->Assignment_date_model->add_default($assignment_id, $this->get_login_user() );
+
+                    $this->load->model('Assignment_feedback_model');
+                    $this->Assignment_feedback_model->add_default_feedback($assignment_id, $this->get_login_user() );                    
                 }
                 redirect('Assignmentadmin/index');
             }

@@ -94,6 +94,7 @@ class Assignment_model extends CI_Model
         $this->db->delete('assignment_mark_criteria',array('asg_id'=>$id));
         $this->db->delete('assignment_question',array('asg_id'=>$id));
         $this->db->delete('assignment_topic_allocation',array('asg_id'=>$id));
+        $this->db->delete('assignment_default_feedback',array('asg_id'=>$id));
         $this->db->delete('assignment_topic',array('assign_id'=>$id));
         $this->db->delete('assignment',array('id'=>$id));
         return 0;
