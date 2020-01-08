@@ -254,10 +254,10 @@ class Assignment extends MY_PasController {
                                 );
                                 echo decode_id($feedback_id).' ,';
                                 if (!empty($feedback_id)) {
-                                    $this->assignment_feedback_model->update_assignment_feedback(decode_id($feedback_id), $params);
+                                    $this->Assignment_feedback_model->update_assignment_feedback(decode_id($feedback_id), $params);
                                 }
                                 else {
-                                    $this->assignment_feedback_model->add_assignment_feedback($params);
+                                    $this->Assignment_feedback_model->add_assignment_feedback($params);
                                 }
                             }
                         }
@@ -268,7 +268,7 @@ class Assignment extends MY_PasController {
                 $data['asg_id'] = $asg_id;
                 $data['topic_id'] = $topic_id;
                 $data['username'] = $this->get_login_user();
-                $data['assignment_questions_self'] = $this->assignment_feedback_model->get_question_with_feedback($decode_asg_id,$this->get_login_user(),$this->get_login_user(),'SELF');
+                $data['assignment_questions_self'] = $this->Assignment_feedback_model->get_question_with_feedback($decode_asg_id,$this->get_login_user(),$this->get_login_user(),'SELF');
                 $this->load->view('pages/assignment/self_feedback_form',$data);
             }
         } while(0);
@@ -310,10 +310,10 @@ class Assignment extends MY_PasController {
                                         "feedback" => $feedback
                                     );
                                     if (!empty($feedback_id)) {
-                                        $result = $this->assignment_feedback_model->update_assignment_feedback(decode_id($feedback_id), $params);
+                                        $result = $this->Assignment_feedback_model->update_assignment_feedback(decode_id($feedback_id), $params);
                                     }
                                     else {
-                                        $result = $this->assignment_feedback_model->add_assignment_feedback($params);
+                                        $result = $this->Assignment_feedback_model->add_assignment_feedback($params);
                                     } 
                                 }
                             }
@@ -328,7 +328,7 @@ class Assignment extends MY_PasController {
                 $data['username'] = $this->get_login_user();
                 $data['assignment_topics_member'] = $this->Assignment_topic_model->get_assignment_member(decode_id($topic_id));
                 foreach($data['assignment_topics_member'] as $member) {
-                    $data['assignment_questions_peer'][$member['user_id']] = $this->assignment_feedback_model->get_question_with_feedback($decode_asg_id,$this->get_login_user(),$member['user_id'],'PEER');
+                    $data['assignment_questions_peer'][$member['user_id']] = $this->Assignment_feedback_model->get_question_with_feedback($decode_asg_id,$this->get_login_user(),$member['user_id'],'PEER');
                 }
                 $this->load->view('pages/assignment/peer_feedback_form',$data);
             }

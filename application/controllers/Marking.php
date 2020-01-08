@@ -16,20 +16,21 @@ class Marking extends MY_PasController {
 
     function index() 
     {
-        if (!$this->check_permission(20) )  break ;
-
-        if ($this->check_permission(90, false)) 
-        {
-            $data['assignments'] = $this->Assignment_model->get_all_assignments();
-        }
-        else 
-        {
-            $data['assignments'] = $this->Assignment_model->get_all_assignments($this->get_login_user());
-        }
-        $data['_view'] = 'pages/assignment_marking/index';
-        $this->load_header($data);
-        $this->load->view('templates/main',$data);
-        $this->load_footer($data);
+        do {
+            if (!$this->check_permission(20) )  break ;
+            if ($this->check_permission(90, false)) 
+            {
+                $data['assignments'] = $this->Assignment_model->get_all_assignments();
+            }
+            else 
+            {
+                $data['assignments'] = $this->Assignment_model->get_all_assignments($this->get_login_user());
+            }
+            $data['_view'] = 'pages/assignment_marking/index';
+            $this->load_header($data);
+            $this->load->view('templates/main',$data);
+            $this->load_footer($data);
+        } while (0);
     }
 
     function group($asg_id = null)

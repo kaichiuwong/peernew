@@ -45,22 +45,24 @@
     <?php endif; ?>
     <?php if ($submission_hist) { $hist = $submission_hist[0]; ?>
     <h6 class="text-bold">Submitted Assignment</h6>
-    <table class="table table-sm table-head-fixed table-hover">
-        <thead>
-            <tr>
-                <th>File</th>
-                <th>Submitted by</th>
-                <th>Submission Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><i class="fas fa-file"></i> <a href="<?php echo base_url().$hist->filename; ?>" target="_blank"><?php echo basename($hist->filename); ?></a></td>
-                <td><i class="fas fa-user"></i> <?php echo $hist->user_id; ?></td>
-                <td><i class="fas fa-clock"></i> <?php echo $hist->submission_date; ?> <?php echo ( $hist->submission_date > $asg_deadline['date_value'] ) ? "<span class='badge badge-danger'>Late Submission</span>": ""; ?> </td>
-            </tr>                  
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-sm table-head-fixed table-hover">
+            <thead>
+                <tr>
+                    <th>File</th>
+                    <th>Submitted by</th>
+                    <th>Submission Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><i class="fas fa-file"></i> <a href="<?php echo base_url().$hist->filename; ?>" target="_blank"><?php echo basename($hist->filename); ?></a></td>
+                    <td><i class="fas fa-user"></i> <?php echo $hist->user_id; ?></td>
+                    <td><i class="fas fa-clock"></i> <?php echo $hist->submission_date; ?> <?php echo ( $hist->submission_date > $asg_deadline['date_value'] ) ? "<span class='badge badge-danger'>Late Submission</span>": ""; ?> </td>
+                </tr>                  
+            </tbody>
+        </table>
+    </div>
     <?php } ?>
     </div>
     <div class="tab-pane fade" id="history-info" role="tabpanel" aria-labelledby="history-info-tab">
