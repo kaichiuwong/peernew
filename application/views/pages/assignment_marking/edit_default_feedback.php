@@ -24,13 +24,11 @@
   <div class="col-12">
     <div class="card card-secondary">
       <div class="card-header">
-        <h3 class="card-title">Default Feedbacks</h3>
+        <h3 class="card-title">Edit Default Feedbacks</h3>
       </div>
       <!-- /.card-header -->
-        <div class="card-body table-responsive p-3">
-        <?php if ($enable_edit): ?>
-        <a href="<?php echo site_url('Marking/edit_default_feedback/'.$asg_id); ?>" class="btn btn-sm btn-primary">Edit Default Feedbacks</a>
-        <?php endif ;?>
+      <?php echo form_open('Marking/edit_default_feedback/'.$asg_id,array("class"=>"form-horizontal")); ?>
+      <div class="card-body table-responsive p-3">
         <?php $last_section = ""; ?>
         <?php foreach($default_feedbacks as $a): ?>
         <?php if ($last_section != $a['section']): ?>
@@ -42,17 +40,25 @@
                 <tr>
                     <td style="width: 100px;">
                       <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Default feedback for score more than this score">
-                        <input type="number" value="<?php echo $a['threshold'];?>" class="form-control input input-sm" disabled readonly />
+                        <input type="hidden" name="id[]" value="<?php echo $a['id'];?>" required/>
+                        <input type="hidden" name="asg_id" value="<?php echo $a['asg_id'];?>" required/>
+                        <input type="number" min="0" step="1" name="threshold_<?php echo $a['id'];?>" value="<?php echo $a['threshold'];?>" class="form-control input input-sm" required />
                       </span>
                     </td>
                     <td>
-                      <span><?php echo $a['feedback']; ?></span>
+                      <textarea name="feedback_<?php echo $a['id'];?>" class="enable-editor" readonly><?php echo $a['feedback']; ?></textarea>
                     </td>
                 </tr>
             </tbody>
         </table>
         <?php endforeach; ?>
-        </div>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        <button type="submit" class="btn btn-sm btn-primary">Save</button>
+        <a href="<?php echo site_url('Marking/default_feedback/'.$asg_id); ?>" class="btn btn-sm btn-secondary">Cancel</a>
+      </div>
+      <?php echo form_close(); ?>
     </div>
     <!-- /.card -->
   </div>

@@ -38,6 +38,34 @@ class Marking extends MY_PasController {
         $done = false;
         do 
         {
+            if (!$this->check_permission(20) )  break ;
+            $asg_result = $this->assignment_check($asg_id);
+            if (!$asg_result['result']) break;
+            $decode_asg_id = $asg_result['decode_asg_id'];
+            $data['assignment'] = $asg_result['asg_info'];
+            $data['asg_header'] = $asg_result['asg_header'];
+            $data['asg_id'] = $asg_id;
+
+            $data['enable_edit'] = false;
+            if ($this->check_permission(30,false) )  $data['enable_edit'] = true;
+
+            $data['default_feedbacks'] = $this->Assignment_feedback_model->get_assignment_default_feedbacks($decode_asg_id);
+            $data['_view'] = 'pages/assignment_marking/default_feedback';
+            $this->load_header($data);
+            $this->load->view('templates/main',$data);
+            $this->load_footer($data);
+            $done = true;
+
+            if (!$done) redirect("Marking");
+        } while(0);
+    }
+
+
+    function edit_default_feedback($asg_id = null)
+    {
+        $done = false;
+        do 
+        {
             if (!$this->check_permission(30) )  break ;
             $asg_result = $this->assignment_check($asg_id);
             if (!$asg_result['result']) break;
@@ -58,17 +86,18 @@ class Marking extends MY_PasController {
                         $this->Assignment_feedback_model->update_assignment_default_feedback($id, $this->get_login_user(), $post_data);
                     }
                 }
+                redirect('Marking/default_feedback/'.$asg_id);
             }
 
             $data['default_feedbacks'] = $this->Assignment_feedback_model->get_assignment_default_feedbacks($decode_asg_id);
-            $data['_view'] = 'pages/assignment_marking/default_feedback';
+            $data['_view'] = 'pages/assignment_marking/edit_default_feedback';
             $this->load_header($data);
             $this->load->view('templates/main',$data);
             $this->load_footer($data);
             $done = true;
-        } while(0);
 
-        if (!$done) redirect("Marking");
+            if (!$done) redirect("Marking");
+        } while(0);
     }
 
     function group($asg_id = null)
@@ -91,9 +120,9 @@ class Marking extends MY_PasController {
             $this->load->view('templates/main',$data);
             $this->load_footer($data);
             $done = true;
-        } while(0);
 
-        if (!$done) redirect("Marking");
+            if (!$done) redirect("Marking");
+        } while(0);
     }
 
     function peer($asg_id = null)
@@ -115,9 +144,9 @@ class Marking extends MY_PasController {
             $this->load->view('templates/main',$data);
             $this->load_footer($data);
             $done = true;
-        } while(0);
 
-        if (!$done) redirect("Marking");
+            if (!$done) redirect("Marking");
+        } while(0);
     }
 
 
@@ -140,9 +169,9 @@ class Marking extends MY_PasController {
             $this->load->view('templates/main',$data);
             $this->load_footer($data);
             $done = true;
-        } while(0);
 
-        if (!$done) redirect("Marking");
+            if (!$done) redirect("Marking");
+        } while(0);
     }
 
     function give_indiv_feedback($asg_id = null, $group_id = null, $username = null)
@@ -163,9 +192,10 @@ class Marking extends MY_PasController {
             $this->load_header($data);
             $this->load->view('templates/main',$data);
             $this->load_footer($data);
-        } while (0);
+            $done = true;
 
-        if (!$done) redirect("Marking");
+            if (!$done) redirect("Marking");
+        } while (0);
     }
 
     function give_group_feedback($asg_id = null, $group_id = null)
@@ -186,9 +216,10 @@ class Marking extends MY_PasController {
             $this->load_header($data);
             $this->load->view('templates/main',$data);
             $this->load_footer($data);
-        } while(0);
+            $done = true;
 
-        //if (!$done) redirect("Marking");
+            if (!$done) redirect("Marking");
+        } while(0);
     }
 
     function export_score($asg_id = null)
