@@ -27,7 +27,7 @@
         <h3 class="card-title">Default Feedbacks</h3>
       </div>
       <!-- /.card-header -->
-      <?php echo form_open('Marking/default_feedbacks/',array("class"=>"form-horizontal")); ?>
+      <?php echo form_open('Marking/default_feedback/'.$asg_id,array("class"=>"form-horizontal")); ?>
       <div class="card-body table-responsive p-3">
         <?php $last_section = ""; ?>
         <?php foreach($default_feedbacks as $a): ?>
@@ -39,8 +39,11 @@
             <tbody>
                 <tr>
                     <td style="width: 80px;">
-                      <input type="hidden" name="id[]" value="<?php echo $a['id'];?>" required/>
-                      <input type="number" min="0" step="1" name="threshold_<?php echo $a['id'];?>" value="<?php echo $a['threshold'];?>" class="form-control input input-sm" required />
+                      <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Default feedback for score more than this score">
+                        <input type="hidden" name="id[]" value="<?php echo $a['id'];?>" required/>
+                        <input type="hidden" name="asg_id" value="<?php echo $a['asg_id'];?>" required/>
+                        <input type="number" min="0" step="1" name="threshold_<?php echo $a['id'];?>" value="<?php echo $a['threshold'];?>" class="form-control input input-sm" required />
+                      </span>
                     </td>
                     <td>
                       <textarea name="feedback_<?php echo $a['id'];?>" class="enable-editor"><?php echo $a['feedback']; ?></textarea>

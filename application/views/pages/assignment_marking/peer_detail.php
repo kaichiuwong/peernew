@@ -11,7 +11,7 @@
   <div class="card-body">
     <div class="callout callout-success">
         <h5><b>Peer Score: </b>
-            <?php echo sprintf("%.2f", ($summary[0]['override_score'] != NULL)? $summary[0]['override_score']:$summary[0]['peer_average']) ; ?>
+            <?php echo sprintf("%.2f", $indiv_score) ; ?>
             <?php echo ($summary[0]['override_score'] != NULL)? "<small class='text-muted'><i>Overrided</i></small>":"" ; ?>
         </h5>
     </div>
@@ -53,16 +53,10 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    <?php if (!empty($summary[0]['group_remark'])): ?>
+    <?php if (!empty($feedback)): ?>
     <div class="callout callout-success">
-        <p><b>Group Feedback:</b></p>
-        <span><?php echo $summary[0]['group_remark']; ?></span>
-    </div>
-    <?php endif; ?>
-    <?php if (!empty($summary[0]['override_score_remark'])): ?>
-    <div class="callout callout-success">
-        <p><b>Individual Feedback:</b></p>
-        <span><?php echo $summary[0]['override_score_remark']; ?></span>
+        <p><b>Feedback:</b></p>
+        <span><?php echo $feedback; ?></span>
     </div>
     <?php endif; ?>
   </div>

@@ -107,7 +107,7 @@ class Assignment_feedback_model extends CI_Model
         return $this->db->insert_id();
     }
 
-    function update_assignment_default_feedback($id,$params)
+    function update_assignment_default_feedback($id,$username,$params)
     {
         $params['last_upd_by'] = $username;
         $params['last_upd_time'] = current_time();

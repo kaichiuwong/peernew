@@ -67,11 +67,15 @@ class Submission_model extends CI_Model
         $this->db->delete('submission',array('asg_id'=>$asg_id, 'user_id'=>$user_id));
     }
 
-    function get_group_submission($asg_id)
+    function get_group_submission($asg_id, $topic_id = null)
     {
         $query_str  = " select s.* ";
         $query_str .= " from sv_group_submission s ";
-        $query_str .= " where s.asg_id=$asg_id order by s.topic_id; ";
+        $query_str .= " where s.asg_id=$asg_id ";
+        if ($topic_id) {
+            $query_str .= " and s.topic_id='$topic_id' " ;
+        }
+        $query_str .= " order by s.topic_id; ";
         $query = $this->db->query($query_str);
         return $query->result_array();
     }

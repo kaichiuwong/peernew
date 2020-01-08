@@ -46,6 +46,20 @@ class Marking extends MY_PasController {
             $data['asg_header'] = $asg_result['asg_header'];
             $data['asg_id'] = $asg_id;
 
+            if (isset($_POST['asg_id']) && isset($_POST['id']))
+            {
+                $ids = $this->input->post('id');
+                foreach($ids as $id) {
+                    if (isset($_POST['threshold_'.$id]) && isset($_POST['feedback_'.$id])) {
+                        $post_data = array (
+                            "threshold" => $this->input->post('threshold_'.$id),
+                            "feedback" => $this->input->post('feedback_'.$id)
+                        );
+                        $this->Assignment_feedback_model->update_assignment_default_feedback($id, $this->get_login_user(), $post_data);
+                    }
+                }
+            }
+
             $data['default_feedbacks'] = $this->Assignment_feedback_model->get_assignment_default_feedbacks($decode_asg_id);
             $data['_view'] = 'pages/assignment_marking/default_feedback';
             $this->load_header($data);
@@ -142,9 +156,9 @@ class Marking extends MY_PasController {
             if (!$asg_result['result']) break;
             $decode_asg_id = $asg_result['decode_asg_id'];
             $data['asg_id'] = $asg_id;
-            $data['group_id'] = $group_id;
-            $data['username'] = $username;
-            $data['summary'] = $this->Submission_model->get_peer_review_summary($decode_asg_id,$username);
+            $data['username'] = decode_id($username);
+            $data['asg_header'] = $asg_result['asg_header'];
+            $data['summary'] = $this->Submission_model->get_peer_review_summary($decode_asg_id,decode_id($username));
             $data['_view'] = 'pages/assignment_marking/indiv_feedback';
             $this->load_header($data);
             $this->load->view('templates/main',$data);
@@ -165,15 +179,16 @@ class Marking extends MY_PasController {
             if (!$asg_result['result']) break;
             $decode_asg_id = $asg_result['decode_asg_id'];
             $data['asg_id'] = $asg_id;
-            $data['group_id'] = $group_id;
-            $data['summary'] = $this->Submission_model->get_group_submission($decode_asg_id);
+            $data['group_id'] = decode_id($group_id);
+            $data['asg_header'] = $asg_result['asg_header'];
+            $data['summary'] = $this->Submission_model->get_group_submission($decode_asg_id, decode_id($group_id));
             $data['_view'] = 'pages/assignment_marking/group_feedback';
             $this->load_header($data);
             $this->load->view('templates/main',$data);
             $this->load_footer($data);
         } while(0);
 
-        if (!$done) redirect("Marking");
+        //if (!$done) redirect("Marking");
     }
 
     function export_score($asg_id = null)
@@ -237,6 +252,21 @@ class Marking extends MY_PasController {
             $data['summary'] = $this->Submission_model->get_peer_review_summary($decode_asg_id,decode_id($username));
             $data['assignment_questions_self'] = $this->Assignment_feedback_model->get_question_with_feedback($decode_asg_id,decode_id($username),decode_id($username),'SELF');
             $data['assignment_topics_member'] = $this->Assignment_topic_model->get_assignment_member(decode_id($group_id));
+            $data['indiv_score'] = ($data['summary'][0]['override_score'] != NULL)? $data['summary'][0]['override_score']:$data['summary'][0]['peer_average'] ;
+            $data['indiv_var'] = $data['summary'][0]['peer_var'] ;
+            $data['group_score'] = $data['summary'][0]['group_score'] ;
+            $data['indiv_default_feedback'] = $this->Assignment_feedback_model->get_default_feedback($decode_asg_id, 'PEER', $data['indiv_score'])['feedback'];
+            $data['indiv_var_default_feedback'] = $this->Assignment_feedback_model->get_default_feedback($decode_asg_id, 'PEER_VARIANCE', $data['indiv_var'])['feedback'];
+            $data['indiv_custom_feedback'] = $data['summary'][0]['override_score_remark'] ;
+            $data['group_default_feedback'] = $this->Assignment_feedback_model->get_default_feedback($decode_asg_id, 'GROUP', $data['group_score'])['feedback'];
+            $data['group_custom_feedback'] = $data['summary'][0]['group_remark'] ;
+            $data['feedback'] = sprintf("%s %s %s %s %s", 
+                                   $data['group_default_feedback'],
+                                   $data['group_custom_feedback'],
+                                   $data['indiv_default_feedback'],
+                                   $data['indiv_var_default_feedback'],
+                                   $data['indiv_custom_feedback']
+                                );
             foreach($data['assignment_topics_member'] as $member) {
                 $data['assignment_questions_peer'][$member['user_id']] = $this->Assignment_feedback_model->get_question_with_feedback($decode_asg_id,$member['user_id'],decode_id($username),'PEER');
             }
