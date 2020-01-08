@@ -65,7 +65,7 @@
                           <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Large score variance between peers"><i class="fas fa-exclamation-triangle"></i></span>
                       <?php endif; ?>
                       <?php if (!empty($a['override_score_remark'])) : ?>
-                          <span class="text-success" data-toggle="tooltip" data-placement="top" title="Feedbacks Provided"><i class="fas fa-comment-alt"></i></span>
+                          <span class="text-success" data-toggle="tooltip" data-placement="top" title="Customised feedback Provided"><i class="fas fa-comment-alt"></i></span>
                       <?php endif; ?>
                       <span class='badge d-none' id="status_<?php echo $a['username']; ?>"></span>
                     </td>

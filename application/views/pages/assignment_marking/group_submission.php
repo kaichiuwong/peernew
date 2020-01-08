@@ -56,7 +56,7 @@
                     <?php endif; ?>
                       <td>
                         <?php if (!empty($a['remark'])) : ?>
-                            <span class="text-success" data-toggle="tooltip" data-placement="top" title="Feedbacks Provided"><i class="fas fa-comment-alt"></i></span>
+                            <span class="text-success" data-toggle="tooltip" data-placement="top" title="Customised feedback Provided"><i class="fas fa-comment-alt"></i></span>
                         <?php endif; ?>
                         <span class='badge d-none' id="status_<?php echo $encode_topic_id; ?>"></span>
                       </td>
