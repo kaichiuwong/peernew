@@ -13,7 +13,7 @@ class Assignment_date extends MY_PasController{
             if ($asg_id) {
                 $data['asg_id'] = $asg_id;
                 if ($this->check_permission(20)) {
-                    $data['_view'] = 'pages/Assignment_date/index';
+                    $data['_view'] = 'pages/assignment_date/index';
                     $data['Assignment_dates'] = $this->Assignment_date_model->get_all_dates_by_asg_id($asg_id);
                     $this->load_header($data);
                     $this->load->view('templates/main',$data);
@@ -45,7 +45,7 @@ class Assignment_date extends MY_PasController{
                 }
                 else
                 {
-                    $data['_view'] = 'pages/Assignment_date/edit';
+                    $data['_view'] = 'pages/assignment_date/edit';
                     $this->load_header($data);
                     $this->load->view('templates/main',$data);
                     $this->load_footer($data);
