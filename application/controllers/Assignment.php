@@ -78,6 +78,51 @@ class Assignment extends MY_PasController {
         if (!$done) redirect("Assignment");
     }
 
+    function feedback($asg_id = null)
+    {
+        $done = false;
+        do 
+        {
+            if (!$this->check_permission(10) ) break;
+            if (empty($asg_id)) break;
+            $asg_result = $this->assignment_check($asg_id);
+            if (!$asg_result['result']) break;
+            $decode_asg_id = $asg_result['decode_asg_id'];
+            $data['assignment'] = $asg_result['asg_info'];
+            $data['asg_header'] = $asg_result['asg_header'];
+            $username = $this->get_login_user();
+            $data['asg_id'] = $asg_id;
+            $data['username'] = $username;
+
+            $data['feedback_released'] = $this->Assignment_model->is_feedback_release($decode_asg_id);
+            if ($data['feedback_released']) {
+                $data['summary'] = $this->Submission_model->get_peer_review_summary($decode_asg_id,$username);
+                $data['indiv_score'] = ($data['summary'][0]['override_score'] != NULL)? $data['summary'][0]['override_score']:$data['summary'][0]['peer_average'] ;
+                $data['indiv_var'] = $data['summary'][0]['peer_var'] ;
+                $data['group_score'] = $data['summary'][0]['group_score'] ;
+                $data['indiv_default_feedback'] = ($data['indiv_score'] === null)?'':$this->Assignment_feedback_model->get_default_feedback($decode_asg_id, 'PEER', $data['indiv_score'])['feedback'];
+                $data['indiv_var_default_feedback'] = ($data['indiv_var'] === null)?'':$this->Assignment_feedback_model->get_default_feedback($decode_asg_id, 'PEER_VARIANCE', $data['indiv_var'])['feedback'];
+                $data['indiv_custom_feedback'] = $data['summary'][0]['override_score_remark'] ;
+                $data['group_default_feedback'] = ($data['group_score'] === null)?'':$this->Assignment_feedback_model->get_default_feedback($decode_asg_id, 'GROUP', $data['group_score'])['feedback'];
+                $data['group_custom_feedback'] = $data['summary'][0]['group_remark'] ;
+                $data['feedback'] = sprintf("%s %s %s %s %s", 
+                                    $data['group_default_feedback'],
+                                    $data['group_custom_feedback'],
+                                    $data['indiv_default_feedback'],
+                                    $data['indiv_var_default_feedback'],
+                                    $data['indiv_custom_feedback']
+                                    );
+            }
+            $data['_view'] = 'pages/assignment/feedback';
+            $this->load_header($data);
+            $this->load->view('templates/main',$data);
+            $this->load_footer($data);
+            $done = true;
+        } while(0);
+
+        if (!$done) redirect("Assignment");
+    }
+
     function submit($asg_id= null) 
     {
         $done = false;

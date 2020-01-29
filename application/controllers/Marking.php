@@ -222,6 +222,16 @@ class Marking extends MY_PasController {
         } while(0);
     }
 
+    function feedback_switch($asg_id)
+    {
+        if ($this->check_permission(30)) {
+            if (!empty($asg_id)) {
+                $this->Assignment_model->feedback_switch($asg_id);
+            }
+        }
+        redirect('Marking');
+    }
+
     function export_score($asg_id = null)
     {
         do 

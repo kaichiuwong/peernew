@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 25, 2020 at 04:50 PM
+-- Generation Time: Jan 29, 2020 at 10:34 PM
 -- Server version: 10.3.21-MariaDB
 -- PHP Version: 5.6.40
 
@@ -19,105 +19,6 @@ DROP DATABASE IF EXISTS `pas`;
 CREATE DATABASE IF NOT EXISTS `pas` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `pas`;
 
-DELIMITER $$
---
--- Procedures
---
-DROP PROCEDURE IF EXISTS `sp_get_all_peer_feedback`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_all_peer_feedback` (IN `asg_id` INT, IN `reviewee` VARCHAR(20))  BEGIN
-    SELECT aq.id as qid, aq.question_order, aq.question, aq.answer_type, aq.question_section, af.*
-      FROM assignment_question aq
-      LEFT JOIN assignment_feedback af ON aq.asg_id=af.asg_id and aq.id=af.question_id
-     WHERE aq.asg_id = asg_id and af.reviewee=reviewee and af.reviewer != af.reviewee ;
-END$$
-
-DROP PROCEDURE IF EXISTS `sp_get_peer_review`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_peer_review` (IN `username` VARCHAR(10), IN `qid` INT)  BEGIN
-select asg_id, reviewee, reviewer, total
-from sv_assignment_peer_sum
-where reviewee = username ; 
-END$$
-
-DROP PROCEDURE IF EXISTS `sp_get_question_feedback`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_question_feedback` (IN `asg_id` INT, IN `reviewer` VARCHAR(20), IN `reviewee` VARCHAR(20), IN `qtype` ENUM('SELF','PEER','GROUP'))  BEGIN
-    SELECT aq.id as qid, aq.question_order, aq.question, aq.answer_type, aq.question_section, af.*
-      FROM assignment_question aq
-      LEFT JOIN assignment_feedback af ON aq.asg_id=af.asg_id and aq.id=af.question_id and af.reviewer=reviewer and af.reviewee=reviewee
-     WHERE aq.asg_id = asg_id and aq.question_section=qtype ;
-END$$
-
-DROP PROCEDURE IF EXISTS `sp_get_student_assignment_list`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_student_assignment_list` (IN `username` VARCHAR(10))  BEGIN
-    SELECT a.*,fn_get_unit_code(a.unit_id) as unit
-    FROM   assignment a, unit_enrol ue
-    WHERE  a.unit_id = ue.unit_id
-    AND    ue.user_id = username ;
-END$$
-
---
--- Functions
---
-DROP FUNCTION IF EXISTS `fn_get_unit_code`$$
-CREATE DEFINER=`root`@`localhost` FUNCTION `fn_get_unit_code` (`unit_id` INT) RETURNS VARCHAR(20) CHARSET utf8 BEGIN
- DECLARE rtnstr VARCHAR(20);
- 
-  SELECT unit_code 
-  INTO   rtnstr
-  FROM   unit
-  WHERE  id=unit_id;
-  
-  RETURN rtnstr ;
-END$$
-
-DROP FUNCTION IF EXISTS `fn_is_allow_view_assignment`$$
-CREATE DEFINER=`root`@`localhost` FUNCTION `fn_is_allow_view_assignment` (`username` VARCHAR(10), `asg_id` INT) RETURNS INT(11) BEGIN
- DECLARE rtn_result INT DEFAULT 0;
- DECLARE temp_val INT DEFAULT 0;
-  
-  SELECT count(1)
-  INTO   temp_val
-  FROM   assignment a, unit_enrol ue
-  WHERE  a.unit_id = ue.unit_id
-  AND    ue.user_id = username
-  AND    a.id = asg_id  
-  AND    a.public = 1 ;
-  
-  SET    rtn_result = rtn_result + temp_val;
-  
-  SELECT count(1)
-  INTO   temp_val
-  FROM   assignment a, unit_staff us
-  WHERE  a.unit_id = us.unit_id
-  AND    us.username = username
-  AND    a.id = asg_id ;
-  
-  SET    rtn_result = rtn_result + temp_val;
-  
-  SELECT count(1)
-  INTO   temp_val
-  FROM   `user` u
-  WHERE  u.username = username
-  AND    u.permission_level >= 90;
-  
-  SET    rtn_result = rtn_result + temp_val;
-  
-  RETURN rtn_result ;
-END$$
-
-DROP FUNCTION IF EXISTS `fn_sem_short_desc`$$
-CREATE DEFINER=`root`@`localhost` FUNCTION `fn_sem_short_desc` (`in_sem` VARCHAR(10)) RETURNS VARCHAR(100) CHARSET utf8 BEGIN
- DECLARE rtnstr VARCHAR(100);
- 
-  SELECT short_description
-  INTO   rtnstr
-  FROM   semester
-  WHERE  sem=in_sem;
-  
-  RETURN rtnstr ;
-END$$
-
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -125,26 +26,26 @@ DELIMITER ;
 --
 
 DROP TABLE IF EXISTS `assignment`;
-CREATE TABLE IF NOT EXISTS `assignment` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `assignment` (
+  `id` int(11) NOT NULL,
   `title` varchar(500) DEFAULT NULL,
   `type` int(11) NOT NULL DEFAULT 0 COMMENT '0 - Indiv, 1 - Group',
   `outcome` mediumtext DEFAULT NULL,
   `scenario` mediumtext DEFAULT NULL,
   `unit_id` int(11) NOT NULL,
   `public` int(11) NOT NULL DEFAULT 0 COMMENT '0 - private, 1 - open to public',
+  `feedback` int(11) NOT NULL DEFAULT 0 COMMENT '0 - feedback does not release to student; 1- feedback release to student',
   `create_time` datetime NOT NULL,
-  `last_upd_time` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `assignment`
 --
 
-INSERT INTO `assignment` (`id`, `title`, `type`, `outcome`, `scenario`, `unit_id`, `public`, `create_time`, `last_upd_time`) VALUES
-(11, 'Group Assignment', 1, '<p>You <strike>should </strike>be <sup>careful </sup>for <span style=\"font-size: 24px;\"><b>the </b></span><a href=\"http://www.google.com\" target=\"_blank\"><b>following </b></a><sub>matrix</sub></p><table class=\"table table-bordered\"><tbody><tr><td>11</td><td>12</td><td>13</td></tr><tr><td>21</td><td>22</td><td>23</td></tr><tr><td>31</td><td>32</td><td>33</td></tr><tr><td>41</td><td>42</td><td>43</td></tr></tbody></table><p><br></p>', '<h3><span style=\"font-family: \" times=\"\" new=\"\" roman\";\"=\"\"><b><u>Nothing</u></b> happens<b><u> <span style=\"font-size: 36px;\">here</span></u></b></span></h3><p style=\"text-align: justify; line-height: 1;\"><span style=\"font-family: \" arial=\"\" black\";=\"\" font-size:=\"\" 18px;\"=\"\">﻿</span><span style=\"font-size: 18px;\">﻿This is a <u>test </u>with <b>multiple </b>format.</span></p>', 7, 1, '2019-12-07 21:30:49', '2019-12-21 21:36:38'),
-(19, 'Requirement Analysis', 1, '', '', 9, 0, '2019-12-31 00:32:33', '2019-12-31 00:32:33');
+INSERT INTO `assignment` (`id`, `title`, `type`, `outcome`, `scenario`, `unit_id`, `public`, `feedback`, `create_time`, `last_upd_time`) VALUES
+(11, 'Group Assignment', 1, '<p>You <strike>should </strike>be <sup>careful </sup>for <span style=\"font-size: 24px;\"><b>the </b></span><a href=\"http://www.google.com\" target=\"_blank\"><b>following </b></a><sub>matrix</sub></p><table class=\"table table-bordered\"><tbody><tr><td>11</td><td>12</td><td>13</td></tr><tr><td>21</td><td>22</td><td>23</td></tr><tr><td>31</td><td>32</td><td>33</td></tr><tr><td>41</td><td>42</td><td>43</td></tr></tbody></table><p><br></p>', '<h3><span style=\"font-family: \" times=\"\" new=\"\" roman\";\"=\"\"><b><u>Nothing</u></b> happens<b><u> <span style=\"font-size: 36px;\">here</span></u></b></span></h3><p style=\"text-align: justify; line-height: 1;\"><span style=\"font-family: \" arial=\"\" black\";=\"\" font-size:=\"\" 18px;\"=\"\">﻿</span><span style=\"font-size: 18px;\">﻿This is a <u>test </u>with <b>multiple </b>format.</span></p>', 7, 1, 0, '2019-12-07 21:30:49', '2019-12-21 21:36:38'),
+(19, 'Requirement Analysis', 1, '', '', 9, 0, 0, '2019-12-31 00:32:33', '2019-12-31 00:32:33');
 
 -- --------------------------------------------------------
 
@@ -153,18 +54,16 @@ INSERT INTO `assignment` (`id`, `title`, `type`, `outcome`, `scenario`, `unit_id
 --
 
 DROP TABLE IF EXISTS `assignment_date`;
-CREATE TABLE IF NOT EXISTS `assignment_date` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `assignment_date` (
+  `id` int(11) NOT NULL,
   `asg_id` int(11) NOT NULL,
   `key` varchar(200) NOT NULL,
   `description` varchar(500) DEFAULT NULL,
   `date_value` datetime DEFAULT NULL,
   `last_upd_by` varchar(50) NOT NULL,
   `create_time` datetime NOT NULL,
-  `last_upd_time` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `asg_id` (`asg_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `assignment_date`
@@ -201,8 +100,8 @@ INSERT INTO `assignment_date` (`id`, `asg_id`, `key`, `description`, `date_value
 --
 
 DROP TABLE IF EXISTS `assignment_default_feedback`;
-CREATE TABLE IF NOT EXISTS `assignment_default_feedback` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `assignment_default_feedback` (
+  `id` int(11) NOT NULL,
   `asg_id` int(11) NOT NULL,
   `section` varchar(50) NOT NULL,
   `section_desc` text DEFAULT NULL,
@@ -210,10 +109,8 @@ CREATE TABLE IF NOT EXISTS `assignment_default_feedback` (
   `feedback` text DEFAULT NULL,
   `last_upd_by` varchar(20) NOT NULL,
   `create_time` datetime NOT NULL,
-  `last_upd_time` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `asg_id` (`asg_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `assignment_default_feedback`
@@ -252,43 +149,38 @@ INSERT INTO `assignment_default_feedback` (`id`, `asg_id`, `section`, `section_d
 --
 
 DROP TABLE IF EXISTS `assignment_feedback`;
-CREATE TABLE IF NOT EXISTS `assignment_feedback` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `assignment_feedback` (
+  `id` int(11) NOT NULL,
   `asg_id` int(11) NOT NULL,
   `question_id` int(11) NOT NULL,
   `reviewer` varchar(20) NOT NULL,
   `reviewee` varchar(20) NOT NULL,
   `feedback` text DEFAULT NULL,
   `create_time` datetime NOT NULL,
-  `last_upd_time` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `asg_id` (`asg_id`),
-  KEY `question_id` (`question_id`),
-  KEY `reviewer` (`reviewer`),
-  KEY `reviewee` (`reviewee`)
-) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8;
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `assignment_feedback`
 --
 
 INSERT INTO `assignment_feedback` (`id`, `asg_id`, `question_id`, `reviewer`, `reviewee`, `feedback`, `create_time`, `last_upd_time`) VALUES
-(21, 11, 32, 'user1', 'user2', '0', '2019-12-16 01:29:16', '2020-01-07 18:29:01'),
-(22, 11, 33, 'user1', 'user2', '0', '2019-12-16 01:29:27', '2020-01-07 18:29:01'),
-(23, 11, 35, 'user1', 'user2', '0', '2019-12-16 01:38:34', '2020-01-07 18:29:01'),
-(24, 11, 34, 'user1', 'user2', '0', '2019-12-16 01:38:45', '2020-01-07 18:29:01'),
-(25, 11, 26, 'user1', 'user3', '3', '2019-12-16 02:08:54', '2020-01-07 18:29:00'),
-(26, 11, 27, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2020-01-07 18:29:00'),
-(27, 11, 28, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2020-01-07 18:29:01'),
-(28, 11, 29, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2020-01-07 18:29:01'),
-(29, 11, 30, 'user1', 'user3', '1', '2019-12-16 02:08:54', '2020-01-07 18:29:01'),
-(30, 11, 31, 'user1', 'user3', '2', '2019-12-16 02:08:54', '2020-01-07 18:29:01'),
-(31, 11, 32, 'user1', 'user3', '3', '2019-12-16 02:08:54', '2020-01-07 18:29:01'),
-(32, 11, 33, 'user1', 'user3', '3', '2019-12-16 02:08:54', '2020-01-07 18:29:01'),
-(33, 11, 34, 'user1', 'user3', '0', '2019-12-16 02:08:54', '2020-01-07 18:29:01'),
-(34, 11, 35, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2020-01-07 18:29:01'),
-(35, 11, 36, 'user1', 'user2', 'Free Rider, i don\'t give him a mark.', '2019-12-16 02:08:54', '2020-01-07 18:29:01'),
-(36, 11, 36, 'user1', 'user3', 'Nice teammate', '2019-12-16 02:08:54', '2020-01-07 18:29:01'),
+(21, 11, 32, 'user1', 'user2', '0', '2019-12-16 01:29:16', '2020-01-30 01:03:30'),
+(22, 11, 33, 'user1', 'user2', '0', '2019-12-16 01:29:27', '2020-01-30 01:03:30'),
+(23, 11, 35, 'user1', 'user2', '0', '2019-12-16 01:38:34', '2020-01-30 01:03:30'),
+(24, 11, 34, 'user1', 'user2', '0', '2019-12-16 01:38:45', '2020-01-30 01:03:30'),
+(25, 11, 26, 'user1', 'user3', '3', '2019-12-16 02:08:54', '2020-01-30 01:03:30'),
+(26, 11, 27, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2020-01-30 01:03:30'),
+(27, 11, 28, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2020-01-30 01:03:30'),
+(28, 11, 29, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2020-01-30 01:03:30'),
+(29, 11, 30, 'user1', 'user3', '1', '2019-12-16 02:08:54', '2020-01-30 01:03:30'),
+(30, 11, 31, 'user1', 'user3', '2', '2019-12-16 02:08:54', '2020-01-30 01:03:30'),
+(31, 11, 32, 'user1', 'user3', '3', '2019-12-16 02:08:54', '2020-01-30 01:03:30'),
+(32, 11, 33, 'user1', 'user3', '3', '2019-12-16 02:08:54', '2020-01-30 01:03:30'),
+(33, 11, 34, 'user1', 'user3', '0', '2019-12-16 02:08:54', '2020-01-30 01:03:30'),
+(34, 11, 35, 'user1', 'user3', '4', '2019-12-16 02:08:54', '2020-01-30 01:03:30'),
+(35, 11, 36, 'user1', 'user2', 'Free Rider, i don\'t give him a mark.', '2019-12-16 02:08:54', '2020-01-30 01:03:30'),
+(36, 11, 36, 'user1', 'user3', 'Nice teammate', '2019-12-16 02:08:54', '2020-01-30 01:03:30'),
 (37, 11, 26, 'user2', 'user1', '3', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
 (38, 11, 26, 'user2', 'user3', '4', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
 (39, 11, 27, 'user2', 'user1', '3', '2019-12-16 02:30:08', '2019-12-16 02:30:08'),
@@ -406,51 +298,53 @@ INSERT INTO `assignment_feedback` (`id`, `asg_id`, `question_id`, `reviewer`, `r
 (151, 11, 36, 'user28', 'user136', 'N/A', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
 (152, 11, 36, 'user28', 'user2', 'I cannot see him to join our meetings', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
 (153, 11, 36, 'user28', 'user3', 'Good teammate', '2019-12-31 00:05:03', '2019-12-31 00:05:03'),
-(155, 11, 26, 'user1', 'user103', '3', '2020-01-06 17:55:53', '2020-01-07 18:29:00'),
-(156, 11, 26, 'user1', 'user136', '4', '2020-01-06 17:57:08', '2020-01-07 18:29:00'),
-(157, 11, 26, 'user1', 'user28', '3', '2020-01-06 17:57:08', '2020-01-07 18:29:00'),
-(158, 11, 36, 'user1', 'user103', 'Testing', '2020-01-06 17:57:08', '2020-01-07 18:29:01'),
-(159, 11, 36, 'user1', 'user136', 'Good player', '2020-01-06 17:57:08', '2020-01-07 18:29:01'),
-(160, 11, 27, 'user1', 'user103', '3', '2020-01-06 17:57:52', '2020-01-07 18:29:00'),
-(161, 11, 27, 'user1', 'user136', '3', '2020-01-06 17:57:52', '2020-01-07 18:29:00'),
-(162, 11, 28, 'user1', 'user103', '4', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(163, 11, 28, 'user1', 'user136', '3', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(164, 11, 29, 'user1', 'user103', '3', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(165, 11, 29, 'user1', 'user136', '3', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(166, 11, 30, 'user1', 'user103', '4', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(167, 11, 30, 'user1', 'user136', '4', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(168, 11, 31, 'user1', 'user103', '4', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(169, 11, 31, 'user1', 'user136', '3', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(170, 11, 32, 'user1', 'user103', '4', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(171, 11, 32, 'user1', 'user136', '3', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(172, 11, 33, 'user1', 'user103', '4', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(173, 11, 33, 'user1', 'user136', '4', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(174, 11, 34, 'user1', 'user103', '4', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(175, 11, 34, 'user1', 'user136', '3', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(176, 11, 35, 'user1', 'user103', '4', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(177, 11, 35, 'user1', 'user136', '4', '2020-01-06 17:57:52', '2020-01-07 18:29:01'),
-(178, 11, 27, 'user1', 'user28', '4', '2020-01-06 17:58:12', '2020-01-07 18:29:00'),
-(179, 11, 28, 'user1', 'user28', '3', '2020-01-06 17:58:12', '2020-01-07 18:29:01'),
-(180, 11, 29, 'user1', 'user28', '4', '2020-01-06 17:58:12', '2020-01-07 18:29:01'),
-(181, 11, 30, 'user1', 'user28', '3', '2020-01-06 17:58:12', '2020-01-07 18:29:01'),
-(182, 11, 31, 'user1', 'user28', '2', '2020-01-06 17:58:12', '2020-01-07 18:29:01'),
-(183, 11, 32, 'user1', 'user28', '4', '2020-01-06 17:58:12', '2020-01-07 18:29:01'),
-(184, 11, 33, 'user1', 'user28', '4', '2020-01-06 17:58:12', '2020-01-07 18:29:01'),
-(185, 11, 34, 'user1', 'user28', '2', '2020-01-06 17:58:12', '2020-01-07 18:29:01'),
-(186, 11, 35, 'user1', 'user28', '2', '2020-01-06 17:58:12', '2020-01-07 18:29:01'),
-(187, 11, 11, 'user1', 'user1', 'sadsafd', '2020-01-06 18:30:39', '2020-01-07 18:29:27'),
-(188, 11, 12, 'user1', 'user1', 'dsfd', '2020-01-06 18:30:39', '2020-01-07 18:29:27'),
-(189, 11, 13, 'user1', 'user1', '34535', '2020-01-06 18:30:48', '2020-01-07 18:29:27'),
-(190, 11, 14, 'user1', 'user1', '<html></html>*&%$^&* test', '2020-01-06 18:31:06', '2020-01-07 18:29:27'),
-(191, 11, 15, 'user1', 'user1', '609889', '2020-01-06 18:32:22', '2020-01-07 18:29:27'),
-(192, 11, 26, 'user1', 'user2', '1', '2020-01-06 18:36:15', '2020-01-07 18:29:00'),
-(193, 11, 27, 'user1', 'user2', '0', '2020-01-06 18:36:15', '2020-01-07 18:29:00'),
-(194, 11, 28, 'user1', 'user2', '0', '2020-01-06 18:36:15', '2020-01-07 18:29:01'),
-(195, 11, 29, 'user1', 'user2', '1', '2020-01-06 18:36:15', '2020-01-07 18:29:01'),
-(196, 11, 30, 'user1', 'user2', '0', '2020-01-06 18:36:15', '2020-01-07 18:29:01'),
-(197, 11, 31, 'user1', 'user2', '0', '2020-01-06 18:36:15', '2020-01-07 18:29:01'),
-(198, 11, 16, 'user1', 'user1', 'a test', '2020-01-06 18:36:49', '2020-01-07 18:29:27'),
-(199, 11, 17, 'user1', 'user1', 'hello world', '2020-01-07 18:28:52', '2020-01-07 18:29:27');
+(155, 11, 26, 'user1', 'user103', '3', '2020-01-06 17:55:53', '2020-01-30 01:03:30'),
+(156, 11, 26, 'user1', 'user136', '4', '2020-01-06 17:57:08', '2020-01-30 01:03:30'),
+(157, 11, 26, 'user1', 'user28', '3', '2020-01-06 17:57:08', '2020-01-30 01:03:30'),
+(158, 11, 36, 'user1', 'user103', 'Testing', '2020-01-06 17:57:08', '2020-01-30 01:03:30'),
+(159, 11, 36, 'user1', 'user136', 'Good player', '2020-01-06 17:57:08', '2020-01-30 01:03:30'),
+(160, 11, 27, 'user1', 'user103', '3', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(161, 11, 27, 'user1', 'user136', '3', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(162, 11, 28, 'user1', 'user103', '4', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(163, 11, 28, 'user1', 'user136', '3', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(164, 11, 29, 'user1', 'user103', '3', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(165, 11, 29, 'user1', 'user136', '3', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(166, 11, 30, 'user1', 'user103', '4', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(167, 11, 30, 'user1', 'user136', '4', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(168, 11, 31, 'user1', 'user103', '4', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(169, 11, 31, 'user1', 'user136', '3', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(170, 11, 32, 'user1', 'user103', '4', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(171, 11, 32, 'user1', 'user136', '3', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(172, 11, 33, 'user1', 'user103', '4', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(173, 11, 33, 'user1', 'user136', '4', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(174, 11, 34, 'user1', 'user103', '4', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(175, 11, 34, 'user1', 'user136', '3', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(176, 11, 35, 'user1', 'user103', '4', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(177, 11, 35, 'user1', 'user136', '4', '2020-01-06 17:57:52', '2020-01-30 01:03:30'),
+(178, 11, 27, 'user1', 'user28', '4', '2020-01-06 17:58:12', '2020-01-30 01:03:30'),
+(179, 11, 28, 'user1', 'user28', '3', '2020-01-06 17:58:12', '2020-01-30 01:03:30'),
+(180, 11, 29, 'user1', 'user28', '4', '2020-01-06 17:58:12', '2020-01-30 01:03:30'),
+(181, 11, 30, 'user1', 'user28', '3', '2020-01-06 17:58:12', '2020-01-30 01:03:30'),
+(182, 11, 31, 'user1', 'user28', '2', '2020-01-06 17:58:12', '2020-01-30 01:03:30'),
+(183, 11, 32, 'user1', 'user28', '4', '2020-01-06 17:58:12', '2020-01-30 01:03:30'),
+(184, 11, 33, 'user1', 'user28', '4', '2020-01-06 17:58:12', '2020-01-30 01:03:30'),
+(185, 11, 34, 'user1', 'user28', '2', '2020-01-06 17:58:12', '2020-01-30 01:03:30'),
+(186, 11, 35, 'user1', 'user28', '2', '2020-01-06 17:58:12', '2020-01-30 01:03:30'),
+(187, 11, 11, 'user1', 'user1', 'sadsafd', '2020-01-06 18:30:39', '2020-01-30 01:03:19'),
+(188, 11, 12, 'user1', 'user1', 'dsfd', '2020-01-06 18:30:39', '2020-01-30 01:03:19'),
+(189, 11, 13, 'user1', 'user1', '34535', '2020-01-06 18:30:48', '2020-01-30 01:03:19'),
+(190, 11, 14, 'user1', 'user1', '<html></html>*&%$^&* test', '2020-01-06 18:31:06', '2020-01-30 01:03:19'),
+(191, 11, 15, 'user1', 'user1', '609889', '2020-01-06 18:32:22', '2020-01-30 01:03:19'),
+(192, 11, 26, 'user1', 'user2', '1', '2020-01-06 18:36:15', '2020-01-30 01:03:30'),
+(193, 11, 27, 'user1', 'user2', '0', '2020-01-06 18:36:15', '2020-01-30 01:03:30'),
+(194, 11, 28, 'user1', 'user2', '0', '2020-01-06 18:36:15', '2020-01-30 01:03:30'),
+(195, 11, 29, 'user1', 'user2', '1', '2020-01-06 18:36:15', '2020-01-30 01:03:30'),
+(196, 11, 30, 'user1', 'user2', '0', '2020-01-06 18:36:15', '2020-01-30 01:03:30'),
+(197, 11, 31, 'user1', 'user2', '0', '2020-01-06 18:36:15', '2020-01-30 01:03:30'),
+(198, 11, 16, 'user1', 'user1', 'a test', '2020-01-06 18:36:49', '2020-01-30 01:03:19'),
+(199, 11, 17, 'user1', 'user1', 'hello world', '2020-01-07 18:28:52', '2020-01-30 01:03:19'),
+(200, 11, 18, 'user1', 'user1', 'test', '2020-01-30 01:03:19', '2020-01-30 01:03:19'),
+(201, 11, 36, 'user1', 'user28', 'Good teammate', '2020-01-30 01:03:30', '2020-01-30 01:03:30');
 
 -- --------------------------------------------------------
 
@@ -459,17 +353,16 @@ INSERT INTO `assignment_feedback` (`id`, `asg_id`, `question_id`, `reviewer`, `r
 --
 
 DROP TABLE IF EXISTS `assignment_group_mark`;
-CREATE TABLE IF NOT EXISTS `assignment_group_mark` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `assignment_group_mark` (
+  `id` int(11) NOT NULL,
   `asg_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
   `score` decimal(10,2) DEFAULT NULL,
   `remark` text DEFAULT NULL,
   `last_upd_by` varchar(10) NOT NULL,
   `create_time` datetime NOT NULL,
-  `last_upd_time` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `assignment_group_mark`
@@ -490,8 +383,8 @@ INSERT INTO `assignment_group_mark` (`id`, `asg_id`, `group_id`, `score`, `remar
 --
 
 DROP TABLE IF EXISTS `assignment_mark_criteria`;
-CREATE TABLE IF NOT EXISTS `assignment_mark_criteria` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `assignment_mark_criteria` (
+  `id` int(11) NOT NULL,
   `asg_id` int(11) NOT NULL,
   `weight` int(11) NOT NULL,
   `type` int(11) NOT NULL DEFAULT 0 COMMENT '0 - Assignment, 1- feedback',
@@ -502,10 +395,8 @@ CREATE TABLE IF NOT EXISTS `assignment_mark_criteria` (
   `pp` mediumtext DEFAULT NULL,
   `nn` mediumtext DEFAULT NULL,
   `create_date` datetime NOT NULL,
-  `last_upd_time` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `asg_id` (`asg_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -514,19 +405,16 @@ CREATE TABLE IF NOT EXISTS `assignment_mark_criteria` (
 --
 
 DROP TABLE IF EXISTS `assignment_peer_mark`;
-CREATE TABLE IF NOT EXISTS `assignment_peer_mark` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `assignment_peer_mark` (
+  `id` int(11) NOT NULL,
   `asg_id` int(11) NOT NULL,
   `score` decimal(13,2) DEFAULT NULL,
   `username` varchar(10) NOT NULL,
   `remark` text DEFAULT NULL,
   `last_upd_by` varchar(10) NOT NULL,
   `create_time` datetime NOT NULL,
-  `last_upd_time` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `asg_id` (`asg_id`),
-  KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `assignment_peer_mark`
@@ -548,18 +436,16 @@ INSERT INTO `assignment_peer_mark` (`id`, `asg_id`, `score`, `username`, `remark
 --
 
 DROP TABLE IF EXISTS `assignment_question`;
-CREATE TABLE IF NOT EXISTS `assignment_question` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `assignment_question` (
+  `id` int(11) NOT NULL,
   `asg_id` int(11) NOT NULL,
   `question_order` int(11) NOT NULL DEFAULT 0,
   `question` mediumtext DEFAULT NULL,
   `answer_type` enum('TEXT','SCALE','SCORE','GRADE') NOT NULL DEFAULT 'TEXT',
   `question_section` enum('SELF','PEER','GROUP') NOT NULL DEFAULT 'SELF',
   `create_time` datetime NOT NULL,
-  `last_upd_time` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `asg_id` (`asg_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `assignment_question`
@@ -595,17 +481,15 @@ INSERT INTO `assignment_question` (`id`, `asg_id`, `question_order`, `question`,
 --
 
 DROP TABLE IF EXISTS `assignment_topic`;
-CREATE TABLE IF NOT EXISTS `assignment_topic` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `assignment_topic` (
+  `id` int(11) NOT NULL,
   `assign_id` int(11) NOT NULL,
   `topic` varchar(500) DEFAULT NULL,
   `topic_desc` mediumtext DEFAULT NULL,
   `max` int(11) NOT NULL DEFAULT 0,
   `create_time` datetime NOT NULL,
-  `last_upd_time` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `assign_id` (`assign_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=998 DEFAULT CHARSET=utf8;
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `assignment_topic`
@@ -860,18 +744,14 @@ INSERT INTO `assignment_topic` (`id`, `assign_id`, `topic`, `topic_desc`, `max`,
 --
 
 DROP TABLE IF EXISTS `assignment_topic_allocation`;
-CREATE TABLE IF NOT EXISTS `assignment_topic_allocation` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `assignment_topic_allocation` (
+  `id` int(11) NOT NULL,
   `asg_id` int(11) NOT NULL,
   `user_id` varchar(20) NOT NULL,
   `topic_id` int(11) NOT NULL,
   `create_time` datetime NOT NULL,
-  `last_upd_time` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `asg_id` (`asg_id`),
-  KEY `user_id` (`user_id`),
-  KEY `topic_id` (`topic_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=283 DEFAULT CHARSET=utf8;
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `assignment_topic_allocation`
@@ -895,11 +775,10 @@ INSERT INTO `assignment_topic_allocation` (`id`, `asg_id`, `user_id`, `topic_id`
 --
 
 DROP TABLE IF EXISTS `semester`;
-CREATE TABLE IF NOT EXISTS `semester` (
+CREATE TABLE `semester` (
   `sem` varchar(10) NOT NULL,
   `short_description` varchar(100) DEFAULT NULL,
-  `description` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`sem`)
+  `description` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -917,18 +796,14 @@ INSERT INTO `semester` (`sem`, `short_description`, `description`) VALUES
 --
 
 DROP TABLE IF EXISTS `submission`;
-CREATE TABLE IF NOT EXISTS `submission` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `submission` (
+  `id` int(11) NOT NULL,
   `asg_id` int(11) NOT NULL,
   `topic_id` int(11) NOT NULL,
   `user_id` varchar(10) NOT NULL,
   `filename` varchar(1000) NOT NULL,
-  `submission_date` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `asg_id` (`asg_id`),
-  KEY `user_id` (`user_id`),
-  KEY `topic_id` (`topic_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+  `submission_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `submission`
@@ -975,7 +850,7 @@ DELIMITER ;
 --
 
 DROP TABLE IF EXISTS `submission_log`;
-CREATE TABLE IF NOT EXISTS `submission_log` (
+CREATE TABLE `submission_log` (
   `id` int(11) NOT NULL,
   `asg_id` int(11) NOT NULL,
   `topic_id` int(11) NOT NULL,
@@ -983,8 +858,7 @@ CREATE TABLE IF NOT EXISTS `submission_log` (
   `filename` varchar(1000) NOT NULL,
   `submission_date` datetime NOT NULL,
   `action` varchar(10) NOT NULL,
-  `action_date` datetime NOT NULL,
-  KEY `asg_id` (`asg_id`,`user_id`)
+  `action_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1010,7 +884,7 @@ INSERT INTO `submission_log` (`id`, `asg_id`, `topic_id`, `user_id`, `filename`,
 -- (See below for the actual view)
 --
 DROP VIEW IF EXISTS `sv_assignment_peer_stat`;
-CREATE TABLE IF NOT EXISTS `sv_assignment_peer_stat` (
+CREATE TABLE `sv_assignment_peer_stat` (
 `asg_id` int(11)
 ,`reviewee` varchar(20)
 ,`average` double
@@ -1026,7 +900,7 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_peer_stat` (
 -- (See below for the actual view)
 --
 DROP VIEW IF EXISTS `sv_assignment_peer_sum`;
-CREATE TABLE IF NOT EXISTS `sv_assignment_peer_sum` (
+CREATE TABLE `sv_assignment_peer_sum` (
 `asg_id` int(11)
 ,`reviewee` varchar(20)
 ,`reviewer` varchar(20)
@@ -1040,7 +914,7 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_peer_sum` (
 -- (See below for the actual view)
 --
 DROP VIEW IF EXISTS `sv_assignment_peer_summary`;
-CREATE TABLE IF NOT EXISTS `sv_assignment_peer_summary` (
+CREATE TABLE `sv_assignment_peer_summary` (
 `id` int(11)
 ,`asg_id` int(11)
 ,`asg_title` varchar(500)
@@ -1076,12 +950,13 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_peer_summary` (
 -- (See below for the actual view)
 --
 DROP VIEW IF EXISTS `sv_assignment_staff`;
-CREATE TABLE IF NOT EXISTS `sv_assignment_staff` (
+CREATE TABLE `sv_assignment_staff` (
 `id` int(11)
 ,`asg_id` int(11)
 ,`title` varchar(500)
 ,`type` int(11)
 ,`public` int(11)
+,`feedback` int(11)
 ,`topic_count` bigint(21)
 ,`student_count` bigint(21)
 ,`outcome` mediumtext
@@ -1108,7 +983,7 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_staff` (
 -- (See below for the actual view)
 --
 DROP VIEW IF EXISTS `sv_assignment_student`;
-CREATE TABLE IF NOT EXISTS `sv_assignment_student` (
+CREATE TABLE `sv_assignment_student` (
 `id` int(11)
 ,`asg_id` int(11)
 ,`public` int(11)
@@ -1132,7 +1007,7 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_student` (
 -- (See below for the actual view)
 --
 DROP VIEW IF EXISTS `sv_assignment_student_count`;
-CREATE TABLE IF NOT EXISTS `sv_assignment_student_count` (
+CREATE TABLE `sv_assignment_student_count` (
 `id` int(11)
 ,`student_count` bigint(21)
 );
@@ -1144,7 +1019,7 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_student_count` (
 -- (See below for the actual view)
 --
 DROP VIEW IF EXISTS `sv_assignment_topic_count`;
-CREATE TABLE IF NOT EXISTS `sv_assignment_topic_count` (
+CREATE TABLE `sv_assignment_topic_count` (
 `id` int(11)
 ,`topic_count` bigint(21)
 );
@@ -1156,7 +1031,7 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_topic_count` (
 -- (See below for the actual view)
 --
 DROP VIEW IF EXISTS `sv_assignment_topic_member`;
-CREATE TABLE IF NOT EXISTS `sv_assignment_topic_member` (
+CREATE TABLE `sv_assignment_topic_member` (
 `id` int(11)
 ,`asg_id` int(11)
 ,`user_id` varchar(20)
@@ -1176,7 +1051,7 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_topic_member` (
 -- (See below for the actual view)
 --
 DROP VIEW IF EXISTS `sv_assignment_topic_summary`;
-CREATE TABLE IF NOT EXISTS `sv_assignment_topic_summary` (
+CREATE TABLE `sv_assignment_topic_summary` (
 `id` int(11)
 ,`user_id` varchar(20)
 ,`topic_id` int(11)
@@ -1192,7 +1067,7 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_topic_summary` (
 -- (See below for the actual view)
 --
 DROP VIEW IF EXISTS `sv_group_submission`;
-CREATE TABLE IF NOT EXISTS `sv_group_submission` (
+CREATE TABLE `sv_group_submission` (
 `topic_id` int(11)
 ,`topic` varchar(500)
 ,`topic_desc` mediumtext
@@ -1216,7 +1091,7 @@ CREATE TABLE IF NOT EXISTS `sv_group_submission` (
 -- (See below for the actual view)
 --
 DROP VIEW IF EXISTS `sv_topic_stat`;
-CREATE TABLE IF NOT EXISTS `sv_topic_stat` (
+CREATE TABLE `sv_topic_stat` (
 `id` int(11)
 ,`cnt` bigint(21)
 );
@@ -1228,7 +1103,7 @@ CREATE TABLE IF NOT EXISTS `sv_topic_stat` (
 -- (See below for the actual view)
 --
 DROP VIEW IF EXISTS `sv_unit_staff`;
-CREATE TABLE IF NOT EXISTS `sv_unit_staff` (
+CREATE TABLE `sv_unit_staff` (
 `id` int(11)
 ,`unit_code` varchar(20)
 ,`unit_description` varchar(500)
@@ -1250,7 +1125,7 @@ CREATE TABLE IF NOT EXISTS `sv_unit_staff` (
 -- (See below for the actual view)
 --
 DROP VIEW IF EXISTS `sv_unit_student`;
-CREATE TABLE IF NOT EXISTS `sv_unit_student` (
+CREATE TABLE `sv_unit_student` (
 `username` varchar(20)
 ,`last_name` varchar(255)
 ,`first_name` varchar(255)
@@ -1272,17 +1147,14 @@ CREATE TABLE IF NOT EXISTS `sv_unit_student` (
 --
 
 DROP TABLE IF EXISTS `unit`;
-CREATE TABLE IF NOT EXISTS `unit` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `unit` (
+  `id` int(11) NOT NULL,
   `unit_code` varchar(20) NOT NULL,
   `sem` varchar(10) NOT NULL,
   `unit_description` varchar(500) DEFAULT NULL,
   `create_time` datetime NOT NULL,
-  `last_upd_time` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `unit_code` (`unit_code`,`sem`),
-  KEY `sem` (`sem`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `unit`
@@ -1306,17 +1178,14 @@ INSERT INTO `unit` (`id`, `unit_code`, `sem`, `unit_description`, `create_time`,
 --
 
 DROP TABLE IF EXISTS `unit_enrol`;
-CREATE TABLE IF NOT EXISTS `unit_enrol` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `unit_enrol` (
+  `id` int(11) NOT NULL,
   `user_id` varchar(10) NOT NULL,
   `unit_id` int(11) NOT NULL,
   `enable` int(11) NOT NULL DEFAULT 1,
   `create_time` datetime NOT NULL,
-  `last_upd_time` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `unit_id` (`unit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=753 DEFAULT CHARSET=utf8;
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `unit_enrol`
@@ -2084,17 +1953,14 @@ INSERT INTO `unit_enrol` (`id`, `user_id`, `unit_id`, `enable`, `create_time`, `
 --
 
 DROP TABLE IF EXISTS `unit_staff`;
-CREATE TABLE IF NOT EXISTS `unit_staff` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `unit_staff` (
+  `id` int(11) NOT NULL,
   `username` varchar(10) NOT NULL,
   `unit_id` int(11) NOT NULL,
   `last_upd_by` varchar(20) NOT NULL,
   `create_time` datetime NOT NULL,
-  `last_upd_time` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `username` (`username`),
-  KEY `unit_id` (`unit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+  `last_upd_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `unit_staff`
@@ -2114,7 +1980,7 @@ INSERT INTO `unit_staff` (`id`, `username`, `unit_id`, `last_upd_by`, `create_ti
 --
 
 DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE `user` (
   `username` varchar(20) NOT NULL,
   `password` varchar(500) NOT NULL,
   `salt` varchar(255) NOT NULL,
@@ -2129,9 +1995,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `last_login_time` datetime DEFAULT NULL,
   `reset_token` varchar(500) DEFAULT NULL,
   `reset_time` datetime DEFAULT NULL,
-  `last_upd_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`username`),
-  UNIQUE KEY `email` (`email`)
+  `last_upd_time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -2139,12 +2003,12 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `id`, `email`, `permission_level`, `locked`, `create_time`, `login_fail_cnt`, `last_login_time`, `reset_token`, `reset_time`, `last_upd_time`) VALUES
-('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2020-01-21 19:24:57', NULL, NULL, '2019-12-01 00:17:48'),
+('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '00000000', 'chiu.97.hk@gmail.com', 90, 0, '2019-11-15 22:34:45', 0, '2020-01-29 22:23:28', NULL, NULL, '2019-12-01 00:17:48'),
 ('staff1', '$1$346d40d8$806o0kWTuSUlndg8x0jZ81', '$1$346d40d85be1653b1b20eee806c93967', 'Account 1', 'Staff', '03007563', 'kaichiu.wong@utas.edu.au', 30, 0, '2019-11-15 22:34:45', 0, '2020-01-08 23:31:42', NULL, NULL, '2019-11-18 01:20:02'),
 ('staff2', '$1$9a121110$nYumg2W2TIJBS4FyX.I111', '$1$9a121110f95b57330d829119e6b09fef', 'Account 2', 'Staff', '12345678', 'teacher@aaa.com', 30, 0, '2019-11-19 00:41:38', 0, '2020-01-05 17:30:38', NULL, NULL, '2020-01-02 23:48:58'),
 ('staff3', '$1$f14a37c0$xSu42pAzI3/.rsvzJL05L0', '$1$f14a37c00eae2ddf8f1303f98008e11f', 'Account 3', 'Staff', '32434', 'sdffe@srewrwe.com', 20, 0, '2019-12-02 02:11:50', 0, '2020-01-08 23:04:43', NULL, NULL, NULL),
 ('staff4', '$1$2bb3309b$uhfCK4zeU7Wm.5kZrcijT/', '$1$2bb3309b3a3f88a9b0bd5b219401a379', 'Account 4', 'Staff', '3243254325', 'sdsfejoi@sdofreoi.com', 20, 0, '2019-12-02 02:13:52', 0, '2020-01-05 17:43:27', NULL, NULL, '2020-01-05 17:42:18'),
-('user1', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'Account 1', 'Student', '492085', 'kcwong3@utas.edu.au', 10, 0, '2019-11-15 22:34:45', 0, '2020-01-08 16:25:20', NULL, NULL, '2019-11-18 01:22:08'),
+('user1', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'Account 1', 'Student', '492085', 'kcwong3@utas.edu.au', 10, 0, '2019-11-15 22:34:45', 0, '2020-01-29 22:32:57', NULL, NULL, '2019-11-18 01:22:08'),
 ('user10', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 10', 'Student', '169146', 'user10@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user100', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 100', 'Student', '899188', 'user100@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
 ('user101', '$1$df0a73e8$WyrXqMoF/1JoBjlBjxWFm.', '$1$df0a73e89e983b8795dc92c444966339', 'User 101', 'Student', '810995', 'user101@abc.com', 10, 1, '2019-12-08 00:28:00', 0, NULL, NULL, NULL, '2019-12-08 00:28:00'),
@@ -2783,7 +2647,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sv_assignment_staff`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_staff`  AS  select `us`.`id` AS `id`,`a`.`id` AS `asg_id`,`a`.`title` AS `title`,`a`.`type` AS `type`,`a`.`public` AS `public`,`st`.`topic_count` AS `topic_count`,`au`.`student_count` AS `student_count`,`a`.`outcome` AS `outcome`,`a`.`scenario` AS `scenario`,`a`.`unit_id` AS `unit_id`,`a`.`create_time` AS `create_time`,`a`.`last_upd_time` AS `last_upd_time`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`fn_sem_short_desc`(`un`.`sem`) AS `sem`,`un`.`sem` AS `sem_key`,`u`.`username` AS `username`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid`,`u`.`email` AS `email`,`u`.`permission_level` AS `permission_level` from (((((`assignment` `a` left join `unit_staff` `us` on(`a`.`unit_id` = `us`.`unit_id`)) left join `unit` `un` on(`a`.`unit_id` = `un`.`id`)) left join `user` `u` on(`us`.`username` = `u`.`username`)) left join `sv_assignment_topic_count` `st` on(`a`.`id` = `st`.`id`)) left join `sv_assignment_student_count` `au` on(`a`.`id` = `au`.`id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_staff`  AS  select `us`.`id` AS `id`,`a`.`id` AS `asg_id`,`a`.`title` AS `title`,`a`.`type` AS `type`,`a`.`public` AS `public`,`a`.`feedback` AS `feedback`,`st`.`topic_count` AS `topic_count`,`au`.`student_count` AS `student_count`,`a`.`outcome` AS `outcome`,`a`.`scenario` AS `scenario`,`a`.`unit_id` AS `unit_id`,`a`.`create_time` AS `create_time`,`a`.`last_upd_time` AS `last_upd_time`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`fn_sem_short_desc`(`un`.`sem`) AS `sem`,`un`.`sem` AS `sem_key`,`u`.`username` AS `username`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid`,`u`.`email` AS `email`,`u`.`permission_level` AS `permission_level` from (((((`assignment` `a` left join `unit_staff` `us` on(`a`.`unit_id` = `us`.`unit_id`)) left join `unit` `un` on(`a`.`unit_id` = `un`.`id`)) left join `user` `u` on(`us`.`username` = `u`.`username`)) left join `sv_assignment_topic_count` `st` on(`a`.`id` = `st`.`id`)) left join `sv_assignment_student_count` `au` on(`a`.`id` = `au`.`id`)) ;
 
 -- --------------------------------------------------------
 
@@ -2865,6 +2729,224 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `sv_unit_student`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_unit_student`  AS  select `u`.`username` AS `username`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid`,`u`.`email` AS `email`,`u`.`permission_level` AS `permission_level`,`un`.`id` AS `id`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`fn_sem_short_desc`(`un`.`sem`) AS `sem`,`un`.`create_time` AS `create_time`,`un`.`last_upd_time` AS `last_upd_time` from ((`unit` `un` join `unit_enrol` `ue`) join `user` `u`) where `un`.`id` = `ue`.`unit_id` and `ue`.`user_id` = `u`.`username` order by `u`.`username`,`un`.`unit_code` ;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `assignment`
+--
+ALTER TABLE `assignment`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `assignment_date`
+--
+ALTER TABLE `assignment_date`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `asg_id` (`asg_id`);
+
+--
+-- Indexes for table `assignment_default_feedback`
+--
+ALTER TABLE `assignment_default_feedback`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `asg_id` (`asg_id`);
+
+--
+-- Indexes for table `assignment_feedback`
+--
+ALTER TABLE `assignment_feedback`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `asg_id` (`asg_id`),
+  ADD KEY `question_id` (`question_id`),
+  ADD KEY `reviewer` (`reviewer`),
+  ADD KEY `reviewee` (`reviewee`);
+
+--
+-- Indexes for table `assignment_group_mark`
+--
+ALTER TABLE `assignment_group_mark`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `assignment_mark_criteria`
+--
+ALTER TABLE `assignment_mark_criteria`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `asg_id` (`asg_id`);
+
+--
+-- Indexes for table `assignment_peer_mark`
+--
+ALTER TABLE `assignment_peer_mark`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `asg_id` (`asg_id`),
+  ADD KEY `username` (`username`);
+
+--
+-- Indexes for table `assignment_question`
+--
+ALTER TABLE `assignment_question`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `asg_id` (`asg_id`);
+
+--
+-- Indexes for table `assignment_topic`
+--
+ALTER TABLE `assignment_topic`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `assign_id` (`assign_id`);
+
+--
+-- Indexes for table `assignment_topic_allocation`
+--
+ALTER TABLE `assignment_topic_allocation`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `asg_id` (`asg_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `topic_id` (`topic_id`);
+
+--
+-- Indexes for table `semester`
+--
+ALTER TABLE `semester`
+  ADD PRIMARY KEY (`sem`);
+
+--
+-- Indexes for table `submission`
+--
+ALTER TABLE `submission`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `asg_id` (`asg_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `topic_id` (`topic_id`);
+
+--
+-- Indexes for table `submission_log`
+--
+ALTER TABLE `submission_log`
+  ADD KEY `asg_id` (`asg_id`,`user_id`);
+
+--
+-- Indexes for table `unit`
+--
+ALTER TABLE `unit`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unit_code` (`unit_code`,`sem`),
+  ADD KEY `sem` (`sem`);
+
+--
+-- Indexes for table `unit_enrol`
+--
+ALTER TABLE `unit_enrol`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `unit_id` (`unit_id`);
+
+--
+-- Indexes for table `unit_staff`
+--
+ALTER TABLE `unit_staff`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `username` (`username`),
+  ADD KEY `unit_id` (`unit_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`username`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `assignment`
+--
+ALTER TABLE `assignment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `assignment_date`
+--
+ALTER TABLE `assignment_date`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+
+--
+-- AUTO_INCREMENT for table `assignment_default_feedback`
+--
+ALTER TABLE `assignment_default_feedback`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT for table `assignment_feedback`
+--
+ALTER TABLE `assignment_feedback`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
+
+--
+-- AUTO_INCREMENT for table `assignment_group_mark`
+--
+ALTER TABLE `assignment_group_mark`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `assignment_mark_criteria`
+--
+ALTER TABLE `assignment_mark_criteria`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `assignment_peer_mark`
+--
+ALTER TABLE `assignment_peer_mark`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `assignment_question`
+--
+ALTER TABLE `assignment_question`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT for table `assignment_topic`
+--
+ALTER TABLE `assignment_topic`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=998;
+
+--
+-- AUTO_INCREMENT for table `assignment_topic_allocation`
+--
+ALTER TABLE `assignment_topic_allocation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=283;
+
+--
+-- AUTO_INCREMENT for table `submission`
+--
+ALTER TABLE `submission`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `unit`
+--
+ALTER TABLE `unit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `unit_enrol`
+--
+ALTER TABLE `unit_enrol`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=753;
+
+--
+-- AUTO_INCREMENT for table `unit_staff`
+--
+ALTER TABLE `unit_staff`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

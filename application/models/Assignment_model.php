@@ -20,7 +20,7 @@ class Assignment_model extends CI_Model
 
     function get_all_assignments($username = null)
     {
-        $query_str = "select distinct s.asg_id, s.title, s.type, s.public, s.topic_count, s.student_count,s.outcome, s.scenario, s.unit_id, s.unit_code, s.unit_description, s.sem, s.sem_key ";
+        $query_str = "select distinct s.asg_id, s.title, s.type, s.public, s.feedback, s.topic_count, s.student_count,s.outcome, s.scenario, s.unit_id, s.unit_code, s.unit_description, s.sem, s.sem_key ";
         $query_str .= " from sv_assignment_staff s  ";
         if ($username) 
         {
@@ -33,7 +33,7 @@ class Assignment_model extends CI_Model
 
     function get_all_assignments_by_unit($unit_code, $sem = null)
     {
-        $query_str = "select distinct s.asg_id, s.title, s.type, s.public, s.topic_count, s.student_count,s.outcome, s.scenario, s.unit_id, s.unit_code, s.unit_description, s.sem, s.sem_key ";
+        $query_str = "select distinct s.asg_id, s.title, s.type, s.public, s.feedback, s.topic_count, s.student_count,s.outcome, s.scenario, s.unit_id, s.unit_code, s.unit_description, s.sem, s.sem_key ";
         $query_str .= " from sv_assignment_staff s  ";
         $query_str .= " where unit_code = '$unit_code' ";
         if ($sem) {
@@ -86,6 +86,20 @@ class Assignment_model extends CI_Model
         return $rtnResult;
     }
 
+    function is_feedback_release($asg_id) 
+    {
+        $rtnResult = false;
+        $query = $this->db->query("select feedback from assignment where id=$asg_id ; ");
+        $row = $query->row_array();
+        if (isset($row))
+        {
+            if (intval($row['feedback']) > 0) {
+                $rtnResult = true;
+            }
+        }
+        return $rtnResult;
+    }
+
     function delete_assignment($id)
     {
         $this->db->delete('assignment_date',array('asg_id'=>$id));
@@ -105,6 +119,15 @@ class Assignment_model extends CI_Model
         $query_str .= "   SET public = CASE WHEN public = 0 THEN 1 ";
         $query_str .= "                     WHEN public = 1 THEN 0 END " ;
         $query_str .= " WHERE public in (0,1) AND id='$asg_id' "; 
+        $query = $this->db->query($query_str);
+        return $this->db->affected_rows();
+    }
+
+    function feedback_switch($asg_id) {
+        $query_str  = "UPDATE `assignment` " ;
+        $query_str .= "   SET feedback = CASE WHEN feedback = 0 THEN 1 ";
+        $query_str .= "                       WHEN feedback = 1 THEN 0 END " ;
+        $query_str .= " WHERE feedback in (0,1) AND id='$asg_id' "; 
         $query = $this->db->query($query_str);
         return $this->db->affected_rows();
     }

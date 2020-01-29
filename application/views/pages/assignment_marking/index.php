@@ -24,8 +24,7 @@
                     <th>Semester</th>
                     <th>Title</th>
                     <th>Type</th>
-                    <th>Group Count</th>
-                    <th>Enrolled Students</th>
+                    <th>Feedback Mode</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -36,10 +35,14 @@
                     <td><?php echo $a['sem']; ?></td>
                     <td><?php echo $a['title']; ?></td>
                     <td><?php echo $a['type'] ? "Group Assignment" : "Individual Assignment"; ?></td>
-                    <td><?php echo $a['topic_count']; ?></td>
-                    <td><?php echo $a['student_count']; ?></td>
+                    <td><?php echo $a['feedback'] ? '<i class="fas fa-users"></i> Released' : '<i class="fas fa-lock"></i> Private'; ?></td>
                     <td>
                         <a href="<?php echo site_url('Marking/group/'.encode_id($a['asg_id'])); ?>" class="btn btn-primary btn-sm">Select</a>
+                        <?php if ($a['feedback']): ?>
+                        <a href="<?php echo site_url('Marking/feedback_switch/'.$a['asg_id']); ?>" class="btn btn-dark btn-sm">Close Feedback</a> 
+                        <?php else: ?>
+                        <a href="<?php echo site_url('Marking/feedback_switch/'.$a['asg_id']); ?>" class="btn btn-success btn-sm" onclick="return confirm('Are your confirm to release the assignment scores and feedbacks to students?');">Release Feedback</a> 
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
