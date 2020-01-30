@@ -12,6 +12,18 @@ class Unit_model extends CI_Model
         return $this->db->get_where('unit',array('id'=>$id))->row_array();
     }
 
+    function get_unit_id($unit_code, $sem)
+    {
+        $rtnResult = 0;
+        $query = $this->db->query("select id from unit where LOWER(unit_code)=LOWER('$unit_code') and sem='$sem' ; ");
+        $row = $query->row_array();
+        if (isset($row))
+        {
+            $rtnResult = intval($row['id']);
+        }
+        return $rtnResult;
+    }
+
     function get_all_units()
     {
         $query = $this->db->query("SELECT id, unit_code, fn_sem_short_desc(sem) as sem, sem as sem_key, unit_description FROM `unit` ORDER BY unit_code, sem; ");
@@ -70,4 +82,5 @@ class Unit_model extends CI_Model
         }
         return $result;
     }
+    
 }
