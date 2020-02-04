@@ -13,11 +13,11 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 --
--- Database: `pas`
+-- Database: `peerassess`
 --
-DROP DATABASE IF EXISTS `pas`;
-CREATE DATABASE IF NOT EXISTS `pas` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `pas`;
+DROP DATABASE IF EXISTS `peerassess`;
+CREATE DATABASE IF NOT EXISTS `peerassess` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `peerassess`;
 
 -- --------------------------------------------------------
 
