@@ -19,6 +19,105 @@ DROP DATABASE IF EXISTS `peerassess`;
 CREATE DATABASE IF NOT EXISTS `peerassess` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `peerassess`;
 
+DELIMITER $$
+--
+-- Procedures
+--
+DROP PROCEDURE IF EXISTS `sp_get_all_peer_feedback`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_all_peer_feedback` (IN `asg_id` INT, IN `reviewee` VARCHAR(20))  BEGIN
+    SELECT aq.id as qid, aq.question_order, aq.question, aq.answer_type, aq.question_section, af.*
+      FROM assignment_question aq
+      LEFT JOIN assignment_feedback af ON aq.asg_id=af.asg_id and aq.id=af.question_id
+     WHERE aq.asg_id = asg_id and af.reviewee=reviewee and af.reviewer != af.reviewee ;
+END$$
+
+DROP PROCEDURE IF EXISTS `sp_get_peer_review`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_peer_review` (IN `username` VARCHAR(10), IN `qid` INT)  BEGIN
+select asg_id, reviewee, reviewer, total
+from sv_assignment_peer_sum
+where reviewee = username ; 
+END$$
+
+DROP PROCEDURE IF EXISTS `sp_get_question_feedback`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_question_feedback` (IN `asg_id` INT, IN `reviewer` VARCHAR(20), IN `reviewee` VARCHAR(20), IN `qtype` ENUM('SELF','PEER','GROUP'))  BEGIN
+    SELECT aq.id as qid, aq.question_order, aq.question, aq.answer_type, aq.question_section, af.*
+      FROM assignment_question aq
+      LEFT JOIN assignment_feedback af ON aq.asg_id=af.asg_id and aq.id=af.question_id and af.reviewer=reviewer and af.reviewee=reviewee
+     WHERE aq.asg_id = asg_id and aq.question_section=qtype ;
+END$$
+
+DROP PROCEDURE IF EXISTS `sp_get_student_assignment_list`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_student_assignment_list` (IN `username` VARCHAR(10))  BEGIN
+    SELECT a.*,fn_get_unit_code(a.unit_id) as unit
+    FROM   assignment a, unit_enrol ue
+    WHERE  a.unit_id = ue.unit_id
+    AND    ue.user_id = username ;
+END$$
+
+--
+-- Functions
+--
+DROP FUNCTION IF EXISTS `fn_get_unit_code`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_get_unit_code` (`unit_id` INT) RETURNS VARCHAR(20) CHARSET utf8 BEGIN
+ DECLARE rtnstr VARCHAR(20);
+ 
+  SELECT unit_code 
+  INTO   rtnstr
+  FROM   unit
+  WHERE  id=unit_id;
+  
+  RETURN rtnstr ;
+END$$
+
+DROP FUNCTION IF EXISTS `fn_is_allow_view_assignment`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_is_allow_view_assignment` (`username` VARCHAR(10), `asg_id` INT) RETURNS INT(11) BEGIN
+ DECLARE rtn_result INT DEFAULT 0;
+ DECLARE temp_val INT DEFAULT 0;
+  
+  SELECT count(1)
+  INTO   temp_val
+  FROM   assignment a, unit_enrol ue
+  WHERE  a.unit_id = ue.unit_id
+  AND    ue.user_id = username
+  AND    a.id = asg_id  
+  AND    a.public = 1 ;
+  
+  SET    rtn_result = rtn_result + temp_val;
+  
+  SELECT count(1)
+  INTO   temp_val
+  FROM   assignment a, unit_staff us
+  WHERE  a.unit_id = us.unit_id
+  AND    us.username = username
+  AND    a.id = asg_id ;
+  
+  SET    rtn_result = rtn_result + temp_val;
+  
+  SELECT count(1)
+  INTO   temp_val
+  FROM   `user` u
+  WHERE  u.username = username
+  AND    u.permission_level >= 90;
+  
+  SET    rtn_result = rtn_result + temp_val;
+  
+  RETURN rtn_result ;
+END$$
+
+DROP FUNCTION IF EXISTS `fn_sem_short_desc`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_sem_short_desc` (`in_sem` VARCHAR(10)) RETURNS VARCHAR(100) CHARSET utf8 BEGIN
+ DECLARE rtnstr VARCHAR(100);
+ 
+  SELECT short_description
+  INTO   rtnstr
+  FROM   semester
+  WHERE  sem=in_sem;
+  
+  RETURN rtnstr ;
+END$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
