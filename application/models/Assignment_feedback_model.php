@@ -123,9 +123,9 @@ class Assignment_feedback_model extends CI_Model
     function add_default_feedback($asg_id,$username) 
     {
         $default_section = array(
-            "GROUP" => "Group Default Feedbacks",
-            "PEER"=> "Individual Default Feedbacks",
-            "PEER_VARIANCE" => "Individual Variance Feedbacks"
+            "GROUP" => "Group Default Feedback",
+            "PEER"=> "Individual Default Feedback",
+            "PEER_VARIANCE" => "Individual Variance Feedback"
         );
         $default_threshold_entry = array(
             0 => null, 

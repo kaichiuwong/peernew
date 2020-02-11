@@ -10,7 +10,7 @@
           <li class="breadcrumb-item"><a href="<?php echo site_url('Marking'); ?>">Assignment List</a></li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/group/'.$asg_id); ?>">Group Score</a></li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/peer/'.$asg_id); ?>">Peer Score</a></li>
-          <li class="breadcrumb-item active">Default Feedbacks</li>
+          <li class="breadcrumb-item active">Default Feedback</li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/final_score/'.$asg_id); ?>">Export Score</a></li>
         </ol>
       </div>
@@ -24,12 +24,12 @@
   <div class="col-12">
     <div class="card card-secondary">
       <div class="card-header">
-        <h3 class="card-title">Default Feedbacks</h3>
+        <h3 class="card-title">Default Feedback</h3>
       </div>
       <!-- /.card-header -->
         <div class="card-body table-responsive p-3">
         <?php if ($enable_edit): ?>
-        <a href="<?php echo site_url('Marking/edit_default_feedback/'.$asg_id); ?>" class="btn btn-sm btn-primary">Edit Default Feedbacks</a>
+        <a href="<?php echo site_url('Marking/edit_default_feedback/'.$asg_id); ?>" class="btn btn-sm btn-primary">Edit Default Feedback</a>
         <?php endif ;?>
         <?php $last_section = ""; ?>
         <?php foreach($default_feedbacks as $a): ?>

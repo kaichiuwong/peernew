@@ -10,7 +10,7 @@
           <li class="breadcrumb-item"><a href="<?php echo site_url('Marking'); ?>">Assignment List</a></li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/group/'.$asg_id); ?>">Group Score</a></li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/peer/'.$asg_id); ?>">Peer Score</a></li>
-          <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/default_feedback/'.$asg_id); ?>">Default Feedbacks</a></li>
+          <li class="breadcrumb-item"><a href="<?php echo site_url('Marking/default_feedback/'.$asg_id); ?>">Default Feedback</a></li>
           <li class="breadcrumb-item active">Export Score</li>
         </ol>
       </div>
