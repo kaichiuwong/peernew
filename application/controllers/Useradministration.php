@@ -55,7 +55,7 @@ class Useradministration extends MY_PasController {
                 $this->load_footer();    
             }
             else {
-                redirect('UserAdministration/user_list');
+                redirect('Useradministration/user_list');
             }
         }
     }
@@ -104,6 +104,6 @@ class Useradministration extends MY_PasController {
                 $this->User->lockuser($username);
             }
         }
-        redirect('UserAdministration');
+        redirect('Useradministration');
     }
 }
