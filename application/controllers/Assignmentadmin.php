@@ -32,7 +32,7 @@ class Assignmentadmin extends MY_PasController {
             $data['asg_id'] = $asg_id;
             $data['assignment'] = $this->Assignment_model->get_assignment($asg_id);
             
-            if(isset($data['assignment']['id']))
+            if(isset($data['assignment']['asg_id']))
             {
                 $new_session_data = array('asg_id' => $asg_id, 'asg_header' => $data['assignment']['unit_code'] . ' - ' . $data['assignment']['title']);
                 $this->session->set_userdata($new_session_data);
@@ -43,7 +43,7 @@ class Assignmentadmin extends MY_PasController {
                 $this->load_footer($data);
             }
             else {
-                redirect('Assignment');
+                redirect('Assignmentadmin/index');
             }
         }
     } 
@@ -107,7 +107,7 @@ class Assignmentadmin extends MY_PasController {
             // check if the assignment exists before trying to edit it
             $data['assignment'] = $this->Assignment_model->get_assignment($asg_id);
             
-            if(isset($data['assignment']['id']))
+            if(isset($data['assignment']['asg_id']))
             {
                 $this->load->library('form_validation');
 
@@ -154,7 +154,7 @@ class Assignmentadmin extends MY_PasController {
             $assignment = $this->Assignment_model->get_assignment($asg_id);
 
             // check if the assignment exists before trying to delete it
-            if(isset($assignment['id']))
+            if(isset($assignment['asg_id']))
             {
                 $this->Assignment_model->delete_assignment($asg_id);
                 redirect('Assignmentadmin/index/');
