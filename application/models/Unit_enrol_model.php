@@ -80,7 +80,7 @@ class Unit_enrol_model extends CI_Model
             $campus = $enrol_record['campus'];
             $sem = date('Y').'0'.$enrol_record['semester'] ;
             $unit_id = $this->Unit_model->get_unit_id($unit_code, $sem);
-            $email=$username . '@postoffice.utas.edu.au';
+            $email=$username . '@utas.edu.au';
             if (!$this->User->getUserInfo($username)) {
                 $userinfo = array(
                     'username' => $username,
