@@ -51,7 +51,7 @@ class Setting extends MY_PasController {
     }
 
     public function refresh_enrol() {
-        $this->load->model('User_enrol_model');
-        $this->User_enrol_model->refresh_enrol_from_db();
+        $this->load->model('Unit_enrol_model');
+        $this->Unit_enrol_model->refresh_enrol_from_db();
     }
 }
