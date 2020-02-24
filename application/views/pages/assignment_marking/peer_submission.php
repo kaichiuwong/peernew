@@ -77,7 +77,8 @@
                     </td>
                     <td>
                       <button type="button" class="btn btn-primary btn-sm peer_submit_button" data-username="<?php echo $a['username']; ?>" id="submit_btn_<?php echo $a['username']; ?>">Save</button> 
-                      <a href="<?php echo site_url('Marking/give_indiv_feedback/'.$asg_id.'/'.encode_id($a['topic_id']).'/'.encode_id($a['username'])); ?>" class="btn btn-info btn-sm">Customise Individual Feedback</a>
+                      <a href="javascript:void(0);" data-username="<?php echo $a['username']; ?>" data-href="<?php echo site_url('Marking/peer_detail/'.$asg_id.'/'.encode_id($a['topic_id']).'/'.encode_id($a['username'])); ?>" class="peer_mark_open btn btn-warning btn-sm">Preview</a>
+                      <a href="<?php echo site_url('Marking/give_indiv_feedback/'.$asg_id.'/'.encode_id($a['topic_id']).'/'.encode_id($a['username'])); ?>" class="btn btn-info btn-sm">Add Feedback</a>
                     </td>
                   <?php echo form_close(); ?>
                 </tr>

@@ -100,6 +100,7 @@ class Assignment extends MY_PasController {
                 $data['indiv_score'] = ($data['summary'][0]['override_score'] != NULL)? $data['summary'][0]['override_score']:$data['summary'][0]['peer_average'] ;
                 $data['indiv_var'] = $data['summary'][0]['peer_var'] ;
                 $data['group_score'] = $data['summary'][0]['group_score'] ;
+                $data['total_score'] = $data['group_score'] + $data['indiv_score'] ;
                 $data['indiv_default_feedback'] = ($data['indiv_score'] === null)?'':$this->Assignment_feedback_model->get_default_feedback($decode_asg_id, 'PEER', $data['indiv_score'])['feedback'];
                 $data['indiv_var_default_feedback'] = ($data['indiv_var'] === null)?'':$this->Assignment_feedback_model->get_default_feedback($decode_asg_id, 'PEER_VARIANCE', $data['indiv_var'])['feedback'];
                 $data['indiv_custom_feedback'] = $data['summary'][0]['override_score_remark'] ;

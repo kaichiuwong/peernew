@@ -63,12 +63,16 @@ class User extends CI_Model {
         if (!empty($newinfo)) {
             $data = array(
                 'last_name' => $newinfo['last_name'],
-                'first_name' => $newinfo['first_name'],
-                'id' => $newinfo['id'],
-                'email' => $newinfo['email']
+                'first_name' => $newinfo['first_name']
             );
             if (isset($newinfo['plevel'])) {
                 $data['permission_level'] = $newinfo['plevel'];
+            }
+            if (isset($newinfo['id'])) {
+                $data['id'] = $newinfo['id'];
+            }
+            if (isset($newinfo['email'])) {
+                $data['email'] = $newinfo['email'];
             }
             $data['last_upd_time'] = current_time();
 
@@ -76,7 +80,7 @@ class User extends CI_Model {
             $this->db->update('user', $data);
             
             if (!empty($newinfo['password'])) {
-                resetpassword($newinfo['password'],null,$username);
+                $this->resetpassword($newinfo['password'],null,$username);
             }
             return 1;
         }

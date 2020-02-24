@@ -27,6 +27,7 @@ class Marking extends MY_PasController {
                 $data['assignments'] = $this->Assignment_model->get_all_assignments($this->get_login_user());
             }
             $data['_view'] = 'pages/assignment_marking/index';
+            $data['allow_control_feedback_mode'] = $this->check_permission(30, false);
             $this->load_header($data);
             $this->load->view('templates/main',$data);
             $this->load_footer($data);
@@ -269,6 +270,11 @@ class Marking extends MY_PasController {
                 $rowCount++;
             }
             $filename = "final_score_". $asg_id . "_" .date("Ymd_His").".xlsx";
+            if (!is_dir('./export/')) {
+                mkdir('./export/', 0775, TRUE);
+                $index_content='<!DOCTYPE html><html><head>	<title>403 Forbidden</title></head><body><p>Directory access is forbidden.</p></body></html>';
+                write_file('./export/index.html', $index_content);
+            }
             $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
             $objWriter->save('./export/'.$filename);
             // download file
@@ -296,6 +302,7 @@ class Marking extends MY_PasController {
             $data['indiv_score'] = ($data['summary'][0]['override_score'] != NULL)? $data['summary'][0]['override_score']:$data['summary'][0]['peer_average'] ;
             $data['indiv_var'] = $data['summary'][0]['peer_var'] ;
             $data['group_score'] = $data['summary'][0]['group_score'] ;
+            $data['total_score'] = $data['group_score'] + $data['indiv_score'] ;
             $data['indiv_default_feedback'] = ($data['indiv_score'] === null)?'':$this->Assignment_feedback_model->get_default_feedback($decode_asg_id, 'PEER', $data['indiv_score'])['feedback'];
             $data['indiv_var_default_feedback'] = ($data['indiv_var'] === null)?'':$this->Assignment_feedback_model->get_default_feedback($decode_asg_id, 'PEER_VARIANCE', $data['indiv_var'])['feedback'];
             $data['indiv_custom_feedback'] = $data['summary'][0]['override_score_remark'] ;
@@ -308,8 +315,14 @@ class Marking extends MY_PasController {
                                    $data['indiv_var_default_feedback'],
                                    $data['indiv_custom_feedback']
                                 );
-            foreach($data['assignment_topics_member'] as $member) {
-                $data['assignment_questions_peer'][$member['user_id']] = $this->Assignment_feedback_model->get_question_with_feedback($decode_asg_id,$member['user_id'],decode_id($username),'PEER');
+            if(empty($data['assignment_topics_member'])) 
+            {
+                $data['assignment_questions_peer'] = array();
+            }
+            else {
+                foreach($data['assignment_topics_member'] as $member) {
+                    $data['assignment_questions_peer'][$member['user_id']] = $this->Assignment_feedback_model->get_question_with_feedback($decode_asg_id,$member['user_id'],decode_id($username),'PEER');
+                }
             }
             $this->load->view('pages/assignment_marking/peer_detail',$data);
         } while(0);

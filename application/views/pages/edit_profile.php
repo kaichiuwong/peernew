@@ -13,9 +13,12 @@
     <div class="card-header">
         <h3 class="card-title">User Profile</h3>
     </div>
-    <?php echo form_open('Member/update/'.$username,array("class"=>"form-horizontal")); ?>
+    <?php echo form_open('Member/update/'.$username,array("class"=>"form-horizontal", 'onsubmit'=>'return validatePassword()')); ?>
     <div class="card-body">
         <div class="col-lg-12">
+            <div class="alert alert-danger d-none " id="errormsg">
+              <small><i class="fas fa-exclamation-triangle"></i> <span id="errorContent"></span></small>
+            </div>
               <div class="form-group">
                 <label for="Username">Username</label>
                 <input type="text" value="<?php echo $username; ?>" class="form-control form-control-user" id="username" name="username" placeholder="Username" readonly>
@@ -48,6 +51,16 @@
                   <option value="10" <?php echo ($plevel>=10 && $plevel<20)?"selected":"" ; ?> ><?php echo get_permission_level_desc(10);?></option>
                   <option value="0" <?php echo ($plevel<10)?"selected":"" ; ?> ><?php echo get_permission_level_desc(0);?></option>
                 </select>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <label for="firstname">Reset password <br /><small>(Leave empty if there is no password update)</small></label>
+                  <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
+                </div>
+                <div class="col-sm-6">
+                  <label for="firstname">Repeat password <br />&nbsp;</label>
+                  <input type="password" class="form-control form-control-user" id="repeatpassword" placeholder="Repeat Password">
+                </div>
               </div>
         </div>
     </div>

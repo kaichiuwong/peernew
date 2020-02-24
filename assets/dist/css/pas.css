@@ -13,3 +13,12 @@
 .sidebar-danger{
   background-color: #d9534f;
 }
+
+.content-header .breadcrumb {padding:0;background:#6c757d;}
+.breadcrumb .breadcrumb-item {background:#6c757d;padding:.2em 1em;}
+.breadcrumb .breadcrumb-item+.active {background:#a5a5a5; color: #fff; padding:.2em 1em;}
+.breadcrumb .breadcrumb-item a, .breadcrumb-right-tag .breadcrumb-item  {color:#fff;}
+.breadcrumb .breadcrumb-item+.breadcrumb-item::before {
+    content: "";
+  padding:0;
+}

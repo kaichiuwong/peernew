@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header bg-secondary">
-    <h3 class="card-title">Peer Marking Statistic</h3>
+    <h3 class="card-title">Feedback Preview</h3>
     <div class="card-tools">
       <!-- Collapse Button -->
       <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
@@ -11,10 +11,33 @@
   <div class="card-body">
     <div class="callout callout-success">
         <h5><b>Peer Score: </b>
-            <?php echo sprintf("%.2f", $indiv_score) ; ?>
-            <?php echo ($summary[0]['override_score'] != NULL)? "<small class='text-muted'><i>Overrided</i></small>":"" ; ?>
+            <?php echo sprintf("%.2f", $total_score) ; ?>
+            <br/>
+            <small>Group: <?php echo sprintf("%.2f", $group_score) ; ?> + Peer: <?php echo sprintf("%.2f", $indiv_score) ; ?> <?php echo ($summary[0]['override_score'] != NULL)? "<small class='text-muted'><i>Peer Score Overrided</i></small>":"" ; ?></small>
         </h5>
     </div>
+    <?php if (!empty($feedback)): ?>
+    <div class="callout callout-success">
+        <p><b>Feedback:</b></p>
+        <span><?php echo $feedback; ?></span>
+    </div>
+    <?php endif; ?>
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->
+
+<div class="card">
+  <div class="card-header bg-secondary">
+    <h3 class="card-title">Peer Marking Statistic</h3>
+    <div class="card-tools">
+      <!-- Collapse Button -->
+      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+    </div>
+    <!-- /.card-tools -->
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
     <table class="table table-sm table-head-fixed table-hover">
         <thead>
             <tr>
@@ -41,6 +64,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                 <?php else: ?>
                     <td><?php echo $a['topic'] ; ?></td>
                     <td><?php echo sprintf("%.2f", $a['group_score']) ; ?></td>
@@ -53,12 +77,6 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    <?php if (!empty($feedback)): ?>
-    <div class="callout callout-success">
-        <p><b>Feedback:</b></p>
-        <span><?php echo $feedback; ?></span>
-    </div>
-    <?php endif; ?>
   </div>
   <!-- /.card-body -->
 </div>
@@ -93,6 +111,9 @@
             </tr>
         </thead>
         <tbody>
+            <?php if (empty($assignment_questions_peer)): ?>
+            <tr><td colspan="3" class="text-muted">*** No peers from this group ***</td></tr>
+            <?php else:?>
             <?php $idx = 0 ; ?>
             <?php foreach($assignment_questions_peer[array_keys($assignment_questions_peer)[0]] as $a):  ?>
             <tr>
@@ -147,6 +168,7 @@
                 <?php $idx = $idx + 1; ?>
             </tr>
             <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
         <tfoot>
             <tr>
@@ -186,6 +208,9 @@
             </tr>
         </thead>
         <tbody>
+            <?php if (empty($assignment_questions_self)) : ?>
+                <tr><td colspan="3" class="text-muted">*** No self evaluation questions defined from this assignment ***</td></tr>
+            <?php else: ?>
             <?php foreach($assignment_questions_self as $a): ?>
             <tr>
                 <td>
@@ -230,6 +255,7 @@
                 <?php endswitch; ?>
             </tr>
             <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
     </table>
 </div>

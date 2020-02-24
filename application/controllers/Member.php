@@ -14,8 +14,12 @@ class Member extends MY_PasController {
         }
         else if ($this->check_permission(10)) {
             $this->load_header();
-            if ($username) {
-                $result = $this->User->getUserInfo(decode_id($username));
+            $decode_id = decode_id($username);
+            if (empty($decode_id)) {
+                $decode_id = $username;
+            }
+            if ($decode_id) {
+                $result = $this->User->getUserInfo($decode_id );
                 if (!empty($result)) {
                     $data['username']=$result[0]->username;
                     $data['firstname']=$result[0]->first_name;
@@ -38,8 +42,12 @@ class Member extends MY_PasController {
         }
         else if ($this->check_permission(20)) {
             $this->load_header();
-            if ($username) {
-                $result = $this->User->getUserInfo(decode_id($username));
+            $decode_id = decode_id($username);
+            if (empty($decode_id)) {
+                $decode_id = $username;
+            }
+            if ($decode_id) {
+                $result = $this->User->getUserInfo($decode_id);
                 if (!empty($result)) {
                     $data['username']=$result[0]->username;
                     $data['firstname']=$result[0]->first_name;
@@ -47,8 +55,8 @@ class Member extends MY_PasController {
                     $data['st_id']=$result[0]->id;
                     $data['email']=$result[0]->email;
                     $this->load->model('Unit_model');
-                    $data['enroll_unit'] = $this->Unit_model->get_list_by_student(decode_id($username));
-                    $data['incharge_unit'] = $this->Unit_model->get_list_by_staff(decode_id($username));
+                    $data['enroll_unit'] = $this->Unit_model->get_list_by_student($decode_id);
+                    $data['incharge_unit'] = $this->Unit_model->get_list_by_staff($decode_id);
                     $this->load->model('Assignment_model');
 
                     $data['_view'] = 'pages/full_profile';
@@ -61,9 +69,13 @@ class Member extends MY_PasController {
 
     public function edit_profile($username) {
         if ($this->check_permission(90)) {
-            if ($username) {
+            $decode_id = decode_id($username);
+            if (empty($decode_id)) {
+                $decode_id = $username;
+            }
+            if ($decode_id) {
                 $this->load_header();
-                $result = $this->User->getUserInfo(decode_id($username));
+                $result = $this->User->getUserInfo($decode_id);
                 if (!empty($result)) {
                     $data['username']=$result[0]->username;
                     $data['firstname']=$result[0]->first_name;
@@ -72,8 +84,8 @@ class Member extends MY_PasController {
                     $data['email']=$result[0]->email;
                     $data['plevel']=$result[0]->permission_level;
                     $this->load->model('Unit_model');
-                    $data['enroll_unit'] = $this->Unit_model->get_list_by_student(decode_id($username));
-                    $data['incharge_unit'] = $this->Unit_model->get_list_by_staff(decode_id($username));
+                    $data['enroll_unit'] = $this->Unit_model->get_list_by_student($decode_id);
+                    $data['incharge_unit'] = $this->Unit_model->get_list_by_staff($decode_id);
                     $this->load->model('Assignment_model');
 
                     $data['_view'] = 'pages/edit_profile';
@@ -132,6 +144,9 @@ class Member extends MY_PasController {
                     'email' => $this->input->post('email'),
                     'plevel'  => $this->input->post('plevel')
                 );
+                if (isset($_POST['password'])) {
+                    $param['password'] = $this->input->post('password');
+                }
                 $result = $this->User->updateUserInfo($this->input->post('username'), $param);
             }
             redirect('Member/edit_profile/'.$username);

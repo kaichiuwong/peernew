@@ -29,7 +29,7 @@
       <?php if ($feedback_released): ?>
         <div class="callout callout-success">
             <h5><b>Score: </b>
-                <?php echo sprintf("%.2f", $indiv_score) ; ?>
+                <?php echo sprintf("%.2f", $total_score) ; ?>
             </h5>
         </div>
         <?php if (!empty($feedback)): ?>

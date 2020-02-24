@@ -139,16 +139,17 @@ class Assignment_feedback_model extends CI_Model
             20 => null
         );
 
-        foreach ($default_section as $section) {
+        foreach ($default_section as $section_key => $section_val) {
             $a = $default_threshold_entry;
-            if ($section == "PEER_VARIANCE") 
+            if ($section_key == "PEER_VARIANCE") 
             {
                 $a = $default_variance_entry ;
             }
             foreach ($a as $key => $value) {
                 $params = array (
                     "asg_id" => $asg_id,
-                    "section" => $section,
+                    "section" => $section_key,
+                    "section_desc" => $section_val,
                     "threshold" => $key,
                     "feedback" => $value
                 );

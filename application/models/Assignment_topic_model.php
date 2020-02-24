@@ -67,7 +67,7 @@ class Assignment_topic_model extends CI_Model
     
     function get_assignment_member($id) 
     {
-        $query = $this->db->query("select * from sv_assignment_topic_member where topic_id=$id order by user_id; ");
+        $query = $this->db->query("select * from sv_assignment_topic_member where topic_id='$id' order by user_id; ");
         return $query->result_array();
     }
     
