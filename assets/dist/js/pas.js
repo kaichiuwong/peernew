@@ -489,6 +489,43 @@ function validatePassword() {
     return rtnResult;
 }
 
+function verifyDateFormat(d) {
+    var re = /^\d{4}-(0[1-9]|1[0-2])-([0-2]\d|3[01]) (0\d|1[01]):[0-5]\d:[0-5]\d$/;
+    return re.test(d);
+}
+
+function validateDateValue() {
+    var rtnResult = false ;
+    var msg = "Input Date is invalid. Please double check.";
+
+    do 
+    {
+        if ( $("#pair_key").val() == $("#key").val() ) { rtnResult = true; break; }
+        if ( $("#pair_date").val() == '' ) { rtnResult = true; break; }
+        if ( $("#date_value").val() == '' ) { rtnResult = true; break; }
+        if ( !(verifyDateFormat($("#date_value").val())) ) break;
+        if ( $("#pair_key").val().includes('_OPEN') && $("#key").val().includes('_CLOSE')) {
+            if ( $("#pair_date").val() >= $("#date_value").val() ) {
+                msg = "Input Date should larger than the open date. Please double check.";
+                break;
+            }
+        }
+        if ( $("#pair_key").val().includes('_CLOSE') && $("#key").val().includes('_OPEN')) {
+            if ( $("#pair_date").val() <= $("#date_value").val() ) {
+                msg = "Input Date should smaller than the close date. Please double check.";
+                break;
+            }
+        }
+        rtnResult = true;
+    } while (false);
+
+    if (!rtnResult) {
+        $("#errormsg").removeClass("d-none");
+        $("#errorContent").html(msg);
+    }
+    return rtnResult;
+}
+
 function updateTotal() {
     var input = 0;
     var total = parseInt($("#org_weight").html());

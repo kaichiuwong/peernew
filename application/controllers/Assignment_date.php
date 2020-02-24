@@ -47,13 +47,29 @@ class Assignment_date extends MY_PasController{
 
             $data['asg_id'] = $asg_id;
             $data['Assignment_date'] = $this->Assignment_date_model->get_assignment_date($id);
+            $current_key = $data['Assignment_date']['key'];
+            $data['pair_key'] = $current_key;
+            $data['pair_date'] = '';
+            if (strpos($current_key, '_OPEN') !== false) {
+                $data['pair_key'] = str_replace("_OPEN","_CLOSE",$current_key);
+            }
+            if (strpos($current_key, '_CLOSE') !== false) {
+                $data['pair_key'] = str_replace("_CLOSE","_OPEN",$current_key);
+            }
+            if ($current_key != $data['pair_key']) {
+                $data['pair_date'] = $this->Assignment_date_model->get_date_by_asg_id_key($asg_id,$data['pair_key'])['date_value'];
+            }
             
             if(isset($data['Assignment_date']['id']))
             {
                 if (isset($_POST['asg_id']) && isset($_POST['id'])) {
+                    $date_value = null;
+                    if (!empty($_POST['date_value'])) {
+                        $date_value = $this->input->post('date_value');
+                    }
                     $params = array(
                         'description' => $this->input->post('description'),
-                        'date_value' => $this->input->post('date_value')
+                        'date_value' => $date_value
                     );
 
                     $this->Assignment_date_model->update_assignment_date($id,$params,$this->get_login_user());            
