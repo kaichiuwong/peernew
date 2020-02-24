@@ -102,6 +102,8 @@ class Assignment_model extends CI_Model
 
     function delete_assignment($id)
     {
+        $this->db->delete('assignment_peer_mark',array('asg_id'=>$id));
+        $this->db->delete('assignment_group_mark',array('asg_id'=>$id));
         $this->db->delete('assignment_date',array('asg_id'=>$id));
         $this->db->delete('assignment_feedback',array('asg_id'=>$id));
         $this->db->delete('submission',array('asg_id'=>$id));
