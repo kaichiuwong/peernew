@@ -89,7 +89,7 @@ class Unit_enrol_model extends CI_Model
                     'id' => $sid,
                     'email' => $email,
                     'plevel' => 10,
-                    'password' => $sid.$username
+                    'password' => $sid
                 );
                 $this->User->createUser($userinfo);
             }
