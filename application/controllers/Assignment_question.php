@@ -9,29 +9,47 @@ class Assignment_question extends MY_PasController{
 
     function index($asg_id, $type = 'PEER')
     {
-        if ($this->check_permission(30)) {
-            if ($asg_id) {
-                $type=strtoupper($type);
-                $data['asg_id'] = $asg_id;
-                $data['type'] = $type;
-                $data['_view'] = 'pages/assignment_question/index';
+        $done = false;
 
-                $data['assignment_questions'] = $this->assignment_question_model->get_assignment_question_by_asgid_section($asg_id,$type);
-                $this->load->model('Assignment_model');
-                $data['all_assignments'] = $this->Assignment_model->get_all_assignments();
-                $this->load_header($data);
-                $this->load->view('templates/main',$data);
-                $this->load_footer($data);
-            }
-            else {
-                redirect('assignmentadmin');
-            }
-        }
+        do 
+        {
+            if (!$this->check_permission(30) ) break;
+            $asg_result = $this->assignment_check($asg_id, false);
+            if (!$asg_result['result']) break;
+            $decode_asg_id = $asg_result['decode_asg_id'];
+            $data['assignment'] = $asg_result['asg_info'];
+            $data['asg_header'] = $asg_result['asg_header'];
+
+            $type=strtoupper($type);
+            $data['asg_id'] = $asg_id;
+            $data['type'] = $type;
+            $data['_view'] = 'pages/assignment_question/index';
+
+            $data['assignment_questions'] = $this->assignment_question_model->get_assignment_question_by_asgid_section($asg_id,$type);
+            $this->load->model('Assignment_model');
+            $data['all_assignments'] = $this->Assignment_model->get_all_assignments();
+            $this->load_header($data);
+            $this->load->view('templates/main',$data);
+            $this->load_footer($data);
+            $done = true;
+        } while(0);
+
+        if (!$done) redirect("Assignmentadmin");
     }
 
     function add($asg_id, $type)
     {   
-        if ($this->check_permission(30)) {
+        $done = false;
+
+        do 
+        {
+            if (!$this->check_permission(30) ) break;
+            $asg_result = $this->assignment_check($asg_id, false);
+            if (!$asg_result['result']) break;
+            $decode_asg_id = $asg_result['decode_asg_id'];
+            $data['assignment'] = $asg_result['asg_info'];
+            $data['asg_header'] = $asg_result['asg_header'];
+
             $type=strtoupper($type);
             $data['asg_id'] = $asg_id;
             $data['type'] = $type;
@@ -55,25 +73,31 @@ class Assignment_question extends MY_PasController{
             $this->load_header($data);
             $this->load->view('templates/main',$data);
             $this->load_footer($data);
-        }
+            $done = true;
+        } while(0);
+
+        if (!$done) redirect("Assignmentadmin");
     }  
 
     function edit($asg_id, $type, $id)
     {   
-        if ($this->check_permission(30)) {
+        $done = false;
+
+        do 
+        {
+            if (!$this->check_permission(30) ) break;
+            $asg_result = $this->assignment_check($asg_id, false);
+            if (!$asg_result['result']) break;
+            $decode_asg_id = $asg_result['decode_asg_id'];
+            $data['assignment'] = $asg_result['asg_info'];
+            $data['asg_header'] = $asg_result['asg_header'];
             $type=strtoupper($type);
             $data['asg_id'] = $asg_id;
             $data['type'] = $type;
             $data['assignment_question'] = $this->assignment_question_model->get_assignment_question($id);
-            
             if(isset($data['assignment_question']['id']))
             {
-                $this->load->library('form_validation');
-
-                $this->form_validation->set_rules('question','Question','required');
-            
-                if($this->form_validation->run())     
-                {   
+                if (isset($_POST['question_order'])) {
                     $params = array(
                         "question_order" => $this->input->post('question_order'),
                         "question" => $this->input->post('question'), 
@@ -84,20 +108,19 @@ class Assignment_question extends MY_PasController{
                     $this->assignment_question_model->update_assignment_question($id,$params);            
                     redirect('assignment_question/index/'.$asg_id);
                 }
-                else
-                {
-                    $this->load->model('Assignment_model');
-                    $data['all_assignments'] = $this->Assignment_model->get_all_assignments();
 
-                    $data['_view'] = 'pages/assignment_question/edit';
-                    $this->load_header($data);
-                    $this->load->view('templates/main',$data);
-                    $this->load_footer($data);
-                }
+                $this->load->model('Assignment_model');
+                $data['all_assignments'] = $this->Assignment_model->get_all_assignments();
+
+                $data['_view'] = 'pages/assignment_question/edit';
+                $this->load_header($data);
+                $this->load->view('templates/main',$data);
+                $this->load_footer($data);
+                $done = true;
             }
-            else
-                show_error('The assignment_question you are trying to edit does not exist.');
-        }
+        } while(0);
+
+        if (!$done) redirect("Assignmentadmin");
     } 
 
     function remove($asg_id,$type,$id)

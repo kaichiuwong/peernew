@@ -9,23 +9,30 @@ class Staff_list extends MY_PasController{
 
     function index($asg_id)
     {
-        if ($asg_id) {
-            if ($this->check_permission(30)) {
-                $this->load->model('User');
+        $done = false;
 
-                $data['asg_id'] = $asg_id;
-                $data['_view'] = 'pages/stafflist/index';
-                $data['staff'] = $this->Unit_staff_model->get_unit_staff_by_asg($asg_id);
-                $data['lecturer_list'] = $this->User->get_user_list_by_permission(30);
-                $data['tutor_list'] = $this->User->get_user_list_by_permission(20);
-                $this->load_header($data);
-                $this->load->view('templates/main',$data);
-                $this->load_footer($data);
-            }
-        }
-        else {
-            redirect('assignmentadmin');
-        }
+        do 
+        {
+            if (!$this->check_permission(30) ) break;
+            $asg_result = $this->assignment_check($asg_id, false);
+            if (!$asg_result['result']) break;
+            $decode_asg_id = $asg_result['decode_asg_id'];
+            $data['assignment'] = $asg_result['asg_info'];
+            $data['asg_header'] = $asg_result['asg_header'];
+
+            $this->load->model('User');
+            $data['asg_id'] = $asg_id;
+            $data['_view'] = 'pages/stafflist/index';
+            $data['staff'] = $this->Unit_staff_model->get_unit_staff_by_asg($asg_id);
+            $data['lecturer_list'] = $this->User->get_user_list_by_permission(30);
+            $data['tutor_list'] = $this->User->get_user_list_by_permission(20);
+            $this->load_header($data);
+            $this->load->view('templates/main',$data);
+            $this->load_footer($data);
+            $done = true;
+        } while(0);
+
+        if (!$done) redirect("Assignmentadmin");
     }
 
     function add($asg_id)

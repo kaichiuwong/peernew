@@ -28,24 +28,27 @@ class Assignmentadmin extends MY_PasController {
 
     function info($asg_id)
     {
-        if ($this->check_permission(30) ) {
+        $done = false;
+
+        do 
+        {
+            if (!$this->check_permission(30) ) break;
+            $asg_result = $this->assignment_check($asg_id, false);
+            if (!$asg_result['result']) break;
+            $decode_asg_id = $asg_result['decode_asg_id'];
+            $data['assignment'] = $asg_result['asg_info'];
+            $data['asg_header'] = $asg_result['asg_header'];
+
             $data['asg_id'] = $asg_id;
-            $data['assignment'] = $this->Assignment_model->get_assignment($asg_id);
-            
-            if(isset($data['assignment']['asg_id']))
-            {
-                $new_session_data = array('asg_id' => $asg_id, 'asg_header' => $data['assignment']['unit_code'] . ' - ' . $data['assignment']['title']);
-                $this->session->set_userdata($new_session_data);
-                
-                $data['_view'] = 'pages/assignmentadmin/info';
-                $this->load_header($data);
-                $this->load->view('templates/main',$data);
-                $this->load_footer($data);
-            }
-            else {
-                redirect('Assignmentadmin/index');
-            }
-        }
+            $data['assignment'] = $this->Assignment_model->get_assignment($asg_id);    
+            $data['_view'] = 'pages/assignmentadmin/info';
+            $this->load_header($data);
+            $this->load->view('templates/main',$data);
+            $this->load_footer($data);
+            $done = true;
+        } while(0);
+
+        if (!$done) redirect("Assignmentadmin");
     } 
 
     function add()
@@ -84,7 +87,18 @@ class Assignmentadmin extends MY_PasController {
                     $this->Assignment_date_model->add_default($assignment_id, $this->get_login_user() );
 
                     $this->load->model('Assignment_feedback_model');
-                    $this->Assignment_feedback_model->add_default_feedback($assignment_id, $this->get_login_user() );                    
+                    $this->Assignment_feedback_model->add_default_feedback($assignment_id, $this->get_login_user() );
+                    
+                    #Add Default Staff for assignment
+                    $this->load->model('User');
+                    $admin_list = $this->User->get_user_list_by_permission(90);
+                    foreach($admin_list as $admin) {
+                        $param = array(
+                            'unit_id' => $assignment_id,
+                            'username' => $admin['username']
+                        );
+                        $this->Unit_staff_model->add_unit_staff($this->get_login_user(), $param);
+                    }
                 }
                 redirect('Assignmentadmin/index');
             }
@@ -102,49 +116,41 @@ class Assignmentadmin extends MY_PasController {
     }  
 
     function edit($asg_id)    {
-        if ($this->check_permission(30)) {
-            $data['asg_id'] = $asg_id;
-            // check if the assignment exists before trying to edit it
-            $data['assignment'] = $this->Assignment_model->get_assignment($asg_id);
-            
-            if(isset($data['assignment']['asg_id']))
-            {
-                $this->load->library('form_validation');
+        $done = false;
 
-                $this->form_validation->set_rules('type','Type','required');
-                $this->form_validation->set_rules('unit_id','Unit Id','required');
-                $this->form_validation->set_rules('title','Title','max_length[500]');
-            
-                if($this->form_validation->run())     
-                {   
-                    $params = array(
-                        'type' => $this->input->post('type'),
-                        'unit_id' => $this->input->post('unit_id'),
-                        'title' => $this->input->post('title'),
-                        'outcome' => $this->input->post('outcome'),
-                        'scenario' => $this->input->post('scenario'),
-                    );
+        do 
+        {
+            if (!$this->check_permission(30) ) break;
+            $asg_result = $this->assignment_check($asg_id, false);
+            if (!$asg_result['result']) break;
 
-                    $this->Assignment_model->update_assignment($asg_id,$params);            
-                    redirect('Assignmentadmin/info/'.$asg_id);
-                }
-                else
-                {
-                    $this->load->model('Unit_model');
-                    $data['all_units'] = $this->Unit_model->get_all_units();
-                    
-                    $new_session_data = array('asg_id' => $asg_id, 'asg_header' => $data['assignment']['unit_code'] . ' - ' . $data['assignment']['title']);
-                    $this->session->set_userdata($new_session_data);
-                    
-                    $data['_view'] = 'pages/assignmentadmin/edit';
-                    $this->load_header($data);
-                    $this->load->view('templates/main',$data);
-                    $this->load_footer($data);
-                }
+            if (isset($_POST['asg_id'])) {
+                $params = array(
+                    'title' => $this->input->post('title'),
+                    'outcome' => $this->input->post('outcome'),
+                    'scenario' => $this->input->post('scenario')
+                );
+
+                $this->Assignment_model->update_assignment($asg_id,$params);            
+                redirect('Assignmentadmin/info/'.$asg_id);
             }
-            else
-                show_error('The assignment you are trying to edit does not exist.');
-        }
+            $decode_asg_id = $asg_result['decode_asg_id'];
+            $data['assignment'] = $asg_result['asg_info'];
+            $data['asg_header'] = $asg_result['asg_header'];
+
+            $data['asg_id'] = $asg_id;
+            $data['assignment'] = $this->Assignment_model->get_assignment($asg_id);    
+            $this->load->model('Unit_model');
+            $data['all_units'] = $this->Unit_model->get_all_units();
+            $data['_view'] = 'pages/assignmentadmin/edit';
+            $this->load_header($data);
+            $this->load->view('templates/main',$data);
+            $this->load_footer($data);
+
+            $done = true;
+        } while(0);
+
+        if (!$done) redirect("Assignmentadmin");
     } 
 
     function remove($asg_id)

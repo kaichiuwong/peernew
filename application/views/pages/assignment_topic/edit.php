@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1><?php echo $this->session->userdata('asg_header'); ?></h1>
+        <h1><?php echo $asg_header; ?></h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -32,7 +32,7 @@
             <label for="assign_id" class="col-md-4 control-label">Assignment</label>
             <div class="col-md-12">
                 <select name="assign_id" class="form-control" disabled>
-                    <option value='<?php echo $assignment_topic['assign_id']; ?>' selected><?php echo $this->session->userdata('asg_header');?></option>
+                    <option value='<?php echo $assignment_topic['assign_id']; ?>' selected><?php echo $asg_header;?></option>
                 </select>
             </div>
         </div>

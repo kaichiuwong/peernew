@@ -9,26 +9,42 @@ class Assignment_date extends MY_PasController{
 
     function index($asg_id)
     {
-        if ($this->check_permission(30)) {
-            if ($asg_id) {
-                $data['asg_id'] = $asg_id;
-                if ($this->check_permission(20)) {
-                    $data['_view'] = 'pages/assignment_date/index';
-                    $data['Assignment_dates'] = $this->Assignment_date_model->get_all_dates_by_asg_id($asg_id);
-                    $this->load_header($data);
-                    $this->load->view('templates/main',$data);
-                    $this->load_footer($data);
-                }
-            }
-            else {
-                redirect('assignmentadmin');
-            }
-        }
+        $done = false;
+
+        do 
+        {
+            if (!$this->check_permission(30) ) break;
+            $asg_result = $this->assignment_check($asg_id, false);
+            if (!$asg_result['result']) break;
+            $decode_asg_id = $asg_result['decode_asg_id'];
+            $data['assignment'] = $asg_result['asg_info'];
+            $data['asg_header'] = $asg_result['asg_header'];
+
+            $data['asg_id'] = $asg_id;
+            $data['_view'] = 'pages/assignment_date/index';
+            $data['Assignment_dates'] = $this->Assignment_date_model->get_all_dates_by_asg_id($asg_id);
+            $this->load_header($data);
+            $this->load->view('templates/main',$data);
+            $this->load_footer($data);
+            $done = true;
+        } while(0);
+
+        if (!$done) redirect("Assignmentadmin");
     }
 
     function edit($asg_id,$id)
-    {   
-        if ($this->check_permission(30)) {
+    {
+        $done = false;
+
+        do 
+        {
+            if (!$this->check_permission(30) ) break;
+            $asg_result = $this->assignment_check($asg_id, false);
+            if (!$asg_result['result']) break;
+            $decode_asg_id = $asg_result['decode_asg_id'];
+            $data['assignment'] = $asg_result['asg_info'];
+            $data['asg_header'] = $asg_result['asg_header'];
+
             $data['asg_id'] = $asg_id;
             $data['Assignment_date'] = $this->Assignment_date_model->get_assignment_date($id);
             
@@ -51,9 +67,10 @@ class Assignment_date extends MY_PasController{
                     $this->load_footer($data);
                 }
             }
-            else
-                show_error('The Assignment_date you are trying to edit does not exist.');
-        }
+            $done = true;
+        } while(0);
+
+        if (!$done) redirect("Assignmentadmin");
     }
     
     function json($asg_id) 

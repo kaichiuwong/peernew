@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1><?php echo $this->session->userdata('asg_header'); ?></h1>
+        <h1><?php echo $asg_header; ?></h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -25,9 +25,10 @@
     <div class="card-header">
         <h3 class="card-title">Edit Assignment</h3>
     </div>
-    <?php echo form_open('Assignmentadmin/edit/'.$assignment['asg_id'],array("class"=>"form-horizontal")); ?>
+    <?php echo form_open('Assignmentadmin/edit/'.$assignment['asg_id'].'/',array("class"=>"form-horizontal")); ?>
     <div class="card-body">
         <div class="form-group">
+            <input type="hidden" name="asg_id" value="<?php echo $assignment['asg_id']; ?>" />
             <label for="type" class="col-md-4 control-label"><span class="text-danger">*</span>Type</label>
             <div class="col-md-12">
                 <select name="type" class="form-control" disabled required>
@@ -87,7 +88,7 @@
     </div>
     <div class="card-footer">
         <button type="submit" class="btn btn-primary btn-sm">Save Change</button>
-        <a href="<?php echo site_url('Assignmentadmin'); ?>" class="btn btn-sm btn-secondary">Cancel</a>
+        <a href="<?php echo site_url('Assignmentadmin/info'); ?>" class="btn btn-sm btn-secondary">Cancel</a>
     </div>
     <?php echo form_close(); ?>
 </div>
