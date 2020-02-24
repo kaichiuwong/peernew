@@ -25,7 +25,7 @@
     <div class="card-header">
         <h3 class="card-title">Edit Assignment</h3>
     </div>
-    <?php echo form_open('Assignmentadmin/edit/'.$assignment['id'],array("class"=>"form-horizontal")); ?>
+    <?php echo form_open('Assignmentadmin/edit/'.$assignment['asg_id'],array("class"=>"form-horizontal")); ?>
     <div class="card-body">
         <div class="form-group">
             <label for="type" class="col-md-4 control-label"><span class="text-danger">*</span>Type</label>
