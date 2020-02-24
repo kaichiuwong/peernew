@@ -108,7 +108,7 @@ Class Usercontrol extends CI_Controller {
                 $reseturl='http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']) . '/resetpassword/' . $resetcode;
                 $body="<p>Dear User,</p>" ;
                 $body .="<p>Your password recovery code is $resetcode. Please enter this code on the webpage using your browser or click the <a href='$reseturl'>link</a> to reset your password.</p>";
-                $this->email->from('utas.ictlab@gmail.com', SYSTEM_FRIENDLY_NAME);
+                $this->email->from('utas.ict.group@gmail.com', SYSTEM_FRIENDLY_NAME);
                 $this->email->to($email);
                 $this->email->subject(SYSTEM_FRIENDLY_NAME .' - Password Reset Code');
                 $this->email->message($body);
