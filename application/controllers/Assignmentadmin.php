@@ -89,16 +89,6 @@ class Assignmentadmin extends MY_PasController {
                     $this->load->model('Assignment_feedback_model');
                     $this->Assignment_feedback_model->add_default_feedback($assignment_id, $this->get_login_user() );
                     
-                    #Add Default Staff for assignment
-                    $this->load->model('User');
-                    $admin_list = $this->User->get_user_list_by_permission(90);
-                    foreach($admin_list as $admin) {
-                        $param = array(
-                            'unit_id' => $assignment_id,
-                            'username' => $admin['username']
-                        );
-                        $this->Unit_staff_model->add_unit_staff($this->get_login_user(), $param);
-                    }
                 }
                 redirect('Assignmentadmin/index');
             }

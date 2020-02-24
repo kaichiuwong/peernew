@@ -54,4 +54,14 @@ class Setting extends MY_PasController {
         $this->load->model('Unit_enrol_model');
         $this->Unit_enrol_model->refresh_enrol_from_db();
     }
+
+    public function release_asg() {
+        $this->load->model('Assignment_model');
+        $this->Assignment_model->batch_release_asg();
+    }
+
+    public function close_asg() {
+        $this->load->model('Assignment_model');
+        $this->Assignment_model->batch_close_asg();
+    }
 }

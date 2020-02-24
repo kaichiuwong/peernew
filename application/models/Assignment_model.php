@@ -125,6 +125,20 @@ class Assignment_model extends CI_Model
         return $this->db->affected_rows();
     }
 
+    function batch_release_asg() 
+    {
+        $query_str  = " call sp_release_asg(); "; 
+        $query = $this->db->query($query_str);
+        return $this->db->affected_rows();
+    }
+
+    function batch_close_asg() 
+    {
+        $query_str  = " call sp_close_asg(); "; 
+        $query = $this->db->query($query_str);
+        return $this->db->affected_rows();
+    }
+
     function feedback_switch($asg_id) {
         $query_str  = "UPDATE `assignment` " ;
         $query_str .= "   SET feedback = CASE WHEN feedback = 0 THEN 1 ";
