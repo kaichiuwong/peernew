@@ -49,4 +49,9 @@ class Setting extends MY_PasController {
         }
         redirect('Setting/profile/updated');
     }
+
+    public function refresh_enrol() {
+        $this->load->model('User_enrol_model');
+        $this->User_enrol_model->refresh_enrol_from_db();
+    }
 }

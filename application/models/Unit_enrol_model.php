@@ -66,7 +66,7 @@ class Unit_enrol_model extends CI_Model
         $remote_query = $remote_db->query($remotesql);
         $remote_result = $remote_query->result_array();
 
-        $truncatesql = "truncate student_unit; ";
+        $truncatesql = "truncate unit_enrol; ";
         $this->db->query($truncatesql);
 
         $this->load->model('User');
