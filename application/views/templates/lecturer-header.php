@@ -16,6 +16,8 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/plugins/fullcalendar-daygrid/main.css" />
   <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/plugins/fullcalendar-timegrid/main.css" />
   <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/plugins/fullcalendar-list/main.css" />
+  <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/dist/css/adminlte.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/dist/css/pas.css?t=<?php echo rand(); ?>">
 </head>

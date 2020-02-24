@@ -25,6 +25,7 @@
 <script src="<?php echo base_url(); ?>/assets/plugins/fullcalendar-daygrid/main.js"></script>
 <script src="<?php echo base_url(); ?>/assets/plugins/fullcalendar-timegrid/main.js"></script>
 <script src="<?php echo base_url(); ?>/assets/plugins/fullcalendar-list/main.js"></script>
+<script src="<?php echo base_url(); ?>/assets/plugins/select2/js/select2.full.min.js"></script>
 <script src="<?php echo base_url(); ?>/assets/dist/js/demo.js"></script>
 <script src="<?php echo base_url(); ?>/assets/dist/js/pas.js?t=<?php echo rand(); ?>"></script>
 </body>

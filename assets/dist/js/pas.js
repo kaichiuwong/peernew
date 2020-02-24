@@ -319,6 +319,9 @@ $(document).on('click','#btn_self_submit',function(){
 
 $(document).ready(function () {
     var counter = 1;
+    if ($(".select2bs4").length) {
+        $('.select2bs4').select2({theme: 'bootstrap4'});
+    }
 
     $("#addrow").on("click", function () {
         var newRow = $("<tr>");

@@ -24,7 +24,7 @@
         <div class="form-group">
             <label for="type" class="col-md-4 control-label"><span class="text-danger">*</span>Type</label>
             <div class="col-md-12">
-                <select name="type" class="form-control" required>
+                <select name="type" class="form-control select2bs4" required>
                     <option value="" disabled selected>-- Assignment Type --</option>
                     <?php 
                     $type_values = array(
@@ -45,7 +45,7 @@
         <div class="form-group">
             <label for="unit_id" class="col-md-4 control-label"><span class="text-danger">*</span>Unit</label>
             <div class="col-md-12">
-                <select name="unit_id" class="form-control" required>
+                <select name="unit_id" class="form-control select2bs4" required>
                     <option value="" disabled selected>-- Unit --</option>
                     <?php 
                     foreach($all_units as $unit)

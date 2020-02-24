@@ -56,21 +56,25 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($staff as $a){ ?>
-                <tr>
-                    <td><a href="<?php echo site_url('Member/full_profile/'.$a['username']); ?>"><?php echo $a['username']; ?></a></td>
-                    <td><?php echo $a['first_name'] . ' ' . $a['last_name'] ; ?></td>
-                    <td>
-                    <?php echo form_open('Staff_list/remove/'.$asg_id); ?>
-                        <div class="input-group">
-                            <input type="hidden" name="username" value="<?php echo $a['username']; ?>" />
-                            <input type="hidden" name="asg_id" value="<?php echo $a['asg_id']; ?>" />
-                            <button class="btn btn-danger btn-sm" type="submit"  onclick="return confirm('Are your confirm to remove this staff from this unit?');">Delete</button>
-                        </div>
-                    <?php echo form_close(); ?>
-                    </td>
-                </tr>
-                <?php } ?>
+                <?php if (!empty($staff)): ?>
+                <?php foreach($staff as $a): ?>
+                  <?php if (!empty($a['username'])): ?>
+                  <tr>
+                      <td><a href="<?php echo site_url('Member/full_profile/'.$a['username']); ?>"><?php echo $a['username']; ?></a></td>
+                      <td><?php echo $a['first_name'] . ' ' . $a['last_name'] ; ?></td>
+                      <td>
+                      <?php echo form_open('Staff_list/remove/'.$asg_id); ?>
+                          <div class="input-group">
+                              <input type="hidden" name="username" value="<?php echo $a['username']; ?>" />
+                              <input type="hidden" name="asg_id" value="<?php echo $a['asg_id']; ?>" />
+                              <button class="btn btn-danger btn-sm" type="submit"  onclick="return confirm('Are your confirm to remove this staff from this unit?');">Delete</button>
+                          </div>
+                      <?php echo form_close(); ?>
+                      </td>
+                  </tr>
+                  <?php endif; ?>
+                <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
       </div>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2020 at 12:25 PM
+-- Generation Time: Feb 24, 2020 at 01:00 PM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `assignment` (
   `feedback` int(11) NOT NULL DEFAULT '0' COMMENT '0 - feedback does not release to student; 1- feedback release to student',
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Triggers `assignment`
@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `assignment_date` (
   `last_upd_by` varchar(50) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=112 ;
 
 -- --------------------------------------------------------
 
@@ -253,7 +253,7 @@ CREATE TABLE IF NOT EXISTS `assignment_default_feedback` (
   `last_upd_by` varchar(20) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=96 ;
 
 -- --------------------------------------------------------
 
@@ -271,7 +271,7 @@ CREATE TABLE IF NOT EXISTS `assignment_feedback` (
   `feedback` text,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=202 ;
 
 -- --------------------------------------------------------
 
@@ -289,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `assignment_group_mark` (
   `last_upd_by` varchar(10) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
 
@@ -333,7 +333,7 @@ CREATE TABLE IF NOT EXISTS `assignment_mark_criteria` (
   `nn` mediumtext,
   `create_date` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 -- --------------------------------------------------------
 
@@ -351,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `assignment_peer_mark` (
   `last_upd_by` varchar(10) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 -- --------------------------------------------------------
 
@@ -369,7 +369,7 @@ CREATE TABLE IF NOT EXISTS `assignment_question` (
   `question_section` enum('SELF','PEER','GROUP') NOT NULL DEFAULT 'SELF',
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=99 ;
 
 -- --------------------------------------------------------
 
@@ -386,7 +386,7 @@ CREATE TABLE IF NOT EXISTS `assignment_topic` (
   `max` int(11) NOT NULL DEFAULT '0',
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1014 ;
 
 -- --------------------------------------------------------
 
@@ -402,7 +402,7 @@ CREATE TABLE IF NOT EXISTS `assignment_topic_allocation` (
   `topic_id` int(11) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=284 ;
 
 -- --------------------------------------------------------
 
@@ -424,12 +424,12 @@ CREATE TABLE IF NOT EXISTS `semester` (
 INSERT INTO `semester` (`sem`, `short_description`, `description`) VALUES
 ('202001', '2020Sem1', '2020 Semester 1'),
 ('202002', '2020Sem2', '2020 Semester 2'),
-('2021Sem1', '2021Sem1', '2021 Semester 1'),
-('2021Sem2', '2021Sem2', '2021 Semester 2'),
-('2022Sem1', '2022Sem1', '2022 Semester 1'),
-('2022Sem2', '2022Sem2', '2022 Semester 2'),
-('2023Sem1', '2023Sem1', '2023 Semester 1'),
-('2023Sem2', '2023Sem2', '2023 Semester 2');
+('202101', '2021Sem1', '2021 Semester 1'),
+('202102', '2021Sem2', '2021 Semester 2'),
+('202201', '2022Sem1', '2022 Semester 1'),
+('202202', '2022Sem2', '2022 Semester 2'),
+('202301', '2023Sem1', '2023 Semester 1'),
+('202302', '2023Sem2', '2023 Semester 2');
 
 -- --------------------------------------------------------
 
@@ -445,7 +445,7 @@ CREATE TABLE IF NOT EXISTS `submission` (
   `user_id` varchar(10) NOT NULL,
   `filename` varchar(1000) NOT NULL,
   `submission_date` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Triggers `submission`
@@ -748,22 +748,43 @@ CREATE TABLE IF NOT EXISTS `unit` (
   `unit_description` varchar(500) DEFAULT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
 
 --
 -- Dumping data for table `unit`
 --
 
 INSERT INTO `unit` (`id`, `unit_code`, `sem`, `unit_description`, `create_time`, `last_upd_time`) VALUES
-(1, 'KIT711', '202001', 'Network Security Techniques and Technology', '2019-11-17 22:41:43', '2019-11-17 22:41:43'),
-(4, 'KIT111', '202001', 'Data Networks and Security', '2019-11-17 23:28:58', '2019-11-17 23:28:58'),
-(5, 'KIT501', '202001', 'ICT Systems Administration Fundamentals', '2019-11-17 23:28:58', '2019-11-17 23:28:58'),
-(6, 'KIT201', '202001', 'Data Networks and Security', '2019-11-17 23:29:51', '2019-11-17 23:29:51'),
-(7, 'KIT301', '202001', 'ICT Project A', '2019-12-05 15:34:57', '2019-12-05 15:34:57'),
-(8, 'KIT302', '202001', 'ICT Project B', '2019-12-05 15:35:05', '2019-12-05 15:35:05'),
-(9, 'KIT503', '202001', 'ICT Professional Practices and Project Management', '2019-12-05 15:35:46', '2019-12-05 15:35:46'),
-(10, 'KIT101', '202002', 'Programming Fundamentals', '2019-12-21 00:46:39', '2019-12-21 00:46:39'),
-(11, 'KIT101', '202001', 'Programming Fundamentals', '2019-12-21 00:46:39', '2019-12-21 00:46:39');
+(1, 'KIT001', '202001', 'Programming Preparation', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(2, 'KIT101', '202001', 'Programming Fundamentals', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(3, 'KIT105', '202001', 'ICT Professional Practices', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(4, 'KIT107', '202001', 'Programming', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(5, 'KIT108', '202001', 'Artificial Intelligence', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(6, 'KIT111', '202001', 'Data Networks and Security', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(7, 'KIT202', '202001', 'Secure Web Programming', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(8, 'KIT203', '202001', 'ICT Project Management and Modelling', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(9, 'KIT205', '202001', 'Data Structures and Algorithms', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(10, 'KIT301', '202001', 'ICT Project A', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(11, 'KIT304', '202001', 'Server Administration and Security Assurance', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(12, 'KIT305', '202001', 'Mobile Application Development', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(13, 'KIT317', '202001', 'Sensor Networks and Applications', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(14, 'KIT417', '202001', 'Sensor Networks and Applications', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(15, 'KIT318', '202001', 'Big Data and Cloud Computing', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(16, 'KIT418', '202001', 'Big Data and Cloud Computing', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(17, 'KIT401', '202001', 'ICT Research Methods', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(18, 'KIT701', '202001', 'ICT Research Methods', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(19, 'KIT405', '202001', 'Programming for Intelligent Web Services & Apps', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(20, 'KIT502', '202001', 'Web Development', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(21, 'KIT503', '202001', 'ICT Professional Practices and Project Management', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(22, 'KIT607', '202001', 'Mobile Application Development', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(23, 'KIT707', '202001', 'Knowledge and Information Management', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(24, 'KIT710', '202001', 'eLogistics', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(25, 'KIT711', '202001', 'Network Security Techniques and Technology', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(26, 'KIT713', '202001', 'Multi-perspective ICT Project', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(27, 'KIT714', '202001', 'ICT Research Principles', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(28, 'KIT208', '202001', 'Virtual and Mixed Reality Technology', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(29, 'KIT508', '202001', 'Virtual and Mixed Reality Technology', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(30, 'KIT302', '202002', 'ICT Project B', '2020-02-24 22:50:12', '2020-02-24 22:50:12');
 
 -- --------------------------------------------------------
 
@@ -795,7 +816,38 @@ CREATE TABLE IF NOT EXISTS `unit_staff` (
   `last_upd_by` varchar(20) NOT NULL,
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+
+--
+-- Dumping data for table `unit_staff`
+--
+
+INSERT INTO `unit_staff` (`id`, `username`, `unit_id`, `last_upd_by`, `create_time`, `last_upd_time`) VALUES
+(1, 'admin', 1, 'admin', '2020-02-24 22:46:09', '2020-02-24 22:46:09'),
+(2, 'admin', 2, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(3, 'admin', 3, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(4, 'admin', 4, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(5, 'admin', 5, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(6, 'admin', 6, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(7, 'admin', 7, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(8, 'admin', 8, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(9, 'admin', 9, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(10, 'admin', 10, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(11, 'admin', 11, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(12, 'admin', 12, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(13, 'admin', 13, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(14, 'admin', 14, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(15, 'admin', 15, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(16, 'admin', 16, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(17, 'admin', 17, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(18, 'admin', 18, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(19, 'admin', 19, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(20, 'admin', 20, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(21, 'admin', 21, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(22, 'admin', 22, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(23, 'admin', 23, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(24, 'admin', 24, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16'),
+(25, 'admin', 25, 'admin', '2020-02-24 22:47:16', '2020-02-24 22:47:16');
 
 -- --------------------------------------------------------
 
@@ -1060,62 +1112,62 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `assignment`
 --
 ALTER TABLE `assignment`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `assignment_date`
 --
 ALTER TABLE `assignment_date`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=112;
 --
 -- AUTO_INCREMENT for table `assignment_default_feedback`
 --
 ALTER TABLE `assignment_default_feedback`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=96;
 --
 -- AUTO_INCREMENT for table `assignment_feedback`
 --
 ALTER TABLE `assignment_feedback`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=202;
 --
 -- AUTO_INCREMENT for table `assignment_group_mark`
 --
 ALTER TABLE `assignment_group_mark`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `assignment_mark_criteria`
 --
 ALTER TABLE `assignment_mark_criteria`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `assignment_peer_mark`
 --
 ALTER TABLE `assignment_peer_mark`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `assignment_question`
 --
 ALTER TABLE `assignment_question`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=99;
 --
 -- AUTO_INCREMENT for table `assignment_topic`
 --
 ALTER TABLE `assignment_topic`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1014;
 --
 -- AUTO_INCREMENT for table `assignment_topic_allocation`
 --
 ALTER TABLE `assignment_topic_allocation`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=284;
 --
 -- AUTO_INCREMENT for table `submission`
 --
 ALTER TABLE `submission`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `unit`
 --
 ALTER TABLE `unit`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `unit_enrol`
 --
@@ -1125,7 +1177,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `unit_staff`
 --
 ALTER TABLE `unit_staff`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
 --
 -- Constraints for dumped tables
 --
