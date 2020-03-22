@@ -490,7 +490,7 @@ function validatePassword() {
 }
 
 function verifyDateFormat(d) {
-    var re = /^\d{4}-(0[1-9]|1[0-2])-([0-2]\d|3[01]) (0\d|1[01]):[0-5]\d:[0-5]\d$/;
+    var re = /^\d{4}-(0[1-9]|1[0-2])-([0-2]\d|3[01]) (0\d|1[0-9]|2[0-3]):[0-5]\d:[0-5]\d$/;
     return re.test(d);
 }
 

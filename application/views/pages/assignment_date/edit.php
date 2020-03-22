@@ -50,7 +50,7 @@
         </div>
         <div class="form-group row">
           <div class="col-sm-6 mb-3 mb-sm-0">
-            <label for="topic" class="col-md-4 control-label">Date Value<small> (YYYY-MM-DD HH:MM:SS)</small></label>
+            <label for="topic" class="col-md-12 control-label">Date Value<br /><small> YYYY-MM-DD HH:MM:SS in 24-Hour time format</small></label>
             <div class="col-md-12 input-group date" id="datetimepicker1" data-target-input="nearest">
                 <div class="input-group-prepend" data-target="#datetimepicker1" data-toggle="datetimepicker">
                     <div class="input-group-text" id="picker_button"><i class="fa fa-calendar"></i></div>
@@ -59,7 +59,7 @@
             </div>
           </div>
           <div class="col-sm-6">
-            <label for="pair_date">Reference: <?php echo $pair_key; ?></label>
+            <label for="pair_date">Reference: <br /><small><?php echo $pair_key; ?></small></label>
             <input type="text"  value="<?php echo $pair_date; ?>" class="form-control form-control-user" id="pair_date" readonly>
             <input type="hidden" value="<?php echo $pair_key; ?>" id="pair_key" readonly>
           </div>
