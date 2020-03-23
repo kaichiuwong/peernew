@@ -24,7 +24,7 @@
                     <th>Semester</th>
                     <th>Title</th>
                     <th>Type</th>
-                    <th>Feedback Mode</th>
+                    <th>Feedback Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -40,9 +40,9 @@
                         <a href="<?php echo site_url('Marking/group/'.encode_id($a['asg_id'])); ?>" class="btn btn-primary btn-sm">Select</a>
                         <?php if ($allow_control_feedback_mode): ?>
                           <?php if ($a['feedback']): ?>
-                          <a href="<?php echo site_url('Marking/feedback_switch/'.$a['asg_id']); ?>" class="btn btn-dark btn-sm">Retract Feedback</a> 
+                          <a href="<?php echo site_url('Marking/feedback_switch/'.$a['asg_id']); ?>" class="btn btn-dark btn-sm">Retract</a> 
                           <?php else: ?>
-                          <a href="<?php echo site_url('Marking/feedback_switch/'.$a['asg_id']); ?>" class="btn btn-success btn-sm" onclick="return confirm('Are your confirm to publish the assignment scores and feedbacks to students?');">Publish Feedback</a> 
+                          <a href="<?php echo site_url('Marking/feedback_switch/'.$a['asg_id']); ?>" class="btn btn-success btn-sm" onclick="return confirm('Are your confirm to publish the assignment scores and feedbacks to students?');">Publish</a> 
                           <?php endif; ?>
                         <?php endif; ?>
                     </td>

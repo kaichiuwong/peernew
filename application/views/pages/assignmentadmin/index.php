@@ -27,7 +27,7 @@
                     <th>Type</th>
                     <th>Group Count</th>
                     <th>Enrolled Students</th>
-                    <th>Student Visibility</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -40,14 +40,14 @@
                     <td><?php echo $a['type'] ? "Group Assignment" : "Individual Assignment"; ?></td>
                     <td><a href="<?php echo site_url('Assignment_topic/index/'.$a['asg_id']); ?>"><?php echo $a['topic_count']; ?></a></td>
                     <td><a href="<?php echo site_url('Student_list/index/'.$a['asg_id']); ?>"><?php echo $a['student_count']; ?></a></td>
-                    <td><?php echo $a['public']?'<i class="fas fa-users"></i> Public':'<i class="fas fa-lock"></i> Private'; ?></td>
+                    <td><?php echo $a['public']?'<span class="text-success"><i class="fas fa-users"></i> <b>Published</b></span>' : '<span class="text-muted"><i class="fas fa-edit"></i> Draft</span>'; ?></td>
                     <td>
                         <a href="<?php echo site_url('Assignmentadmin/info/'.$a['asg_id']); ?>" class="btn btn-primary btn-sm">Edit</a>
-                        <a href="<?php echo site_url('Assignmentadmin/remove/'.$a['asg_id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are your confirm to remove this assignment?');">Delete</a>
+                        <a href="<?php echo site_url('Assignmentadmin/remove/'.$a['asg_id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('*** WARNING ***\nTHIS WILL REMOVE ALL ASSIGNMENT RELATED RECORDS, INCLUDING SUBMISSION, MARKINGS, GROUP ALLOCATION, ASSIGNMENT QUESTIONS etc. \nAre your confirm to remove this assignment? ');">Delete</a>
                         <?php if ($a['public']): ?>
-                        <a href="<?php echo site_url('Assignmentadmin/public_switch/'.$a['asg_id']); ?>" class="btn btn-dark btn-sm">Make Private</a> 
+                        <a href="<?php echo site_url('Assignmentadmin/public_switch/'.$a['asg_id']); ?>" class="btn btn-dark btn-sm">Retract</a> 
                         <?php else: ?>
-                        <a href="<?php echo site_url('Assignmentadmin/public_switch/'.$a['asg_id']); ?>" class="btn btn-success btn-sm" onclick="return confirm('Are your confirm to release this assignment to students?');">Make Public</a> 
+                        <a href="<?php echo site_url('Assignmentadmin/public_switch/'.$a['asg_id']); ?>" class="btn btn-success btn-sm" onclick="return confirm('Are your confirm to publish this assignment to students?');">Publish</a> 
                         <?php endif; ?>
                     </td>
                 </tr>
