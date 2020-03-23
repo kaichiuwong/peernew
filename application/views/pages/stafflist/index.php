@@ -34,8 +34,11 @@
               <?php echo form_open('Staff_list/add/'.$asg_id); ?>
               <select name="username" class="form-control-sm" required>
                   <option value="" disabled selected>*** Staff List ***</option>
+                  <?php foreach($uc_list as $user) :?>
+                    <option value="<?php echo $user['username']; ?>" >Unit Coordinator - <?php echo $user['first_name']; ?> <?php echo $user['last_name']; ?> (<?php echo $user['username']; ?>)</option>
+                  <?php endforeach; ?>
                   <?php foreach($lecturer_list as $user) :?>
-                    <option value="<?php echo $user['username']; ?>" >Academic Staff - <?php echo $user['first_name']; ?> <?php echo $user['last_name']; ?> (<?php echo $user['username']; ?>)</option>
+                    <option value="<?php echo $user['username']; ?>" >Lecturer - <?php echo $user['first_name']; ?> <?php echo $user['last_name']; ?> (<?php echo $user['username']; ?>)</option>
                   <?php endforeach; ?>
                   <?php foreach($tutor_list as $user) :?>
                     <option value="<?php echo $user['username']; ?>" >Tutor - <?php echo $user['first_name']; ?> <?php echo $user['last_name']; ?> (<?php echo $user['username']; ?>)</option>

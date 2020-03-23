@@ -24,6 +24,7 @@ class Staff_list extends MY_PasController{
             $data['asg_id'] = $asg_id;
             $data['_view'] = 'pages/stafflist/index';
             $data['staff'] = $this->Unit_staff_model->get_unit_staff_by_asg($asg_id);
+            $data['uc_list'] = $this->User->get_user_list_by_permission(50);
             $data['lecturer_list'] = $this->User->get_user_list_by_permission(30);
             $data['tutor_list'] = $this->User->get_user_list_by_permission(20);
             $this->load_header($data);
