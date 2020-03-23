@@ -1,7 +1,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="<?php echo site_url('Home'); ?>" class="brand-link text-center">
+    <a href="<?php echo site_url('Home'); ?>" class="brand-link text-center ">
       <span class="brand-text font-weight-bold"><?php echo SYSTEM_FRIENDLY_NAME;?></span>
     </a>
 
@@ -40,19 +40,6 @@
             <a href="<?php echo site_url('Assignment'); ?>" class="nav-link">
               <i class="nav-icon fas fa-file-upload"></i>
               <p>Submission</p>
-            </a>
-          </li>
-          <li class="nav-header">System</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-cogs"></i>
-              <p>Setting</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="<?php echo site_url('Useradministration'); ?>" class="nav-link">
-              <i class="nav-icon fas fa-user-cog"></i>
-              <p>User Administration</p>
             </a>
           </li>
           <li class="nav-header"></li>
