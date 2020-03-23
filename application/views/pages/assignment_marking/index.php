@@ -35,14 +35,14 @@
                     <td><?php echo $a['sem']; ?></td>
                     <td><?php echo $a['title']; ?></td>
                     <td><?php echo $a['type'] ? "Group Assignment" : "Individual Assignment"; ?></td>
-                    <td><?php echo $a['feedback'] ? '<i class="fas fa-users"></i> Released' : '<i class="fas fa-lock"></i> Private'; ?></td>
+                    <td><?php echo $a['feedback'] ? '<span class="text-success"><i class="fas fa-users"></i> <b>Published</b></span>' : '<span class="text-muted"><i class="fas fa-edit"></i> Draft</span>'; ?></td>
                     <td>
                         <a href="<?php echo site_url('Marking/group/'.encode_id($a['asg_id'])); ?>" class="btn btn-primary btn-sm">Select</a>
                         <?php if ($allow_control_feedback_mode): ?>
                           <?php if ($a['feedback']): ?>
-                          <a href="<?php echo site_url('Marking/feedback_switch/'.$a['asg_id']); ?>" class="btn btn-dark btn-sm">Close Feedback</a> 
+                          <a href="<?php echo site_url('Marking/feedback_switch/'.$a['asg_id']); ?>" class="btn btn-dark btn-sm">Retract Feedback</a> 
                           <?php else: ?>
-                          <a href="<?php echo site_url('Marking/feedback_switch/'.$a['asg_id']); ?>" class="btn btn-success btn-sm" onclick="return confirm('Are your confirm to release the assignment scores and feedbacks to students?');">Release Feedback</a> 
+                          <a href="<?php echo site_url('Marking/feedback_switch/'.$a['asg_id']); ?>" class="btn btn-success btn-sm" onclick="return confirm('Are your confirm to publish the assignment scores and feedbacks to students?');">Publish Feedback</a> 
                           <?php endif; ?>
                         <?php endif; ?>
                     </td>
