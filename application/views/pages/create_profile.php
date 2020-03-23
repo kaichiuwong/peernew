@@ -45,12 +45,14 @@
                   <option value="" <?php echo (isset($param['plevel']))?"":"seleced"; ?> disabled>*** Permission Level ***</option>
                   <?php if (isset($param['plevel'])): ?>
                     <option value="90" <?php echo ($param['plevel']>=90)?"selected":"" ; ?> ><?php echo get_permission_level_desc(90);?></option>
-                    <option value="30" <?php echo ($param['plevel']>=30 && $param['plevel']<90)?"selected":"" ; ?> ><?php echo get_permission_level_desc(30);?></option>
+                    <option value="50" <?php echo ($param['plevel']>=50 && $param['plevel']<90)?"selected":"" ; ?> ><?php echo get_permission_level_desc(50);?></option>
+                    <option value="30" <?php echo ($param['plevel']>=30 && $param['plevel']<50)?"selected":"" ; ?> ><?php echo get_permission_level_desc(30);?></option>
                     <option value="20" <?php echo ($param['plevel']>=20 && $param['plevel']<30)?"selected":"" ; ?> ><?php echo get_permission_level_desc(20);?></option>
                     <option value="10" <?php echo ($param['plevel']>=10 && $param['plevel']<20)?"selected":"" ; ?> ><?php echo get_permission_level_desc(10);?></option>
                     <option value="0" <?php echo ($param['plevel']<10)?"selected":"" ; ?> ><?php echo get_permission_level_desc(0);?></option>
                   <?php else: ?>
                     <option value="90"><?php echo get_permission_level_desc(90);?></option>
+                    <option value="50"><?php echo get_permission_level_desc(50);?></option>
                     <option value="30"><?php echo get_permission_level_desc(30);?></option>
                     <option value="20"><?php echo get_permission_level_desc(20);?></option>
                     <option value="10"><?php echo get_permission_level_desc(10);?></option>
