@@ -32,8 +32,8 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="st_id">Student ID</label>
-                <input type="text"  value="<?php echo (isset($param['id']))?$param['id']:""; ?>" class="form-control form-control-user" id="st_id" name="st_id" placeholder="Staff ID">
+                <label for="st_id">SID</label>
+                <input type="text"  value="<?php echo (isset($param['id']))?$param['id']:""; ?>" class="form-control form-control-user" id="st_id" name="st_id" placeholder="SID">
               </div>
               <div class="form-group">
                 <label for="email">Email Address <?php if (isset($emailerror)): ?><small class="text-danger"><?php echo $emailerror; ?></small><?php endif;?></label>

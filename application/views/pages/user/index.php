@@ -28,7 +28,7 @@
             <thead>
                 <tr>
                     <th>Username</th>
-                    <th>Student ID</th>
+                    <th>SID</th>
                     <th>Student Name</th>
                     <th>Email</th>
                     <th>Status</th>

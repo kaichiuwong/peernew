@@ -43,8 +43,8 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="st_id">Student ID</label>
-                <input type="text"  value="<?php echo $st_id; ?>" class="form-control form-control-user" placeholder="Student ID"  readonly>
+                <label for="st_id">SID</label>
+                <input type="text"  value="<?php echo $st_id; ?>" class="form-control form-control-user" placeholder="SID"  readonly>
               </div>
               <div class="form-group">
                 <label for="email">Email Address</label>
