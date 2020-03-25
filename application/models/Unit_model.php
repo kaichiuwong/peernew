@@ -26,25 +26,48 @@ class Unit_model extends CI_Model
 
     function get_all_units()
     {
-        $query = $this->db->query("SELECT id, unit_code, fn_sem_short_desc(sem) as sem, sem as sem_key, unit_description FROM `unit` ORDER BY unit_code, sem; ");
+        $query = $this->db->query("SELECT id, unit_code, fn_sem_short_desc(sem) as sem, sem as sem_key, unit_description, `enable` FROM `unit` WHERE enable=1 ORDER BY unit_code, sem; ");
+        return $query->result_array();
+    }
+
+    function get_all_units_with_disabled()
+    {
+        $query = $this->db->query("SELECT id, unit_code, fn_sem_short_desc(sem) as sem, sem as sem_key, unit_description, `enable` FROM `unit` ORDER BY unit_code, sem; ");
         return $query->result_array();
     }
 
     function add_unit($params)
     {
+        $params['create_time'] = current_time();
+        $params['last_upd_time'] = current_time();
         $this->db->insert('unit',$params);
         return $this->db->insert_id();
     }
 
     function update_unit($id,$params)
     {
+        $params['last_upd_time'] = current_time();
         $this->db->where('id',$id);
         return $this->db->update('unit',$params);
     }
 
+    function enable_switch($unit_id) {
+        $query_str  = "UPDATE `unit` " ;
+        $query_str .= "   SET enable = CASE WHEN enable = 0 THEN 1 ";
+        $query_str .= "                     WHEN enable = 1 THEN 0 END, last_upd_time = now() " ;
+        $query_str .= " WHERE enable in (0,1) AND id='$unit_id' "; 
+        $query = $this->db->query($query_str);
+        return $this->db->affected_rows();
+    }
+
     function delete_unit($id)
     {
-        return $this->db->delete('unit',array('id'=>$id));
+        $this->db->delete('unit_group_allocation',array('unit_id'=>$id));
+        $this->db->delete('unit_group',array('unit_id'=>$id));
+        $this->db->delete('unit_enrol',array('unit_id'=>$id));
+        $this->db->delete('unit_staff',array('unit_id'=>$id));
+        $this->db->delete('unit',array('id'=>$id));
+        return true;
     }
     
     function get_list(){

@@ -119,7 +119,7 @@ class Assignment_model extends CI_Model
     function public_switch($asg_id) {
         $query_str  = "UPDATE `assignment` " ;
         $query_str .= "   SET public = CASE WHEN public = 0 THEN 1 ";
-        $query_str .= "                     WHEN public = 1 THEN 0 END " ;
+        $query_str .= "                     WHEN public = 1 THEN 0 END, last_upd_time = now() " ;
         $query_str .= " WHERE public in (0,1) AND id='$asg_id' "; 
         $query = $this->db->query($query_str);
         return $this->db->affected_rows();
@@ -142,7 +142,7 @@ class Assignment_model extends CI_Model
     function feedback_switch($asg_id) {
         $query_str  = "UPDATE `assignment` " ;
         $query_str .= "   SET feedback = CASE WHEN feedback = 0 THEN 1 ";
-        $query_str .= "                       WHEN feedback = 1 THEN 0 END " ;
+        $query_str .= "                       WHEN feedback = 1 THEN 0 END, last_upd_time = now() " ;
         $query_str .= " WHERE feedback in (0,1) AND id='$asg_id' "; 
         $query = $this->db->query($query_str);
         return $this->db->affected_rows();

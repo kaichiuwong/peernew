@@ -46,11 +46,35 @@ class Unit_staff_model extends CI_Model
         return $this->db->delete('unit_staff',$params);
     }
 
+    function delete_unit_staff_by_unit($unit_id)
+    {
+        $this->db->where('unit_id',$unit_id);
+        return $this->db->delete('unit_staff');
+    }
+
     function get_unit_staff_by_asg($asg_id)
     {
         $query_str  = " select s.* ";
         $query_str .= " from sv_assignment_staff s ";
         $query_str .= " where s.asg_id=$asg_id order by username; ";
+        $query = $this->db->query($query_str);
+        return $query->result_array();
+    }
+
+    function get_unit_staff_by_unit($unit_id)
+    {
+        $query_str  = " select s.*, u.last_name, u.first_name ";
+        $query_str .= " from unit_staff s, user u ";
+        $query_str .= " where s.unit_id=$unit_id AND s.username = u.username order by s.username; ";
+        $query = $this->db->query($query_str);
+        return $query->result_array();
+    }
+
+    function get_unit_staff_by_staff($unit_id, $username)
+    {
+        $query_str  = " select s.*, u.last_name, u.first_name ";
+        $query_str .= " from unit_staff s, user u ";
+        $query_str .= " where s.unit_id=$unit_id AND s.username = '$username' AND s.username = u.username order by s.username; ";
         $query = $this->db->query($query_str);
         return $query->result_array();
     }

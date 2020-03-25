@@ -24,6 +24,7 @@
                     <th>Unit</th>
                     <th>Semester</th>
                     <th>Description</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -33,9 +34,15 @@
                     <td><?php echo $a['unit_code']; ?></td>
                     <td><?php echo $a['sem']; ?></td>
                     <td><?php echo $a['unit_description']; ?></td>
+                    <td><span class="text-<?php echo  ( $a['enable'] ? "success":"danger") ; ?>"><b><?php echo  ( $a['enable'] ? "<i class='fas fa-check'></i> Enabled":"<i class='fas fa-times-circle'></i> Disabled") ; ?></b></td>
                     <td>
-                        <a href="<?php echo site_url('unit/info/'.encode_id($a['id'])); ?>" class="btn btn-primary btn-sm">Select</a>
-                        <a href="<?php echo site_url('unit/remove/'.encode_id($a['id'])); ?>" class="btn btn-danger btn-sm">Remove</a> 
+                        <a href="<?php echo site_url('Unit/edit/'.encode_id($a['id'])); ?>" class="btn btn-primary btn-sm">Select</a>
+                        <a href="<?php echo site_url('Unit/enable_switch/'.encode_id($a['id'])); ?>" class="btn btn-<?php echo  ( $a['enable'] ? "danger":"success") ; ?> btn-sm">
+                          <?php echo  ( $a['enable'] ? "Disable":"Enable") ; ?>
+                        </a>
+                        <a href="<?php echo site_url('Unit/remove/'.encode_id($a['id'])); ?>" class="btn btn-dark btn-sm" onclick="return confirm('*** WARNING ***\nTHIS WILL REMOVE ALL UNIT RELATED RECORDS, INCLUDING ASSIGNMENTS, ASSINGNMENT SUBMISSION, MARKINGS, GROUP ALLOCATION, ASSIGNMENT QUESTIONS etc. \nAre your confirm to remove this UNIT? ');">
+                          Remove
+                        </a> 
                     </td>
                 </tr>
             <?php } ?>
