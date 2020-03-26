@@ -24,6 +24,7 @@
                     <th>Unit</th>
                     <th>Semester</th>
                     <th>Description</th>
+                    <th>Enrolled Student</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -34,6 +35,7 @@
                     <td><?php echo $a['unit_code']; ?></td>
                     <td><?php echo $a['sem']; ?></td>
                     <td><?php echo $a['unit_description']; ?></td>
+                    <td><?php echo $a['std_cnt']; ?></td>
                     <td><span class="text-<?php echo  ( $a['enable'] ? "success":"danger") ; ?>"><b><?php echo  ( $a['enable'] ? "<i class='fas fa-check'></i> Enabled":"<i class='fas fa-times-circle'></i> Disabled") ; ?></b></td>
                     <td>
                         <a href="<?php echo site_url('Assignmentadmin/add/'.encode_id($a['id']) ); ?>" class="btn btn-success btn-sm">Create Assignment</a> 

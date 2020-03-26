@@ -32,7 +32,11 @@ class Unit_model extends CI_Model
 
     function get_all_units_with_disabled()
     {
-        $query = $this->db->query("SELECT id, unit_code, fn_sem_short_desc(sem) as sem, sem as sem_key, unit_description, `enable` FROM `unit` ORDER BY unit_code, sem; ");
+        $query_str =  " SELECT u.id, u.unit_code, fn_sem_short_desc(u.sem) as sem, u.sem as sem_key, u.unit_description, u.enable, count(ue.id) as std_cnt ";
+        $query_str .= "   FROM unit u ";
+        $query_str .= "   LEFT JOIN unit_enrol ue on u.id = ue.unit_id ";
+        $query_str .= "  GROUP BY u.id, u.unit_code, u.sem, u.unit_description, u.enable" ;
+        $query = $this->db->query($query_str);
         return $query->result_array();
     }
 
