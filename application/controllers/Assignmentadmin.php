@@ -6,6 +6,7 @@ class Assignmentadmin extends MY_PasController {
     {
         parent::__construct();
         $this->load->model('Assignment_model');
+        $this->load->model('Unit_group_model');
     } 
 
     function index($unit_code = null)
@@ -51,7 +52,7 @@ class Assignmentadmin extends MY_PasController {
         if (!$done) redirect("Assignmentadmin");
     } 
 
-    function add()
+    function add($unit_id)
     {
         if ($this->check_permission(30)) {
             $this->load->library('form_validation');
@@ -74,15 +75,6 @@ class Assignmentadmin extends MY_PasController {
                 
                 $assignment_id = $this->Assignment_model->add_assignment($params);
                 if ($assignment_id) {
-                    $this->load->model('Assignment_topic_model');
-                    
-                    $this->Assignment_topic_model->bulk_add_assignment_topic(
-                            $assignment_id, 
-                            $this->input->post('group_num'), 
-                            $this->input->post('max'),
-                            $this->input->post('prefix')
-                    );
-
                     $this->load->model('Assignment_date_model');
                     $this->Assignment_date_model->add_default($assignment_id, $this->get_login_user() );
 
@@ -94,13 +86,22 @@ class Assignmentadmin extends MY_PasController {
             }
             else
             {
-                $this->load->model('Unit_model');
-                $data['all_units'] = $this->Unit_model->get_all_units();
-                
-                $data['_view'] = 'pages/assignmentadmin/add';
-                $this->load_header($data);
-                $this->load->view('templates/main',$data);
-                $this->load_footer($data);
+                $real_unit_id = decode_id($unit_id);
+                if (!empty($real_unit_id)) {
+                    $this->load->model('Unit_model');
+                    $data['unit_set'] = $this->Unit_group_model->get_unit_set_stat($real_unit_id);
+                    $data['unit_id'] = $real_unit_id;
+                    $data['unit_info']=$this->Unit_model->get_unit_info($real_unit_id)[0];
+                    $data['unit_header']=$data['unit_info']->unit_code . ' - '. $data['unit_info']->unit_description;
+                    
+                    $data['_view'] = 'pages/assignmentadmin/add';
+                    $this->load_header($data);
+                    $this->load->view('templates/main',$data);
+                    $this->load_footer($data);
+                }
+                else {
+                    redirect('Assignmentadmin/index');
+                }
             }
         }
     }  

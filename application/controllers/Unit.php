@@ -13,7 +13,6 @@ class Unit extends MY_PasController {
     function index()
     {
         if ($this->check_permission(50)) {
-            #$data['assignments'] = $this->Unit_model->get_all_assignments_student($this->get_login_user(), $this->current_sem());
             $data['units'] = $this->Unit_model->get_all_units_with_disabled();
             $data['_view'] = 'pages/unit/index';
             $this->load_header($data);

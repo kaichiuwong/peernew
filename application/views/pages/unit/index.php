@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Unit Administration</h1>
+        <h1>Unit List</h1>
       </div>
     </div>
   </div><!-- /.container-fluid -->
@@ -36,7 +36,8 @@
                     <td><?php echo $a['unit_description']; ?></td>
                     <td><span class="text-<?php echo  ( $a['enable'] ? "success":"danger") ; ?>"><b><?php echo  ( $a['enable'] ? "<i class='fas fa-check'></i> Enabled":"<i class='fas fa-times-circle'></i> Disabled") ; ?></b></td>
                     <td>
-                        <a href="<?php echo site_url('Unit/edit/'.encode_id($a['id'])); ?>" class="btn btn-primary btn-sm">Select</a>
+                        <a href="<?php echo site_url('Assignmentadmin/add/'.encode_id($a['id']) ); ?>" class="btn btn-success btn-sm">Create Assignment</a> 
+                        <a href="<?php echo site_url('Unit/edit/'.encode_id($a['id'])); ?>" class="btn btn-primary btn-sm">Edit</a>
                         <a href="<?php echo site_url('Unit/enable_switch/'.encode_id($a['id'])); ?>" class="btn btn-<?php echo  ( $a['enable'] ? "danger":"success") ; ?> btn-sm">
                           <?php echo  ( $a['enable'] ? "Disable":"Enable") ; ?>
                         </a>
