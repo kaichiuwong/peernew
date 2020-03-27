@@ -19,7 +19,7 @@
     <div class="card-header">
         <h3 class="card-title">Create Assignment</h3>
     </div>
-    <?php echo form_open('Assignmentadmin/add',array("class"=>"form-horizontal")); ?>
+    <?php echo form_open('Assignmentadmin/add/'.$unit_id,array("class"=>"form-horizontal")); ?>
     <div class="card-body">
         <div class="form-group">
             <label for="type" class="col-md-4 control-label"><span class="text-danger">*</span>Type</label>
@@ -70,9 +70,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="title" class="col-md-4 control-label">Title</label>
+            <label for="title" class="col-md-4 control-label"><span class="text-danger">*</span>Title</label>
             <div class="col-md-12">
-                <input type="text" name="title" value="<?php echo $this->input->post('title'); ?>" class="form-control" id="title" />
+                <input type="text" name="title" value="<?php echo $this->input->post('title'); ?>" class="form-control" id="title" required />
                 <span class="text-danger"><?php echo form_error('title');?></span>
             </div>
         </div>
@@ -90,8 +90,8 @@
         </div>
     </div>
     <div class="card-footer">
-        <button type="submit" class="btn btn-primary btn-sm">Create</button>
-        <a href="<?php echo site_url('Assignmentadmin'); ?>" class="btn btn-sm btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary btn-sm" name="submit">Create</button>
+        <a href="<?php echo site_url('Unit'); ?>" class="btn btn-sm btn-secondary">Cancel</a>
     </div>
     <?php echo form_close(); ?>
 </div>

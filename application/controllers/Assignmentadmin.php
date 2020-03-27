@@ -55,19 +55,12 @@ class Assignmentadmin extends MY_PasController {
     function add($unit_id)
     {
         if ($this->check_permission(30)) {
-            $this->load->library('form_validation');
 
-            $this->form_validation->set_rules('type','Assignment Type','required');
-            $this->form_validation->set_rules('unit_id','Unit','required');
-            $this->form_validation->set_rules('group_num','Number of Group','required');
-            $this->form_validation->set_rules('max','Max number per group','required');
-            $this->form_validation->set_rules('title','Title','max_length[500]');
-            
-            if($this->form_validation->run())     
+            if(isset($_POST['submit']))
             {   
                 $params = array(
                     'type' => $this->input->post('type'),
-                    'unit_id' => $this->input->post('unit_id'),
+                    'unit_id' => decode_id($this->input->post('unit_id')),
                     'title' => $this->input->post('title'),
                     'outcome' => $this->input->post('outcome'),
                     'scenario' => $this->input->post('scenario'),
@@ -90,7 +83,8 @@ class Assignmentadmin extends MY_PasController {
                 if (!empty($real_unit_id)) {
                     $this->load->model('Unit_model');
                     $data['unit_set'] = $this->Unit_group_model->get_unit_set_stat($real_unit_id);
-                    $data['unit_id'] = $real_unit_id;
+                    $data['real_unit_id'] = $real_unit_id;
+                    $data['unit_id'] = $unit_id;
                     $data['unit_info']=$this->Unit_model->get_unit_info($real_unit_id)[0];
                     $data['unit_header']=$data['unit_info']->unit_code . ' - '. $data['unit_info']->unit_description;
                     

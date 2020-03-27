@@ -116,4 +116,22 @@ class Unit_group_model extends CI_Model
     {
         $this->db->delete('unit_set_group_allocation',array('group_id'=>$grp_id));
     }
+
+    function get_group_by_set($set_id)
+    {
+        $query = $this->db->query("select t.*,s.cnt from unit_set_group t, sv_group_list_stat s where t.id=s.id and t.set_id=$set_id order by t.id; ");
+        return $query->result_array();
+    }
+
+    function get_group_member($id) 
+    {
+        $query = $this->db->query("select * from sv_unit_group_member where group_id='$id' order by user_id; ");
+        return $query->result_array();
+    }
+
+    function remove_group($grp_id)
+    {
+        $this->remove_groups_allocation($grp_id);
+        $this->db->delete('unit_set_group',array('id'=>$grp_id));
+    }
 }
