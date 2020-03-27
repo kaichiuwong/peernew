@@ -43,7 +43,7 @@
                     <td><?php echo $a['cnt']; ?></td>
                     <td>
                         <a href="<?php echo site_url('Unit_group/group/'.$unit_id.'/'.encode_id($a['id'])); ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="View/Edit Details of this Group Set"><i class="far fa-edit"></i></a>
-                        <a href="<?php echo site_url('Unit_group/random/'.$unit_id.'/'.encode_id($a['id'])); ?>" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Random Assign Students to Groups"><i class="fas fa-dice"></i></a>
+                        <a href="<?php echo site_url('Unit_group/random/'.$unit_id.'/'.encode_id($a['id'])); ?>" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Randomly assign students without group to a group"><i class="fas fa-dice"></i></a>
                         <a href="<?php echo site_url('Unit_group/remove/'.$unit_id.'/'.encode_id($a['id'])); ?>" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Remove this Group Set" onclick="return confirm('Are your confirm to remove this Group Set? ');"><i class="far fa-trash-alt"></i></a> 
                     </td>
                 </tr>

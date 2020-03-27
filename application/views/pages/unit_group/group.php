@@ -28,7 +28,16 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body table-responsive p-3">
-	  <a href="<?php echo site_url('Unit_group/add_group/'.$unit_id.'/'.$set_id); ?>" class="btn btn-success btn-sm">Create Extra Groups</a> 
+	  <a href="<?php echo site_url('Unit_group/add_group/'.$unit_id.'/'.$set_id); ?>" class="btn btn-success btn-lg" data-toggle="tooltip" data-placement="top" title="Create extra groups under this set"><i class="fas fa-user-plus"></i></a> 
+      <?php if (count($student_no_grp) == 0): ?>
+        <a href="javascript:void(0);" class="btn btn-success btn-lg" data-toggle="tooltip" data-placement="top" title="All students has a group">0 <i class="far fa-smile"></i></a>
+      <?php else: ?>
+        <a href="javascript:void(0);" data-grp-name="Students without group" data-href="<?php echo site_url('Unit_group/student_no_group/'.$unit_id.'/'.$set_id); ?>" class="group_info_open btn btn-warning btn-lg" data-toggle="tooltip" data-placement="top" title="<?php echo count($student_no_grp); ?> students without group"><?php echo count($student_no_grp); ?> <i class="far fa-sad-tear"></i></a>
+      <?php endif; ?>
+      
+      <a href="<?php echo site_url('Unit_group/random/'.$unit_id.'/'.$set_id); ?>" class="btn btn-warning btn-lg" data-toggle="tooltip" data-placement="top" title="Randomly assign students without group to a group"><i class="fas fa-dice"></i></a>
+      <a href="<?php echo site_url('Unit_group/clear_allocation/'.$unit_id.'/'.$set_id); ?>" class="btn btn-danger btn-lg" data-toggle="tooltip" data-placement="top" title="Clear groups allocation"><i class="fas fa-broom"></i></a>
+      <a href="<?php echo site_url('Unit_group/clear_groups/'.$unit_id.'/'.$set_id); ?>" class="btn btn-danger btn-lg" data-toggle="tooltip" data-placement="top" title="Remove all groups"><i class="fas fa-eraser"></i></a>
         <table class="table table-sm table-head-fixed table-hover enable-datatable">
             <thead>
                 <tr>

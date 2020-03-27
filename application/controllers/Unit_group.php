@@ -93,6 +93,7 @@ class Unit_group extends MY_PasController {
 
             $data['_view'] = 'pages/unit_group/group';
             $data['group_list'] = $this->Unit_group_model->get_group_by_set($real_set_id);
+            $data['student_no_grp'] = $this->Unit_group_model->get_student_without_group($real_unit_id, $real_set_id);
             $data['set_info'] = $this->Unit_group_model->get_unit_set($real_set_id)[0];
             $this->load_header($data);
             $this->load->view('templates/main',$data);
@@ -136,6 +137,21 @@ class Unit_group extends MY_PasController {
         if (!$done) redirect("Unit_group/group/".$unit_id.'/'.$set_id);
     }
 
+    function random($unit_id, $set_id)
+    {
+        $done = false;
+        do {
+            if (!$this->check_permission(50) ) break;
+            $real_unit_id = decode_id($unit_id);
+            $real_set_id = decode_id($set_id);
+            if (empty($real_unit_id)) break;
+            if (empty($real_set_id)) break;
+            $this->Unit_group_model->random_assign($real_unit_id, $real_set_id);
+        } while(0);
+
+        if (!$done) redirect("Unit_group/group/".$unit_id.'/'.$set_id);
+    }
+
     function remove_group($unit_id, $set_id, $grp_id)
     {
         $done = false;
@@ -156,6 +172,44 @@ class Unit_group extends MY_PasController {
             $data['assignment_topics'] = $this->Unit_group_model->get_group_member($real_grp_id);
             $this->load->view('pages/unit_group/group_member',$data);
         }
+    }
+
+    function student_no_group($unit_id, $set_id)
+    {
+        if ($this->check_permission(50)) {
+            $real_unit_id = decode_id($unit_id);
+            $real_set_id = decode_id($set_id);
+            if (!empty($real_unit_id) && !empty($real_set_id)) {
+                $data['assignment_topics'] = $this->Unit_group_model->get_student_without_group($real_unit_id, $real_set_id);
+                $this->load->view('pages/unit_group/group_member',$data);
+            }
+        }
+    }
+
+    function clear_allocation($unit_id, $set_id)
+    {
+        $done = false;
+        do {
+            if (!$this->check_permission(50) ) break;
+            $real_set_id = decode_id($set_id);
+            if (empty($real_set_id)) break;
+            $this->Unit_group_model->clear_allocation($real_set_id);
+        } while(0);
+
+        if (!$done) redirect("Unit_group/group/".$unit_id.'/'.$set_id);
+    }
+
+    function clear_groups($unit_id, $set_id)
+    {
+        $done = false;
+        do {
+            if (!$this->check_permission(50) ) break;
+            $real_set_id = decode_id($set_id);
+            if (empty($real_set_id)) break;
+            $this->Unit_group_model->clear_groups($real_set_id);
+        } while(0);
+
+        if (!$done) redirect("Unit_group/group/".$unit_id.'/'.$set_id);
     }
 
 }

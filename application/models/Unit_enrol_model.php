@@ -27,7 +27,7 @@ class Unit_enrol_model extends CI_Model
     {
         $query_str  = " select s.* ";
         $query_str .= " from sv_unit_student s ";
-        $query_str .= " where s.id=$unit_id order by s.username; ";
+        $query_str .= " where s.id=$unit_id  order by s.username; ";
         $query = $this->db->query($query_str);
         return $query->result_array();
     }
