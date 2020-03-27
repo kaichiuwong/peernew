@@ -59,7 +59,7 @@
               <tbody>
               <?php foreach($enroll_unit as $a):  ?>
                   <tr>
-                      <td><a href="<?php echo site_url('assignmentadmin/index/'.$a['unit_code']); ?>"><?php echo $a['unit_code']; ?></a></td>
+                      <td><a href="<?php echo site_url('Unit/info/'.encode_id($a['id'])) ; ?>"><?php echo $a['unit_code']; ?></a></td>
                       <td><?php echo $a['sem']; ?></td>
                       <td><?php echo $a['unit_description']; ?></td>
                   </tr>
@@ -89,7 +89,7 @@
               <tbody>
               <?php foreach($incharge_unit as $a):  ?>
                   <tr>
-                      <td><a href="<?php echo site_url('assignmentadmin/index/'.$a['unit_code']); ?>"><?php echo $a['unit_code']; ?></a></td>
+                      <td><a href="<?php echo site_url('Unit/info/'.encode_id($a['id'])) ; ?>"><?php echo $a['unit_code']; ?></a></td>
                       <td><?php echo $a['sem']; ?></td>
                       <td><?php echo $a['unit_description']; ?></td>
                   </tr>

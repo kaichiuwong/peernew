@@ -62,6 +62,30 @@ class Unit extends MY_PasController {
         if (!$done) redirect("Unit");
     }
 
+    function info($unit_id)
+    {
+        $done = false;
+        do {
+            if (!$this->check_permission(50) ) break;
+            $data['unit_id'] = $unit_id ;
+            $real_unit_id = decode_id($unit_id);
+            if (empty($real_unit_id)) break;
+            $data['unit_info']=$this->Unit_model->get_unit_info($real_unit_id)[0];
+            $data['sem_list'] = $this->Semester_model->get_all_sem();
+            $data['error_msg'] = '';
+
+            $data['unit_info']=$this->Unit_model->get_unit_info($real_unit_id)[0];
+            $data['unit_header']=$data['unit_info']->unit_code . ' - '. $data['unit_info']->unit_description;
+            $data['_view'] = 'pages/unit/info';
+            $this->load_header($data);
+            $this->load->view('templates/main',$data);
+            $this->load_footer($data);
+            $done = true;
+        } while(0);
+
+        if (!$done) redirect("Unit");
+    }
+
     function edit($unit_id)
     {
         $done = false;
