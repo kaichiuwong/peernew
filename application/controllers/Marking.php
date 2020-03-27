@@ -254,6 +254,7 @@ class Marking extends MY_PasController {
             $objPHPExcel->getActiveSheet()->SetCellValue('F1', 'Group Score');       
             $objPHPExcel->getActiveSheet()->SetCellValue('G1', 'Peer Score');       
             $objPHPExcel->getActiveSheet()->SetCellValue('H1', 'Total Score');       
+            $objPHPExcel->getActiveSheet()->SetCellValue('I1', 'Remarks');       
             $rowCount = 2;
             $score_list = $this->Submission_model->get_final_score($decode_asg_id);
             $unit_code='';
@@ -267,6 +268,9 @@ class Marking extends MY_PasController {
                 $objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount, $list['group_score']?sprintf("%.2f", $list['group_score']):0);
                 $objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount, $list['peer_score']?sprintf("%.2f", $list['peer_score']):0);
                 $objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount, $list['total_score']?sprintf("%.2f", $list['total_score']):0);
+                $remark = '';
+                if ($list['enable'] == 0) $remark = 'Student has withdrawn this unit.';
+                $objPHPExcel->getActiveSheet()->SetCellValue('I' . $rowCount, $remark);
                 $rowCount++;
             }
             $filename = "final_score_". $asg_id . "_" .date("Ymd_His").".xlsx";

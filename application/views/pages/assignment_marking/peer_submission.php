@@ -61,6 +61,9 @@
                       </td>
                     <?php endif; ?>
                     <td>
+                      <?php if ($a['enable']==0) : ?>
+                          <span class="text-danger" data-toggle="tooltip" data-placement="top" title="This student has already withdrawn this unit"><i class="fas fa-sign-out-alt"></i></span>
+                      <?php endif; ?>
                       <?php if ($a['peer_var']>=10) : ?>
                           <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Large score variance between peers"><i class="fas fa-exclamation-triangle"></i></span>
                       <?php endif; ?>

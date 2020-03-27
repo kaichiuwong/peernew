@@ -39,6 +39,7 @@
                     <th class="align-text-top">Group Score</th>
                     <th class="align-text-top">Peer Score</th>
                     <th class="align-text-top">Total Score</th>
+                    <th class="align-text-top">Remarks</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,6 +59,11 @@
                       <td><?php echo sprintf("%.2f", $a['peer_score']) ; ?></td>
                       <td><?php echo sprintf("%.2f", $a['total_score']) ; ?></td>
                     <?php endif; ?>
+                    <?php if ( $a['enable'] == 0 ): ?>
+                      <td>Student has withdrawn this unit.</td>
+                    <?php else: ?>
+                      <td></td>
+                    <?php endif;?>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

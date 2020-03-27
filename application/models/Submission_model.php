@@ -95,7 +95,7 @@ class Submission_model extends CI_Model
 
     function get_final_score($asg_id, $username = null)
     {
-        $query_str  = " select s.sid, s.username, s.last_name, s.first_name, s.unit_code, s.sem, s.asg_title, s.topic_id, s.topic, ifnull(s.group_score,0) as group_score, IFNULL(s.override_score, s.peer_average) as peer_score, IFNULL(s.group_score,0)+IFNULL(s.override_score, s.peer_average) as total_score ";
+        $query_str  = " select s.sid, s.enable, s.username, s.last_name, s.first_name, s.unit_code, s.sem, s.asg_title, s.topic_id, s.topic, ifnull(s.group_score,0) as group_score, IFNULL(s.override_score, s.peer_average) as peer_score, IFNULL(s.group_score,0)+IFNULL(s.override_score, s.peer_average) as total_score ";
         $query_str .= " from sv_assignment_peer_summary s ";
         $query_str .= " where s.asg_id=$asg_id ";
         if ($username) {
