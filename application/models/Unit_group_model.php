@@ -158,7 +158,7 @@ class Unit_group_model extends CI_Model
             'user_id' => $username,
             'group_id' => $grp_id
         );
-        $this->db->insert('Unit_set_group_allocation',$params);
+        $this->db->insert('unit_set_group_allocation',$params);
         return $this->db->insert_id();
     }
 
@@ -168,7 +168,7 @@ class Unit_group_model extends CI_Model
         $this->clear_groups($set_id);
         $this->db->delete('unit_set',array('id'=>$set_id));
     }
-
+s
     function clear_allocation($set_id) 
     {
         $group_list = $this->get_unit_set_group($set_id);
