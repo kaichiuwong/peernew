@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2020 at 02:25 PM
+-- Generation Time: Mar 27, 2020 at 03:40 PM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -13,13 +13,14 @@ SET time_zone = "+00:00";
 --
 -- Database: `peerassess`
 --
+USE `peerassess`;
 
 DELIMITER $$
 --
 -- Procedures
 --
 DROP PROCEDURE IF EXISTS `sp_close_asg`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_close_asg`()
+CREATE PROCEDURE `sp_close_asg`()
     NO SQL
 UPDATE
     assignment a,
@@ -34,7 +35,7 @@ WHERE
     and ad.date_value <= NOW()$$
 
 DROP PROCEDURE IF EXISTS `sp_get_all_peer_feedback`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_all_peer_feedback`(IN `asg_id` INT, IN `reviewee` VARCHAR(20))
+CREATE PROCEDURE `sp_get_all_peer_feedback`(IN `asg_id` INT, IN `reviewee` VARCHAR(20))
 BEGIN
     SELECT aq.id as qid, aq.question_order, aq.question, aq.answer_type, aq.question_section, af.*
       FROM assignment_question aq
@@ -43,7 +44,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_get_peer_review`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_peer_review`(IN `username` VARCHAR(10), IN `qid` INT)
+CREATE PROCEDURE `sp_get_peer_review`(IN `username` VARCHAR(10), IN `qid` INT)
 BEGIN
 select asg_id, reviewee, reviewer, total
 from sv_assignment_peer_sum
@@ -51,7 +52,7 @@ where reviewee = username ;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_get_question_feedback`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_question_feedback`(IN `asg_id` INT, IN `reviewer` VARCHAR(20), IN `reviewee` VARCHAR(20), IN `qtype` ENUM('SELF','PEER','GROUP'))
+CREATE PROCEDURE `sp_get_question_feedback`(IN `asg_id` INT, IN `reviewer` VARCHAR(20), IN `reviewee` VARCHAR(20), IN `qtype` ENUM('SELF','PEER','GROUP'))
 BEGIN
     SELECT aq.id as qid, aq.question_order, aq.question, aq.answer_type, aq.question_section, af.*
       FROM assignment_question aq
@@ -60,7 +61,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_get_student_assignment_list`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_student_assignment_list`(IN `username` VARCHAR(10))
+CREATE PROCEDURE `sp_get_student_assignment_list`(IN `username` VARCHAR(10))
 BEGIN
     SELECT a.*,fn_get_unit_code(a.unit_id) as unit
     FROM   assignment a, unit_enrol ue
@@ -69,7 +70,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_release_asg`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_release_asg`()
+CREATE PROCEDURE `sp_release_asg`()
     NO SQL
 UPDATE
     assignment a,
@@ -87,7 +88,7 @@ WHERE
 -- Functions
 --
 DROP FUNCTION IF EXISTS `fn_get_unit_code`$$
-CREATE DEFINER=`root`@`localhost` FUNCTION `fn_get_unit_code`(`unit_id` INT) RETURNS varchar(20) CHARSET utf8
+CREATE FUNCTION `fn_get_unit_code`(`unit_id` INT) RETURNS varchar(20) CHARSET utf8
 BEGIN
  DECLARE rtnstr VARCHAR(20);
  
@@ -100,7 +101,7 @@ BEGIN
 END$$
 
 DROP FUNCTION IF EXISTS `fn_is_allow_view_assignment`$$
-CREATE DEFINER=`root`@`localhost` FUNCTION `fn_is_allow_view_assignment`(`username` VARCHAR(10), `asg_id` INT) RETURNS int(11)
+CREATE FUNCTION `fn_is_allow_view_assignment`(`username` VARCHAR(10), `asg_id` INT) RETURNS int(11)
 BEGIN
  DECLARE rtn_result INT DEFAULT 0;
  DECLARE temp_val INT DEFAULT 0;
@@ -136,7 +137,7 @@ BEGIN
 END$$
 
 DROP FUNCTION IF EXISTS `fn_sem_short_desc`$$
-CREATE DEFINER=`root`@`localhost` FUNCTION `fn_sem_short_desc`(`in_sem` VARCHAR(10)) RETURNS varchar(100) CHARSET utf8
+CREATE FUNCTION `fn_sem_short_desc`(`in_sem` VARCHAR(10)) RETURNS varchar(100) CHARSET utf8
 BEGIN
  DECLARE rtnstr VARCHAR(100);
  
@@ -340,13 +341,6 @@ CREATE TABLE IF NOT EXISTS `assignment_log` (
   `action` varchar(20) NOT NULL,
   `action_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `assignment_log`
---
-
-INSERT INTO `assignment_log` (`id`, `title`, `type`, `outcome`, `scenario`, `unit_id`, `public`, `feedback`, `create_time`, `last_upd_time`, `action`, `action_date`) VALUES
-(4, 'Team work', 1, '', '', 10, 0, 0, '2020-02-25 01:23:28', '2020-02-25 01:23:28', 'DELETE', '2020-02-25 01:52:11');
 
 -- --------------------------------------------------------
 
@@ -566,6 +560,7 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_peer_sum` (
 DROP VIEW IF EXISTS `sv_assignment_peer_summary`;
 CREATE TABLE IF NOT EXISTS `sv_assignment_peer_summary` (
 `id` int(11)
+,`enable` int(11)
 ,`asg_id` int(11)
 ,`asg_title` varchar(500)
 ,`sem` varchar(100)
@@ -644,6 +639,7 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_student` (
 ,`last_name` varchar(255)
 ,`first_name` varchar(255)
 ,`sid` varchar(10)
+,`enable` int(11)
 );
 -- --------------------------------------------------------
 
@@ -700,6 +696,18 @@ CREATE TABLE IF NOT EXISTS `sv_assignment_topic_summary` (
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `sv_group_list_stat`
+--
+DROP VIEW IF EXISTS `sv_group_list_stat`;
+CREATE TABLE IF NOT EXISTS `sv_group_list_stat` (
+`id` int(11)
+,`set_id` int(11)
+,`max` int(11)
+,`cnt` bigint(21)
+);
+-- --------------------------------------------------------
+
+--
 -- Stand-in structure for view `sv_group_submission`
 --
 DROP VIEW IF EXISTS `sv_group_submission`;
@@ -728,6 +736,21 @@ DROP VIEW IF EXISTS `sv_topic_stat`;
 CREATE TABLE IF NOT EXISTS `sv_topic_stat` (
 `id` int(11)
 ,`cnt` bigint(21)
+);
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `sv_unit_group_member`
+--
+DROP VIEW IF EXISTS `sv_unit_group_member`;
+CREATE TABLE IF NOT EXISTS `sv_unit_group_member` (
+`id` int(11)
+,`user_id` varchar(20)
+,`group_id` int(11)
+,`first_name` varchar(255)
+,`last_name` varchar(255)
+,`sid` varchar(10)
+,`email` varchar(255)
 );
 -- --------------------------------------------------------
 
@@ -765,6 +788,7 @@ CREATE TABLE IF NOT EXISTS `sv_unit_student` (
 ,`id` int(11)
 ,`unit_code` varchar(20)
 ,`unit_description` varchar(500)
+,`enable` int(11)
 ,`sem` varchar(100)
 ,`create_time` datetime
 ,`last_upd_time` datetime
@@ -781,6 +805,7 @@ CREATE TABLE IF NOT EXISTS `unit` (
   `unit_code` varchar(20) NOT NULL,
   `sem` varchar(10) NOT NULL,
   `unit_description` varchar(500) DEFAULT NULL,
+  `enable` int(11) NOT NULL DEFAULT '1',
   `create_time` datetime NOT NULL,
   `last_upd_time` datetime NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
@@ -789,37 +814,37 @@ CREATE TABLE IF NOT EXISTS `unit` (
 -- Dumping data for table `unit`
 --
 
-INSERT INTO `unit` (`id`, `unit_code`, `sem`, `unit_description`, `create_time`, `last_upd_time`) VALUES
-(1, 'KIT001', '202001', 'Programming Preparation', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(2, 'KIT101', '202001', 'Programming Fundamentals', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(3, 'KIT105', '202001', 'ICT Professional Practices', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(4, 'KIT107', '202001', 'Programming', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(5, 'KIT108', '202001', 'Artificial Intelligence', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(6, 'KIT111', '202001', 'Data Networks and Security', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(7, 'KIT202', '202001', 'Secure Web Programming', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(8, 'KIT203', '202001', 'ICT Project Management and Modelling', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(9, 'KIT205', '202001', 'Data Structures and Algorithms', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(10, 'KIT301', '202001', 'ICT Project A', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(11, 'KIT304', '202001', 'Server Administration and Security Assurance', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(12, 'KIT305', '202001', 'Mobile Application Development', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(13, 'KIT317', '202001', 'Sensor Networks and Applications', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(14, 'KIT417', '202001', 'Sensor Networks and Applications', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(15, 'KIT318', '202001', 'Big Data and Cloud Computing', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(16, 'KIT418', '202001', 'Big Data and Cloud Computing', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(17, 'KIT401', '202001', 'ICT Research Methods', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(18, 'KIT701', '202001', 'ICT Research Methods', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(19, 'KIT405', '202001', 'Programming for Intelligent Web Services & Apps', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(20, 'KIT502', '202001', 'Web Development', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(21, 'KIT503', '202001', 'ICT Professional Practices and Project Management', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(22, 'KIT607', '202001', 'Mobile Application Development', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(23, 'KIT707', '202001', 'Knowledge and Information Management', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(24, 'KIT710', '202001', 'eLogistics', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(25, 'KIT711', '202001', 'Network Security Techniques and Technology', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(26, 'KIT713', '202001', 'Multi-perspective ICT Project', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(27, 'KIT714', '202001', 'ICT Research Principles', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(28, 'KIT208', '202001', 'Virtual and Mixed Reality Technology', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(29, 'KIT508', '202001', 'Virtual and Mixed Reality Technology', '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
-(30, 'KIT302', '202002', 'ICT Project B', '2020-02-24 22:50:12', '2020-02-24 22:50:12');
+INSERT INTO `unit` (`id`, `unit_code`, `sem`, `unit_description`, `enable`, `create_time`, `last_upd_time`) VALUES
+(1, 'KIT001', '202001', 'Programming Preparation', 1, '2020-02-24 22:45:30', '2020-03-28 01:33:53'),
+(2, 'KIT101', '202001', 'Programming Fundamentals', 1, '2020-02-24 22:45:30', '2020-03-27 18:12:05'),
+(3, 'KIT105', '202001', 'ICT Professional Practices', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(4, 'KIT107', '202001', 'Programming', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(5, 'KIT108', '202001', 'Artificial Intelligence', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(6, 'KIT111', '202001', 'Data Networks and Security', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(7, 'KIT202', '202001', 'Secure Web Programming', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(8, 'KIT203', '202001', 'ICT Project Management and Modelling', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(9, 'KIT205', '202001', 'Data Structures and Algorithms', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(10, 'KIT301', '202001', 'ICT Project A', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(11, 'KIT304', '202001', 'Server Administration and Security Assurance', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(12, 'KIT305', '202001', 'Mobile Application Development', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(13, 'KIT317', '202001', 'Sensor Networks and Applications', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(14, 'KIT417', '202001', 'Sensor Networks and Applications', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(15, 'KIT318', '202001', 'Big Data and Cloud Computing', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(16, 'KIT418', '202001', 'Big Data and Cloud Computing', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(17, 'KIT401', '202001', 'ICT Research Methods', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(18, 'KIT701', '202001', 'ICT Research Methods', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(19, 'KIT405', '202001', 'Programming for Intelligent Web Services & Apps', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(20, 'KIT502', '202001', 'Web Development', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(21, 'KIT503', '202001', 'ICT Professional Practices and Project Management', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(22, 'KIT607', '202001', 'Mobile Application Development', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(23, 'KIT707', '202001', 'Knowledge and Information Management', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(24, 'KIT710', '202001', 'eLogistics', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(25, 'KIT711', '202001', 'Network Security Techniques and Technology', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(26, 'KIT713', '202001', 'Multi-perspective ICT Project', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(27, 'KIT714', '202001', 'ICT Research Principles', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(28, 'KIT208', '202001', 'Virtual and Mixed Reality Technology', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(29, 'KIT508', '202001', 'Virtual and Mixed Reality Technology', 1, '2020-02-24 22:45:30', '2020-02-24 22:45:30'),
+(30, 'KIT302', '202002', 'ICT Project B', 1, '2020-02-24 22:50:12', '2020-02-24 22:50:12');
 
 -- --------------------------------------------------------
 
@@ -840,29 +865,40 @@ CREATE TABLE IF NOT EXISTS `unit_enrol` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `unit_group`
+-- Table structure for table `unit_set`
 --
 
-DROP TABLE IF EXISTS `unit_group`;
-CREATE TABLE IF NOT EXISTS `unit_group` (
+DROP TABLE IF EXISTS `unit_set`;
+CREATE TABLE IF NOT EXISTS `unit_set` (
 `id` int(11) NOT NULL,
   `unit_id` int(11) NOT NULL,
-  `category` varchar(500) NOT NULL,
-  `group_id` varchar(500) DEFAULT NULL,
-  `group_desc` mediumtext,
+  `desc` mediumtext
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `unit_set_group`
+--
+
+DROP TABLE IF EXISTS `unit_set_group`;
+CREATE TABLE IF NOT EXISTS `unit_set_group` (
+`id` int(11) NOT NULL,
+  `set_id` int(11) NOT NULL,
+  `group_name` varchar(500) DEFAULT NULL,
+  `group_desc` text,
   `max` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `unit_group_allocation`
+-- Table structure for table `unit_set_group_allocation`
 --
 
-DROP TABLE IF EXISTS `unit_group_allocation`;
-CREATE TABLE IF NOT EXISTS `unit_group_allocation` (
+DROP TABLE IF EXISTS `unit_set_group_allocation`;
+CREATE TABLE IF NOT EXISTS `unit_set_group_allocation` (
 `id` int(11) NOT NULL,
-  `unit_id` int(11) NOT NULL,
   `user_id` varchar(20) NOT NULL,
   `group_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -949,7 +985,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `id`, `email`, `permission_level`, `locked`, `create_time`, `login_fail_cnt`, `last_login_time`, `reset_token`, `reset_time`, `last_upd_time`) VALUES
-('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '', 'kaichiu.wong@utas.edu.au', 90, 0, '2019-11-15 22:34:45', 0, '2020-03-24 00:00:43', NULL, NULL, '2020-02-24 18:58:43');
+('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '', 'kaichiu.wong@utas.edu.au', 90, 0, '2019-11-15 22:34:45', 0, '2020-03-27 21:32:09', NULL, NULL, '2020-02-24 18:58:43');
 
 -- --------------------------------------------------------
 
@@ -958,7 +994,7 @@ INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `
 --
 DROP TABLE IF EXISTS `sv_assignment_peer_stat`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_peer_stat` AS select `sv_assignment_peer_sum`.`asg_id` AS `asg_id`,`sv_assignment_peer_sum`.`reviewee` AS `reviewee`,avg(`sv_assignment_peer_sum`.`total`) AS `average`,variance(`sv_assignment_peer_sum`.`total`) AS `var`,min(`sv_assignment_peer_sum`.`total`) AS `min_score`,max(`sv_assignment_peer_sum`.`total`) AS `max_score` from `sv_assignment_peer_sum` where (`sv_assignment_peer_sum`.`reviewer` <> `sv_assignment_peer_sum`.`reviewee`) group by `sv_assignment_peer_sum`.`asg_id`,`sv_assignment_peer_sum`.`reviewee` order by `sv_assignment_peer_sum`.`asg_id`,`sv_assignment_peer_sum`.`reviewee`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_assignment_peer_stat` AS select `sv_assignment_peer_sum`.`asg_id` AS `asg_id`,`sv_assignment_peer_sum`.`reviewee` AS `reviewee`,avg(`sv_assignment_peer_sum`.`total`) AS `average`,variance(`sv_assignment_peer_sum`.`total`) AS `var`,min(`sv_assignment_peer_sum`.`total`) AS `min_score`,max(`sv_assignment_peer_sum`.`total`) AS `max_score` from `sv_assignment_peer_sum` where (`sv_assignment_peer_sum`.`reviewer` <> `sv_assignment_peer_sum`.`reviewee`) group by `sv_assignment_peer_sum`.`asg_id`,`sv_assignment_peer_sum`.`reviewee` order by `sv_assignment_peer_sum`.`asg_id`,`sv_assignment_peer_sum`.`reviewee`;
 
 -- --------------------------------------------------------
 
@@ -967,7 +1003,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sv_assignment_peer_sum`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_peer_sum` AS select `assignment_feedback`.`asg_id` AS `asg_id`,`assignment_feedback`.`reviewee` AS `reviewee`,`assignment_feedback`.`reviewer` AS `reviewer`,sum((`assignment_feedback`.`feedback` + 0.0)) AS `total` from `assignment_feedback` where (`assignment_feedback`.`reviewer` <> `assignment_feedback`.`reviewee`) group by `assignment_feedback`.`asg_id`,`assignment_feedback`.`reviewee`,`assignment_feedback`.`reviewer` order by `assignment_feedback`.`asg_id`,`assignment_feedback`.`reviewee`,`assignment_feedback`.`reviewer`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_assignment_peer_sum` AS select `assignment_feedback`.`asg_id` AS `asg_id`,`assignment_feedback`.`reviewee` AS `reviewee`,`assignment_feedback`.`reviewer` AS `reviewer`,sum((`assignment_feedback`.`feedback` + 0.0)) AS `total` from `assignment_feedback` where (`assignment_feedback`.`reviewer` <> `assignment_feedback`.`reviewee`) group by `assignment_feedback`.`asg_id`,`assignment_feedback`.`reviewee`,`assignment_feedback`.`reviewer` order by `assignment_feedback`.`asg_id`,`assignment_feedback`.`reviewee`,`assignment_feedback`.`reviewer`;
 
 -- --------------------------------------------------------
 
@@ -976,7 +1012,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sv_assignment_peer_summary`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_peer_summary` AS select `s`.`id` AS `id`,`s`.`asg_id` AS `asg_id`,`s`.`asg_title` AS `asg_title`,`s`.`sem` AS `sem`,`s`.`sem_key` AS `sem_key`,`s`.`unit_id` AS `unit_id`,`s`.`unit_code` AS `unit_code`,`s`.`unit_description` AS `unit_description`,`s`.`username` AS `username`,`s`.`email` AS `email`,`s`.`last_name` AS `last_name`,`s`.`first_name` AS `first_name`,`s`.`sid` AS `sid`,`t`.`topic_id` AS `topic_id`,`t`.`topic` AS `topic`,`t`.`topic_desc` AS `topic_desc`,`a`.`average` AS `peer_average`,`a`.`var` AS `peer_var`,`a`.`min_score` AS `peer_min_score`,`a`.`max_score` AS `peer_max_score`,`g`.`score_id` AS `group_score_id`,`g`.`score` AS `group_score`,`g`.`remark` AS `group_remark`,`p`.`id` AS `override_score_id`,`p`.`score` AS `override_score`,`p`.`remark` AS `override_score_remark` from (((`sv_assignment_student` `s` left join `sv_assignment_peer_stat` `a` on(((`s`.`asg_id` = `a`.`asg_id`) and (`s`.`username` = `a`.`reviewee`)))) left join `assignment_peer_mark` `p` on(((`s`.`asg_id` = `p`.`asg_id`) and (`p`.`username` = `s`.`username`)))) left join (`sv_assignment_topic_summary` `t` join `sv_group_submission` `g` on(((`t`.`assign_id` = `g`.`asg_id`) and (`t`.`topic_id` = `g`.`topic_id`)))) on(((`s`.`asg_id` = `t`.`assign_id`) and (`s`.`username` = `t`.`user_id`))));
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_assignment_peer_summary` AS select `s`.`id` AS `id`,`s`.`enable` AS `enable`,`s`.`asg_id` AS `asg_id`,`s`.`asg_title` AS `asg_title`,`s`.`sem` AS `sem`,`s`.`sem_key` AS `sem_key`,`s`.`unit_id` AS `unit_id`,`s`.`unit_code` AS `unit_code`,`s`.`unit_description` AS `unit_description`,`s`.`username` AS `username`,`s`.`email` AS `email`,`s`.`last_name` AS `last_name`,`s`.`first_name` AS `first_name`,`s`.`sid` AS `sid`,`t`.`topic_id` AS `topic_id`,`t`.`topic` AS `topic`,`t`.`topic_desc` AS `topic_desc`,`a`.`average` AS `peer_average`,`a`.`var` AS `peer_var`,`a`.`min_score` AS `peer_min_score`,`a`.`max_score` AS `peer_max_score`,`g`.`score_id` AS `group_score_id`,`g`.`score` AS `group_score`,`g`.`remark` AS `group_remark`,`p`.`id` AS `override_score_id`,`p`.`score` AS `override_score`,`p`.`remark` AS `override_score_remark` from (((`sv_assignment_student` `s` left join `sv_assignment_peer_stat` `a` on(((`s`.`asg_id` = `a`.`asg_id`) and (`s`.`username` = `a`.`reviewee`)))) left join `assignment_peer_mark` `p` on(((`s`.`asg_id` = `p`.`asg_id`) and (`p`.`username` = `s`.`username`)))) left join (`sv_assignment_topic_summary` `t` join `sv_group_submission` `g` on(((`t`.`assign_id` = `g`.`asg_id`) and (`t`.`topic_id` = `g`.`topic_id`)))) on(((`s`.`asg_id` = `t`.`assign_id`) and (`s`.`username` = `t`.`user_id`))));
 
 -- --------------------------------------------------------
 
@@ -985,7 +1021,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sv_assignment_staff`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_staff` AS select `us`.`id` AS `id`,`a`.`id` AS `asg_id`,`a`.`title` AS `title`,`a`.`type` AS `type`,`a`.`public` AS `public`,`a`.`feedback` AS `feedback`,`st`.`topic_count` AS `topic_count`,`au`.`student_count` AS `student_count`,`a`.`outcome` AS `outcome`,`a`.`scenario` AS `scenario`,`a`.`unit_id` AS `unit_id`,`a`.`create_time` AS `create_time`,`a`.`last_upd_time` AS `last_upd_time`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`fn_sem_short_desc`(`un`.`sem`) AS `sem`,`un`.`sem` AS `sem_key`,`u`.`username` AS `username`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid`,`u`.`email` AS `email`,`u`.`permission_level` AS `permission_level` from (((((`assignment` `a` left join `unit_staff` `us` on((`a`.`unit_id` = `us`.`unit_id`))) left join `unit` `un` on((`a`.`unit_id` = `un`.`id`))) left join `user` `u` on((`us`.`username` = `u`.`username`))) left join `sv_assignment_topic_count` `st` on((`a`.`id` = `st`.`id`))) left join `sv_assignment_student_count` `au` on((`a`.`id` = `au`.`id`)));
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_assignment_staff` AS select `us`.`id` AS `id`,`a`.`id` AS `asg_id`,`a`.`title` AS `title`,`a`.`type` AS `type`,`a`.`public` AS `public`,`a`.`feedback` AS `feedback`,`st`.`topic_count` AS `topic_count`,`au`.`student_count` AS `student_count`,`a`.`outcome` AS `outcome`,`a`.`scenario` AS `scenario`,`a`.`unit_id` AS `unit_id`,`a`.`create_time` AS `create_time`,`a`.`last_upd_time` AS `last_upd_time`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`fn_sem_short_desc`(`un`.`sem`) AS `sem`,`un`.`sem` AS `sem_key`,`u`.`username` AS `username`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid`,`u`.`email` AS `email`,`u`.`permission_level` AS `permission_level` from (((((`assignment` `a` left join `unit_staff` `us` on((`a`.`unit_id` = `us`.`unit_id`))) left join `unit` `un` on((`a`.`unit_id` = `un`.`id`))) left join `user` `u` on((`us`.`username` = `u`.`username`))) left join `sv_assignment_topic_count` `st` on((`a`.`id` = `st`.`id`))) left join `sv_assignment_student_count` `au` on((`a`.`id` = `au`.`id`)));
 
 -- --------------------------------------------------------
 
@@ -994,7 +1030,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sv_assignment_student`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_student` AS select distinct `ue`.`id` AS `id`,`a`.`id` AS `asg_id`,`a`.`public` AS `public`,`a`.`title` AS `asg_title`,`fn_sem_short_desc`(`un`.`sem`) AS `sem`,`un`.`sem` AS `sem_key`,`un`.`id` AS `unit_id`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`u`.`username` AS `username`,`u`.`email` AS `email`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid` from (((`assignment` `a` join `unit_enrol` `ue`) join `unit` `un`) join `user` `u`) where ((`a`.`unit_id` = `un`.`id`) and (`un`.`id` = `ue`.`unit_id`) and (`ue`.`user_id` = `u`.`username`));
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_assignment_student` AS select distinct `ue`.`id` AS `id`,`a`.`id` AS `asg_id`,`a`.`public` AS `public`,`a`.`title` AS `asg_title`,`fn_sem_short_desc`(`un`.`sem`) AS `sem`,`un`.`sem` AS `sem_key`,`un`.`id` AS `unit_id`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`u`.`username` AS `username`,`u`.`email` AS `email`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid`,`ue`.`enable` AS `enable` from (((`assignment` `a` join `unit_enrol` `ue`) join `unit` `un`) join `user` `u`) where ((`a`.`unit_id` = `un`.`id`) and (`un`.`id` = `ue`.`unit_id`) and (`ue`.`user_id` = `u`.`username`));
 
 -- --------------------------------------------------------
 
@@ -1003,7 +1039,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sv_assignment_student_count`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_student_count` AS select `a`.`id` AS `id`,count(`ue`.`user_id`) AS `student_count` from (`assignment` `a` left join `unit_enrol` `ue` on((`a`.`unit_id` = `ue`.`unit_id`))) group by `a`.`id`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_assignment_student_count` AS select `a`.`id` AS `id`,count(`ue`.`user_id`) AS `student_count` from (`assignment` `a` left join `unit_enrol` `ue` on((`a`.`unit_id` = `ue`.`unit_id`))) group by `a`.`id`;
 
 -- --------------------------------------------------------
 
@@ -1012,7 +1048,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sv_assignment_topic_count`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_topic_count` AS select `a`.`id` AS `id`,count(`t`.`id`) AS `topic_count` from (`assignment` `a` left join `assignment_topic` `t` on((`a`.`id` = `t`.`assign_id`))) group by `a`.`id`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_assignment_topic_count` AS select `a`.`id` AS `id`,count(`t`.`id`) AS `topic_count` from (`assignment` `a` left join `assignment_topic` `t` on((`a`.`id` = `t`.`assign_id`))) group by `a`.`id`;
 
 -- --------------------------------------------------------
 
@@ -1021,7 +1057,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sv_assignment_topic_member`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_topic_member` AS select `ata`.`id` AS `id`,`ata`.`asg_id` AS `asg_id`,`ata`.`user_id` AS `user_id`,`ata`.`topic_id` AS `topic_id`,`ata`.`create_time` AS `create_time`,`ata`.`last_upd_time` AS `last_upd_time`,`u`.`first_name` AS `first_name`,`u`.`last_name` AS `last_name`,`u`.`id` AS `sid`,`u`.`email` AS `email` from (`assignment_topic_allocation` `ata` join `user` `u`) where (`ata`.`user_id` = `u`.`username`);
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_assignment_topic_member` AS select `ata`.`id` AS `id`,`ata`.`asg_id` AS `asg_id`,`ata`.`user_id` AS `user_id`,`ata`.`topic_id` AS `topic_id`,`ata`.`create_time` AS `create_time`,`ata`.`last_upd_time` AS `last_upd_time`,`u`.`first_name` AS `first_name`,`u`.`last_name` AS `last_name`,`u`.`id` AS `sid`,`u`.`email` AS `email` from (`assignment_topic_allocation` `ata` join `user` `u`) where (`ata`.`user_id` = `u`.`username`);
 
 -- --------------------------------------------------------
 
@@ -1030,7 +1066,16 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sv_assignment_topic_summary`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_assignment_topic_summary` AS select `ata`.`id` AS `id`,`ata`.`user_id` AS `user_id`,`ata`.`topic_id` AS `topic_id`,`t`.`assign_id` AS `assign_id`,`t`.`topic` AS `topic`,`t`.`topic_desc` AS `topic_desc` from (`assignment_topic_allocation` `ata` join `assignment_topic` `t`) where (`t`.`id` = `ata`.`topic_id`);
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_assignment_topic_summary` AS select `ata`.`id` AS `id`,`ata`.`user_id` AS `user_id`,`ata`.`topic_id` AS `topic_id`,`t`.`assign_id` AS `assign_id`,`t`.`topic` AS `topic`,`t`.`topic_desc` AS `topic_desc` from (`assignment_topic_allocation` `ata` join `assignment_topic` `t`) where (`t`.`id` = `ata`.`topic_id`);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `sv_group_list_stat`
+--
+DROP TABLE IF EXISTS `sv_group_list_stat`;
+
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_group_list_stat` AS select `g`.`id` AS `id`,`g`.`set_id` AS `set_id`,`g`.`max` AS `max`,count(`usga`.`id`) AS `cnt` from (`unit_set_group` `g` left join `unit_set_group_allocation` `usga` on((`g`.`id` = `usga`.`group_id`))) group by `g`.`id`,`g`.`set_id`,`g`.`max`;
 
 -- --------------------------------------------------------
 
@@ -1039,7 +1084,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sv_group_submission`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_group_submission` AS select `t`.`id` AS `topic_id`,`t`.`topic` AS `topic`,`t`.`topic_desc` AS `topic_desc`,`t`.`assign_id` AS `asg_id`,`s`.`user_id` AS `user_id`,`s`.`id` AS `submission_id`,`s`.`filename` AS `filename`,`s`.`submission_date` AS `submission_date`,`agm`.`id` AS `score_id`,`agm`.`score` AS `score`,`agm`.`remark` AS `remark`,`agm`.`last_upd_by` AS `marker`,`agm`.`create_time` AS `score_create_time`,`agm`.`last_upd_time` AS `score_last_upd_time` from ((`assignment_topic` `t` left join `submission` `s` on(((`t`.`id` = `s`.`topic_id`) and (`t`.`assign_id` = `s`.`asg_id`)))) left join `assignment_group_mark` `agm` on(((`t`.`id` = `agm`.`group_id`) and (`t`.`assign_id` = `agm`.`asg_id`))));
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_group_submission` AS select `t`.`id` AS `topic_id`,`t`.`topic` AS `topic`,`t`.`topic_desc` AS `topic_desc`,`t`.`assign_id` AS `asg_id`,`s`.`user_id` AS `user_id`,`s`.`id` AS `submission_id`,`s`.`filename` AS `filename`,`s`.`submission_date` AS `submission_date`,`agm`.`id` AS `score_id`,`agm`.`score` AS `score`,`agm`.`remark` AS `remark`,`agm`.`last_upd_by` AS `marker`,`agm`.`create_time` AS `score_create_time`,`agm`.`last_upd_time` AS `score_last_upd_time` from ((`assignment_topic` `t` left join `submission` `s` on(((`t`.`id` = `s`.`topic_id`) and (`t`.`assign_id` = `s`.`asg_id`)))) left join `assignment_group_mark` `agm` on(((`t`.`id` = `agm`.`group_id`) and (`t`.`assign_id` = `agm`.`asg_id`))));
 
 -- --------------------------------------------------------
 
@@ -1048,7 +1093,16 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sv_topic_stat`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_topic_stat` AS select `a`.`id` AS `id`,count(`ata`.`topic_id`) AS `cnt` from (`assignment_topic` `a` left join `assignment_topic_allocation` `ata` on((`a`.`id` = `ata`.`topic_id`))) group by `a`.`id`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_topic_stat` AS select `a`.`id` AS `id`,count(`ata`.`topic_id`) AS `cnt` from (`assignment_topic` `a` left join `assignment_topic_allocation` `ata` on((`a`.`id` = `ata`.`topic_id`))) group by `a`.`id`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `sv_unit_group_member`
+--
+DROP TABLE IF EXISTS `sv_unit_group_member`;
+
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_unit_group_member` AS select `ata`.`id` AS `id`,`ata`.`user_id` AS `user_id`,`ata`.`group_id` AS `group_id`,`u`.`first_name` AS `first_name`,`u`.`last_name` AS `last_name`,`u`.`id` AS `sid`,`u`.`email` AS `email` from (`unit_set_group_allocation` `ata` join `user` `u`) where (`ata`.`user_id` = `u`.`username`);
 
 -- --------------------------------------------------------
 
@@ -1057,7 +1111,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sv_unit_staff`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_unit_staff` AS select `un`.`id` AS `id`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`fn_sem_short_desc`(`un`.`sem`) AS `sem`,`un`.`create_time` AS `create_time`,`un`.`last_upd_time` AS `last_upd_time`,`u`.`username` AS `username`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid`,`u`.`email` AS `email`,`u`.`permission_level` AS `permission_level` from ((`unit` `un` join `unit_staff` `us`) join `user` `u`) where ((`un`.`id` = `us`.`unit_id`) and (`us`.`username` = `u`.`username`));
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_unit_staff` AS select `un`.`id` AS `id`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`fn_sem_short_desc`(`un`.`sem`) AS `sem`,`un`.`create_time` AS `create_time`,`un`.`last_upd_time` AS `last_upd_time`,`u`.`username` AS `username`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid`,`u`.`email` AS `email`,`u`.`permission_level` AS `permission_level` from ((`unit` `un` join `unit_staff` `us`) join `user` `u`) where ((`un`.`id` = `us`.`unit_id`) and (`us`.`username` = `u`.`username`));
 
 -- --------------------------------------------------------
 
@@ -1066,7 +1120,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sv_unit_student`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sv_unit_student` AS select `u`.`username` AS `username`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid`,`u`.`email` AS `email`,`u`.`permission_level` AS `permission_level`,`un`.`id` AS `id`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`fn_sem_short_desc`(`un`.`sem`) AS `sem`,`un`.`create_time` AS `create_time`,`un`.`last_upd_time` AS `last_upd_time` from ((`unit` `un` join `unit_enrol` `ue`) join `user` `u`) where ((`un`.`id` = `ue`.`unit_id`) and (`ue`.`user_id` = `u`.`username`)) order by `u`.`username`,`un`.`unit_code`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_unit_student` AS select `u`.`username` AS `username`,`u`.`last_name` AS `last_name`,`u`.`first_name` AS `first_name`,`u`.`id` AS `sid`,`u`.`email` AS `email`,`u`.`permission_level` AS `permission_level`,`un`.`id` AS `id`,`un`.`unit_code` AS `unit_code`,`un`.`unit_description` AS `unit_description`,`ue`.`enable` AS `enable`,`fn_sem_short_desc`(`un`.`sem`) AS `sem`,`un`.`create_time` AS `create_time`,`un`.`last_upd_time` AS `last_upd_time` from ((`unit` `un` join `unit_enrol` `ue`) join `user` `u`) where ((`un`.`id` = `ue`.`unit_id`) and (`ue`.`user_id` = `u`.`username`)) order by `u`.`username`,`un`.`unit_code`;
 
 --
 -- Indexes for dumped tables
@@ -1163,16 +1217,22 @@ ALTER TABLE `unit_enrol`
  ADD PRIMARY KEY (`id`), ADD KEY `user_id` (`user_id`), ADD KEY `unit_id` (`unit_id`);
 
 --
--- Indexes for table `unit_group`
+-- Indexes for table `unit_set`
 --
-ALTER TABLE `unit_group`
+ALTER TABLE `unit_set`
  ADD PRIMARY KEY (`id`), ADD KEY `unit_id` (`unit_id`);
 
 --
--- Indexes for table `unit_group_allocation`
+-- Indexes for table `unit_set_group`
 --
-ALTER TABLE `unit_group_allocation`
- ADD PRIMARY KEY (`id`), ADD KEY `unit_id` (`unit_id`), ADD KEY `user_id` (`user_id`), ADD KEY `group_id` (`group_id`);
+ALTER TABLE `unit_set_group`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `unit_set_group_allocation`
+--
+ALTER TABLE `unit_set_group_allocation`
+ ADD PRIMARY KEY (`id`), ADD KEY `user_id` (`user_id`), ADD KEY `group_id` (`group_id`);
 
 --
 -- Indexes for table `unit_staff`
@@ -1256,14 +1316,19 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
 ALTER TABLE `unit_enrol`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `unit_group`
+-- AUTO_INCREMENT for table `unit_set`
 --
-ALTER TABLE `unit_group`
+ALTER TABLE `unit_set`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `unit_group_allocation`
+-- AUTO_INCREMENT for table `unit_set_group`
 --
-ALTER TABLE `unit_group_allocation`
+ALTER TABLE `unit_set_group`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `unit_set_group_allocation`
+--
+ALTER TABLE `unit_set_group_allocation`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `unit_staff`
@@ -1350,17 +1415,16 @@ ADD CONSTRAINT `unit_enrol_id` FOREIGN KEY (`unit_id`) REFERENCES `unit` (`id`),
 ADD CONSTRAINT `unit_enrol_username` FOREIGN KEY (`user_id`) REFERENCES `user` (`username`);
 
 --
--- Constraints for table `unit_group`
+-- Constraints for table `unit_set`
 --
-ALTER TABLE `unit_group`
+ALTER TABLE `unit_set`
 ADD CONSTRAINT `fk_unit_group_unit_id` FOREIGN KEY (`unit_id`) REFERENCES `unit` (`id`);
 
 --
--- Constraints for table `unit_group_allocation`
+-- Constraints for table `unit_set_group_allocation`
 --
-ALTER TABLE `unit_group_allocation`
-ADD CONSTRAINT `fk_unit_group_alloc_group_id` FOREIGN KEY (`group_id`) REFERENCES `unit_group` (`id`),
-ADD CONSTRAINT `fk_unit_group_alloc_unit_id` FOREIGN KEY (`unit_id`) REFERENCES `unit` (`id`),
+ALTER TABLE `unit_set_group_allocation`
+ADD CONSTRAINT `fk_unit_group_alloc_group_id` FOREIGN KEY (`group_id`) REFERENCES `unit_set_group` (`id`),
 ADD CONSTRAINT `fk_unit_group_alloc_username` FOREIGN KEY (`user_id`) REFERENCES `user` (`username`);
 
 --
