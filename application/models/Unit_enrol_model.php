@@ -22,6 +22,16 @@ class Unit_enrol_model extends CI_Model
         return $query->result_array();
     }
 
+
+    function get_unit_enrol_by_unitid($unit_id)
+    {
+        $query_str  = " select s.* ";
+        $query_str .= " from sv_unit_student s ";
+        $query_str .= " where s.id=$unit_id order by s.username; ";
+        $query = $this->db->query($query_str);
+        return $query->result_array();
+    }
+
     function get_all_unit_enrols()
     {
         $query = $this->db->query("select * from sv_assignment_student order by id; ");

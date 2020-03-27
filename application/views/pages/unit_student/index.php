@@ -3,18 +3,15 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1><?php echo $asg_header; ?></h1>
+        <h1><?php echo $unit_header; ?></h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="<?php echo site_url('Assignmentadmin'); ?>">Assignment List</a></li>
-          <li class="breadcrumb-item"><a href="<?php echo site_url('Assignmentadmin/info/'.$asg_id); ?>">Info</a></li>
-          <li class="breadcrumb-item"><a href="<?php echo site_url('assignment_date/index/'.$asg_id); ?>">Timeline</a></li>
-          <li class="breadcrumb-item"><a href="<?php echo site_url('assignment_topic/index/'.$asg_id); ?>">Group List</a></li>
+          <li class="breadcrumb-item"><a href="<?php echo site_url('Unit'); ?>">Unit List</a></li>
+          <li class="breadcrumb-item"><a href="<?php echo site_url('Unit/info/'.$unit_id); ?>">Info</a></li>
+          <li class="breadcrumb-item"><a href="<?php echo site_url('Staff_list/index/'.$unit_id); ?>">Staff List</a></li>
           <li class="breadcrumb-item active">Student List</li>
-          
-          <li class="breadcrumb-item"><a href="<?php echo site_url('assignment_question/index/'.$asg_id).'/self'; ?>">Self Evaluation</a></li>
-          <li class="breadcrumb-item"><a href="<?php echo site_url('assignment_question/index/'.$asg_id).'/peer'; ?>">Peer Review</a></li>
+          <li class="breadcrumb-item"><a href="<?php echo site_url('Unit_group/index/'.$unit_id); ?>">Group Set</a></li>
         </ol>
       </div>
     </div>
@@ -33,35 +30,22 @@
         <table class="table table-sm table-head-fixed table-hover enable-datatable">
             <thead>
                 <tr>
-                    <th>Student ID</th>
                     <th>Username</th>
+                    <th>Student ID</th>
                     <th>Student Name</th>
-                    <th>Group</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach($students as $a){ ?>
                 <tr>
-                    <td><a href="<?php echo site_url('Member/full_profile/'.$a['username']); ?>"><?php echo $a['sid']; ?></a></td>
-                    <td><?php echo $a['username']; ?></td>
+                    <td><a href="<?php echo site_url('Member/full_profile/'.$a['username']); ?>"><?php echo $a['username']; ?></a></td>
+                    <td><?php echo $a['sid']; ?></td>
                     <td><?php echo $a['first_name'] . ' ' . $a['last_name'] ; ?></td>
                     <td>
-                    <?php echo form_open('student_list/assign_grp/'); ?>
-                        <div class="input-group">
-                            <input type="hidden" name="ata_id" value="<?php echo $a['ata_id']; ?>" />
-                            <input type="hidden" name="user_id" value="<?php echo $a['username']; ?>" />
-                            <input type="hidden" name="asg_id" value="<?php echo $a['asg_id']; ?>" />
-                            <select name="group_id" class="form-control-sm" required>
-                                <option value="" disabled selected>*** Not Assigned to Groups ***</option>
-                                <?php foreach($group_list as $g){ ?>
-                                <option value="<?php echo $g['id']; ?>" <?php echo ($g['id'] == $a['topic_id'])? "selected":"" ;?> <?php echo ($g['cnt'] >= $g['max'])? "disabled":"" ;?>><?php echo $g['topic'] . ' ('.$g['cnt'].'/'.$g['max'].')'; ?></option>
-                                <?php }?>
-                            </select>
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary btn-sm" type="submit" tabindex="-1">Assign</button>
-                            </span>
-                        </div>
-                    <?php echo form_close(); ?>
+                      <span class="text-<?php echo $a['enable'] ? "success":"danger"?>">
+                        <b><?php echo $a['enable'] ? "<i class='fas fa-sign-in-alt'></i> Enrolled":"<i class='fas fa-sign-out-alt'></i> Withdrawn"?></b>
+                      </span>
                     </td>
                 </tr>
                 <?php } ?>

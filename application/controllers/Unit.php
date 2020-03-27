@@ -70,7 +70,6 @@ class Unit extends MY_PasController {
             $data['unit_id'] = $unit_id ;
             $real_unit_id = decode_id($unit_id);
             if (empty($real_unit_id)) break;
-            $data['unit_info']=$this->Unit_model->get_unit_info($real_unit_id)[0];
             $data['sem_list'] = $this->Semester_model->get_all_sem();
             $data['error_msg'] = '';
 
