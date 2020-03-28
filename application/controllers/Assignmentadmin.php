@@ -73,6 +73,11 @@ class Assignmentadmin extends MY_PasController {
 
                     $this->load->model('Assignment_feedback_model');
                     $this->Assignment_feedback_model->add_default_feedback($assignment_id, $this->get_login_user() );
+
+                    if (!empty($_POST['group_set'] ) ) {
+                        $this->load->model('Unit_group_model');
+                        $this->Unit_group_model->transfer_set_to_assignment($this->input->post('group_set'), $assignment_id);
+                    }
                     
                 }
                 redirect('Assignmentadmin/index');

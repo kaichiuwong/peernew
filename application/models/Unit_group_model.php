@@ -229,4 +229,26 @@ class Unit_group_model extends CI_Model
         $this->remove_groups_allocation($grp_id);
         $this->db->delete('unit_set_group',array('id'=>$grp_id));
     }
+
+
+    function transfer_set_to_assignment($set_id, $asg_id)
+    {
+        $this->load->model('Assignment_topic_model');
+        $group_list = $this->get_unit_set_group($set_id);
+        foreach($group_list as $grp)
+        {
+            $param = array(
+                'assign_id' => $asg_id,
+                'topic' => $grp['group_name'],
+                'topic_desc' => $grp['group_desc'], 
+                'max' => $grp['max']
+            );
+            $grp_id = $this->Assignment_topic_model->add_assignment_topic($param);
+            $grp_mbr = $this->get_unit_groups_allocation($grp['id']);
+            foreach ($grp_mbr as $mbr)
+            {
+                $this->Assignment_topic_model->join_topic($asg_id, $mbr['user_id'], $grp_id);
+            }
+        }
+    }
 }
