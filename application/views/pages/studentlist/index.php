@@ -33,8 +33,8 @@
         <table class="table table-sm table-head-fixed table-hover enable-datatable">
             <thead>
                 <tr>
-                    <th>Student ID</th>
                     <th>Username</th>
+                    <th>Student ID</th>
                     <th>Student Name</th>
                     <th>Group</th>
                 </tr>
@@ -42,8 +42,8 @@
             <tbody>
                 <?php foreach($students as $a){ ?>
                 <tr>
-                    <td><a href="<?php echo site_url('Member/full_profile/'.$a['username']); ?>"><?php echo $a['sid']; ?></a></td>
-                    <td><?php echo $a['username']; ?></td>
+                    <td><a href="<?php echo site_url('Member/full_profile/'.$a['username']); ?>"><?php echo $a['username']; ?></a> <?php if ($a['enable'] == 0) : ?><span class="badge badge-danger">Withdrawn</sapn><?php endif; ?></a</td>
+                    <td><?php echo $a['sid']; ?></td>
                     <td><?php echo $a['first_name'] . ' ' . $a['last_name'] ; ?></td>
                     <td>
                     <?php echo form_open('student_list/assign_grp/'); ?>
@@ -51,14 +51,14 @@
                             <input type="hidden" name="ata_id" value="<?php echo $a['ata_id']; ?>" />
                             <input type="hidden" name="user_id" value="<?php echo $a['username']; ?>" />
                             <input type="hidden" name="asg_id" value="<?php echo $a['asg_id']; ?>" />
-                            <select name="group_id" class="form-control-sm" required>
+                            <select name="group_id" class="form-control-sm" required <?php if ($a['enable'] == 0) : ?> disabled <?php endif; ?> >
                                 <option value="" disabled selected>*** Not Assigned to Groups ***</option>
                                 <?php foreach($group_list as $g){ ?>
                                 <option value="<?php echo $g['id']; ?>" <?php echo ($g['id'] == $a['topic_id'])? "selected":"" ;?> <?php echo ($g['cnt'] >= $g['max'])? "disabled":"" ;?>><?php echo $g['topic'] . ' ('.$g['cnt'].'/'.$g['max'].')'; ?></option>
                                 <?php }?>
                             </select>
                             <span class="input-group-btn">
-                                <button class="btn btn-primary btn-sm" type="submit" tabindex="-1">Assign</button>
+                                <button class="btn btn-primary btn-sm" type="submit" tabindex="-1" <?php if ($a['enable'] == 0) : ?> disabled <?php endif; ?> >Assign</button>
                             </span>
                         </div>
                     <?php echo form_close(); ?>
