@@ -61,6 +61,31 @@ class Unit_enrol_model extends CI_Model
         return $this->db->delete('unit_enrol',array('id'=>$id));
     }
 
+    function get_unit_enrol_by_user($unit_id, $user_id) 
+    {
+        $query_str  = " select ue.* ";
+        $query_str .= " from unit_enrol ue ";
+        $query_str .= " where ue.user_id = '$user_id' and ue.unit_id= $unit_id ; ";
+        $query = $this->db->query($query_str);
+        return $query->result_array();
+    }
+
+    function withdraw_unit($unit_id, $user_id)
+    {
+        $query_str .= " update unit_enrol ";
+        $query_str .= "    set enable = 0, last_upd_time = now() ";
+        $query_str .= " where user_id = '$user_id' and unit_id= $unit_id and enable = 1 ; ";
+        $query = $this->db->query($query_str);
+    }
+
+    function enrol_unit($unit_id, $user_id)
+    {
+        $query_str .= " update unit_enrol ";
+        $query_str .= "    set enable = 1 ";
+        $query_str .= " where user_id = '$user_id' and unit_id= $unit_id and enable = 0 ; ";
+        $query = $this->db->query($query_str);
+    }
+
     function refresh_enrol_from_db()
     {
         $cnt = 0;
@@ -76,7 +101,7 @@ class Unit_enrol_model extends CI_Model
         $remote_query = $remote_db->query($remotesql);
         $remote_result = $remote_query->result_array();
 
-        $truncatesql = "truncate unit_enrol; ";
+        $truncatesql = "update unit_enrol set enable = 0 ; ";
         $this->db->query($truncatesql);
 
         $this->load->model('User');
@@ -109,9 +134,16 @@ class Unit_enrol_model extends CI_Model
                     'user_id' => $username,
                     'unit_id' => $unit_id
                 );
-                $this->add_unit_enrol($enrol_info);
+                if (!get_unit_enrol_by_user($unit_id, $username)) {
+                    $this->add_unit_enrol($enrol_info);
+                }
+                else {
+                    $this->enrol_unit($unit_id, $username);
+                }
                 $cnt++;
             }
         }
+
+        return cnt;
     }
 }
