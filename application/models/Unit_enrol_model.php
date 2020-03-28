@@ -134,7 +134,7 @@ class Unit_enrol_model extends CI_Model
                     'user_id' => $username,
                     'unit_id' => $unit_id
                 );
-                if (!get_unit_enrol_by_user($unit_id, $username)) {
+                if (!$this->get_unit_enrol_by_user($unit_id, $username)) {
                     $this->add_unit_enrol($enrol_info);
                 }
                 else {
