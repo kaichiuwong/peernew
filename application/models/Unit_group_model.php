@@ -66,6 +66,23 @@ class Unit_group_model extends CI_Model
         return $query->result_array();
     }
 
+    function get_unit_groups_allocation_set($set_id)
+    {
+        $query_str =  " select ue.user_id username, ue.enable, usga.* " ;
+        $query_str .= "   from unit_enrol ue left join unit_set_group_allocation usga on ( ue.user_id = usga.user_id and enable = 1 and usga.group_id in (select id from unit_set_group where set_id = '$set_id' )  ) " ;
+        $query = $this->db->query($query_str);
+        return $query->result_array();
+    }
+    function get_unit_groups_allocation_stat($set_id)
+    {
+        $query_str =  " select usg.id as unit_group_id, usg.set_id, usg.group_name, usg.group_desc, usg.max, count(usga.id) as cnt " ;
+        $query_str .= "   from unit_set_group usg left join unit_set_group_allocation usga on usg.id = usga.group_id" ;
+        $query_str .= "    and usg.set_id = '$set_id'  " ;
+        $query_str .= "  group by usg.id, usg.set_id, usg.group_name, usg.group_desc, usg.max;   " ;
+        $query = $this->db->query($query_str);
+        return $query->result_array();
+    }
+
     function create_unit_set($unit_id, $num = 0, $max = 0, $desc='', $prefix = '')
     {
         $params = array (
@@ -152,6 +169,14 @@ class Unit_group_model extends CI_Model
         }
     }
 
+    function assign_group($username, $old_grp_id, $grp_id)
+    {
+        $query_str =  " update unit_set_group_allocation" ;
+        $query_str .= "    set group_id = $grp_id " ;
+        $query_str .= "  where user_id = '$username' and group_id= $old_grp_id; " ;
+        $query = $this->db->query($query_str);
+    }
+
     function add_student_to_group($username, $grp_id)
     {
         $params = array (
@@ -168,7 +193,7 @@ class Unit_group_model extends CI_Model
         $this->clear_groups($set_id);
         $this->db->delete('unit_set',array('id'=>$set_id));
     }
-s
+
     function clear_allocation($set_id) 
     {
         $group_list = $this->get_unit_set_group($set_id);
