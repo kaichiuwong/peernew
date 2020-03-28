@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2020 at 03:40 PM
+-- Generation Time: Mar 28, 2020 at 07:43 PM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -888,7 +888,7 @@ CREATE TABLE IF NOT EXISTS `unit_set_group` (
   `group_name` varchar(500) DEFAULT NULL,
   `group_desc` text,
   `max` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=251 ;
 
 -- --------------------------------------------------------
 
@@ -985,7 +985,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `salt`, `last_name`, `first_name`, `id`, `email`, `permission_level`, `locked`, `create_time`, `login_fail_cnt`, `last_login_time`, `reset_token`, `reset_time`, `last_upd_time`) VALUES
-('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '', 'kaichiu.wong@utas.edu.au', 90, 0, '2019-11-15 22:34:45', 0, '2020-03-27 21:32:09', NULL, NULL, '2020-02-24 18:58:43');
+('admin', '$1$5ac36b5d$ATVyx7vRGou5dQvPdCyzU1', '$1$5ac36b5dbe8321e5f6896d0e4c402728', 'Admin', 'System', '', 'kaichiu.wong@utas.edu.au', 90, 0, '2019-11-15 22:34:45', 0, '2020-03-29 03:05:03', NULL, NULL, '2020-02-24 18:58:43');
 
 -- --------------------------------------------------------
 
@@ -1039,7 +1039,7 @@ CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_assignment_student` AS 
 --
 DROP TABLE IF EXISTS `sv_assignment_student_count`;
 
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_assignment_student_count` AS select `a`.`id` AS `id`,count(`ue`.`user_id`) AS `student_count` from (`assignment` `a` left join `unit_enrol` `ue` on((`a`.`unit_id` = `ue`.`unit_id`))) group by `a`.`id`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `sv_assignment_student_count` AS select `a`.`id` AS `id`,count(`ue`.`user_id`) AS `student_count` from (`assignment` `a` left join `unit_enrol` `ue` on(((`a`.`unit_id` = `ue`.`unit_id`) and (`ue`.`enable` = 1)))) group by `a`.`id`;
 
 -- --------------------------------------------------------
 
@@ -1324,7 +1324,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `unit_set_group`
 --
 ALTER TABLE `unit_set_group`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=251;
 --
 -- AUTO_INCREMENT for table `unit_set_group_allocation`
 --
