@@ -16,6 +16,13 @@
               <p>Home</p>
             </a>
           </li>
+          <li class="nav-header">Unit</li>
+          <li class="nav-item">
+            <a href="<?php echo site_url('Unit'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-book"></i>
+              <p>Unit List</p>
+            </a>
+          </li>
           <li class="nav-header">Assignment</li>
           <li class="nav-item">
             <a href="<?php echo site_url('Assignmentadmin'); ?>" class="nav-link">

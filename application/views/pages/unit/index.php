@@ -17,7 +17,7 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body table-responsive p-3">
-      <a href="<?php echo site_url('Unit/add'); ?>" class="btn btn-success btn-sm">Create Unit</a> 
+      <?php if (!$readonly) : ?><a href="<?php echo site_url('Unit/add'); ?>" class="btn btn-success btn-sm">Create Unit</a> <?php endif; ?>
         <table class="table table-sm table-head-fixed table-hover enable-datatable">
             <thead>
                 <tr>
@@ -38,7 +38,8 @@
                     <td><?php echo $a['std_cnt']; ?></td>
                     <td><span class="text-<?php echo  ( $a['enable'] ? "success":"danger") ; ?>"><b><?php echo  ( $a['enable'] ? "<i class='fas fa-check'></i> Enabled":"<i class='fas fa-times-circle'></i> Disabled") ; ?></b></td>
                     <td>
-                        <a href="<?php echo site_url('Assignmentadmin/add/'.encode_id($a['id']) ); ?>" class="btn btn-success btn-sm">Create Assignment</a> 
+                        <a href="<?php echo site_url('Assignmentadmin/add/'.encode_id($a['id']) ); ?>" class="btn btn-success btn-sm">Create Assignment</a>
+                        <?php if (!$readonly) : ?>
                         <a href="<?php echo site_url('Unit/info/'.encode_id($a['id'])); ?>" class="btn btn-primary btn-sm">Select</a>
                         <a href="<?php echo site_url('Unit/enable_switch/'.encode_id($a['id'])); ?>" class="btn btn-<?php echo  ( $a['enable'] ? "danger":"success") ; ?> btn-sm">
                           <?php echo  ( $a['enable'] ? "Disable":"Enable") ; ?>
@@ -46,6 +47,7 @@
                         <a href="<?php echo site_url('Unit/remove/'.encode_id($a['id'])); ?>" class="btn btn-dark btn-sm" onclick="return confirm('*** WARNING ***\nTHIS WILL REMOVE ALL UNIT RELATED RECORDS, INCLUDING ASSIGNMENTS, ASSINGNMENT SUBMISSION, MARKINGS, GROUP ALLOCATION, ASSIGNMENT QUESTIONS etc. \nAre your confirm to remove this UNIT? ');">
                           Remove
                         </a> 
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php } ?>

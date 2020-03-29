@@ -30,11 +30,14 @@ class Unit_model extends CI_Model
         return $query->result_array();
     }
 
-    function get_all_units_with_disabled()
+    function get_all_units_with_disabled($username = '')
     {
         $query_str =  " SELECT u.id, u.unit_code, fn_sem_short_desc(u.sem) as sem, u.sem as sem_key, u.unit_description, u.enable, count(ue.id) as std_cnt ";
         $query_str .= "   FROM unit u ";
         $query_str .= "   LEFT JOIN unit_enrol ue on u.id = ue.unit_id and ue.enable = 1 ";
+        if (!empty($username)) {
+            $query_str .= "   WHERE u.id in (SELECT unit_id FROM unit_staff WHERE username = '$username' ) ";
+        }
         $query_str .= "  GROUP BY u.id, u.unit_code, u.sem, u.unit_description, u.enable" ;
         $query = $this->db->query($query_str);
         return $query->result_array();

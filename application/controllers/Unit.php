@@ -12,8 +12,13 @@ class Unit extends MY_PasController {
     
     function index()
     {
-        if ($this->check_permission(50)) {
-            $data['units'] = $this->Unit_model->get_all_units_with_disabled();
+        if ($this->check_permission(30)) {
+            $data['readonly']= true;
+            $data['units'] = $this->Unit_model->get_all_units_with_disabled($this->get_login_user());
+            if ($this->check_permission(50, false)) {
+                $data['readonly']= false;
+                $data['units'] = $this->Unit_model->get_all_units_with_disabled();
+            }
             $data['_view'] = 'pages/unit/index';
             $this->load_header($data);
             $this->load->view('templates/main',$data);
