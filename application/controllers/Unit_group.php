@@ -230,7 +230,7 @@ class Unit_group extends MY_PasController {
             $data['unit_header']=$data['unit_info']->unit_code . ' - '. $data['unit_info']->unit_description;
 
             $data['_view'] = 'pages/unit_group/list';
-            $data['students'] = $this->Unit_group_model->get_unit_groups_allocation_set($real_set_id);
+            $data['students'] = $this->Unit_group_model->get_unit_groups_allocation_set($real_unit_id, $real_set_id);
             $data['group_list'] = $this->Unit_group_model->get_unit_groups_allocation_stat($real_set_id);
             $this->load_header($data);
             $this->load->view('templates/main',$data);

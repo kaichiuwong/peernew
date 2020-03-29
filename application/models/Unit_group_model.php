@@ -65,7 +65,7 @@ class Unit_group_model extends CI_Model
         $query = $this->db->query($query_str);
         return $query->result_array();
     }
-
+/*
     function get_unit_groups_allocation_set($set_id)
     {
         $query_str =  " select ue.user_id username, ue.enable, usga.* " ;
@@ -73,6 +73,18 @@ class Unit_group_model extends CI_Model
         $query = $this->db->query($query_str);
         return $query->result_array();
     }
+*/
+    function get_unit_groups_allocation_set($unit_id, $set_id)
+    {
+        $query_str =  " select ue.user_id username, ue.enable, usga.* " ;
+        $query_str .= "   from unit_enrol ue left join unit_set_group_allocation usga on "; 
+        $query_str .= "                      ( ue.user_id = usga.user_id and enable = 1 and usga.group_id in ";
+        $query_str .= "                                                               (select usg.id from unit_set_group usg where usg.set_id = '$set_id' )  ) " ;
+        $query_str .= "  where ue.unit_id = '$unit_id' ; "; 
+        $query = $this->db->query($query_str);
+        return $query->result_array();
+    }
+
     function get_unit_groups_allocation_stat($set_id)
     {
         $query_str =  " select usg.id as unit_group_id, usg.set_id, usg.group_name, usg.group_desc, usg.max, count(usga.id) as cnt " ;
