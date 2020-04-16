@@ -72,7 +72,7 @@ class Unit_enrol_model extends CI_Model
 
     function withdraw_unit($unit_id, $user_id)
     {
-        $query_str .= " update unit_enrol ";
+        $query_str = " update unit_enrol ";
         $query_str .= "    set enable = 0, last_upd_time = now() ";
         $query_str .= " where user_id = '$user_id' and unit_id= $unit_id and enable = 1 ; ";
         $query = $this->db->query($query_str);
@@ -80,8 +80,8 @@ class Unit_enrol_model extends CI_Model
 
     function enrol_unit($unit_id, $user_id)
     {
-        $query_str .= " update unit_enrol ";
-        $query_str .= "    set enable = 1 ";
+        $query_str = " update unit_enrol ";
+        $query_str .= "    set enable = 1, last_upd_time = now()  ";
         $query_str .= " where user_id = '$user_id' and unit_id= $unit_id and enable = 0 ; ";
         $query = $this->db->query($query_str);
     }
