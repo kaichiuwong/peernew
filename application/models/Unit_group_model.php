@@ -85,6 +85,15 @@ class Unit_group_model extends CI_Model
         return $query->result_array();
     }
 
+    function remove_unit_set_by_unit($unit_id) 
+    {
+        $grp_list = $this->get_unit_set_list($unit_id);
+        foreach ($grp_list as $grp)
+        {
+            $this->remove_set($grp['id']);
+        }
+    }
+
     function get_unit_groups_allocation_stat($set_id)
     {
         $query_str =  " select usg.id as unit_group_id, usg.set_id, usg.group_name, usg.group_desc, usg.max, count(usga.id) as cnt " ;
@@ -218,6 +227,7 @@ class Unit_group_model extends CI_Model
     {
         $this->db->delete('unit_set_group',array('set_id'=>$set_id));
     }
+
 
     function remove_groups_allocation($grp_id)
     {

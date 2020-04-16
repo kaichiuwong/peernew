@@ -43,6 +43,15 @@ class Assignment_model extends CI_Model
         $query = $this->db->query($query_str );
         return $query->result_array();
     }
+
+    function get_all_assignments_by_unit_id($unit_id)
+    {
+        $query_str =  " select * " ;
+        $query_str .= "   from assignment asg " ;
+        $query_str .= "  where asg.unit_id = '$unit_id' ; " ;
+        $query = $this->db->query($query_str);
+        return $query->result_array();
+    }
     
     function get_all_assignments_student($username, $sem)
     {
@@ -98,6 +107,15 @@ class Assignment_model extends CI_Model
             }
         }
         return $rtnResult;
+    }
+
+    function delete_assignment_by_unit($unit_id)
+    {
+        $asg_list = $this->get_all_assignments_by_unit_id($unit_id);
+        foreach ($asg_list as $asg)
+        {
+            $this->delete_assignment($asg['id']);
+        }
     }
 
     function delete_assignment($id)

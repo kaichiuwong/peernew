@@ -69,8 +69,10 @@ class Unit_model extends CI_Model
 
     function delete_unit($id)
     {
-        $this->db->delete('unit_group_allocation',array('unit_id'=>$id));
-        $this->db->delete('unit_group',array('unit_id'=>$id));
+        $this->load->model('Assignment_model');
+        $this->load->model('Unit_group_model');
+        $this->Assignment_model->delete_assignment_by_unit($id);
+        $this->Unit_group_model->remove_unit_set_by_unit($id);
         $this->db->delete('unit_enrol',array('unit_id'=>$id));
         $this->db->delete('unit_staff',array('unit_id'=>$id));
         $this->db->delete('unit',array('id'=>$id));
