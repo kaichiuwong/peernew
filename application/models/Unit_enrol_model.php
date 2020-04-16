@@ -144,6 +144,6 @@ class Unit_enrol_model extends CI_Model
             }
         }
 
-        return cnt;
+        return $cnt;
     }
 }
