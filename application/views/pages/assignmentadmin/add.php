@@ -22,9 +22,48 @@
     <?php echo form_open('Assignmentadmin/add/'.$unit_id,array("class"=>"form-horizontal")); ?>
     <div class="card-body">
         <div class="form-group">
-            <label for="type" class="col-md-4 control-label"><span class="text-danger">*</span>Type</label>
+            <label for="title" class="col-md-12 control-label"><span class="text-danger">*</span>Assignment Title</label>
             <div class="col-md-12">
-                <select name="type" class="form-control select2bs4" required>
+                <input type="text" name="title" value="<?php echo $this->input->post('title'); ?>" class="form-control" id="title" required />
+                <span class="text-danger"><?php echo form_error('title');?></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="unit_id" class="col-md-12 control-label"><span class="text-danger">*</span>Unit</label>
+            <div class="col-md-12">
+                <input type="hidden" name="unit_id" value="<?php echo $unit_id; ?>" class="form-control" id="unit_id" required readonly/>
+                <input type="text" name="unit_desc" value="<?php echo $unit_header; ?>" class="form-control" id="unit_id" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="group_set" class="col-md-12 control-label">
+                <span class="text-danger">*</span>Predefine Group Set
+                <?php if (count($unit_set) <= 0): ?>
+                    <small class="text-danger"><br /><i class="fas fa-exclamation-triangle"></i> <a href="<?php echo site_url('Unit_group/add/'.$unit_id); ?>">No group set defined for this unit! Please define a group set before creating any assignment for this unit</a></small>
+                <?php endif; ?>
+            </label>
+            <div class="col-md-12">
+                <select name="group_set" class="form-control select2bs4" required <?php if (count($unit_set) <= 0) echo "disabled" ?>>
+                    <option value="" disabled selected>-- Group Set --</option>
+                    <?php 
+                    foreach($unit_set as $set)
+                    {
+                        $selected = '';
+                        if ($this->input->post('group_set')) {
+                            $selected = ($set['id'] == $this->input->post('group_set')) ? ' disabled' : ' selected="selected" ';
+                        }
+
+                        echo '<option value="'.$set['id'].'" '.$selected.'>'.$set['desc']. ' ('.$set['cnt'].' Groups)'.'</option>';
+                    } 
+                    ?>
+                </select>
+                <span class="text-danger"><?php echo form_error('group_set');?></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="type" class="col-md-12 control-label"><span class="text-danger">*</span>Type</label>
+            <div class="col-md-12">
+                <select name="type" class="form-control select2bs4" required disabled>
                     <option value="" disabled selected>-- Assignment Type --</option>
                     <?php 
                     $type_values = array(
@@ -43,47 +82,13 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="unit_id" class="col-md-4 control-label"><span class="text-danger">*</span>Unit</label>
-            <div class="col-md-12">
-                <input type="hidden" name="unit_id" value="<?php echo $unit_id; ?>" class="form-control" id="unit_id" required readonly/>
-                <input type="text" name="unit_desc" value="<?php echo $unit_header; ?>" class="form-control" id="unit_id" readonly/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="group_set" class="col-md-4 control-label">Predefine Group Set</label>
-            <div class="col-md-12">
-                <select name="group_set" class="form-control select2bs4">
-                    <option value="" disabled selected>-- Group Set --</option>
-                    <?php 
-                    foreach($unit_set as $set)
-                    {
-                        $selected = '';
-                        if ($this->input->post('group_set')) {
-                            $selected = ($set['id'] == $this->input->post('group_set')) ? ' disabled' : ' selected="selected" ';
-                        }
-
-                        echo '<option value="'.$set['id'].'" '.$selected.'>'.$set['desc']. ' ('.$set['cnt'].' Groups)'.'</option>';
-                    } 
-                    ?>
-                </select>
-                <span class="text-danger"><?php echo form_error('group_set');?></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="title" class="col-md-4 control-label"><span class="text-danger">*</span>Title</label>
-            <div class="col-md-12">
-                <input type="text" name="title" value="<?php echo $this->input->post('title'); ?>" class="form-control" id="title" required />
-                <span class="text-danger"><?php echo form_error('title');?></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="outcome" class="col-md-4 control-label">Outcome</label>
+            <label for="outcome" class="col-md-12 control-label">Outcome</label>
             <div class="col-md-12">
                 <textarea name="outcome" class="form-control textarea enable-editor" id="outcome" rows="5"><?php echo $this->input->post('outcome'); ?></textarea>
             </div>
         </div>
         <div class="form-group">
-            <label for="scenario" class="col-md-4 control-label">Scenario</label>
+            <label for="scenario" class="col-md-12 control-label">Scenario</label>
             <div class="col-md-12">
                 <textarea name="scenario" class="form-control textarea enable-editor" id="scenario" rows="5"><?php echo $this->input->post('scenario'); ?></textarea>
             </div>
