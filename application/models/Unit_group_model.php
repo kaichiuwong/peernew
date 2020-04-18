@@ -98,8 +98,8 @@ class Unit_group_model extends CI_Model
     {
         $query_str =  " select usg.id as unit_group_id, usg.set_id, usg.group_name, usg.group_desc, usg.max, count(usga.id) as cnt " ;
         $query_str .= "   from unit_set_group usg left join unit_set_group_allocation usga on usg.id = usga.group_id" ;
-        $query_str .= "    and usg.set_id = '$set_id'  " ;
-        $query_str .= "  group by usg.id, usg.set_id, usg.group_name, usg.group_desc, usg.max;   " ;
+        $query_str .= "  group by usg.id, usg.set_id, usg.group_name, usg.group_desc, usg.max  " ;
+        $query_str .= "    having usg.set_id = '$set_id' ; ";
         $query = $this->db->query($query_str);
         return $query->result_array();
     }
