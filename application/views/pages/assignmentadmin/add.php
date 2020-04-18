@@ -63,7 +63,7 @@
         <div class="form-group">
             <label for="type" class="col-md-12 control-label"><span class="text-danger">*</span>Type</label>
             <div class="col-md-12">
-                <select name="type" class="form-control select2bs4" required disabled>
+                <select name="type" class="form-control select2bs4" required readonly>
                     <option value="" disabled selected>-- Assignment Type --</option>
                     <?php 
                     $type_values = array(
