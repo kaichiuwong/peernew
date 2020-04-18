@@ -34,7 +34,8 @@
             <thead>
                 <tr>
                     <th>Username</th>
-                    <th>Group</th>
+                    <th>Current Group</th>
+                    <th>Actions</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -42,6 +43,13 @@
                 <?php foreach($students as $a){ ?>
                 <tr>
                 <td><a href="<?php echo site_url('Member/full_profile/'.$a['username']); ?>"><?php echo $a['username']; ?> <?php if ($a['enable'] == 0) : ?><span class="badge badge-danger">Withdrawn</sapn><?php endif; ?></a></td>
+                <td>
+                <span id="current_group_<?php echo $a['username']; ?>">
+                <?php foreach($group_list as $g): ?>
+                  <?php if ($g['unit_group_id'] == $a['group_id']) { echo $g['group_desc'] . ' ('.$g['cnt'].'/'.$g['max'].')' ; break; } ?>
+                <?php endforeach; ?>
+                </span>
+                </td>
                     <td>
                     <?php echo form_open('Unit_group/assign_grp/'.$unit_id.'/'.$set_id, array("class"=>"form-horizontal grp_assign_form", "data-username" => $a['username'], "id"=>"grp_assign_".$a['username'])); ?>
                         <div class="input-group">
@@ -50,9 +58,9 @@
                             <input type="hidden" id="set_id_<?php echo $a['username']; ?>" name="set_id" value="<?php echo $set_id; ?>" />
                             <input type="hidden" id="grp_list_url_<?php echo $a['username']; ?>" value="<?php echo site_url('Unit_group/grp_list_html/'.$set_id.'/'); ?>" />
                             <select id="group_id_<?php echo $a['username']; ?>" name="group_id" class="form-control-sm group_select_list" required  <?php if ($a['enable'] == 0) : ?> disabled <?php endif; ?> >
-                                <option value="" disabled selected>*** Not Assigned to Groups ***</option>
+                                <option value="" disabled selected>*** Select a New Group ***</option>
                                 <?php foreach($group_list as $g){ ?>
-                                <option value="<?php echo $g['unit_group_id']; ?>" <?php echo ($g['unit_group_id'] == $a['group_id'])? "selected":"" ;?> <?php echo ($g['cnt'] >= $g['max'])? "disabled":"" ;?>><?php echo $g['group_desc'] . ' ('.$g['cnt'].'/'.$g['max'].')'; ?></option>
+                                <option value="<?php echo $g['unit_group_id']; ?>" <?php echo ($g['cnt'] >= $g['max'])? "disabled":"" ;?>><?php echo $g['group_desc'] . ' ('.$g['cnt'].'/'.$g['max'].')'; ?></option>
                                 <?php }?>
                             </select>
                             <span class="input-group-btn">

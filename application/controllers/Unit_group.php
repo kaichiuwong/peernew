@@ -249,7 +249,7 @@ class Unit_group extends MY_PasController {
         header('Content-Type: application/json');
         $done = false;
         $http_code = 500;
-        $grp_id = null;
+        $grp_info = null;
         $msg = "";
         do {
             if (!$this->check_permission(50, false) ) break;
@@ -259,8 +259,8 @@ class Unit_group extends MY_PasController {
             if (!isset($_POST['group_id'])) break;            
             $real_set_id = decode_id($this->input->post('set_id'));
             if (empty($real_set_id)) break;
-            $grp_id = $this->Unit_group_model->assign_group($this->input->post('user_id'),$this->input->post('old_grp_id'),$this->input->post('group_id'));
-            if ($grp_id) {
+            $grp_info = $this->Unit_group_model->assign_group($this->input->post('user_id'),$this->input->post('old_grp_id'),$this->input->post('group_id'));
+            if ($grp_info) {
                 $done = true;
                 $http_code = 200;
             }
@@ -272,7 +272,7 @@ class Unit_group extends MY_PasController {
         return $this->output
             ->set_content_type('application/json')
             ->set_status_header($http_code)
-            ->set_output( json_encode( array('grp_id' => $grp_id, 'status' => $done, 'message'=>$msg) ) );
+            ->set_output( json_encode( array_merge($grp_info, array('status' => $done, 'message'=>$msg)) ) );
     }
 
     function grp_list_html($set_id, $selected = null)

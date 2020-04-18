@@ -104,6 +104,16 @@ class Unit_group_model extends CI_Model
         return $query->result_array();
     }
 
+    function get_unit_groups_stat($grp_id)
+    {
+        $query_str =  " select usg.id as unit_group_id, usg.set_id, usg.group_name, usg.group_desc, usg.max, count(usga.id) as cnt " ;
+        $query_str .= "   from unit_set_group usg left join unit_set_group_allocation usga on usg.id = usga.group_id" ;
+        $query_str .= "  group by usg.id, usg.set_id, usg.group_name, usg.group_desc, usg.max  " ;
+        $query_str .= "    having usg.id = '$grp_id' ; ";
+        $query = $this->db->query($query_str);
+        return $query->result_array();
+    }
+
     function create_unit_set($unit_id, $num = 0, $max = 0, $desc='', $prefix = '')
     {
         $params = array (
@@ -220,7 +230,7 @@ class Unit_group_model extends CI_Model
                 $query_str .= " and group_id= $old_grp_id ";
             }
             $query = $this->db->query($query_str);
-            $result = $grp_id;
+            $result = $this->get_unit_groups_stat($grp_id)[0];
         }
         return $result;
     }

@@ -318,8 +318,9 @@ $(document).on('submit','#peer_feedback_form',function(event){
             data: form.serialize(),
             success: function(data)
             {
-                    $("#old_grp_id_"+grpid).val(data.grp_id);
-                    refresh_group_list(grpid, new_grp_id);
+                    $("#old_grp_id_"+grpid).val(data.unit_group_id);
+                    $("#current_group_"+grpid).html(data.group_desc + " (" + data.cnt + "/"+ data.max+ ")");
+                    refresh_group_list(grpid);
                     $(".submit_btn").attr("disabled", false);
                     $(".group_select_list").attr("readonly", false);
                     $("#status_"+grpid).html("Saved");
@@ -332,7 +333,7 @@ $(document).on('submit','#peer_feedback_form',function(event){
                     }, 5000);
             },
             error: function (data) {
-                    refresh_group_list(grpid, old_grp_id);
+                    refresh_group_list(grpid);
                     $(".submit_btn").attr("disabled", false);
                     $(".group_select_list").attr("readonly", false);
                     $("#status_"+grpid).html("Error");
@@ -589,11 +590,11 @@ function updateTotal() {
     $("#sum_weight").html(total);
 }
 
-function refresh_group_list(grpid, new_grp_id) 
+function refresh_group_list(grpid) 
 {
     $.ajax({ cache: false,
-        url: $("#grp_list_url_"+grpid).val() + new_grp_id
+        url: $("#grp_list_url_"+grpid).val()
     }).done(function (data) {
-        $("#group_id_"+grpid).html(data);
+        $(".group_select_list").html(data);
     });
 }
