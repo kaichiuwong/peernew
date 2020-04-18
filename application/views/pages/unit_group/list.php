@@ -35,6 +35,7 @@
                 <tr>
                     <th>Username</th>
                     <th>Group</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,23 +43,25 @@
                 <tr>
                 <td><a href="<?php echo site_url('Member/full_profile/'.$a['username']); ?>"><?php echo $a['username']; ?> <?php if ($a['enable'] == 0) : ?><span class="badge badge-danger">Withdrawn</sapn><?php endif; ?></a></td>
                     <td>
-                    <?php echo form_open('Unit_group/assign_grp/'.$unit_id.'/'.$set_id); ?>
+                    <?php echo form_open('Unit_group/assign_grp/'.$unit_id.'/'.$set_id, array("class"=>"form-horizontal grp_assign_form", "data-username" => $a['username'], "id"=>"grp_assign_".$a['username'])); ?>
                         <div class="input-group">
-                            <input type="hidden" name="old_grp_id" value="<?php echo $a['group_id']; ?>" />
-                            <input type="hidden" name="user_id" value="<?php echo $a['username']; ?>" />
-                            <input type="hidden" name="set_id" value="<?php echo 'set_id'; ?>" />
-                            <select name="group_id" class="form-control-sm" required  <?php if ($a['enable'] == 0) : ?> disabled <?php endif; ?> >
+                            <input type="hidden" id="old_grp_id_<?php echo $a['username']; ?>" name="old_grp_id" value="<?php echo $a['group_id']; ?>" />
+                            <input type="hidden" id="user_id_<?php echo $a['username']; ?>" name="user_id" value="<?php echo $a['username']; ?>" />
+                            <input type="hidden" id="set_id_<?php echo $a['username']; ?>" name="set_id" value="<?php echo $set_id; ?>" />
+                            <input type="hidden" id="grp_list_url_<?php echo $a['username']; ?>" value="<?php echo site_url('Unit_group/grp_list_html/'.$set_id.'/'); ?>" />
+                            <select id="group_id_<?php echo $a['username']; ?>" name="group_id" class="form-control-sm group_select_list" required  <?php if ($a['enable'] == 0) : ?> disabled <?php endif; ?> >
                                 <option value="" disabled selected>*** Not Assigned to Groups ***</option>
                                 <?php foreach($group_list as $g){ ?>
                                 <option value="<?php echo $g['unit_group_id']; ?>" <?php echo ($g['unit_group_id'] == $a['group_id'])? "selected":"" ;?> <?php echo ($g['cnt'] >= $g['max'])? "disabled":"" ;?>><?php echo $g['group_desc'] . ' ('.$g['cnt'].'/'.$g['max'].')'; ?></option>
                                 <?php }?>
                             </select>
                             <span class="input-group-btn">
-                                <button class="btn btn-primary btn-sm" type="submit" tabindex="-1" <?php if ($a['enable'] == 0) : ?> disabled <?php endif; ?> >Assign</button>
+                                <button class="btn btn-primary btn-sm submit_btn" type="submit" id="submit_btn_<?php echo $a['username']; ?>" tabindex="-1" <?php if ($a['enable'] == 0) : ?> disabled <?php endif; ?> >Assign</button>
                             </span>
                         </div>
                     <?php echo form_close(); ?>
                     </td>
+                    <td><span id="status_<?php echo $a['username']; ?>" class="badge"></span></td>
                 </tr>
                 <?php } ?>
             </tbody>

@@ -297,6 +297,58 @@ $(document).on('submit','#peer_feedback_form',function(event){
     return false;
  });
 
+ $(document).on('submit','.grp_assign_form',function(event){
+    event.preventDefault();
+    var grpid = $(this).attr('data-username');
+    if ($("#user_id_"+grpid).val()) {
+        $(".submit_btn").attr("disabled", true);
+        $(".group_select_list").attr("readonly", true);  
+        var new_grp_id = $("#group_id_"+grpid).val();
+        var old_grp_id = $("#old_grp_id_"+grpid).val();
+        $("#status_"+grpid).html("Saving");
+        $("#status_"+grpid).removeClass("d-none badge-primary badge-danger");
+        $("#status_"+grpid).addClass("badge-secondary");    
+
+        var form = $('#grp_assign_'+grpid);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function(data)
+            {
+                    $("#old_grp_id_"+grpid).val(data.grp_id);
+                    refresh_group_list(grpid, new_grp_id);
+                    $(".submit_btn").attr("disabled", false);
+                    $(".group_select_list").attr("readonly", false);
+                    $("#status_"+grpid).html("Saved");
+                    $("#status_"+grpid).removeClass("badge-secondary");
+                    $("#status_"+grpid).addClass("badge-primary");
+                    
+                    setTimeout(function() { 
+                        $("#status_"+grpid).removeClass("badge-primary");
+                        $("#status_"+grpid).addClass("d-none");
+                    }, 5000);
+            },
+            error: function (data) {
+                    refresh_group_list(grpid, old_grp_id);
+                    $(".submit_btn").attr("disabled", false);
+                    $(".group_select_list").attr("readonly", false);
+                    $("#status_"+grpid).html("Error");
+                    $("#status_"+grpid).removeClass("badge-secondary");
+                    $("#status_"+grpid).addClass("badge-danger");   
+                    
+                    setTimeout(function() { 
+                        $("#status_"+grpid).removeClass("badge-secondary");
+                        $("#status_"+grpid).addClass("d-none");
+                    }, 5000);
+            }
+            });
+    }
+    return false;
+ });
+
 $(document).on('click','#btn_self_submit',function(){
     $('#self_feedback_form').submit();
  });
@@ -537,3 +589,11 @@ function updateTotal() {
     $("#sum_weight").html(total);
 }
 
+function refresh_group_list(grpid, new_grp_id) 
+{
+    $.ajax({ cache: false,
+        url: $("#grp_list_url_"+grpid).val() + new_grp_id
+    }).done(function (data) {
+        $("#group_id_"+grpid).html(data);
+    });
+}

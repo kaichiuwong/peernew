@@ -66,7 +66,7 @@ class Unit_group extends MY_PasController {
 
     function remove($unit_id,$set_id)
     {
-        if (!$this->check_permission(50) ) {
+        if ($this->check_permission(50) ) {
             $done = false;
             do {
                 $real_set_id = decode_id($set_id);
@@ -80,7 +80,7 @@ class Unit_group extends MY_PasController {
 
     function group($unit_id,$set_id)
     {
-        if (!$this->check_permission(50) ) {
+        if ($this->check_permission(50) ) {
             $done = false;
 
             do 
@@ -92,11 +92,11 @@ class Unit_group extends MY_PasController {
                 $data['set_id'] = $set_id;
                 $data['unit_info']=$this->Unit_model->get_unit_info($real_unit_id)[0];
                 $data['unit_header']=$data['unit_info']->unit_code . ' - '. $data['unit_info']->unit_description;
-
-                $data['_view'] = 'pages/unit_group/group';
                 $data['group_list'] = $this->Unit_group_model->get_group_by_set($real_set_id);
                 $data['student_no_grp'] = $this->Unit_group_model->get_student_without_group($real_unit_id, $real_set_id);
                 $data['set_info'] = $this->Unit_group_model->get_unit_set($real_set_id)[0];
+                
+                $data['_view'] = 'pages/unit_group/group';
                 $this->load_header($data);
                 $this->load->view('templates/main',$data);
                 $this->load_footer($data);
@@ -244,16 +244,50 @@ class Unit_group extends MY_PasController {
         if (!$done) redirect("Unit_group/group/".$unit_id.'/'.$set_id);
     }
 
-    function assign_grp($unit_id, $set_id)
+    function assign_grp()
     {
+        header('Content-Type: application/json');
         $done = false;
+        $http_code = 500;
+        $grp_id = null;
+        $msg = "";
         do {
-            if (!$this->check_permission(50) ) break;
-            $real_set_id = decode_id($set_id);
+            if (!$this->check_permission(50, false) ) break;
+            if (!isset($_POST['set_id'])) break;
+            if (!isset($_POST['user_id'])) break;
+            if (!isset($_POST['old_grp_id'])) break;
+            if (!isset($_POST['group_id'])) break;            
+            $real_set_id = decode_id($this->input->post('set_id'));
             if (empty($real_set_id)) break;
-            $this->Unit_group_model->assign_group($this->input->post('user_id'),$this->input->post('old_grp_id'),$this->input->post('group_id'));
+            $grp_id = $this->Unit_group_model->assign_group($this->input->post('user_id'),$this->input->post('old_grp_id'),$this->input->post('group_id'));
+            if ($grp_id) {
+                $done = true;
+                $http_code = 200;
+            }
+            else {
+                $msg = "Full Group";
+            }
         } while(0);
 
-        if (!$done) redirect("Unit_group/student_list/".$unit_id.'/'.$set_id);
+        return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header($http_code)
+            ->set_output( json_encode( array('grp_id' => $grp_id, 'status' => $done, 'message'=>$msg) ) );
+    }
+
+    function grp_list_html($set_id, $selected = null)
+    {
+        $done = false;
+        do 
+        {
+            if (!$this->check_permission(50, false) ) break;
+            $real_set_id = decode_id($set_id);
+            if (empty($real_set_id)) break;
+            $data['set_id'] = $set_id;
+            $data['selected_id'] = $selected;
+            $data['group_list'] = $this->Unit_group_model->get_unit_groups_allocation_stat($real_set_id);
+            $this->load->view('pages/unit_group/grp_list',$data);
+            $done = true;
+        } while(0);
     }
 }

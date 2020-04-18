@@ -190,12 +190,39 @@ class Unit_group_model extends CI_Model
         }
     }
 
+    function is_group_full($grp_id)
+    {
+        $rtn = true;
+        $query_str =  " select * " ;
+        $query_str .= "   from sv_group_list_stat " ;
+        $query_str .= "  where cnt < max ";
+        $query_str .= "    and id = $grp_id ";
+        $query = $this->db->query($query_str);
+        $result = $query->result_array();
+        if (count($result) > 0 ) {
+            $rtn = false;
+        }
+        return $rtn;
+    }
+
     function assign_group($username, $old_grp_id, $grp_id)
     {
-        $query_str =  " update unit_set_group_allocation" ;
-        $query_str .= "    set group_id = $grp_id " ;
-        $query_str .= "  where user_id = '$username' and group_id= $old_grp_id; " ;
-        $query = $this->db->query($query_str);
+        $result  = null;
+        if (!$this->is_group_full($grp_id)) {
+            if (empty($old_grp_id)) {
+                $query_str = "insert into unit_set_group_allocation (group_id, user_id) ";
+                $query_str .= "    values( $grp_id, '$username') ; " ;
+            }
+            else {
+                $query_str =  " update unit_set_group_allocation" ;
+                $query_str .= "    set group_id = $grp_id " ;
+                $query_str .= "  where user_id = '$username'  " ;
+                $query_str .= " and group_id= $old_grp_id ";
+            }
+            $query = $this->db->query($query_str);
+            $result = $grp_id;
+        }
+        return $result;
     }
 
     function add_student_to_group($username, $grp_id)
