@@ -31,7 +31,11 @@
                     <th style="width: 50%">Question</th>
                     <?php foreach($assignment_topics_member as $member) : ?>
                     <?php if ($member['user_id'] != $username) :?>
-                        <th><?php echo $member['first_name']; ?> <?php echo $member['last_name']; ?></th>
+                        <th>
+                        <a href="javascript:void(0);" data-title="Self Evaluation Feedback of " data-username="<?php echo $member['first_name']; ?> <?php echo $member['last_name']; ?>" data-href="<?php echo site_url('assignment/peer_self_review/'.$asg_id.'/'.$topic_id.'/'.encode_id($member['user_id']) ); ?>" class="peer_mark_open">
+                            <?php echo $member['first_name']; ?> <?php echo $member['last_name']; ?>
+                        </a>
+                        </th>
                     <?php endif; ?>
                     <?php endforeach; ?>
                 </tr>

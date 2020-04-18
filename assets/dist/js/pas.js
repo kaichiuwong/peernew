@@ -44,35 +44,6 @@ $(function () {
 
 $('#date_value').on('click',function(){
     $('#picker_button').click();
-});    
-
-$('.group_info_open').on('click',function(){
-    var dataURL = $(this).attr('data-href');
-    var grpName = $(this).attr('data-grp-name');
-    $('#group_member_body').html('');
-    $('#group_member_header').html('Group Members of ' + grpName);
-    $('#loading-overlay').addClass('overlay d-flex justify-content-center align-items-center');
-    $('#group_member_modal').modal({show:true});
-    $('.modal-body').load(dataURL,function(){
-        $('#loading-overlay').removeClass('overlay d-flex justify-content-center align-items-center');
-        $('#loading-overlay').addClass('d-none');
-    });
-});
-
-
-$('.peer_mark_open').on('click',function(){
-    var dataURL = $(this).attr('data-href');
-    var username = $(this).attr('data-username');
-    $('#large-modal-body').html('');
-    $('#large-modal-header').html('Peer Marking Detail of ' + username);
-    $('#large-modal-loading-overlay').addClass('overlay d-flex justify-content-center align-items-center');
-    $('#large-modal').modal({show:true});
-    $('.modal-body').load(dataURL,function(){
-        $('#large-modal-loading-overlay').removeClass('overlay d-flex justify-content-center align-items-center');
-        $('#large-modal-loading-overlay').addClass('d-none');
-        document.querySelector("#large-modal-body");
-        enable_editor();
-    });
 });
 
 $(document).on('change', '.custom-file-input', function (event) {
@@ -407,7 +378,8 @@ $(document).ready(function () {
     load_asg_submission_form();
     load_self_review_form();
     load_peer_review_form();
-
+    bind_info_windows();
+    bind_large_info_windows();
 });
 
 function enable_datatable() 
@@ -496,6 +468,8 @@ function load_peer_review_form() {
             else {
                 $('#btn_peer_submit').addClass('d-none');
             }
+            bind_info_windows();
+            bind_large_info_windows();
         });
     }
 }
@@ -596,5 +570,48 @@ function refresh_group_list(grpid)
         url: $("#grp_list_url_"+grpid).val()
     }).done(function (data) {
         $(".group_select_list").html(data);
+    });
+}
+
+
+function bind_info_windows() {
+    $('.group_info_open').on('click',function(){
+        var dataURL = $(this).attr('data-href');
+        var grpName = $(this).attr('data-grp-name');
+        var title = 'Group Members of ';
+        var title_attr = $(this).attr('data-title')
+        if (typeof title_attr !== typeof undefined && title_attr !== false) {
+            title = $(this).attr('data-title');
+        }
+        $('#group_member_body').html('');
+        $('#group_member_header').html(title + grpName);
+        $('#loading-overlay').addClass('overlay d-flex justify-content-center align-items-center');
+        $('#group_member_modal').modal({show:true});
+        $('.modal-body').load(dataURL,function(){
+            $('#loading-overlay').removeClass('overlay d-flex justify-content-center align-items-center');
+            $('#loading-overlay').addClass('d-none');
+        });
+    });
+}
+
+function bind_large_info_windows() {
+    $('.peer_mark_open').on('click',function(){
+        var dataURL = $(this).attr('data-href');
+        var username = $(this).attr('data-username');
+        var title = 'Peer Marking Detail of ';
+        var title_attr = $(this).attr('data-title')
+        if (typeof title_attr !== typeof undefined && title_attr !== false) {
+            title = $(this).attr('data-title');
+        }
+        $('#large-modal-body').html('');
+        $('#large-modal-header').html(title + username);
+        $('#large-modal-loading-overlay').addClass('overlay d-flex justify-content-center align-items-center');
+        $('#large-modal').modal({show:true});
+        $('.modal-body').load(dataURL,function(){
+            $('#large-modal-loading-overlay').removeClass('overlay d-flex justify-content-center align-items-center');
+            $('#large-modal-loading-overlay').addClass('d-none');
+            document.querySelector("#large-modal-body");
+            enable_editor();
+        });
     });
 }

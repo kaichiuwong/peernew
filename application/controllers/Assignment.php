@@ -207,6 +207,24 @@ class Assignment extends MY_PasController {
         } while(0);
     }
 
+    function peer_self_review($asg_id = null, $group_id = null, $username = null)
+    {
+        do 
+        {
+            if (!$this->check_permission(10, false) ) break;
+            if (empty($asg_id) || empty($group_id) || empty($username)) break;
+            $asg_result = $this->assignment_check($asg_id);
+            if (!$asg_result['result']) break;
+            $decode_asg_id = $asg_result['decode_asg_id'];
+            $data['asg_id'] = $asg_id;
+            $data['group_id'] = $group_id;
+            $data['username'] = $username;
+
+            $data['assignment_questions_self'] = $this->Assignment_feedback_model->get_question_with_feedback($decode_asg_id,decode_id($username),decode_id($username),'SELF');
+            $this->load->view('pages/assignment/peer_self_review',$data);
+        } while(0);
+    }
+
     function asg_upload_form($asg_id = null, $topic_id = null) {
         do{
             if (!$this->check_permission(10) ) break;
