@@ -28,7 +28,7 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body table-responsive p-3">
-	  <a href="<?php echo site_url('Unit_group/add_group/'.$unit_id.'/'.$set_id); ?>" class="btn btn-success btn-lg" data-toggle="tooltip" data-placement="top" title="Create extra groups under this set"><i class="fas fa-user-plus"></i></a> 
+	  <a href="<?php echo site_url('Unit_group/add_group/'.$unit_id.'/'.$set_id); ?>" class="btn btn-success btn-lg" data-toggle="tooltip" data-placement="top" title="Create extra groups under this set"><i class="fas fa-folder-plus"></i></a> 
     <a href="<?php echo site_url('Unit_group/student_list/'.$unit_id.'/'.$set_id); ?>" class="btn btn-primary btn-lg" data-toggle="tooltip" data-placement="top" title="View student list"><i class="fas fa-list"></i></a>
       <?php if (count($student_no_grp) == 0): ?>
         <a href="javascript:void(0);" class="btn btn-success btn-lg" data-toggle="tooltip" data-placement="top" title="All students has a group">0 <i class="far fa-smile"></i></a>
