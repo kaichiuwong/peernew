@@ -420,7 +420,7 @@ function enable_datatable()
             "ordering": true,
             "info": true,
             "autoWidth": false,
-            "pageLength": 100
+            "pageLength": 1000
         });
     }
 }
