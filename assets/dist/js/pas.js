@@ -319,7 +319,7 @@ $(document).on('submit','#peer_feedback_form',function(event){
             success: function(data)
             {
                     $("#old_grp_id_"+grpid).val(data.unit_group_id);
-                    $("#current_group_"+grpid).html(data.group_desc + " (" + data.cnt + "/"+ data.max+ ")");
+                    $("#current_group_"+grpid).html(data.group_desc);
                     refresh_group_list(grpid);
                     $(".submit_btn").attr("disabled", false);
                     $(".group_select_list").attr("readonly", false);

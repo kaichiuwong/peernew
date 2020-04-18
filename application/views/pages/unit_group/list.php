@@ -46,7 +46,7 @@
                 <td>
                 <span id="current_group_<?php echo $a['username']; ?>">
                 <?php foreach($group_list as $g): ?>
-                  <?php if ($g['unit_group_id'] == $a['group_id']) { echo $g['group_desc'] . ' ('.$g['cnt'].'/'.$g['max'].')' ; break; } ?>
+                  <?php if ($g['unit_group_id'] == $a['group_id']) { echo $g['group_desc'] ; break; } ?>
                 <?php endforeach; ?>
                 </span>
                 </td>
