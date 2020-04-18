@@ -45,9 +45,13 @@
                 <td><a href="<?php echo site_url('Member/full_profile/'.$a['username']); ?>"><?php echo $a['username']; ?> <?php if ($a['enable'] == 0) : ?><span class="badge badge-danger">Withdrawn</sapn><?php endif; ?></a></td>
                 <td>
                 <span id="current_group_<?php echo $a['username']; ?>">
+                <?php if (empty($a['group_id'])): ?>
+                  <b class="text-muted"><i>*** No Group ***</i></b>
+                <?php else: ?>
                 <?php foreach($group_list as $g): ?>
                   <?php if ($g['unit_group_id'] == $a['group_id']) { echo $g['group_desc'] ; break; } ?>
                 <?php endforeach; ?>
+                <?php endif; ?>
                 </span>
                 </td>
                     <td>
