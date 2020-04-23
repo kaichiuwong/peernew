@@ -42,20 +42,20 @@
             <tbody>
                 <tr id="first_row">
                     <td>
-                        <input type="number" min="1" step="1" value="<?php echo $assignment_question['question_order']; ?>" name="question_order" class="form-control" />
+                        <input type="number" min="1" step="1" value="<?php echo $assignment_question['question_order']; ?>" name="question_order" class="form-control" required />
                     </td>
                     <td>
                         <input type="hidden" name="asg_id" value="<?php echo $assignment_question['asg_id']; ?>" required />
                         <input type="text" name="question" class="form-control" value="<?php echo ($this->input->post('question') ? $this->input->post('question') : $assignment_question['question']); ?>" />
                     </td>
                     <td>
-                        <select class="form-control" name="question_section" >
+                        <select class="form-control" name="question_section" required >
                             <option value="SELF" <?php echo $assignment_question['question_section'] == "SELF"?"selected":"";?> >Self Evaluation Only (Private)</option>
                             <option value="PEER" <?php echo $assignment_question['question_section'] == "PEER"?"selected":"";?> >Peer Evaluation (Viewable by Peers)</option>
                         </select>
                     </td>
                     <td>
-                        <select class="form-control" name="answer_type" >
+                        <select class="form-control" name="answer_type" required >
                             <option value="TEXT" <?php echo $assignment_question['answer_type'] == "TEXT"?"selected":"";?> >Text</option>
                             <option value="SCALE" <?php echo $assignment_question['answer_type'] == "SCALE"?"selected":"";?> >Scale (0-4)</option>
                             <option value="SCORE" <?php echo $assignment_question['answer_type'] == "SCORE"?"selected":"";?> >Score (0%-100%)</option>
