@@ -43,14 +43,14 @@
                 <?php endif; ?>
             </label>
             <div class="col-md-12">
-                <select name="group_set" class="form-control select2bs4" required <?php if (count($unit_set) <= 0) echo "disabled" ?>>
+                <select name="group_set" class="form-control select2bs4" required >
                     <option value="" disabled selected>-- Group Set --</option>
                     <?php 
                     foreach($unit_set as $set)
                     {
                         $selected = '';
                         if ($this->input->post('group_set')) {
-                            $selected = ($set['id'] == $this->input->post('group_set')) ? ' disabled' : ' selected="selected" ';
+                            $selected = ($set['id'] == $this->input->post('group_set')) ? ' ' : ' selected="selected" ';
                         }
 
                         echo '<option value="'.$set['id'].'" '.$selected.'>'.$set['desc']. ' ('.$set['cnt'].' Groups)'.'</option>';
