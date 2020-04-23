@@ -12,7 +12,6 @@
           <li class="breadcrumb-item"><a href="<?php echo site_url('assignment_date/index/'.$asg_id); ?>">Timeline</a></li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('assignment_topic/index/'.$asg_id); ?>">Group List</a></li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('student_list/index/'.$asg_id); ?>">Student List</a></li>
-          
           <li class="breadcrumb-item"><a href="<?php echo site_url('assignment_question/index/'.$asg_id).'/self'; ?>">Self Evaluation</a></li>
           <li class="breadcrumb-item"><a href="<?php echo site_url('assignment_question/index/'.$asg_id).'/peer'; ?>">Peer Review</a></li>
           <li class="breadcrumb-item active">Create Questions</li>
@@ -43,19 +42,19 @@
             <tbody>
                 <tr id="first_row">
                     <td>
-                        <input type="number" min="1" step="1" value="1" name="question_order0" class="form-control" />
+                        <input type="number" min="1" step="1" value="1" name="question_order0" class="form-control" required/>
                     </td>
                     <td>
                         <input type="text" name="question0" class="form-control" />
                     </td>
                     <td>
-                        <select class="form-control" name="question_section0" >
+                        <select class="form-control" name="question_section0" required  >
                             <option value="SELF">Self Evaluation Only (Private)</option>
                             <option value="PEER">Peer Evaluation (Viewable by Peers)</option>
                         </select>
                     </td>
                     <td>
-                        <select class="form-control" name="answer_type0" >
+                        <select class="form-control" name="answer_type0" required >
                             <option value="TEXT">Text</option>
                             <option value="SCALE">Scale (0-4)</option>
                             <option value="SCORE">Score (0%-100%)</option>
