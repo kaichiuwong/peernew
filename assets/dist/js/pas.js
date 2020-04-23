@@ -351,13 +351,13 @@ $(document).ready(function () {
         var newRow = $("<tr>");
         var cols = "";
         
-        cols += '<td><input type="number" min="1" step="1" value="'+(counter+1)+'" name="question_order'+(counter+1)+'" class="form-control" /></td>';
+        cols += '<td><input type="number" min="1" step="1" value="'+(counter+1)+'" name="question_order'+(counter)+'" class="form-control" required /></td>';
         cols += '<td><input type="text" name="question'+counter+'" class="form-control" /></td>';
-        cols += '<td><select class="form-control" name="question_section'+counter+'" >';
+        cols += '<td><select class="form-control" name="question_section'+counter+'" required>';
         cols += '<option value="SELF">Self Evaluation Only (Private)</option>';
         cols += '<option value="PEER">Peer Evaluation (Viewable by Peers)</option>';
         cols += '</select></td>';
-        cols += '<td><select class="form-control" name="answer_type'+counter+'" >';
+        cols += '<td><select class="form-control" name="answer_type'+counter+'" required>';
         cols += '<option value="TEXT">Text</option>';
         cols += '<option value="SCALE">Scale (1-5)</option>';
         cols += '<option value="SCORE">Score (0%-100%)</option>';
